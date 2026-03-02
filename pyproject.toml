@@ -1,0 +1,22 @@
+[project]
+name = "streamtex-docs"
+version = "0.3.0"
+description = "StreamTeX interactive manuals and documentation"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "streamtex>=0.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4.0",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+# Override for local dev — points to adjacent library repo
+[tool.uv.sources]
+streamtex = { path = "../streamtex", editable = true }

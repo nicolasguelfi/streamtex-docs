@@ -14,10 +14,9 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Install dependencies (cached layer)
-# Strip [tool.uv.sources] (editable dev path) so uv resolves from PyPI
+# --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path
 COPY pyproject.toml uv.lock ./
-RUN sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
-    uv sync --frozen --no-dev
+RUN uv sync --no-sources --no-dev
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 ARG FOLDER="manuals/stx_manual_intro"

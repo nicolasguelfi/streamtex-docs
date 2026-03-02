@@ -16,7 +16,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 # Install dependencies (cached layer)
 # streamtex is installed from PyPI via uv sync
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --no-sources
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 ARG FOLDER="manuals/stx_manual_intro"

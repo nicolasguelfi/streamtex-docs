@@ -19,7 +19,7 @@ import streamtex as stx
 from streamtex import st_book
 
 # Load shared blocks
-shared = stx.LazyBlockRegistry(["../stx_manuals_shared-blocks/blocks"])
+shared = stx.LazyBlockRegistry(["../shared-blocks/blocks"])
 
 # Use in st_book()
 st_book([
@@ -38,7 +38,7 @@ import sys
 import importlib.util
 
 # Load shared blocks module
-shared_path = Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks"
+shared_path = Path(__file__).parent.parent / "shared-blocks" / "blocks"
 sys.path.insert(0, str(shared_path))
 
 import bck_header_training
@@ -63,7 +63,7 @@ Access them via `resolve_static()`:
 import streamtex as stx
 
 # Configure static sources
-stx.set_static_sources(["static", "../stx_manuals_shared-blocks/static"])
+stx.set_static_sources(["static", "../shared-blocks/static"])
 
 # Resolve a file
 logo_path = stx.resolve_static("images/logo.png")

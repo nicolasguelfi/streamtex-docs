@@ -106,7 +106,7 @@ from pathlib import Path
 # Configure static sources in book.py (called once at startup)
 stx.set_static_sources([
     str(Path(__file__).parent / "static"),                              # Local project static
-    str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static"),  # Shared static
+    str(Path(__file__).parent.parent / "shared-blocks" / "static"),  # Shared static
 ])
 """)
     st_space("v", 1)
@@ -155,7 +155,7 @@ data_path = stx.resolve_static("data/trainers.json")
 
 # The function searches:
 #   1. /abs/path/to/project/static/data/trainers.json  -> found? return it
-#   2. /abs/path/to/stx_manuals_shared-blocks/static/data/trainers.json  -> found? return it
+#   2. /abs/path/to/shared-blocks/static/data/trainers.json  -> found? return it
 #   3. Not found anywhere -> returns "data/trainers.json" (original path)
 
 # Use the resolved path
@@ -328,7 +328,7 @@ StreamTeX multi-project architectures.""")
 
 stx.set_static_sources([
     str(Path(__file__).parent / "static"),                                  # Project images
-    str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static"), # Shared images
+    str(Path(__file__).parent.parent / "shared-blocks" / "static"), # Shared images
 ])
 
 # Directory structure:
@@ -338,7 +338,7 @@ stx.set_static_sources([
 #       images/
 #         advanced_banner.png    <- Local only
 #     book.py
-#   stx_manuals_shared-blocks/
+#   shared-blocks/
 #     static/
 #       images/
 #         training_logo.png      <- Shared across projects
@@ -387,13 +387,13 @@ import streamtex as stx
 from pathlib import Path
 
 # Block sources (for LazyBlockRegistry)
-shared_blocks_path = str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks")
+shared_blocks_path = str(Path(__file__).parent.parent / "shared-blocks" / "blocks")
 shared_blocks = stx.LazyBlockRegistry([shared_blocks_path])
 
 # Static sources (for image/asset resolution)
 stx.set_static_sources([
     str(Path(__file__).parent / "static"),
-    str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static"),
+    str(Path(__file__).parent.parent / "shared-blocks" / "static"),
 ])
 
 # Now shared blocks can reference images by name,
@@ -580,7 +580,7 @@ import streamtex as stx
 
 # Debugging: print the current static source configuration
 print("Static sources:", stx.get_static_sources())
-# -> ['abs/path/to/static', '/abs/path/to/stx_manuals_shared-blocks/static']
+# -> ['abs/path/to/static', '/abs/path/to/shared-blocks/static']
 
 # Debugging: check if a specific file resolves correctly
 resolved = stx.resolve_static("images/logo.png")

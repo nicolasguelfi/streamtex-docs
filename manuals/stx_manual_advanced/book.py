@@ -17,8 +17,8 @@ import blocks
 
 # Configure shared blocks (Phase 1: LazyBlockRegistry)
 from pathlib import Path
-_shared_blocks_path = str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks")
-_static_shared_path = str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static")
+_shared_blocks_path = str(Path(__file__).parent.parent / "shared-blocks" / "blocks")
+_static_shared_path = str(Path(__file__).parent.parent / "shared-blocks" / "static")
 
 shared_blocks = stx.LazyBlockRegistry([_shared_blocks_path])
 

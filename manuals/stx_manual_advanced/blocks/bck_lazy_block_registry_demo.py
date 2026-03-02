@@ -102,7 +102,7 @@ import streamtex as stx
 from pathlib import Path
 
 # Point to a shared blocks directory
-shared_path = str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks")
+shared_path = str(Path(__file__).parent.parent / "shared-blocks" / "blocks")
 
 # Create the registry
 shared_blocks = stx.LazyBlockRegistry([shared_path])
@@ -370,7 +370,7 @@ This very project (stx_manual_advanced) uses both registries.
 
 Local blocks come from blocks/ via ProjectBlockRegistry.
 
-Shared blocks come from stx_manuals_shared-blocks/ via LazyBlockRegistry.""")
+Shared blocks come from shared-blocks/ via LazyBlockRegistry.""")
     st_space("v", 1)
 
     show_code("""\
@@ -386,14 +386,14 @@ import blocks  # Local blocks (ProjectBlockRegistry in __init__.py)
 
 # Configure shared blocks (LazyBlockRegistry)
 _shared_blocks_path = str(
-    Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks"
+    Path(__file__).parent.parent / "shared-blocks" / "blocks"
 )
 shared_blocks = stx.LazyBlockRegistry([_shared_blocks_path])
 
 # Configure static sources for multi-directory image resolution
 stx.set_static_sources([
     str(Path(__file__).parent / "static"),       # Local static first
-    str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static"),
+    str(Path(__file__).parent.parent / "shared-blocks" / "static"),
 ])
 
 # Orchestrate: mix local and shared blocks
@@ -418,12 +418,12 @@ Both appear in the same st_book() call seamlessly.""",
         )
     st_space("v", 2)
 
-    st_write(bs.subsection, "The stx_manuals_shared-blocks/ Directory Structure")
+    st_write(bs.subsection, "The shared-blocks/ Directory Structure")
     st_space("v", 1)
 
     show_code("""\
 documentation/manuals/
-  stx_manuals_shared-blocks/
+  shared-blocks/
     blocks/
       bck_header_training.py    # Shared header for training courses
       bck_footer_training.py    # Shared footer for training courses

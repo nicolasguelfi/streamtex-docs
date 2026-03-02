@@ -132,9 +132,9 @@ shared-blocks/
 The shared-blocks directory can live anywhere on disk.
 
 Common locations:
-  - A sibling directory next to your projects (documentation/manuals/stx_manuals_shared-blocks/)
+  - A sibling directory next to your projects (documentation/manuals/shared-blocks/)
   - A separate Git repository cloned alongside your project
-  - A monorepo subfolder (libs/stx_manuals_shared-blocks/)
+  - A monorepo subfolder (libs/shared-blocks/)
 
 LazyBlockRegistry resolves paths to absolute form, so relative paths work.""")
     st_space("v", 1)
@@ -143,9 +143,9 @@ LazyBlockRegistry resolves paths to absolute form, so relative paths work.""")
     st_space("v", 1)
 
     show_code("""\
-# In this repository, shared blocks sit at documentation/manuals/stx_manuals_shared-blocks/
+# In this repository, shared blocks sit at documentation/manuals/shared-blocks/
 documentation/manuals/
-  stx_manuals_shared-blocks/   # Shared block library
+  shared-blocks/   # Shared block library
     blocks/
       bck_header_training.py
       bck_footer_training.py
@@ -195,7 +195,7 @@ from pathlib import Path
 
 # Resolve the path to the shared blocks directory
 _shared_blocks_path = str(
-    Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks"
+    Path(__file__).parent.parent / "shared-blocks" / "blocks"
 )
 
 # Create a LazyBlockRegistry for shared blocks
@@ -203,8 +203,8 @@ shared_blocks = stx.LazyBlockRegistry([_shared_blocks_path])
 
 # Now access any shared block by name (dot notation)
 # The first access triggers a lazy import; subsequent accesses are cached
-shared_blocks.bck_header_training   # -> loads stx_manuals_shared-blocks/blocks/bck_header_training.py
-shared_blocks.bck_footer_training   # -> loads stx_manuals_shared-blocks/blocks/bck_footer_training.py
+shared_blocks.bck_header_training   # -> loads shared-blocks/blocks/bck_header_training.py
+shared_blocks.bck_footer_training   # -> loads shared-blocks/blocks/bck_footer_training.py
 """)
     st_space("v", 1)
 
@@ -261,17 +261,17 @@ from pathlib import Path
 import blocks  # Local blocks (ProjectBlockRegistry in __init__.py)
 
 # Shared blocks via LazyBlockRegistry
-_shared_path = str(Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks")
+_shared_path = str(Path(__file__).parent.parent / "shared-blocks" / "blocks")
 shared_blocks = stx.LazyBlockRegistry([_shared_path])
 
 # Orchestrate: mix local and shared blocks freely
 st_book([
-    shared_blocks.bck_header_training,    # Shared header (from stx_manuals_shared-blocks/)
+    shared_blocks.bck_header_training,    # Shared header (from shared-blocks/)
     blocks.bck_welcome_intro,             # Local block (from blocks/)
     blocks.bck_text_and_styling,          # Local block
     blocks.bck_grids_and_lists,           # Local block
     shared_blocks.bck_best_practices,     # Shared block
-    shared_blocks.bck_footer_training,    # Shared footer (from stx_manuals_shared-blocks/)
+    shared_blocks.bck_footer_training,    # Shared footer (from shared-blocks/)
 ], paginate=True)
 """)
     st_space("v", 1)
@@ -294,7 +294,7 @@ improving code readability and maintainability.""",
     show_explanation("""\
 This very project (stx_manual_advanced) uses this exact pattern.
 
-All content blocks are local, but the footer comes from stx_manuals_shared-blocks/.
+All content blocks are local, but the footer comes from shared-blocks/.
 
 The relevant extract from book.py:""")
     st_space("v", 1)
@@ -306,7 +306,7 @@ import blocks  # Local blocks via ProjectBlockRegistry
 
 # Configure shared blocks
 _shared_blocks_path = str(
-    Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "blocks"
+    Path(__file__).parent.parent / "shared-blocks" / "blocks"
 )
 shared_blocks = stx.LazyBlockRegistry([_shared_blocks_path])
 
@@ -462,7 +462,7 @@ _local_static = str(Path(__file__).parent / "static")
 
 # Shared static directory (fallback)
 _shared_static = str(
-    Path(__file__).parent.parent / "stx_manuals_shared-blocks" / "static"
+    Path(__file__).parent.parent / "shared-blocks" / "static"
 )
 
 # Register both sources: local first, shared second
@@ -730,11 +730,11 @@ LazyBlockRegistry sources list. The first source wins.""",
 # Override pattern: project-specific version takes priority
 shared = stx.LazyBlockRegistry([
     "blocks/overrides",          # Project overrides (checked first)
-    "../../stx_manuals_shared-blocks/blocks", # Shared originals (checked second)
+    "../../shared-blocks/blocks", # Shared originals (checked second)
 ])
 
 # If blocks/overrides/bck_header.py exists, it is used
-# Otherwise, stx_manuals_shared-blocks/blocks/bck_header.py is used
+# Otherwise, shared-blocks/blocks/bck_header.py is used
 shared.bck_header  # -> resolves to highest-priority source
 """)
     st_space("v", 1)

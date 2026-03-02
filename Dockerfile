@@ -14,9 +14,10 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Install dependencies (cached layer)
-# streamtex is installed from PyPI via uv sync
+# Strip [tool.uv.sources] (editable dev path) so uv resolves from PyPI
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-sources
+RUN sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
+    uv sync --frozen --no-dev
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 ARG FOLDER="manuals/stx_manual_intro"

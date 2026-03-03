@@ -72,16 +72,19 @@ def build():
              toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.large, (
-            (s.bold, "Description"), " — what the command does and when to use it"
-        ))
-        st_write(s.large, (
-            (s.bold, "Context Loading"), " — which files the AI must read first"
-        ))
-        st_write(s.large, (
-            (s.bold, "Workflow"), " — step-by-step instructions the AI follows"
-        ))
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Description"), " — what the command does and when to use it"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Context Loading"), " — which files the AI must read first"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Workflow"), " — step-by-step instructions the AI follows"
+            ))
     st_space("v", 2)
 
     # ── Step-by-step creation ─────────────────────────────────────

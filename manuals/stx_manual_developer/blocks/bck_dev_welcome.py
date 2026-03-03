@@ -71,24 +71,24 @@ def build():
     with st_block(bs.prereq_box):
         st_write(s.project.titles.section_subtitle, "Prerequisites", toc_lvl="+1")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Python 3.10+ (see .python-version)")
-            st_write(s.large, "git (version control)")
-            st_write(s.large, "uv — fast Python package manager (replaces pip/venv)")
-            st_write(s.large, "A code editor (VS Code, PyCharm, etc.)")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Python 3.10+ (see .python-version)")
+            with l.item(): st_write(s.large, "git (version control)")
+            with l.item(): st_write(s.large, "uv — fast Python package manager (replaces pip/venv)")
+            with l.item(): st_write(s.large, "A code editor (VS Code, PyCharm, etc.)")
     st_space("v", 2)
 
     # Guide overview
     st_write(s.project.titles.section_subtitle, "What This Guide Covers", toc_lvl="+1")
     st_space("v", 1)
-    with st_list(list_type="ol"):
-        st_write(s.large, "Repository Structure — understanding the 38 source modules")
-        st_write(s.large, "Development Setup — clone, install, workspace management")
-        st_write(s.large, "Architecture — rendering pipeline, styles, blocks, export, book")
-        st_write(s.large, "Coding Standards — conventions, module patterns, export guards")
-        st_write(s.large, "Testing — pytest, patterns, gotchas, coverage matrix")
-        st_write(s.large, "CI/CD — GitHub Actions workflows")
-        st_write(s.large, "Release Process — versioning, changelog, PyPI publishing")
-        st_write(s.large, "CLI Architecture — click groups, adding commands")
-        st_write(s.large, "Maintenance — dependencies, ruff, tooling")
-        st_write(s.large, "Claude Profiles — .claude/ structure, profile management")
+    with st_list(list_type="ol") as l:
+        with l.item(): st_write(s.large, "Repository Structure — understanding the 38 source modules")
+        with l.item(): st_write(s.large, "Development Setup — clone, install, workspace management")
+        with l.item(): st_write(s.large, "Architecture — rendering pipeline, styles, blocks, export, book")
+        with l.item(): st_write(s.large, "Coding Standards — conventions, module patterns, export guards")
+        with l.item(): st_write(s.large, "Testing — pytest, patterns, gotchas, coverage matrix")
+        with l.item(): st_write(s.large, "CI/CD — GitHub Actions workflows")
+        with l.item(): st_write(s.large, "Release Process — versioning, changelog, PyPI publishing")
+        with l.item(): st_write(s.large, "CLI Architecture — click groups, adding commands")
+        with l.item(): st_write(s.large, "Maintenance — dependencies, ruff, tooling")
+        with l.item(): st_write(s.large, "Claude Profiles — .claude/ structure, profile management")

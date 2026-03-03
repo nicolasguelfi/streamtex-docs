@@ -57,19 +57,20 @@ def build():
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Auto-reads:")
-                with st_list(list_type="ul"):
-                    st_write(s.large, "block-blueprints.md")
-                    st_write(s.large, "visual-design-rules.md")
-                    st_write(s.large, "coding_standards.md")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item(): st_write(s.large, "visual-design-rules.md")
+                    with l.item(): st_write(s.large, "coding_standards.md")
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Key principles:")
-                with st_list(list_type="ul"):
-                    st_write(s.large, "1 block = 1 concept")
-                    st_write(s.large, "Maximum 15 blocks per project")
-                    st_write(s.large, "Logical progressive ordering")
-                    st_write(s.large,
-                             "Generates styles, blocks, and book.py")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "1 block = 1 concept")
+                    with l.item(): st_write(s.large, "Maximum 15 blocks per project")
+                    with l.item(): st_write(s.large, "Logical progressive ordering")
+                    with l.item():
+                        st_write(s.large,
+                                 "Generates styles, blocks, and book.py")
 
         with g.cell():
             with st_block(bs.agent_card):
@@ -85,22 +86,26 @@ def build():
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Auto-reads:")
-                with st_list(list_type="ul"):
-                    st_write(s.large, "block-blueprints.md")
-                    st_write(s.large, "visual-design-rules.md")
-                    st_write(s.large, "style-conventions.md")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item(): st_write(s.large, "visual-design-rules.md")
+                    with l.item(): st_write(s.large, "style-conventions.md")
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Key principles:")
-                with st_list(list_type="ul"):
-                    st_write(s.large,
-                             "Enforces formatting and anti-pattern rules")
-                    st_write(s.large,
-                             "Uses blueprint templates for consistency")
-                    st_write(s.large,
-                             "Validates structure before completion")
-                    st_write(s.large,
-                             "Applies style composition patterns")
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(s.large,
+                                 "Enforces formatting and anti-pattern rules")
+                    with l.item():
+                        st_write(s.large,
+                                 "Uses blueprint templates for consistency")
+                    with l.item():
+                        st_write(s.large,
+                                 "Validates structure before completion")
+                    with l.item():
+                        st_write(s.large,
+                                 "Applies style composition patterns")
 
     st_space("v", 2)
 
@@ -120,22 +125,26 @@ def build():
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Auto-reads:")
-                with st_list(list_type="ul"):
-                    st_write(s.large, "visual-design-rules.md")
-                    st_write(s.large, "style-conventions.md")
-                    st_write(s.large, "coding_standards.md")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "visual-design-rules.md")
+                    with l.item(): st_write(s.large, "style-conventions.md")
+                    with l.item(): st_write(s.large, "coding_standards.md")
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Key principles:")
-                with st_list(list_type="ul"):
-                    st_write(s.large,
-                             "Returns pass/fail per compliance criterion")
-                    st_write(s.large,
-                             "Checks structure, visuals, and pedagogy")
-                    st_write(s.large,
-                             "Non-destructive: reports without modifying")
-                    st_write(s.large,
-                             "Suggests fixes for each failed criterion")
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(s.large,
+                                 "Returns pass/fail per compliance criterion")
+                    with l.item():
+                        st_write(s.large,
+                                 "Checks structure, visuals, and pedagogy")
+                    with l.item():
+                        st_write(s.large,
+                                 "Non-destructive: reports without modifying")
+                    with l.item():
+                        st_write(s.large,
+                                 "Suggests fixes for each failed criterion")
 
         with g.cell():
             with st_block(bs.agent_card):
@@ -153,22 +162,27 @@ def build():
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Auto-reads:")
-                with st_list(list_type="ul"):
-                    st_write(s.large, "visual-design-rules.md")
-                    st_write(s.large, "block-blueprints.md")
-                    st_write(s.large,
-                             "streamtex-quick-reference.md")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "visual-design-rules.md")
+                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item():
+                        st_write(s.large,
+                                 "streamtex-quick-reference.md")
                 st_space("v", 0.5)
 
                 st_write(bs.label, "Key principles:")
-                with st_list(list_type="ul"):
-                    st_write(s.large,
-                             "Optimized for live projection (10-20m)")
-                    st_write(s.large,
-                             "Larger fonts, fewer items per slide")
-                    st_write(s.large,
-                             "High contrast for screen readability")
-                    st_write(s.large,
-                             "Maximum 5-7 items per visual block")
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(s.large,
+                                 "Optimized for live projection (10-20m)")
+                    with l.item():
+                        st_write(s.large,
+                                 "Larger fonts, fewer items per slide")
+                    with l.item():
+                        st_write(s.large,
+                                 "High contrast for screen readability")
+                    with l.item():
+                        st_write(s.large,
+                                 "Maximum 5-7 items per visual block")
 
     st_space("v", 1)

@@ -157,25 +157,25 @@ def build():
                 st_write(s.project.titles.subsection_title,
                          "HTML Tags", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "<h1> ... <h6>")
-                    st_write(s.large, "<p>")
-                    st_write(s.large, "<ul>, <ol>")
-                    st_write(s.large, "<div>")
-                    st_write(s.large, "<img>")
-                    st_write(s.large, "<code>, <pre>")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "<h1> ... <h6>")
+                    with l.item(): st_write(s.large, "<p>")
+                    with l.item(): st_write(s.large, "<ul>, <ol>")
+                    with l.item(): st_write(s.large, "<div>")
+                    with l.item(): st_write(s.large, "<img>")
+                    with l.item(): st_write(s.large, "<code>, <pre>")
         with g.cell():
             with st_block(s.project.containers.tip_callout):
                 st_write(s.project.titles.subsection_title,
                          "StreamTeX Functions", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "st_write() with toc_lvl")
-                    st_write(s.large, "st_write()")
-                    st_write(s.large, "st_list()")
-                    st_write(s.large, "st_block()")
-                    st_write(s.large, "st_image()")
-                    st_write(s.large, "show_code()")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "st_write() with toc_lvl")
+                    with l.item(): st_write(s.large, "st_write()")
+                    with l.item(): st_write(s.large, "st_list()")
+                    with l.item(): st_write(s.large, "st_block()")
+                    with l.item(): st_write(s.large, "st_image()")
+                    with l.item(): st_write(s.large, "show_code()")
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────

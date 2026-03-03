@@ -39,28 +39,31 @@ def build():
     with st_block(s.project.containers.good_callout):
         st_write(s.project.titles.subsection_title, "SYNC: These Files")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "commands/ — all custom command .md files")
-            st_write(s.large, "agents/ — all agent definition files")
-            st_write(s.large, "skills/ — knowledge base files")
-            st_write(s.large, "references/ — coding standards, cheatsheets")
-            st_write(s.large, "CLAUDE.md — the main behavior configuration")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "commands/ — all custom command .md files")
+            with l.item(): st_write(s.large, "agents/ — all agent definition files")
+            with l.item(): st_write(s.large, "skills/ — knowledge base files")
+            with l.item(): st_write(s.large, "references/ — coding standards, cheatsheets")
+            with l.item(): st_write(s.large, "CLAUDE.md — the main behavior configuration")
     st_space("v", 1)
 
     with st_block(s.project.containers.bad_callout):
         st_write(s.project.colors.error_red + s.bold,
                  "DO NOT SYNC: These Files")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, (
-                "memory/ — machine-specific, contains local context"
-            ))
-            st_write(s.large, (
-                "settings.json — contains path-dependent permissions"
-            ))
-            st_write(s.large, (
-                "Any files with absolute paths or machine-specific config"
-            ))
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(s.large, (
+                    "memory/ — machine-specific, contains local context"
+                ))
+            with l.item():
+                st_write(s.large, (
+                    "settings.json — contains path-dependent permissions"
+                ))
+            with l.item():
+                st_write(s.large, (
+                    "Any files with absolute paths or machine-specific config"
+                ))
     st_space("v", 2)
 
     # ── Solution: sync script ─────────────────────────────────────

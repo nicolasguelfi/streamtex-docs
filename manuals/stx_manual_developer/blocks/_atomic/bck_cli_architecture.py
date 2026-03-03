@@ -103,6 +103,7 @@ stx                          # Root CLI group
         show_explanation(textwrap.dedent("""\
             The console.py module provides Rich-based formatting
             utilities used by all CLI commands for consistent output:
+
             - Colored status messages (success, warning, error).
             - Tables for structured output.
             - Progress indicators for long-running operations.

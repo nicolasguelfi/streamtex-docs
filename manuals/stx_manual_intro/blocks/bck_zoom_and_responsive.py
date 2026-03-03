@@ -84,11 +84,11 @@ def build():
     st_write(s.medium, "Use these patterns for responsive layouts:")
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, "CSS Grid with 'repeat(auto-fit, ...)' for flexible columns")
-        st_write(s.medium, "Relative sizing: '1fr 2fr' instead of fixed pixels")
-        st_write(s.medium, "Percentages for widths and paddings")
-        st_write(s.medium, "Mobile-first: start small, scale up with zoom")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, "CSS Grid with 'repeat(auto-fit, ...)' for flexible columns")
+        with l.item(): st_write(s.medium, "Relative sizing: '1fr 2fr' instead of fixed pixels")
+        with l.item(): st_write(s.medium, "Percentages for widths and paddings")
+        with l.item(): st_write(s.medium, "Mobile-first: start small, scale up with zoom")
 
     st_space("v", 2)
 
@@ -116,23 +116,27 @@ def build():
     st_write(bs.section, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ol"):
-        st_write(
-            s.medium,
-            "Never fix font sizes in pixels — use relative sizes (12pt, 14pt, etc.)",
-        )
-        st_write(
-            s.medium,
-            "Use grid with 'auto-fit' or 'auto-fill' for adaptive columns",
-        )
-        st_write(
-            s.medium,
-            "Test at zoom levels: 80%, 100%, 120% to ensure readability",
-        )
-        st_write(
-            s.medium,
-            "Zoom is transparent to users — content stays crisp and proportional",
-        )
+    with st_list(list_type="ol") as l:
+        with l.item():
+            st_write(
+                s.medium,
+                "Never fix font sizes in pixels — use relative sizes (12pt, 14pt, etc.)",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Use grid with 'auto-fit' or 'auto-fill' for adaptive columns",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Test at zoom levels: 80%, 100%, 120% to ensure readability",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Zoom is transparent to users — content stays crisp and proportional",
+            )
 
     st_space("v", 3)
 

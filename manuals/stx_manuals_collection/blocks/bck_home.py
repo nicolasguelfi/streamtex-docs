@@ -102,12 +102,12 @@ def build():
             "AI-powered workflows let you create content without writing a single line of Python.",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.medium, "Introduction: text, styles, grids, lists, images, code, export")
-            st_write(s.medium, "AI Manual: commands, agents, blueprints, profiles, AI-driven workflows")
-            st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
-            st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
-            st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, "Introduction: text, styles, grids, lists, images, code, export")
+            with l.item(): st_write(s.medium, "AI Manual: commands, agents, blueprints, profiles, AI-driven workflows")
+            with l.item(): st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
+            with l.item(): st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
+            with l.item(): st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
 
     # === Project cards — Row 1 (3 cards) ===
     st_space("v", 2)

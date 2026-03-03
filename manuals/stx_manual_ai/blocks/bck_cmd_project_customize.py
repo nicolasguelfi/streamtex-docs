@@ -40,23 +40,27 @@ def build():
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
-        with st_list(list_type="ul"):
-            st_write(
-                s.large,
-                (s.bold, '"Change the color palette to an ocean theme"'),
-            )
-            st_write(
-                s.large,
-                (s.bold, '"Add dark mode support with a toggle"'),
-            )
-            st_write(
-                s.large,
-                (s.bold, '"Switch navigation from paginated to continuous"'),
-            )
-            st_write(
-                s.large,
-                (s.bold, '"Use Inter font and increase heading sizes"'),
-            )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, '"Change the color palette to an ocean theme"'),
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, '"Add dark mode support with a toggle"'),
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, '"Switch navigation from paginated to continuous"'),
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, '"Use Inter font and increase heading sizes"'),
+                )
     st_space("v", 2)
 
     # ── What it modifies ───────────────────────────────────────────
@@ -69,22 +73,25 @@ def build():
     )
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.large,
-            (s.bold, "custom/styles.py "),
-            "— color classes, text styles, container styles",
-        )
-        st_write(
-            s.large,
-            (s.bold, "custom/themes.py "),
-            "— theme definitions and dark/light variants",
-        )
-        st_write(
-            s.large,
-            (s.bold, ".streamlit/config.toml "),
-            "— Streamlit theme colors, font, layout",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "custom/styles.py "),
+                "— color classes, text styles, container styles",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "custom/themes.py "),
+                "— theme definitions and dark/light variants",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, ".streamlit/config.toml "),
+                "— Streamlit theme colors, font, layout",
+            )
     st_space("v", 2)
 
     # ── Step-by-step demo ──────────────────────────────────────────

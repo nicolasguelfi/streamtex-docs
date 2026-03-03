@@ -103,27 +103,31 @@ def build():
         )
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.large,
-            (s.bold, "Structure "),
-            "— BlockStyles class, build() function, imports",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Spacing "),
-            "— consistent st_space() usage between elements",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Style usage "),
-            "— no inline CSS, no hardcoded colors",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Text density "),
-            "— too much content per slide, readability",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Structure "),
+                "— BlockStyles class, build() function, imports",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Spacing "),
+                "— consistent st_space() usage between elements",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Style usage "),
+                "— no inline CSS, no hardcoded colors",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Text density "),
+                "— too much content per slide, readability",
+            )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

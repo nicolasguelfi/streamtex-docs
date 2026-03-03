@@ -121,20 +121,20 @@ def build():
     with st_block(s.project.containers.tip_callout):
         st_write(s.project.titles.tip_label, "Workspace (recommended)")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Multiple related projects (presentations, courses)")
-            st_write(s.large, "Shared AI profiles across projects")
-            st_write(s.large, "Centralized dependency management")
-            st_write(s.large, "Team collaboration on the same repository")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Multiple related projects (presentations, courses)")
+            with l.item(): st_write(s.large, "Shared AI profiles across projects")
+            with l.item(): st_write(s.large, "Centralized dependency management")
+            with l.item(): st_write(s.large, "Team collaboration on the same repository")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Standalone Project")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Single presentation or document")
-            st_write(s.large, "Quick prototyping or experimentation")
-            st_write(s.large, "No need for shared configuration")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Single presentation or document")
+            with l.item(): st_write(s.large, "Quick prototyping or experimentation")
+            with l.item(): st_write(s.large, "No need for shared configuration")
     st_space("v", 2)
 
     show_details(textwrap.dedent("""\

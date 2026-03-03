@@ -32,6 +32,7 @@ stx publish check""", language="bash")
 
         show_explanation(textwrap.dedent("""\
             Before publishing, stx publish check verifies:
+
             - Version in pyproject.toml matches streamtex/__init__.py.
             - CHANGELOG.md contains an entry for the current version.
             - Working directory is clean (no uncommitted changes).
@@ -102,6 +103,7 @@ stx publish pypi""", language="bash")
             4. If the token is valid, PyPI accepts the upload.
 
             Benefits:
+
             - No stored secrets in the repository.
             - Tokens are short-lived and scoped to the workflow.
             - Full audit trail on both GitHub and PyPI.

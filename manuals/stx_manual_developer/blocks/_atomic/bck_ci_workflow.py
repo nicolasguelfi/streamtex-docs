@@ -27,6 +27,7 @@ def build():
 
         show_explanation(textwrap.dedent("""\
             The StreamTeX ecosystem has two GitHub repos with separate CIs:
+
             - **streamtex** (library): lint + test on every push/PR
             - **streamtex-docs** (documentation): structural checks on every push/PR
 

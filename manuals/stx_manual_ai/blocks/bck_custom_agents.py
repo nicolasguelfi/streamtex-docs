@@ -38,23 +38,23 @@ def build():
     with st_block(s.project.containers.good_callout):
         st_write(s.project.titles.subsection_title, "Agent")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Autonomous — makes decisions independently")
-            st_write(s.large, "Multi-step — chains several operations")
-            st_write(s.large, "Context-aware — reads skills and adapts")
-            st_write(s.large, "Principle-driven — follows guiding rules")
-            st_write(s.large, "Best for: complex creative or structural tasks")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Autonomous — makes decisions independently")
+            with l.item(): st_write(s.large, "Multi-step — chains several operations")
+            with l.item(): st_write(s.large, "Context-aware — reads skills and adapts")
+            with l.item(): st_write(s.large, "Principle-driven — follows guiding rules")
+            with l.item(): st_write(s.large, "Best for: complex creative or structural tasks")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Command")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Scripted — follows a fixed step sequence")
-            st_write(s.large, "Single-task — one clearly defined outcome")
-            st_write(s.large, "User-guided — may ask questions at each step")
-            st_write(s.large, "Template-driven — produces predictable output")
-            st_write(s.large, "Best for: repetitive, well-defined tasks")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Scripted — follows a fixed step sequence")
+            with l.item(): st_write(s.large, "Single-task — one clearly defined outcome")
+            with l.item(): st_write(s.large, "User-guided — may ask questions at each step")
+            with l.item(): st_write(s.large, "Template-driven — produces predictable output")
+            with l.item(): st_write(s.large, "Best for: repetitive, well-defined tasks")
     st_space("v", 2)
 
     # ── File structure ────────────────────────────────────────────
@@ -87,19 +87,23 @@ def build():
     st_write(bs.sub, "Required Sections", toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.large, (
-            (s.bold, "Role"), " — define who the agent is and its specialization"
-        ))
-        st_write(s.large, (
-            (s.bold, "Context"), " — list skills and reference files to read"
-        ))
-        st_write(s.large, (
-            (s.bold, "Workflow"), " — describe the multi-step process the agent follows"
-        ))
-        st_write(s.large, (
-            (s.bold, "Principles"), " — guiding rules the agent must always respect"
-        ))
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Role"), " — define who the agent is and its specialization"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Context"), " — list skills and reference files to read"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Workflow"), " — describe the multi-step process the agent follows"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Principles"), " — guiding rules the agent must always respect"
+            ))
     st_space("v", 2)
 
     # ── Example agent ─────────────────────────────────────────────

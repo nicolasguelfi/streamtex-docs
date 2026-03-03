@@ -76,6 +76,7 @@ ENTRYPOINT ["/bin/sh", "-c", \\
 
         show_explanation(textwrap.dedent("""\
             Key points:
+
             - **--no-sources** + **sed**: same problem as CI — the local editable
               path ../streamtex doesn't exist in Docker. Two-step fix: ignore during
               sync, then strip from pyproject.toml so uv run doesn't re-check.

@@ -52,35 +52,40 @@ def build():
             "Creates visually polished, pedagogically structured blocks",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(
-                s.large,
-                "Enforces ",
-                (s.bold, "~45-character lines "),
-                "for readability",
-            )
-            st_write(
-                s.large,
-                "Uses ",
-                (s.bold, "32pt body text "),
-                "as the standard baseline",
-            )
-            st_write(
-                s.large,
-                "Follows ",
-                (s.bold, "canonical block structure: "),
-                "BlockStyles, build(), helpers",
-            )
-            st_write(
-                s.large,
-                "Detects anti-patterns: string concatenation, "
-                "missing examples, raw st.write",
-            )
-            st_write(
-                s.large,
-                "Reads visual design rules and style conventions "
-                "before generating",
-            )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.large,
+                    "Enforces ",
+                    (s.bold, "~45-character lines "),
+                    "for readability",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    "Uses ",
+                    (s.bold, "32pt body text "),
+                    "as the standard baseline",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    "Follows ",
+                    (s.bold, "canonical block structure: "),
+                    "BlockStyles, build(), helpers",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    "Detects anti-patterns: string concatenation, "
+                    "missing examples, raw st.write",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    "Reads visual design rules and style conventions "
+                    "before generating",
+                )
     st_space("v", 2)
 
     # ── Slide Reviewer ─────────────────────────────────────────────
@@ -93,27 +98,31 @@ def build():
             "Reviews completed slides for compliance",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(
-                s.large,
-                (s.bold, "Structure "),
-                "— BlockStyles class, build() function, imports",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Visual quality "),
-                "— consistent styles, proper spacing, grid usage",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Pedagogical flow "),
-                "— logical progression, explanations before code",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Formatting "),
-                "— line lengths, text sizes, no hardcoded colors",
-            )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Structure "),
+                    "— BlockStyles class, build() function, imports",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Visual quality "),
+                    "— consistent styles, proper spacing, grid usage",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Pedagogical flow "),
+                    "— logical progression, explanations before code",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Formatting "),
+                    "— line lengths, text sizes, no hardcoded colors",
+                )
     st_space("v", 2)
 
     # ── Workflow ───────────────────────────────────────────────────
@@ -121,26 +130,28 @@ def build():
     st_space("v", 1)
 
     with st_block(bs.workflow_box):
-        st_write(
-            bs.workflow_step, "1. Designer creates ",
-            (bs.workflow_text, "a new block from description"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.workflow_step, "2. Reviewer validates ",
-            (bs.workflow_text, "the block against all criteria"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.workflow_step, "3. If issues found ",
-            (bs.workflow_text, "— Designer fixes and resubmits"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.workflow_step, "4. Final pass ",
-            (bs.workflow_text,
-             "— Reviewer confirms compliance, block is ready"),
-        )
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(
+                    bs.workflow_step, "Designer creates ",
+                    (bs.workflow_text, "a new block from description"),
+                )
+            with l.item():
+                st_write(
+                    bs.workflow_step, "Reviewer validates ",
+                    (bs.workflow_text, "the block against all criteria"),
+                )
+            with l.item():
+                st_write(
+                    bs.workflow_step, "If issues found ",
+                    (bs.workflow_text, "— Designer fixes and resubmits"),
+                )
+            with l.item():
+                st_write(
+                    bs.workflow_step, "Final pass ",
+                    (bs.workflow_text,
+                     "— Reviewer confirms compliance, block is ready"),
+                )
     st_space("v", 2)
 
     # ── Example review output ──────────────────────────────────────

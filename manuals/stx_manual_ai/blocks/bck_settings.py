@@ -84,11 +84,11 @@ def build():
             "patterns for flexible matching."
         ))
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, 'Bash(uv run *) — allows all uv run commands')
-            st_write(s.large, 'Bash(git *) — allows all git operations')
-            st_write(s.large, 'Read, Write, Edit — file operations')
-            st_write(s.large, 'Glob, Grep — search operations')
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, 'Bash(uv run *) — allows all uv run commands')
+            with l.item(): st_write(s.large, 'Bash(git *) — allows all git operations')
+            with l.item(): st_write(s.large, 'Read, Write, Edit — file operations')
+            with l.item(): st_write(s.large, 'Glob, Grep — search operations')
     st_space("v", 1)
 
     with st_block(s.project.containers.bad_callout):
@@ -100,10 +100,10 @@ def build():
             "prevent dangerous operations."
         ))
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, 'Bash(rm -rf *) — prevents recursive deletion')
-            st_write(s.large, 'Bash(pip install *) — enforces uv usage')
-            st_write(s.large, 'Bash(python *) — enforces uv run prefix')
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, 'Bash(rm -rf *) — prevents recursive deletion')
+            with l.item(): st_write(s.large, 'Bash(pip install *) — enforces uv usage')
+            with l.item(): st_write(s.large, 'Bash(python *) — enforces uv run prefix')
     st_space("v", 2)
 
     # --- How to configure ---

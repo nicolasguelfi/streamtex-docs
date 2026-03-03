@@ -72,30 +72,35 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "32pt "),
-                        "body text",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Full sentences "),
-                        "allowed",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "~45 chars "),
-                        "per line",
-                    )
-                    st_write(
-                        s.large,
-                        "Standard color contrast",
-                    )
-                    st_write(
-                        s.large,
-                        "Multiple items per section",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "32pt "),
+                            "body text",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Full sentences "),
+                            "allowed",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "~45 chars "),
+                            "per line",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Standard color contrast",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Multiple items per section",
+                        )
 
         with g.cell():
             with st_block(bs.presentation_card):
@@ -105,32 +110,37 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "48pt+ "),
-                        "body text",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Keywords only "),
-                        "(5-7 words per bullet)",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "96pt+ "),
-                        "titles",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "High contrast "),
-                        "colors enforced",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Fewer items "),
-                        "per slide",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "48pt+ "),
+                            "body text",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Keywords only "),
+                            "(5-7 words per bullet)",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "96pt+ "),
+                            "titles",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "High contrast "),
+                            "colors enforced",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Fewer items "),
+                            "per slide",
+                        )
     st_space("v", 2)
 
     # ── When to use ────────────────────────────────────────────────
@@ -222,10 +232,10 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                with st_list(list_type="ul"):
-                    st_write(s.Large, "Named reference to a value")
-                    st_write(s.Large, "Created with = operator")
-                    st_write(s.Large, "Type inferred automatically")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.Large, "Named reference to a value")
+                    with l.item(): st_write(s.Large, "Created with = operator")
+                    with l.item(): st_write(s.Large, "Type inferred automatically")
     st_space("v", 2)
 
     show_details(textwrap.dedent("""\

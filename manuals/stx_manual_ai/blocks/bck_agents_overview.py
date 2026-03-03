@@ -45,27 +45,31 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "Single task, "),
-                        "user-triggered",
-                    )
-                    st_write(
-                        s.large,
-                        "Invoked with ",
-                        (s.bold, "/command-name"),
-                    )
-                    st_write(
-                        s.large,
-                        "Executes one focused action and stops",
-                    )
-                    st_write(
-                        s.large,
-                        "Example: ",
-                        (s.bold, "/block-new"),
-                        " creates one block file",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Single task, "),
+                            "user-triggered",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Invoked with ",
+                            (s.bold, "/command-name"),
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Executes one focused action and stops",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Example: ",
+                            (s.bold, "/block-new"),
+                            " creates one block file",
+                        )
 
         with g.cell():
             with st_block(s.project.containers.ai_callout):
@@ -74,26 +78,30 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "Autonomous "),
-                        "multi-step workflow",
-                    )
-                    st_write(
-                        s.large,
-                        "Reads context, makes decisions, iterates",
-                    )
-                    st_write(
-                        s.large,
-                        "Orchestrates multiple commands in sequence",
-                    )
-                    st_write(
-                        s.large,
-                        "Example: ",
-                        (s.bold, "Project Architect"),
-                        " designs an entire project",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Autonomous "),
+                            "multi-step workflow",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Reads context, makes decisions, iterates",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Orchestrates multiple commands in sequence",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            "Example: ",
+                            (s.bold, "Project Architect"),
+                            " designs an entire project",
+                        )
     st_space("v", 2)
 
     show_explanation(textwrap.dedent("""\

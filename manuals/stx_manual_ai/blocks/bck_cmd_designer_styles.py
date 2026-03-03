@@ -47,22 +47,25 @@ def build():
         )
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.large,
-            (s.bold, "Duplicate styles "),
-            "— same CSS defined in multiple BlockStyles classes",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Inline CSS "),
-            "— raw style strings passed directly to stx functions",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Hardcoded colors "),
-            "— hex codes or rgb() used instead of project color classes",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Duplicate styles "),
+                "— same CSS defined in multiple BlockStyles classes",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Inline CSS "),
+                "— raw style strings passed directly to stx functions",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Hardcoded colors "),
+                "— hex codes or rgb() used instead of project color classes",
+            )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -140,27 +143,31 @@ def build():
         )
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.large,
-            (s.bold, "BlockStyles class "),
-            "— must exist and define style attributes",
-        )
-        st_write(
-            s.large,
-            (s.bold, "build() function "),
-            "— must be present as the entry point",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Imports "),
-            "— only stx functions, no raw st.markdown or st.write",
-        )
-        st_write(
-            s.large,
-            (s.bold, "Docstring "),
-            "— module-level docstring describing the block",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "BlockStyles class "),
+                "— must exist and define style attributes",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "build() function "),
+                "— must be present as the entry point",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Imports "),
+                "— only stx functions, no raw st.markdown or st.write",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "Docstring "),
+                "— module-level docstring describing the block",
+            )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

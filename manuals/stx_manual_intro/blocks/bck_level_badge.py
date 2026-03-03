@@ -70,9 +70,9 @@ def build():
             "Each section demonstrates one concept with live examples.",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.medium, "Quick Start: install, create a project, write your first block")
-            st_write(s.medium, "Core features: text, styles, grids, lists, images, code")
-            st_write(s.medium, "Navigation: book, TOC, markers, zoom, export")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, "Quick Start: install, create a project, write your first block")
+            with l.item(): st_write(s.medium, "Core features: text, styles, grids, lists, images, code")
+            with l.item(): st_write(s.medium, "Navigation: book, TOC, markers, zoom, export")
 
     st_space("v", 2)

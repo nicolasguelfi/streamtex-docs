@@ -158,31 +158,35 @@ def build():
             tag=t.div,
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(
-                s.large,
-                (s.bold, "One architect plans "),
-                "— designs the block structure and color palette using "
-                "Project Architect, then shares the plan with the team",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Multiple designers implement "),
-                "— each team member generates and refines their assigned "
-                "blocks using slide-new and slide-fix",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Use a consistent profile "),
-                "— all team members install the same .claude/ profile "
-                "so that the AI follows identical conventions everywhere",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Share custom styles "),
-                "— the custom/styles.py file is the single source of "
-                "truth for colors, fonts, and containers across the team",
-            )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "One architect plans "),
+                    "— designs the block structure and color palette using "
+                    "Project Architect, then shares the plan with the team",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Multiple designers implement "),
+                    "— each team member generates and refines their assigned "
+                    "blocks using slide-new and slide-fix",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Use a consistent profile "),
+                    "— all team members install the same .claude/ profile "
+                    "so that the AI follows identical conventions everywhere",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Share custom styles "),
+                    "— the custom/styles.py file is the single source of "
+                    "truth for colors, fonts, and containers across the team",
+                )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

@@ -111,13 +111,13 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, (bs.param_label, "style"), " \u2014 optional Style wrapper for the container")
-        st_write(s.medium, (bs.param_label, "light_bg"), " \u2014 True for white background (default), False for dark/transparent")
-        st_write(s.medium, (bs.param_label, "height"), " \u2014 iframe height in pixels (default 600)")
-        st_write(s.medium, (bs.param_label, "hyphenate"), " \u2014 True for LaTeX.js hyphenation (default True)")
-        st_write(s.medium, (bs.param_label, "file"), " \u2014 path to a .tex file (resolved via static assets)")
-        st_write(s.medium, (bs.param_label, "encoding"), " \u2014 file encoding (default utf-8)")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, (bs.param_label, "style"), " \u2014 optional Style wrapper for the container")
+        with l.item(): st_write(s.medium, (bs.param_label, "light_bg"), " \u2014 True for white background (default), False for dark/transparent")
+        with l.item(): st_write(s.medium, (bs.param_label, "height"), " \u2014 iframe height in pixels (default 600)")
+        with l.item(): st_write(s.medium, (bs.param_label, "hyphenate"), " \u2014 True for LaTeX.js hyphenation (default True)")
+        with l.item(): st_write(s.medium, (bs.param_label, "file"), " \u2014 path to a .tex file (resolved via static assets)")
+        with l.item(): st_write(s.medium, (bs.param_label, "encoding"), " \u2014 file encoding (default utf-8)")
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -159,14 +159,14 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, "Sectioning: \\\\section, \\\\subsection, \\\\subsubsection")
-        st_write(s.medium, "Text formatting: \\\\textbf, \\\\emph, \\\\texttt, \\\\underline")
-        st_write(s.medium, "Lists: \\\\begin{itemize}, \\\\begin{enumerate}")
-        st_write(s.medium, "Tables: \\\\begin{tabular} with basic column specs")
-        st_write(s.medium, "Math: inline $...$ and display $$...$$ environments")
-        st_write(s.medium, "Quotes: \\\\begin{quote}")
-        st_write(s.medium, "Footnotes: \\\\footnote{...}")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, "Sectioning: \\\\section, \\\\subsection, \\\\subsubsection")
+        with l.item(): st_write(s.medium, "Text formatting: \\\\textbf, \\\\emph, \\\\texttt, \\\\underline")
+        with l.item(): st_write(s.medium, "Lists: \\\\begin{itemize}, \\\\begin{enumerate}")
+        with l.item(): st_write(s.medium, "Tables: \\\\begin{tabular} with basic column specs")
+        with l.item(): st_write(s.medium, "Math: inline $...$ and display $$...$$ environments")
+        with l.item(): st_write(s.medium, "Quotes: \\\\begin{quote}")
+        with l.item(): st_write(s.medium, "Footnotes: \\\\footnote{...}")
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -217,12 +217,12 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, "No custom packages (\\\\usepackage is limited to built-in ones)")
-        st_write(s.medium, "No TikZ diagrams \u2014 use st_tikz() instead")
-        st_write(s.medium, "No BibTeX / bibliography management")
-        st_write(s.medium, "No \\\\def or \\\\newcommand macros")
-        st_write(s.medium, "No cross-references (\\\\ref, \\\\label)")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, "No custom packages (\\\\usepackage is limited to built-in ones)")
+        with l.item(): st_write(s.medium, "No TikZ diagrams \u2014 use st_tikz() instead")
+        with l.item(): st_write(s.medium, "No BibTeX / bibliography management")
+        with l.item(): st_write(s.medium, "No \\\\def or \\\\newcommand macros")
+        with l.item(): st_write(s.medium, "No cross-references (\\\\ref, \\\\label)")
     st_space("v", 2)
 
     # --- Section 7: When to Use What ---
@@ -235,22 +235,25 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.medium,
-            (s.text.weights.bold_weight, "st_latex()"),
-            " \u2014 math formulas only (KaTeX, fast, Streamlit native)",
-        )
-        st_write(
-            s.medium,
-            (s.text.weights.bold_weight, "st_latex_doc()"),
-            " \u2014 full documents, fragments, structured content (LaTeX.js, iframe)",
-        )
-        st_write(
-            s.medium,
-            (s.text.weights.bold_weight, "st_tikz()"),
-            " \u2014 TikZ diagrams (requires local pdflatex + dvisvgm)",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.medium,
+                (s.text.weights.bold_weight, "st_latex()"),
+                " \u2014 math formulas only (KaTeX, fast, Streamlit native)",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                (s.text.weights.bold_weight, "st_latex_doc()"),
+                " \u2014 full documents, fragments, structured content (LaTeX.js, iframe)",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                (s.text.weights.bold_weight, "st_tikz()"),
+                " \u2014 TikZ diagrams (requires local pdflatex + dvisvgm)",
+            )
     st_space("v", 2)
 
     show_details(textwrap.dedent("""\

@@ -36,27 +36,31 @@ def build():
                 st_write(bs.col_title_bad, "Code-First (Traditional)",
                          tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "20+ minutes "),
-                        "per styled block",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Manual styling "),
-                        "— write CSS by hand",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Trial-and-error "),
-                        "— tweak, reload, repeat",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Must know the API "),
-                        "— every function, every parameter",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "20+ minutes "),
+                            "per styled block",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Manual styling "),
+                            "— write CSS by hand",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Trial-and-error "),
+                            "— tweak, reload, repeat",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Must know the API "),
+                            "— every function, every parameter",
+                        )
 
         # Right: AI-Assisted
         with g.cell():
@@ -64,27 +68,31 @@ def build():
                 st_write(bs.col_title_good, "AI-Assisted (StreamTeX)",
                          tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(
-                        s.large,
-                        (s.bold, "~3 minutes "),
-                        "per styled block",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Describe what you want "),
-                        "— AI picks styles",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Auto-styling "),
-                        "— consistent, standards-compliant",
-                    )
-                    st_write(
-                        s.large,
-                        (s.bold, "Zero Python needed "),
-                        "— natural language input",
-                    )
+                with st_list(list_type="ul") as l:
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "~3 minutes "),
+                            "per styled block",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Describe what you want "),
+                            "— AI picks styles",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Auto-styling "),
+                            "— consistent, standards-compliant",
+                        )
+                    with l.item():
+                        st_write(
+                            s.large,
+                            (s.bold, "Zero Python needed "),
+                            "— natural language input",
+                        )
     st_space("v", 2)
 
     # ── Clarification callout ─────────────────────────────────────

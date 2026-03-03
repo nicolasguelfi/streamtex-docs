@@ -59,25 +59,25 @@ def build():
                 st_write(bs.cat_title, "Project", tag=t.div)
                 st_write(bs.cat_count, "5 commands", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "project-init")
-                    st_write(s.large, "project-customize")
-                    st_write(s.large, "course-generate")
-                    st_write(s.large, "collection-new")
-                    st_write(s.large, "project-upgrade")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "project-init")
+                    with l.item(): st_write(s.large, "project-customize")
+                    with l.item(): st_write(s.large, "course-generate")
+                    with l.item(): st_write(s.large, "collection-new")
+                    with l.item(): st_write(s.large, "project-upgrade")
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(bs.cat_title, "Designer", tag=t.div)
                 st_write(bs.cat_count, "7 commands", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "block-new")
-                    st_write(s.large, "slide-new")
-                    st_write(s.large, "slide-audit")
-                    st_write(s.large, "slide-fix")
-                    st_write(s.large, "style-audit")
-                    st_write(s.large, "style-refactor")
-                    st_write(s.large, "block-preview")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "block-new")
+                    with l.item(): st_write(s.large, "slide-new")
+                    with l.item(): st_write(s.large, "slide-audit")
+                    with l.item(): st_write(s.large, "slide-fix")
+                    with l.item(): st_write(s.large, "style-audit")
+                    with l.item(): st_write(s.large, "style-refactor")
+                    with l.item(): st_write(s.large, "block-preview")
     st_space("v", 1)
 
     # Row 2: Migration + Developer
@@ -87,21 +87,21 @@ def build():
                 st_write(bs.cat_title, "Migration", tag=t.div)
                 st_write(bs.cat_count, "5 commands", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "html-migrate")
-                    st_write(s.large, "html-convert-batch")
-                    st_write(s.large, "html-convert-block")
-                    st_write(s.large, "html-export")
-                    st_write(s.large, "conversion-audit")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "html-migrate")
+                    with l.item(): st_write(s.large, "html-convert-batch")
+                    with l.item(): st_write(s.large, "html-convert-block")
+                    with l.item(): st_write(s.large, "html-export")
+                    with l.item(): st_write(s.large, "conversion-audit")
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(bs.cat_title, "Developer", tag=t.div)
                 st_write(bs.cat_count, "3 commands", tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ul"):
-                    st_write(s.large, "test-run")
-                    st_write(s.large, "lint")
-                    st_write(s.large, "deploy")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "test-run")
+                    with l.item(): st_write(s.large, "lint")
+                    with l.item(): st_write(s.large, "deploy")
     st_space("v", 1)
 
     # Row 3: Presentation (centered)
@@ -109,10 +109,10 @@ def build():
         st_write(bs.cat_title, "Presentation", tag=t.div)
         st_write(bs.cat_count, "3 commands", tag=t.div)
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "presentation-audit")
-            st_write(s.large, "presentation-fix")
-            st_write(s.large, "survey-convert")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "presentation-audit")
+            with l.item(): st_write(s.large, "presentation-fix")
+            with l.item(): st_write(s.large, "survey-convert")
     st_space("v", 2)
 
     # ── Anatomy of a command file ──────────────────────────────────

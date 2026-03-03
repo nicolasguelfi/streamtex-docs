@@ -56,11 +56,11 @@ def build():
     )
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, "Page title from meta tags (if available)")
-        st_write(s.medium, "Brief description")
-        st_write(s.medium, "Favicon from the domain")
-        st_write(s.medium, "Preview thumbnail (if available)")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, "Page title from meta tags (if available)")
+        with l.item(): st_write(s.medium, "Brief description")
+        with l.item(): st_write(s.medium, "Favicon from the domain")
+        with l.item(): st_write(s.medium, "Preview thumbnail (if available)")
 
     st_space("v", 2)
 
@@ -102,25 +102,22 @@ def build():
         )
         st_space("v", 1)
 
-        st_write(
-            s.medium,
-            "• ",
-            (s.project.colors.primary_blue, "Documentation", "https://github.com/streamtex"),
-        )
-        st_space("v", 0.5)
-
-        st_write(
-            s.medium,
-            "• ",
-            (s.project.colors.primary_blue, "PyPI Package", "https://pypi.org/project/streamtex"),
-        )
-        st_space("v", 0.5)
-
-        st_write(
-            s.medium,
-            "• ",
-            (s.project.colors.primary_blue, "GitHub Repository", "https://github.com/streamtex/streamtex"),
-        )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.medium,
+                    (s.project.colors.primary_blue, "Documentation", "https://github.com/streamtex"),
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    (s.project.colors.primary_blue, "PyPI Package", "https://pypi.org/project/streamtex"),
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    (s.project.colors.primary_blue, "GitHub Repository", "https://github.com/streamtex/streamtex"),
+                )
 
     st_space("v", 2)
 
@@ -234,26 +231,31 @@ set_link_config(LinkConfig(
     st_write(bs.section, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ol"):
-        st_write(
-            s.medium,
-            "Keep hover ON for external references and documentation links",
-        )
-        st_write(
-            s.medium,
-            "Use underline or color to indicate links visually",
-        )
-        st_write(
-            s.medium,
-            "Include meaningful link text (not 'click here')",
-        )
-        st_write(
-            s.medium,
-            "Disable hover only for internal navigation or UI links",
-        )
-        st_write(
-            s.medium,
-            "Use LinkConfig for global link target control",
-        )
+    with st_list(list_type="ol") as l:
+        with l.item():
+            st_write(
+                s.medium,
+                "Keep hover ON for external references and documentation links",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Use underline or color to indicate links visually",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Include meaningful link text (not 'click here')",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Disable hover only for internal navigation or UI links",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Use LinkConfig for global link target control",
+            )
 
     st_space("v", 3)

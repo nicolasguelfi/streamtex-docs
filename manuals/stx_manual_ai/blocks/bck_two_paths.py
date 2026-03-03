@@ -61,27 +61,31 @@ def build():
                 st_write(bs.audience, "For educators, presenters, content creators",
                          tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ol"):
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Install a profile "),
-                        "into your project",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Describe your project "),
-                        "in plain language",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "AI generates everything "),
-                        "— blocks, styles, book.py",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Review and refine "),
-                        "the output",
-                    )
+                with st_list(list_type="ol") as l:
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Install a profile "),
+                            "into your project",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Describe your project "),
+                            "in plain language",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "AI generates everything "),
+                            "— blocks, styles, book.py",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Review and refine "),
+                            "the output",
+                        )
 
         # Right: Code-First Path
         with g.cell():
@@ -91,27 +95,31 @@ def build():
                 st_write(bs.audience, "For developers, library contributors",
                          tag=t.div)
                 st_space("v", 1)
-                with st_list(list_type="ol"):
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Read coding standards "),
-                        "and the cheatsheet",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Write blocks manually "),
-                        "with full control",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Use AI for audit/review "),
-                        "— catch mistakes fast",
-                    )
-                    st_write(
-                        bs.step_text,
-                        (s.bold, "Custom extensions "),
-                        "— new styles, helpers, themes",
-                    )
+                with st_list(list_type="ol") as l:
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Read coding standards "),
+                            "and the cheatsheet",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Write blocks manually "),
+                            "with full control",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Use AI for audit/review "),
+                            "— catch mistakes fast",
+                        )
+                    with l.item():
+                        st_write(
+                            bs.step_text,
+                            (s.bold, "Custom extensions "),
+                            "— new styles, helpers, themes",
+                        )
     st_space("v", 2)
 
     # ── Bottom note ───────────────────────────────────────────────

@@ -1,7 +1,7 @@
 """Part 4 — Agent: Project Architect — designs full project structures."""
 
 import textwrap
-from streamtex import st_write, st_space, st_block, st_grid
+from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
@@ -46,30 +46,27 @@ def build():
     st_space("v", 1)
 
     with st_block(bs.step_card):
-        st_write(
-            bs.step_number, "1. ",
-            (bs.step_text, "Reads block blueprints and design rules"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "2. ",
-            (bs.step_text, "Analyzes the user's natural language description"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "3. ",
-            (bs.step_text, "Creates a block plan — names, contents, ordering"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "4. ",
-            (bs.step_text, "Proposes a color palette and visual theme"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "5. ",
-            (bs.step_text, "Generates a features list for the project"),
-        )
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(
+                    bs.step_text, "Reads block blueprints and design rules",
+                )
+            with l.item():
+                st_write(
+                    bs.step_text, "Analyzes the user's natural language description",
+                )
+            with l.item():
+                st_write(
+                    bs.step_text, "Creates a block plan — names, contents, ordering",
+                )
+            with l.item():
+                st_write(
+                    bs.step_text, "Proposes a color palette and visual theme",
+                )
+            with l.item():
+                st_write(
+                    bs.step_text, "Generates a features list for the project",
+                )
     st_space("v", 2)
 
     # ── Design principles ──────────────────────────────────────────

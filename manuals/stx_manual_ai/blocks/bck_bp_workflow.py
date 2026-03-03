@@ -38,35 +38,37 @@ def build():
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
-        st_write(
-            bs.step_number, "1. Plan ",
-            (bs.step_text, "— Use Project Architect or describe structure"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "2. Generate ",
-            (bs.step_text, "— Use project-init or slide-new"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "3. Audit ",
-            (bs.step_text, "— Run slide-audit and style-audit"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "4. Fix ",
-            (bs.step_text, "— Apply fixes with slide-fix"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "5. Review ",
-            (bs.step_text, "— Manual review of output"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.step_number, "6. Iterate ",
-            (bs.step_text, "— Refine specific blocks"),
-        )
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(
+                    bs.step_number, "Plan ",
+                    (bs.step_text, "— Use Project Architect or describe structure"),
+                )
+            with l.item():
+                st_write(
+                    bs.step_number, "Generate ",
+                    (bs.step_text, "— Use project-init or slide-new"),
+                )
+            with l.item():
+                st_write(
+                    bs.step_number, "Audit ",
+                    (bs.step_text, "— Run slide-audit and style-audit"),
+                )
+            with l.item():
+                st_write(
+                    bs.step_number, "Fix ",
+                    (bs.step_text, "— Apply fixes with slide-fix"),
+                )
+            with l.item():
+                st_write(
+                    bs.step_number, "Review ",
+                    (bs.step_text, "— Manual review of output"),
+                )
+            with l.item():
+                st_write(
+                    bs.step_number, "Iterate ",
+                    (bs.step_text, "— Refine specific blocks"),
+                )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -166,27 +168,31 @@ def build():
             tag=t.div,
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(
-                s.large,
-                (s.bold, "Project conventions "),
-                "— naming rules, block structure patterns",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Color palette decisions "),
-                "— chosen theme, accent colors, contrast rules",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Block status tracking "),
-                "— which blocks are finalized, which need rework",
-            )
-            st_write(
-                s.large,
-                (s.bold, "Recurring patterns "),
-                "— common layouts, shared helpers, style shortcuts",
-            )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Project conventions "),
+                    "— naming rules, block structure patterns",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Color palette decisions "),
+                    "— chosen theme, accent colors, contrast rules",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Block status tracking "),
+                    "— which blocks are finalized, which need rework",
+                )
+            with l.item():
+                st_write(
+                    s.large,
+                    (s.bold, "Recurring patterns "),
+                    "— common layouts, shared helpers, style shortcuts",
+                )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

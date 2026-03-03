@@ -169,27 +169,31 @@ def build():
     st_write(s.large, "Files updated by project-upgrade:")
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(
-            s.large,
-            (s.bold, "setup.py "),
-            "— updated to latest entry-point pattern",
-        )
-        st_write(
-            s.large,
-            (s.bold, ".streamlit/config.toml "),
-            "— new Streamlit config keys added",
-        )
-        st_write(
-            s.large,
-            (s.bold, "blocks/__init__.py "),
-            "— updated to latest ProjectBlockRegistry pattern",
-        )
-        st_write(
-            s.large,
-            (s.bold, "blocks/helpers.py "),
-            "— updated to latest BlockHelperConfig pattern",
-        )
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "setup.py "),
+                "— updated to latest entry-point pattern",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, ".streamlit/config.toml "),
+                "— new Streamlit config keys added",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "blocks/__init__.py "),
+                "— updated to latest ProjectBlockRegistry pattern",
+            )
+        with l.item():
+            st_write(
+                s.large,
+                (s.bold, "blocks/helpers.py "),
+                "— updated to latest BlockHelperConfig pattern",
+            )
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

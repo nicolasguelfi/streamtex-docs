@@ -41,22 +41,27 @@ def build():
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.large, (
-            (s.bold, "API Reference"), " — all stx functions with signatures and examples"
-        ))
-        st_write(s.large, (
-            (s.bold, "Best Practices"), " — coding standards, Style composition, block patterns"
-        ))
-        st_write(s.large, (
-            (s.bold, "Common Patterns"), " — grids, lists, code blocks, containers"
-        ))
-        st_write(s.large, (
-            (s.bold, "Troubleshooting"), " — common errors and how to fix them"
-        ))
-        st_write(s.large, (
-            (s.bold, "Migration Guides"), " — upgrading from older StreamTeX versions"
-        ))
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "API Reference"), " — all stx functions with signatures and examples"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Best Practices"), " — coding standards, Style composition, block patterns"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Common Patterns"), " — grids, lists, code blocks, containers"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Troubleshooting"), " — common errors and how to fix them"
+            ))
+        with l.item():
+            st_write(s.large, (
+                (s.bold, "Migration Guides"), " — upgrading from older StreamTeX versions"
+            ))
     st_space("v", 2)
 
     # ── How to activate ──────────────────────────────────────────
@@ -86,23 +91,23 @@ def build():
     with st_block(s.project.containers.good_callout):
         st_write(s.project.titles.subsection_title, "stx-guide (Global Skill)")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Read-only knowledge base")
-            st_write(s.large, "Available in any project, any session")
-            st_write(s.large, "No commands or agents — pure reference")
-            st_write(s.large, "Answers API questions, explains syntax")
-            st_write(s.large, "Does not modify project files")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Read-only knowledge base")
+            with l.item(): st_write(s.large, "Available in any project, any session")
+            with l.item(): st_write(s.large, "No commands or agents — pure reference")
+            with l.item(): st_write(s.large, "Answers API questions, explains syntax")
+            with l.item(): st_write(s.large, "Does not modify project files")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Project Profile (Installed)")
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.large, "Full behavior configuration (CLAUDE.md)")
-            st_write(s.large, "Includes commands, agents, and skills")
-            st_write(s.large, "Project-specific — must be installed")
-            st_write(s.large, "Can create and modify files")
-            st_write(s.large, "Defines coding standards and constraints")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Full behavior configuration (CLAUDE.md)")
+            with l.item(): st_write(s.large, "Includes commands, agents, and skills")
+            with l.item(): st_write(s.large, "Project-specific — must be installed")
+            with l.item(): st_write(s.large, "Can create and modify files")
+            with l.item(): st_write(s.large, "Defines coding standards and constraints")
     st_space("v", 2)
 
     # ── When to use ──────────────────────────────────────────────
@@ -115,12 +120,12 @@ def build():
     """))
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.large, "Quick questions about a specific API function")
-        st_write(s.large, "Syntax help when writing blocks from memory")
-        st_write(s.large, "Debugging a rendering issue")
-        st_write(s.large, "Exploring what StreamTeX can do before starting a project")
-        st_write(s.large, "Working in a non-StreamTeX project that needs a one-off slide")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.large, "Quick questions about a specific API function")
+        with l.item(): st_write(s.large, "Syntax help when writing blocks from memory")
+        with l.item(): st_write(s.large, "Debugging a rendering issue")
+        with l.item(): st_write(s.large, "Exploring what StreamTeX can do before starting a project")
+        with l.item(): st_write(s.large, "Working in a non-StreamTeX project that needs a one-off slide")
     st_space("v", 2)
 
     show_details(textwrap.dedent("""\

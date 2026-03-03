@@ -2,7 +2,7 @@
 
 import textwrap
 
-from streamtex import st_write, st_space, st_block, st_grid
+from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
@@ -94,31 +94,33 @@ def build():
     st_space("v", 1)
 
     with st_block(bs.flow_box):
-        st_write(
-            bs.flow_step,
-            "1. streamtex-claude ",
-            (bs.flow_text, "installs AI profiles INTO your project"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.flow_step,
-            "2. Your project ",
-            (bs.flow_text, "imports and uses the "),
-            (s.project.colors.ai_violet + s.bold, "streamtex"),
-            (bs.flow_text, " library for rendering"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.flow_step,
-            "3. streamtex-docs ",
-            (bs.flow_text, "documents every function, style, and pattern"),
-        )
-        st_space("v", 0.5)
-        st_write(
-            bs.flow_step,
-            "4. AI agents ",
-            (bs.flow_text, "read the docs and standards to generate correct code"),
-        )
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(
+                    bs.flow_step,
+                    "streamtex-claude ",
+                    (bs.flow_text, "installs AI profiles INTO your project"),
+                )
+            with l.item():
+                st_write(
+                    bs.flow_step,
+                    "Your project ",
+                    (bs.flow_text, "imports and uses the "),
+                    (s.project.colors.ai_violet + s.bold, "streamtex"),
+                    (bs.flow_text, " library for rendering"),
+                )
+            with l.item():
+                st_write(
+                    bs.flow_step,
+                    "streamtex-docs ",
+                    (bs.flow_text, "documents every function, style, and pattern"),
+                )
+            with l.item():
+                st_write(
+                    bs.flow_step,
+                    "AI agents ",
+                    (bs.flow_text, "read the docs and standards to generate correct code"),
+                )
     st_space("v", 2)
 
     show_details(textwrap.dedent("""\

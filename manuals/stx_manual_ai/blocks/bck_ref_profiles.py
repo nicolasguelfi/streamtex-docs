@@ -56,25 +56,31 @@ def _render_profile_column(name: str, commands: str, agents: str,
                      "RECOMMENDED", tag=t.div)
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.large,
-                 (bs.feature_label, "Commands: "),
-                 (bs.feature_value, commands))
-        st_write(s.large,
-                 (bs.feature_label, "Agents: "),
-                 (bs.feature_value, agents))
-        st_write(s.large,
-                 (bs.feature_label, "Audience: "),
-                 (bs.feature_value, audience))
-        st_write(s.large,
-                 (bs.feature_label, "Key focus: "),
-                 (bs.feature_value, focus))
-        st_write(s.large,
-                 (bs.feature_label, "Extends: "),
-                 (bs.feature_value, extends))
-        st_write(s.large,
-                 (bs.feature_label, "Unique: "),
-                 (bs.feature_value, unique))
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Commands: "),
+                     (bs.feature_value, commands))
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Agents: "),
+                     (bs.feature_value, agents))
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Audience: "),
+                     (bs.feature_value, audience))
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Key focus: "),
+                     (bs.feature_value, focus))
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Extends: "),
+                     (bs.feature_value, extends))
+        with l.item():
+            st_write(s.large,
+                     (bs.feature_label, "Unique: "),
+                     (bs.feature_value, unique))
 
 
 def build():

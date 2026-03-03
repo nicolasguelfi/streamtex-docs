@@ -62,6 +62,7 @@ permissions:
 
         show_explanation(textwrap.dedent("""\
             Two permissions are required:
+
             - contents: read — to check out the repository code.
             - id-token: write — to request an OIDC token from GitHub,
               which PyPI uses to verify the publisher identity.

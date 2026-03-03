@@ -69,18 +69,18 @@ def build():
     st_write(bs.section, "Available Export-Aware Widgets", toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ul"):
-        st_write(s.medium, "stx.st_dataframe() — tables")
-        st_write(s.medium, "stx.st_line_chart() — line charts")
-        st_write(s.medium, "stx.st_bar_chart() — bar charts")
-        st_write(s.medium, "stx.st_area_chart() — area charts")
-        st_write(s.medium, "stx.st_scatter_chart() — scatter plots")
-        st_write(s.medium, "stx.st_table() — simple tables")
-        st_write(s.medium, "stx.st_metric() — metrics")
-        st_write(s.medium, "stx.st_json() — JSON display")
-        st_write(s.medium, "stx.st_graphviz() — graph diagrams")
-        st_write(s.medium, "stx.st_audio() — audio playback")
-        st_write(s.medium, "stx.st_video() — video playback")
+    with st_list(list_type="ul") as l:
+        with l.item(): st_write(s.medium, "stx.st_dataframe() — tables")
+        with l.item(): st_write(s.medium, "stx.st_line_chart() — line charts")
+        with l.item(): st_write(s.medium, "stx.st_bar_chart() — bar charts")
+        with l.item(): st_write(s.medium, "stx.st_area_chart() — area charts")
+        with l.item(): st_write(s.medium, "stx.st_scatter_chart() — scatter plots")
+        with l.item(): st_write(s.medium, "stx.st_table() — simple tables")
+        with l.item(): st_write(s.medium, "stx.st_metric() — metrics")
+        with l.item(): st_write(s.medium, "stx.st_json() — JSON display")
+        with l.item(): st_write(s.medium, "stx.st_graphviz() — graph diagrams")
+        with l.item(): st_write(s.medium, "stx.st_audio() — audio playback")
+        with l.item(): st_write(s.medium, "stx.st_video() — video playback")
 
     st_space("v", 2)
 
@@ -189,22 +189,26 @@ stx.st_graphviz(\"\"\"
     st_write(bs.section, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    with st_list(list_type="ol"):
-        st_write(
-            s.medium,
-            "Always use stx.st_* for widgets when export is enabled",
-        )
-        st_write(
-            s.medium,
-            "Use st.* ONLY for interactive elements (buttons, inputs) that won't export",
-        )
-        st_write(
-            s.medium,
-            "For custom widgets without stx.st_* wrapper, use stx.st_export() context",
-        )
-        st_write(
-            s.medium,
-            "Test HTML export to ensure all data is visible",
-        )
+    with st_list(list_type="ol") as l:
+        with l.item():
+            st_write(
+                s.medium,
+                "Always use stx.st_* for widgets when export is enabled",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Use st.* ONLY for interactive elements (buttons, inputs) that won't export",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "For custom widgets without stx.st_* wrapper, use stx.st_export() context",
+            )
+        with l.item():
+            st_write(
+                s.medium,
+                "Test HTML export to ensure all data is visible",
+            )
 
     st_space("v", 3)

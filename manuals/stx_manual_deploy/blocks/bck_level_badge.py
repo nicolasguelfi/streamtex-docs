@@ -71,9 +71,9 @@ def build():
             "Each section includes step-by-step instructions and automation scripts.",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.medium, "Local: Docker build and compose for testing")
-            st_write(s.medium, "Cloud: Streamlit Cloud, HuggingFace Spaces, Render.com")
-            st_write(s.medium, "Production: GCP VM + Ansible, CI/CD pipelines")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, "Local: Docker build and compose for testing")
+            with l.item(): st_write(s.medium, "Cloud: Streamlit Cloud, HuggingFace Spaces, Render.com")
+            with l.item(): st_write(s.medium, "Production: GCP VM + Ansible, CI/CD pipelines")
 
     st_space("v", 2)

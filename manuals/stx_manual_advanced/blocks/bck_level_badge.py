@@ -70,9 +70,9 @@ def build():
             "Multi-source blocks, collections, export, and deployment strategies.",
         )
         st_space("v", 1)
-        with st_list(list_type="ul"):
-            st_write(s.medium, "Registry: LazyBlockRegistry, shared blocks, static resolution")
-            st_write(s.medium, "Advanced: overlays, themes, helpers, collections")
-            st_write(s.medium, "Production: export, deployment, data visualization")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, "Registry: LazyBlockRegistry, shared blocks, static resolution")
+            with l.item(): st_write(s.medium, "Advanced: overlays, themes, helpers, collections")
+            with l.item(): st_write(s.medium, "Production: export, deployment, data visualization")
 
     st_space("v", 2)

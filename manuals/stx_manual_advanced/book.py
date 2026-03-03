@@ -34,7 +34,7 @@ stx.set_static_sources([
 st.set_page_config(
     page_title="StreamTeX - Advanced",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 sts.theme = dark
 

@@ -10,7 +10,7 @@ import streamtex.styles as sts
 st.set_page_config(
     page_title="Course Library",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 sts.theme = dark
 

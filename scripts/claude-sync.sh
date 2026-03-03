@@ -5,6 +5,7 @@
 #   ./claude-sync.sh              # Verifie et corrige les liens (mode normal)
 #   ./claude-sync.sh --status     # Affiche l'etat sans rien modifier
 #   ./claude-sync.sh --init       # Premiere installation (copie local -> cloud)
+#   ./claude-sync.sh --clone      # Clone depuis le cloud (cloud = source de verite)
 #   ./claude-sync.sh --help       # Aide
 #
 # Principe : tout reste local par defaut. Seuls les elements explicitement
@@ -18,7 +19,8 @@ set -euo pipefail
 # ============================================
 # Configuration
 # ============================================
-CLOUD_DIR="${CLAUDE_SYNC_CLOUD_DIR:-$HOME/Dropbox/config/claude}"
+CLOUD_DIR="${CLAUDE_SYNC_CLOUD_DIR:-/Volumes/Mac_Data/Win_data/data/backups/Dropbox-nicolas.guelfi@laposte.net/messir Dropbox/Nicolas Guelfi/users/NG/tech/Système/claude/claude}"
+
 CLAUDE_DIR="$HOME/.claude"
 
 # Elements racine a synchroniser (safe, petits, rarement ecrits)
@@ -49,6 +51,7 @@ USAGE:
   ./claude-sync.sh              Mode normal : verifie et cree les liens manquants
   ./claude-sync.sh --status     Affiche l'etat sans rien modifier
   ./claude-sync.sh --init       Premiere installation (copie local -> cloud + liens)
+  ./claude-sync.sh --clone      Configure comme clone (cloud = source de verite)
   ./claude-sync.sh --help       Affiche cette aide
 
 CONFIGURATION:
@@ -80,7 +83,7 @@ log_err()  { echo -e "  ${RED}ERROR${NC}  $1"; LINKS_BROKEN=$((LINKS_BROKEN + 1)
 # Verifie ou cree un lien pour un item
 check_item() {
     local item="$1"
-    local mode="$2"  # "status" ou "fix" ou "init"
+    local mode="$2"  # "status" ou "fix" ou "init" ou "clone"
     local source="$CLAUDE_DIR/$item"
     local target="$CLOUD_DIR/$item"
 
@@ -92,7 +95,13 @@ check_item() {
             log_ok "$item"
             return
         else
-            log_warn "$item -> $actual_target (attendu: $target)"
+            if [ "$mode" = "clone" ]; then
+                rm "$source"
+                ln -s "$target" "$source"
+                log_new "$item (lien corrige)"
+            else
+                log_warn "$item -> $actual_target (attendu: $target)"
+            fi
             return
         fi
     fi
@@ -125,11 +134,18 @@ check_item() {
         ln -s "$target" "$source"
         log_new "$item (lien cree depuis cloud)"
     elif [ -e "$source" ] && [ -e "$target" ]; then
-        # Les deux existent -> signaler le conflit, ne pas toucher
-        log_warn "$item — CONFLIT: existe localement ET dans le cloud"
-        log_warn "  Local: $source"
-        log_warn "  Cloud: $target"
-        log_warn "  Action: comparer manuellement, supprimer le local, puis relancer"
+        if [ "$mode" = "clone" ]; then
+            # Mode clone : cloud = source de verite, archiver le local
+            mv "$source" "${source}.bak"
+            ln -s "$target" "$source"
+            log_new "$item (local archive -> .bak, lien cree depuis cloud)"
+        else
+            # Les deux existent -> signaler le conflit, ne pas toucher
+            log_warn "$item — CONFLIT: existe localement ET dans le cloud"
+            log_warn "  Local: $source"
+            log_warn "  Cloud: $target"
+            log_warn "  Action: comparer manuellement, supprimer le local, puis relancer"
+        fi
     else
         # Rien n'existe -> rien a faire
         if [ "$mode" = "init" ]; then
@@ -153,14 +169,16 @@ scan_projects() {
         fi
     done
 
-    # Projets dans le cloud qui n'existent pas localement
+    # Projets dans le cloud dont le memory/ n'est pas encore lie localement
     if [ -d "$CLOUD_DIR/projects" ]; then
         for cloud_mem in "$CLOUD_DIR"/projects/*/memory/; do
             [ -d "$cloud_mem" ] || continue
             proj_name=$(basename "$(dirname "$cloud_mem")")
             local_proj="$CLAUDE_DIR/projects/$proj_name"
+            local_mem="$local_proj/memory"
 
-            if [ ! -d "$local_proj" ]; then
+            # Traiter si le memory/ n'existe pas encore (ni dossier, ni lien)
+            if [ ! -d "$local_mem" ] && [ ! -L "$local_mem" ]; then
                 mkdir -p "$local_proj"
                 check_item "projects/$proj_name/memory" "$mode"
             fi
@@ -176,6 +194,7 @@ MODE="fix"
 case "${1:-}" in
     --status) MODE="status" ;;
     --init)   MODE="init" ;;
+    --clone)  MODE="clone" ;;
     --help)   usage ;;
     "")       MODE="fix" ;;
     *)        echo "Option inconnue: $1"; usage ;;
@@ -190,6 +209,12 @@ echo "  Local:  $CLAUDE_DIR"
 echo "  Mode:   $MODE"
 echo "========================================"
 echo ""
+
+if [ "$MODE" = "clone" ]; then
+    echo -e "  ${YELLOW}⚠ Mode CLONE : le cloud est la source de verite.${NC}"
+    echo "  Les fichiers locaux en conflit seront archives (.bak) et remplaces par des liens."
+    echo ""
+fi
 
 # Verifier les prerequis
 if [ ! -d "$CLAUDE_DIR" ]; then

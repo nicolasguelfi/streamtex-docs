@@ -114,9 +114,11 @@ def build():
         from streamtex import st_book, TOCConfig, BannerConfig
         import blocks
 
-        st.set_page_config(page_title="My Project", layout="wide")
+        st.set_page_config(page_title="My Project", layout="wide",
+                           initial_sidebar_state="expanded")
 
-        toc = TOCConfig(numerate_titles=False, toc_position=0, sidebar_max_level=2)
+        toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY, toc_position=0,
+                        sidebar_max_level=2, search=True)
 
         st_book([
             blocks.bck_welcome,

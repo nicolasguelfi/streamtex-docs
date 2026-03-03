@@ -18,7 +18,7 @@ stx.set_static_sources([str(Path(__file__).parent / "static")])
 st.set_page_config(
     page_title="StreamTeX - Deploy",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 sts.theme = dark
 

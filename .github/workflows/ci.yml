@@ -1,4 +1,4 @@
-# StreamTeX Docs CI — Lint references on push/PR
+# StreamTeX Docs CI — Structural checks on push/PR
 name: CI
 
 on:
@@ -8,8 +8,8 @@ on:
     branches: [main]
 
 jobs:
-  lint:
-    name: Lint
+  check:
+    name: Check
     runs-on: ubuntu-latest
     # UV_NO_SOURCES ignores [tool.uv.sources] for ALL uv commands in this job.
     # In local dev, pyproject.toml points streamtex to ../streamtex (editable install).
@@ -31,5 +31,87 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      # --- 1. Verify PyPI streamtex works ---
       - name: Verify streamtex import
         run: uv run python -c "import streamtex; print(f'streamtex {streamtex.__version__}')"
+
+      # --- 2. Verify all blocks have valid syntax + build() function ---
+      - name: Verify block structure
+        run: |
+          uv run python -c "
+          import ast, glob, sys
+
+          errors = []
+          count = 0
+          for f in sorted(glob.glob('manuals/**/blocks/**/*.py', recursive=True)):
+              if '__pycache__' in f or '__init__' in f or 'helpers' in f:
+                  continue
+              count += 1
+              try:
+                  tree = ast.parse(open(f).read(), filename=f)
+                  has_build = any(
+                      isinstance(n, ast.FunctionDef) and n.name == 'build'
+                      for n in ast.walk(tree)
+                  )
+                  if not has_build:
+                      errors.append(f'{f}: missing build()')
+              except SyntaxError as e:
+                  errors.append(f'{f}: syntax error line {e.lineno}: {e.msg}')
+
+          if errors:
+              print(f'FAILED — {len(errors)} error(s) in {count} blocks:')
+              for e in errors:
+                  print(f'  {e}')
+              sys.exit(1)
+          print(f'OK — {count} blocks verified')
+          "
+
+      # --- 3. Verify composite blocks reference existing atomics ---
+      - name: Verify composite → atomic links
+        run: |
+          uv run python -c "
+          import re, os, glob, sys
+
+          errors = []
+          count = 0
+          for f in sorted(glob.glob('manuals/**/blocks/bck_*.py', recursive=True)):
+              if '_atomic' in f:
+                  continue
+              content = open(f).read()
+              atomics = re.findall(r'load_atomic_block\([\x22\x27](\w+)', content)
+              for name in atomics:
+                  count += 1
+                  atomic_path = os.path.join(os.path.dirname(f), '_atomic', f'{name}.py')
+                  if not os.path.exists(atomic_path):
+                      errors.append(f'{os.path.basename(f)}: missing atomic {name}.py')
+
+          if errors:
+              print(f'FAILED — {len(errors)} broken link(s):')
+              for e in errors:
+                  print(f'  {e}')
+              sys.exit(1)
+          print(f'OK — {count} atomic links verified')
+          "
+
+      # --- 4. Verify all book.py files parse correctly ---
+      - name: Verify book.py files
+        run: |
+          uv run python -c "
+          import ast, glob, sys
+
+          errors = []
+          count = 0
+          for f in sorted(glob.glob('manuals/**/book.py', recursive=True)):
+              count += 1
+              try:
+                  ast.parse(open(f).read(), filename=f)
+              except SyntaxError as e:
+                  errors.append(f'{f}: syntax error line {e.lineno}: {e.msg}')
+
+          if errors:
+              print(f'FAILED — {len(errors)} error(s):')
+              for e in errors:
+                  print(f'  {e}')
+              sys.exit(1)
+          print(f'OK — {count} book.py files verified')
+          "

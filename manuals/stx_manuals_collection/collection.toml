@@ -3,7 +3,7 @@
 
 [collection]
 title = "StreamTeX Training Collection"
-description = "Introduction, Advanced, and Deployment courses for learning StreamTeX"
+description = "Introduction, AI Workflows, Advanced, Deployment, and Developer courses for learning StreamTeX"
 cards_per_row = 3
 
 [projects.test-intro]
@@ -13,16 +13,23 @@ cover = "static/images/covers/test-intro.png"
 project_url = "http://localhost:8502"
 order = 1
 
+[projects.test-ai]
+title = "AI-Powered Workflows"
+description = "22 commands, 4 agents, 10 blueprints, 4 profiles: create content with AI assistants"
+cover = "static/images/covers/test-ai.png"
+project_url = "http://localhost:8506"
+order = 2
+
 [projects.test-advanced]
 title = "Advanced Features & Multi-Repo Architecture"
 description = "Master advanced concepts: shared blocks, multi-source resolution, and deployment strategies"
 cover = "static/images/covers/test-advanced.png"
 project_url = "http://localhost:8503"
-order = 2
+order = 3
 
 [projects.test-deploy]
 title = "Deployment Guide"
 description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, HuggingFace, Render.com, GCP, CI/CD"
 cover = "static/images/covers/test-deploy.png"
 project_url = "http://localhost:8504"
-order = 3
+order = 4

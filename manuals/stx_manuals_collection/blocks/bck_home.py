@@ -15,6 +15,7 @@ _URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")
 _URL_ADVANCED = os.environ.get("STX_URL_TEST_ADVANCED", "http://localhost:8503")
 _URL_DEPLOY = os.environ.get("STX_URL_TEST_DEPLOY", "http://localhost:8504")
 _URL_DEVELOPER = os.environ.get("STX_URL_TEST_DEVELOPER", "http://localhost:8505")
+_URL_AI = os.environ.get("STX_URL_TEST_AI", "http://localhost:8506")
 
 
 class BlockStyles:
@@ -97,19 +98,21 @@ def build():
         st_write(
             bs.description,
             "Browse the curated StreamTeX training courses. "
-            "Each course is self-contained and can be launched independently.",
+            "Each course is self-contained and can be launched independently. "
+            "AI-powered workflows let you create content without writing a single line of Python.",
         )
         st_space("v", 1)
         with st_list(list_type="ul"):
             st_write(s.medium, "Introduction: text, styles, grids, lists, images, code, export")
+            st_write(s.medium, "AI Manual: commands, agents, blueprints, profiles, AI-driven workflows")
             st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
             st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
             st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
 
-    # === Project cards ===
+    # === Project cards — Row 1 (3 cards) ===
     st_space("v", 2)
 
-    with st_grid(cols=4, responsive=True, grid_style=bs.grid_with_gap):
+    with st_grid(cols=3, responsive=True, grid_style=bs.grid_with_gap):
 
         # Card 1: Introduction
         with st_block(bs.card_container):
@@ -125,10 +128,27 @@ def build():
             st_space("v", 2)
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                st.link_button("🚀 Open Course", _URL_INTRO, use_container_width=True)
+                st.link_button("📚 Open Course", _URL_INTRO, use_container_width=True)
             st_space("v", 1)
 
-        # Card 2: Advanced
+        # Card 2: AI Manual
+        with st_block(bs.card_container):
+            st_space("v", 1)
+            st_write(s.huge + "text-align:center;", "🤖")
+            st_space("v", 1)
+            st_write(bs.project_title + "text-align:center;", "AI-Powered Workflows")
+            st_space("v", 1)
+            st_write(
+                bs.card_description + "text-align:center;",
+                "22 commands, 4 agents, 10 blueprints: create content with AI assistants",
+            )
+            st_space("v", 2)
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.link_button("🤖 Open Manual", _URL_AI, use_container_width=True)
+            st_space("v", 1)
+
+        # Card 3: Advanced
         with st_block(bs.card_container):
             st_space("v", 1)
             st_write(s.huge + "text-align:center;", "⚡")
@@ -142,10 +162,15 @@ def build():
             st_space("v", 2)
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                st.link_button("🚀 Open Course", _URL_ADVANCED, use_container_width=True)
+                st.link_button("⚡ Open Course", _URL_ADVANCED, use_container_width=True)
             st_space("v", 1)
 
-        # Card 3: Deployment Guide
+    # === Project cards — Row 2 (2 cards) ===
+    st_space("v", 1)
+
+    with st_grid(cols=2, responsive=True, grid_style=bs.grid_with_gap):
+
+        # Card 4: Deployment Guide
         with st_block(bs.card_container):
             st_space("v", 1)
             st_write(s.huge + "text-align:center;", "🚀")
@@ -162,7 +187,7 @@ def build():
                 st.link_button("🚀 Open Course", _URL_DEPLOY, use_container_width=True)
             st_space("v", 1)
 
-        # Card 4: Developer Guide
+        # Card 5: Developer Guide
         with st_block(bs.card_container):
             st_space("v", 1)
             st_write(s.huge + "text-align:center;", "🔧")

@@ -43,7 +43,7 @@ def build():
         show_code(textwrap.dedent("""\
             [project]
             name = "streamtex"
-            version = "0.3.0"
+            version = "X.Y.Z"
             requires-python = ">=3.10"
 
             [build-system]
@@ -76,7 +76,7 @@ def build():
 
         show_explanation(textwrap.dedent("""\
             `ci.yml` runs ruff check, pytest, and optionally mypy on every pull
-            request. `publish.yml` is triggered by version tags (e.g. `v0.3.0`)
+            request. `publish.yml` is triggered by version tags (e.g. `vX.Y.Z`)
             and handles the full PyPI release pipeline.
         """))
         st_space("v", 2)
@@ -116,7 +116,7 @@ def build():
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
-            ## [0.3.0] - 2025-xx-xx
+            ## [X.Y.Z] - YYYY-MM-DD
             ### Added
             - New feature description
 

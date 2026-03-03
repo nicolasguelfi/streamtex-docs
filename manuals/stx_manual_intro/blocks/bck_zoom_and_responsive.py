@@ -14,6 +14,7 @@ class BlockStyles:
     section = s.project.titles.section_subtitle
     info_box = Style("background:rgba(100,150,200,0.1);padding:16px;border-radius:8px;", "info_box")
     code_block = s.project.containers.code_box
+    feature_box = Style("background:rgba(100,150,200,0.1);padding:16px;border-radius:8px;", "feature_box")
 
 
 bs = BlockStyles

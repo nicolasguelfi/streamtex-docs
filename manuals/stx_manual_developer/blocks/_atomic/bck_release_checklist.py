@@ -27,7 +27,7 @@ def build():
 
         show_explanation(textwrap.dedent("""\
             StreamTeX follows semantic versioning (semver):
-            MAJOR.MINOR.PATCH (e.g. 0.3.0).
+            MAJOR.MINOR.PATCH (e.g. 1.2.3).
 
             - MAJOR: incompatible API changes.
             - MINOR: new features, backward-compatible.

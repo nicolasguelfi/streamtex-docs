@@ -5,18 +5,20 @@
 # Usage: ./run-manuals.sh [OPTIONS]
 # Options:
 #   --help               Affiche cette aide
-#   --all                Lance les 5 manuels (défaut)
+#   --all                Lance les 6 manuels (défaut)
 #   --collection         Lance que le hub collection (port 8501)
 #   --intro              Lance que le manuel intro (port 8502)
 #   --advanced           Lance que le manuel advanced (port 8503)
 #   --deployment         Lance que le guide de déploiement (port 8504)
 #   --developer          Lance que le manuel développeur (port 8505)
-#   --ports P1,P2,P3,P4,P5  Ports personnalisés (défaut: 8501,8502,8503,8504,8505)
+#   --ai                 Lance que le manuel AI (port 8506)
+#   --ports P1,P2,P3,P4,P5,P6  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506)
 #   --no-intro           Exclut le manuel intro
 #   --no-advanced        Exclut le manuel advanced
 #   --no-collection      Exclut la collection
 #   --no-deployment      Exclut le guide de déploiement
 #   --no-developer       Exclut le manuel développeur
+#   --no-ai              Exclut le manuel AI
 #   --kill               Tue tous les processus Streamlit lancés
 #   --watch              Lance et regarde les logs
 
@@ -28,6 +30,7 @@ INTRO_PROJECT="$SCRIPT_DIR/manuals/stx_manual_intro"
 ADVANCED_PROJECT="$SCRIPT_DIR/manuals/stx_manual_advanced"
 DEPLOYMENT_PROJECT="$SCRIPT_DIR/manuals/stx_manual_deploy"
 DEVELOPER_PROJECT="$SCRIPT_DIR/manuals/stx_manual_developer"
+AI_PROJECT="$SCRIPT_DIR/manuals/stx_manual_ai"
 
 # Ports par défaut
 COLLECTION_PORT=8501
@@ -35,6 +38,7 @@ INTRO_PORT=8502
 ADVANCED_PORT=8503
 DEPLOYMENT_PORT=8504
 DEVELOPER_PORT=8505
+AI_PORT=8506
 
 # Flags pour les manuels à lancer
 LAUNCH_COLLECTION=true
@@ -42,6 +46,7 @@ LAUNCH_INTRO=true
 LAUNCH_ADVANCED=true
 LAUNCH_DEPLOYMENT=true
 LAUNCH_DEVELOPER=true
+LAUNCH_AI=true
 
 WATCH_MODE=false
 
@@ -56,20 +61,22 @@ USAGE:
   ./run-manuals.sh [OPTIONS]
 
 OPTIONS:
-  --all              Lance les 5 manuels (défaut)
+  --all              Lance les 6 manuels (défaut)
   --collection       Lance que le hub collection (port 8501)
   --intro            Lance que le manuel intro (port 8502)
   --advanced         Lance que le manuel advanced (port 8503)
   --deployment       Lance que le guide de déploiement (port 8504)
   --developer        Lance que le manuel développeur (port 8505)
+  --ai               Lance que le manuel AI (port 8506)
 
   --no-intro         Exclut le manuel intro
   --no-advanced      Exclut le manuel advanced
   --no-collection    Exclut la collection
   --no-deployment    Exclut le guide de déploiement
   --no-developer     Exclut le manuel développeur
+  --no-ai            Exclut le manuel AI
 
-  --ports P1,P2,P3,P4,P5  Ports personnalisés (défaut: 8501,8502,8503,8504,8505)
+  --ports P1,P2,P3,P4,P5,P6  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506)
   --kill             Tue tous les processus Streamlit lancés
   --watch            Lance et regarde les logs (Ctrl+C pour quitter)
   --help             Affiche cette aide
@@ -102,6 +109,7 @@ URLs:
   Advanced:   http://localhost:8503
   Deployment: http://localhost:8504
   Developer:  http://localhost:8505
+  AI:         http://localhost:8506
 EOF
             exit 0
             ;;
@@ -111,6 +119,7 @@ EOF
             LAUNCH_ADVANCED=true
             LAUNCH_DEPLOYMENT=true
             LAUNCH_DEVELOPER=true
+            LAUNCH_AI=true
             shift
             ;;
         --collection)
@@ -119,6 +128,7 @@ EOF
             LAUNCH_ADVANCED=false
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
             shift
             ;;
         --intro)
@@ -127,6 +137,7 @@ EOF
             LAUNCH_ADVANCED=false
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
             shift
             ;;
         --advanced)
@@ -135,6 +146,7 @@ EOF
             LAUNCH_ADVANCED=true
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
             shift
             ;;
         --deployment)
@@ -143,6 +155,7 @@ EOF
             LAUNCH_ADVANCED=false
             LAUNCH_DEPLOYMENT=true
             LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
             shift
             ;;
         --developer)
@@ -151,6 +164,16 @@ EOF
             LAUNCH_ADVANCED=false
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=true
+            LAUNCH_AI=false
+            shift
+            ;;
+        --ai)
+            LAUNCH_COLLECTION=false
+            LAUNCH_INTRO=false
+            LAUNCH_ADVANCED=false
+            LAUNCH_DEPLOYMENT=false
+            LAUNCH_DEVELOPER=false
+            LAUNCH_AI=true
             shift
             ;;
         --no-intro)
@@ -173,14 +196,19 @@ EOF
             LAUNCH_DEVELOPER=false
             shift
             ;;
+        --no-ai)
+            LAUNCH_AI=false
+            shift
+            ;;
         --ports)
-            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT <<< "$2"
+            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT AI_PORT <<< "$2"
             # Remplacer '_' par le port par défaut
             [ "$COLLECTION_PORT" = "_" ] && COLLECTION_PORT=8501
             [ "$INTRO_PORT" = "_" ] && INTRO_PORT=8502
             [ "$ADVANCED_PORT" = "_" ] && ADVANCED_PORT=8503
             [ "$DEPLOYMENT_PORT" = "_" ] && DEPLOYMENT_PORT=8504
             [ "$DEVELOPER_PORT" = "_" ] && DEVELOPER_PORT=8505
+            [ "$AI_PORT" = "_" ] || [ -z "$AI_PORT" ] && AI_PORT=8506
             shift 2
             ;;
         --kill)
@@ -221,6 +249,7 @@ check_project() {
 [ "$LAUNCH_ADVANCED" = true ] && check_project "$ADVANCED_PROJECT" "advanced"
 [ "$LAUNCH_DEPLOYMENT" = true ] && check_project "$DEPLOYMENT_PROJECT" "deployment"
 [ "$LAUNCH_DEVELOPER" = true ] && check_project "$DEVELOPER_PROJECT" "developer"
+[ "$LAUNCH_AI" = true ] && check_project "$AI_PROJECT" "ai"
 
 # Logs
 LOG_DIR="/tmp/streamtex-manuals"
@@ -230,6 +259,7 @@ INTRO_LOG="$LOG_DIR/intro.log"
 ADVANCED_LOG="$LOG_DIR/advanced.log"
 DEPLOYMENT_LOG="$LOG_DIR/deployment.log"
 DEVELOPER_LOG="$LOG_DIR/developer.log"
+AI_LOG="$LOG_DIR/ai.log"
 
 # Fonction pour afficher les PID
 print_pids() {
@@ -242,6 +272,7 @@ print_pids() {
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT (PID: $(pgrep -f "stx_manual_advanced" | head -1 || echo '—'))"
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT (PID: $(pgrep -f "stx_manual_deploy" | head -1 || echo '—'))"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT (PID: $(pgrep -f "stx_manual_developer" | head -1 || echo '—'))"
+    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT (PID: $(pgrep -f "stx_manual_ai" | head -1 || echo '—'))"
     echo ""
     echo "Logs: $LOG_DIR"
     [ "$WATCH_MODE" = false ] && echo "Utilisez --kill pour arrêter tous les processus"
@@ -274,6 +305,7 @@ launch_project() {
     cd "$SCRIPT_DIR"
     nohup uv run streamlit run "$project_path/book.py" \
         --server.port "$port" \
+        --server.headless true \
         --logger.level=warning \
         > "$log_file" 2>&1 &
 
@@ -294,8 +326,8 @@ launch_project() {
 cleanup() {
     echo ""
     echo "Arrêt des manuels..."
-    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer" || true
-    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer" || true
+    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer\|stx_manual_ai" || true
+    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer\|streamlit run.*stx_manual_ai" || true
     sleep 1
     echo "Tous les manuels ont été arrêtés"
 }
@@ -328,6 +360,10 @@ if [ "$LAUNCH_DEVELOPER" = true ]; then
     launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
 fi
 
+if [ "$LAUNCH_AI" = true ]; then
+    launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
+fi
+
 print_pids
 
 # Attendre si en watch mode
@@ -358,6 +394,10 @@ if [ "$WATCH_MODE" = true ]; then
             echo "Developer est arrêté. Redémarrage..."
             launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
         fi
+        if [ "$LAUNCH_AI" = true ] && ! pgrep -f "streamlit run.*stx_manual_ai" > /dev/null 2>&1; then
+            echo "AI est arrêté. Redémarrage..."
+            launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
+        fi
     done
 else
     # Attendre un peu puis ouvrir dans Chrome
@@ -370,6 +410,7 @@ else
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT"
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT"
+    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT"
     echo ""
     echo "Utilisez './run-manuals.sh --kill' pour arrêter tous les manuels"
     echo ""

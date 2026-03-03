@@ -46,7 +46,7 @@ def build():
         )
         st_write(
             stx.StxStyles.large + stx.StxStyles.text.colors.white,
-            "Contributing to the StreamTeX library — v0.3.0",
+            "Contributing to the StreamTeX library",
             tag=t.div,
         )
     st_space("v", 1)

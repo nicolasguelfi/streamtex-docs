@@ -67,7 +67,7 @@ def build():
 
     st_write(
         stx.StxStyles.large + stx.StxStyles.text.colors.reset,
-        "v0.3.0 Gotchas",
+        "Known Gotchas",
         toc_lvl="2"
     )
     st_space("v", 1)

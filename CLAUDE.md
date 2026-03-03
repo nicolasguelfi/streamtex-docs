@@ -72,6 +72,7 @@ streamtex-docs/
 │   ├── stx_manual_advanced/    # Advanced features (port 8503)
 │   ├── stx_manual_deploy/      # Deployment guide (port 8504)
 │   ├── stx_manual_developer/   # Developer guide (port 8505)
+│   ├── stx_manual_ai/          # AI workflows guide (port 8506)
 │   ├── stx_manuals_collection/ # Collection hub (port 8501)
 │   └── shared-blocks/          # Shared block library
 ├── references/
@@ -84,8 +85,9 @@ streamtex-docs/
 
 ## Running Manuals
 ```bash
-./run-manuals.sh --all            # Launch all 5 manuals
+./run-manuals.sh --all            # Launch all 6 manuals
 ./run-manuals.sh --developer      # Launch only developer manual (port 8505)
+./run-manuals.sh --ai             # Launch only AI manual (port 8506)
 ./run-manuals.sh --kill           # Stop all manuals
 # Or individually:
 uv run streamlit run manuals/stx_manual_intro/book.py

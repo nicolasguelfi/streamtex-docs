@@ -130,7 +130,7 @@ def build():
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
-        uv add streamtex>=0.3.0
+        uv add streamtex --upgrade
     """), language="bash")
     st_space("v", 2)
 
@@ -222,9 +222,9 @@ def build():
     st_space("v", 1)
 
     show_explanation(textwrap.dedent("""\
-        The following APIs are deprecated in v0.3.0. They continue
+        The following APIs are deprecated in v0.3. They continue
         to work for backward compatibility but will be removed in
-        v0.4.0. Update your code as described above.
+        a future release. Update your code as described above.
     """))
     st_space("v", 1)
 
@@ -240,8 +240,8 @@ def build():
     st_space("v", 1)
 
     show_details(textwrap.dedent("""\
-        Both deprecated parameters still work in 0.3.0 and emit
+        Both deprecated parameters still work in v0.3 and emit
         a deprecation warning at runtime. They will be removed
-        entirely in 0.4.0. Plan your migration accordingly.
+        in a future release. Plan your migration accordingly.
     """))
     st_space("v", 1)

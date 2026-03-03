@@ -35,10 +35,10 @@ def build():
 # 1. pyproject.toml — used by build tools and PyPI
 [project]
 name = "streamtex"
-version = "0.3.0"
+version = "X.Y.Z"
 
 # 2. streamtex/__init__.py — used at runtime
-__version__ = "0.3.0\"""", language="python")
+__version__ = "X.Y.Z\"""", language="python")
         st_space("v", 2)
 
         # --- Why both? ---
@@ -91,12 +91,12 @@ stx publish check""", language="bash")
                 st_write(s.project.colors.neutral_gray + s.large,
                          "pyproject.toml")
             with g.cell():
-                st_write(s.large, "version = \"0.3.0\"")
+                st_write(s.large, "version = \"X.Y.Z\"")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "streamtex/__init__.py")
             with g.cell():
-                st_write(s.large, "__version__ = \"0.3.0\"")
+                st_write(s.large, "__version__ = \"X.Y.Z\"")
         st_space("v", 2)
 
         show_details(textwrap.dedent("""\

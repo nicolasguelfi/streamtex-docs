@@ -25,12 +25,12 @@ def build():
     st_space("v", 2)
 
     # ── Purpose ────────────────────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         /project:project-init creates a complete, ready-to-run
         StreamTeX project from a simple natural language description.
         It generates the directory structure, styles, starter blocks,
         and the orchestration file (book.py) in one pass.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Step-by-step demo ──────────────────────────────────────────
@@ -150,10 +150,10 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: the more specific your description, the better the result.
         Include audience, number of slides, theme preferences, and any
         special requirements (diagrams, code examples, quizzes). Vague
         prompts like "make a presentation" produce generic scaffolding.
-    """))
+    """)
     st_space("v", 1)

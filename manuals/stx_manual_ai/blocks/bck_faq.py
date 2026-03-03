@@ -1,12 +1,10 @@
 """Part 8 — FAQ & Troubleshooting — common questions and error resolution."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """FAQ block styles."""
@@ -31,9 +29,7 @@ class BlockStyles:
     error_title = s.project.colors.error_red + s.bold + s.large
     fix_label = s.project.colors.success_green + s.bold + s.large
 
-
 bs = BlockStyles
-
 
 def _render_qa(question: str, answer: str):
     """Render a question-answer pair in a styled card."""
@@ -41,7 +37,6 @@ def _render_qa(question: str, answer: str):
         st_write(bs.question_text, question, tag=t.div)
         st_space("v", 1)
         st_write(bs.answer_text, answer)
-
 
 def _render_error(error: str, fix: str):
     """Render a troubleshooting entry with error and fix."""
@@ -51,18 +46,17 @@ def _render_error(error: str, fix: str):
         st_write(bs.fix_label, "Fix: ", tag=t.span)
         st_write(bs.answer_text, fix)
 
-
 def build():
     """Render the FAQ and troubleshooting section."""
     st_space("v", 1)
     st_write(bs.heading, "FAQ & Troubleshooting", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Answers to the most common questions about using StreamTeX
         with AI assistants, followed by a troubleshooting guide
         for frequent errors.
-    """))
+    """)
     st_space("v", 2)
 
     # ── FAQ Section ───────────────────────────────────────────────
@@ -155,11 +149,11 @@ def build():
     st_write(bs.sub, "Troubleshooting", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Common errors and their solutions. If your issue is not listed
         here, check the StreamTeX developer manual or open an issue
         on the GitHub repository.
-    """))
+    """)
     st_space("v", 1)
 
     # Error 1

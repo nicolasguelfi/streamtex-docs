@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Tabs, expanders & popovers demo styles."""
@@ -18,18 +16,17 @@ class BlockStyles:
             + s.center_txt)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Tabs, Expanders & Popovers",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Streamlit containers (tabs, expanders, popovers) are context
             managers — just like st_block(). StreamTeX content works
             normally inside them.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Tabs ---
@@ -129,9 +126,9 @@ with st.popover("Show info card"):
         st_write(bs.sub, "Deep Nesting", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Streamlit containers can nest: tabs > expander > st_grid.
-        """))
+        """)
         st_space("v", 1)
 
         tab_a, tab_b = st.tabs(["Tab A", "Tab B"])
@@ -159,10 +156,10 @@ with st.popover("Show info card"):
                             st_write("Deeply nested item 2")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st.tabs, st.expander, st.popover are context managers like st_block().
 
             All stx.* functions work inside Streamlit containers.
 
             Nesting is supported: tabs > expander > grid/list.
-        """))
+        """)

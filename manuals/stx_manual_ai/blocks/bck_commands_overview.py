@@ -26,13 +26,13 @@ def build():
     st_space("v", 2)
 
     # ── Introduction ───────────────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX AI commands are slash commands that you type directly
         inside Claude Code. The syntax is always the same:
         /category:command-name. Each command loads its own context,
         reads the relevant coding standards, and walks the AI through
         a structured, step-by-step workflow.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Slash command syntax ───────────────────────────────────────
@@ -149,10 +149,10 @@ def build():
     st_space("v", 2)
 
     # ── Summary ────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Every command follows the same pattern: description, context
         loading, then a step-by-step workflow. The AI reads the context
         files before executing any step, ensuring that all generated
         code conforms to StreamTeX coding standards.
-    """))
+    """)
     st_space("v", 1)

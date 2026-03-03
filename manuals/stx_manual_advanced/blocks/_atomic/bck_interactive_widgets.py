@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Interactive widgets demo styles."""
@@ -15,16 +13,15 @@ class BlockStyles:
     content = s.large
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Interactive Widgets", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Widgets are st.* (interactivity). Their return values drive
             what stx.* renders. Styles can be built dynamically at runtime.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Buttons & toggles ---
@@ -128,11 +125,11 @@ with st_block(s.project.containers.result_box):
             st_write(color_style + s.Large + s.bold, "Colored text!")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Widgets return values that drive what stx.* displays.
 
             Style() objects can be constructed dynamically at runtime
             using f-strings: ns(f"font-size: {val}px;").
 
             Always use st.* for interactivity, stx.* for content.
-        """))
+        """)

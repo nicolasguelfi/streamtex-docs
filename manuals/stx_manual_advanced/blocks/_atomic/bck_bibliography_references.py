@@ -7,8 +7,6 @@ from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 from streamtex.bib import cite, st_bibliography, export_bibtex, get_bib_registry
 from custom.bib_refs import st_refs
-import textwrap
-
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
@@ -22,20 +20,19 @@ class BlockStyles:
 
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Bibliography & References",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX provides a built-in bibliography system.
 
             Load references from BibTeX, JSON, RIS, or CSL-JSON files.
 
             Cite inline with hover preview. Render formatted bibliographies in APA, IEEE, MLA, Chicago, or Harvard style.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 1: Loading References ---
@@ -45,13 +42,13 @@ def build():
         show_code(file="examples/bib/loading_references.py")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Supported import formats: .bib (BibTeX), .json (JSON array), .ris (RIS/Zotero), .csl-json (CSL-JSON/Mendeley).
 
             Add custom formats with register_bib_parser("ext", parser_function).
 
             References are loaded once per st_book() render and cached in the BibRegistry singleton.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 2: Inline Citations ---
@@ -85,13 +82,13 @@ def build():
 
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st_refs.key is equivalent to cite("key") but enables IDE autocompletion.
 
             For multi-key citations, use cite("key1", "key2") → (Author1; Author2, Year).
 
             Hover over citations above to see the preview card. Click Copy or Open.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 3: Citation Styles ---
@@ -143,13 +140,13 @@ BibConfig(citation_style=CitationStyle.SUPERSCRIPT)""")
         st_write(bs.sub, "5. Extensible Fields", toc_lvl="+1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             BibEntry has 20+ standard fields (title, authors, year, journal, doi, etc.).
 
             Any unknown fields from your source files are preserved in the 'extra' dict.
 
             Access them with entry.get_field("custom_field").
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/bib/extensible_fields.py")
@@ -188,10 +185,10 @@ BibConfig(citation_style=CitationStyle.SUPERSCRIPT)""")
         st_write(bs.sub, "7. Output Formats (BibFormat)", toc_lvl="+1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX supports 5 bibliography output formats via BibFormat enum.
             Each format styles author names, titles, journals, and dates differently.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -213,13 +210,13 @@ BibConfig(format=BibFormat.CHICAGO)
 BibConfig(format=BibFormat.HARVARD)""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The format is set once in BibConfig and applies to all st_bibliography() calls.
 
             You can also override per-call: st_bibliography(format=BibFormat.IEEE).
 
             Each format handles edge cases (missing fields, et al. for 3+ authors).
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 8: Rendered Bibliography ---
@@ -272,35 +269,35 @@ st.download_button("Download .bib", bibtex_str, "references.bib")""")
         st_write(bs.sub, "10. st_refs & IDE Autocompletion", toc_lvl="+1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_refs maps attribute access to cite() calls with full IDE autocompletion.
 
             Generate a typed Python module from your .bib file, then import st_refs
             from there. Your IDE shows all keys with docstrings (title, authors, year).
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/bib/st_refs_autocompletion.py")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The generated .py contains @property definitions with docstrings for each key.
 
             Unknown keys (added after generation) still work via __getattr__ fallback — just without completion.
 
             Regenerate with the same command when you add or modify bibliography entries.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 11: Custom Parsers ---
         st_write(bs.sub, "11. Custom Parsers (register_bib_parser)", toc_lvl="+1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             You can extend the bibliography system with custom parsers for
             any file format. Register a parser function that takes a file path
             and returns a list of BibEntry objects.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -325,10 +322,10 @@ register_bib_parser("custom", parse_custom_format)
 # load_bib("references.custom")""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The parser function receives the file path and must return List[BibEntry].
 
             The format name is used for file extension detection in load_bib().
 
             Built-in parsers: bib (BibTeX), json (JSON), ris (RIS), csl-json (CSL-JSON).
-        """))
+        """)

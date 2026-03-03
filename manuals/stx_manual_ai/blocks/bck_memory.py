@@ -23,24 +23,24 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         MEMORY.md is a file that persists across Claude Code sessions.
         It acts as long-term storage for decisions, conventions, and
         patterns that the AI should remember between conversations.
         Unlike CLAUDE.md which defines behavior rules, MEMORY.md
         stores accumulated project knowledge.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Location ──────────────────────────────────────────────────
     st_write(bs.sub, "Where MEMORY.md Lives", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The memory file is stored inside the .claude directory,
         scoped to the specific project path. Claude Code reads
         it automatically at the start of every session.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -87,11 +87,11 @@ def build():
     st_write(bs.sub, "Example MEMORY.md", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Here is a real-world example of a MEMORY.md file for a
         StreamTeX documentation workspace. Notice how it captures
         infrastructure details, service mappings, and key decisions.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

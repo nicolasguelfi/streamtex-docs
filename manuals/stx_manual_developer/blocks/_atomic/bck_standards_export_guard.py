@@ -24,13 +24,13 @@ def build():
                  toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Every function that calls st.html() must be guarded with
             is_export_active(). This ensures that when an HTML export
             is running, all rendered content is captured into the
             export buffer. Without the guard, content is displayed in
             the browser but missing from the exported file.
-        """))
+        """)
         st_space("v", 2)
 
         # --- The pattern ---
@@ -46,7 +46,7 @@ def build():
         """), language="python")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The pattern has three parts:
 
             1. Build the HTML string from the style and content.
@@ -56,14 +56,14 @@ def build():
 
             This dual-write approach means every piece of visible
             content is also available for export.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Why it matters ---
         st_write(bs.sub, "Why this matters", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX supports exporting entire books or pages to
             standalone HTML files. The export system works by collecting
             every HTML fragment rendered during a page build. If a
@@ -72,20 +72,20 @@ def build():
 
             The AST guard test was created specifically to catch these
             omissions at CI time, before they reach users.
-        """))
+        """)
         st_space("v", 2)
 
         # --- AST test ---
         st_write(bs.sub, "The AST guard test", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             An automated AST test scans every module in streamtex/ for
             calls to st.html(). For each call site, it verifies that
             an is_export_active() check exists in the same function
             scope. If any unguarded call is found, the test fails with
             a clear message indicating the file and line number.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -121,11 +121,11 @@ def build():
         """), language="python")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             If you see the AST test failing on CI, search for st.html()
             in the reported file and add the is_export_active() guard.
 
             Prefer extracting a shared _render() helper rather than
             duplicating the guard in every function. Most StreamTeX
             modules already have one.
-        """))
+        """)

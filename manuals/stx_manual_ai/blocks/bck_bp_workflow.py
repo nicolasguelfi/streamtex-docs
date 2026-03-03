@@ -25,12 +25,12 @@ def build():
     st_write(bs.heading, "Optimal AI Workflow", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Following a structured order of operations maximizes AI
         effectiveness and minimizes rework. This section covers the
         recommended workflow, when to switch to manual coding, and
         how to maintain project memory.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Recommended order ─────────────────────────────────────────
@@ -87,11 +87,11 @@ def build():
     st_write(bs.sub, "When to Switch to Manual Coding", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         AI excels at generating standard blocks, enforcing conventions,
         and handling repetitive tasks. Some scenarios require manual
         intervention for best results.
-    """))
+    """)
     st_space("v", 1)
 
     with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
@@ -153,12 +153,12 @@ def build():
     st_write(bs.sub, "MEMORY.md Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         MEMORY.md is Claude Code's persistent memory file. It stores
         project conventions and decisions that should persist across
         conversations. A well-maintained MEMORY.md reduces context
         re-explanation and keeps AI output consistent.
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.tip_callout):
@@ -215,11 +215,11 @@ def build():
     st_space("v", 2)
 
     # ── Final tip ─────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: run the Plan-Generate-Audit-Fix cycle at least twice before
         manual review. The first pass catches structural issues; the
         second pass catches style inconsistencies. After two automated
         cycles, manual review can focus on content quality rather than
         formatting.
-    """))
+    """)
     st_space("v", 1)

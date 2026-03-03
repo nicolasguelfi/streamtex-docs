@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Grid basics styles."""
@@ -18,7 +16,6 @@ class BlockStyles:
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Grid Basics", tag=t.div, toc_lvl="1")
@@ -28,9 +25,9 @@ def build():
         st_write(bs.sub, "st_grid with integer columns", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Pass an integer to cols for equal-width columns.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -53,9 +50,9 @@ with st_grid(cols=3, cell_styles=bs.cell) as g:
         st_write(bs.sub, "st_grid with string columns", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Pass a CSS grid-template-columns string for custom widths.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -75,9 +72,9 @@ with st_grid(cols="1fr 2fr", cell_styles=bs.cell) as g:
         st_write(bs.sub, "grid_style parameter", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             grid_style applies CSS to the entire grid container.
-        """))
+        """)
         st_space("v", 1)
 
         table_style = ns("table-layout: fixed; width: 100%; border-collapse: collapse;")
@@ -98,23 +95,23 @@ with st_grid(cols=2, grid_style=table_style,
             with g.cell(): st_write(s.large, "Data B1")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Defaults: cols=2, grid_style=none, cell_styles=none.
 
             Cells auto-wrap to new rows when cols limit is reached.
 
             Use # row N comments for readability in complex grids.
-        """))
+        """)
         st_space("v", 3)
 
         # responsive_cols helper
         st_write(bs.sub, "responsive_cols() helper", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The responsive_cols() helper generates a CSS grid-template-columns
             value using auto-fit and minmax for adaptive column layouts.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -125,10 +122,10 @@ from streamtex import responsive_cols
 cols_css = responsive_cols(min_width="250px")""")
         st_space("v", 1)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Use this with grid_style for grids that adapt to screen width.
 
             Columns automatically wrap when the viewport is too narrow.
 
             Prefer st_grid(responsive=True) for most cases — it uses responsive_cols() internally.
-        """))
+        """)

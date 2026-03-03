@@ -26,12 +26,12 @@ def build():
     st_write(bs.heading, "Migration Commands", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Migration commands convert existing HTML content into native
         StreamTeX blocks. Whether you have a single file or an entire
         directory of HTML pages, these commands automate the conversion
         while preserving structure and styling intent.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Command 1: html-migrate ────────────────────────────────────
@@ -179,11 +179,11 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: always run /migration:conversion-audit after a batch
         conversion. It checks that every generated block is valid
         StreamTeX and flags any HTML constructs that could not be
         automatically converted (complex tables, embedded scripts,
         SVG elements).
-    """))
+    """)
     st_space("v", 1)

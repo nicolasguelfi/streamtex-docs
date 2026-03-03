@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """List demo styles."""
@@ -14,7 +12,6 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     list_item = s.large
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,9 +22,9 @@ def build():
         st_write(bs.sub, "Unordered list (lt.unordered)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Render bullet-point lists with st_list and lt.unordered.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -47,9 +44,9 @@ with st_list(list_type=lt.unordered, li_style=bs.list_item, align="center") as l
         st_write(bs.sub, "Ordered list (lt.ordered)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Render numbered lists with lt.ordered.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -69,9 +66,9 @@ with st_list(list_type=lt.ordered, li_style=bs.list_item, align="center") as l:
         st_write(bs.sub, "Nested lists", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Nest st_list contexts for multi-level hierarchies.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/list/nested_lists.py")
@@ -96,11 +93,11 @@ with st_list(list_type=lt.ordered, li_style=bs.list_item, align="center") as l:
         st_write(bs.sub, "ListStyle with custom symbols - centered", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use ListStyle for custom bullet symbols at each nesting level.
 
             With align="center", the list block is centered.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/list/custom_symbols_centered.py")
@@ -128,9 +125,9 @@ with st_list(list_type=lt.ordered, li_style=bs.list_item, align="center") as l:
         st_write(bs.sub, "ListStyle with custom symbols - aligned left", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Without align, the list stays left-aligned with normal sub-item indentation.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -163,9 +160,9 @@ with st_list(list_type=lt.unordered,
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use ordered_lowercase for alphabetical (a, b, c) list markers.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -189,9 +186,9 @@ with st_list(list_type=lt.ordered,
         st_write(bs.sub, "Per-item style override", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Override the style of individual items with l.item(style=...).
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -209,9 +206,9 @@ with st_list(list_type=lt.unordered, li_style=bs.list_item, align="center") as l
             with l.item(): st_write("Normal item")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Defaults: list_type=lt.unordered, l_style=none, li_style=none.
 
             Set a consistent li_style on the list.
             Override per-item only when needed for emphasis.
-        """))
+        """)

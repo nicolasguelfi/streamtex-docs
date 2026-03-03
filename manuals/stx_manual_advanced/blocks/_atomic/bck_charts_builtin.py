@@ -5,9 +5,7 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import random
-
 
 class BlockStyles:
     """Built-in charts demo styles."""
@@ -18,7 +16,6 @@ class BlockStyles:
             + s.container.paddings.small_padding)
 bs = BlockStyles
 
-
 def _make_line_data(n=20):
     """Generate synthetic line chart data as a dict."""
     random.seed(42)
@@ -26,22 +23,20 @@ def _make_line_data(n=20):
     series_b = [random.gauss(60, 15) for _ in range(n)]
     return {"Series A": series_a, "Series B": series_b}
 
-
 def _make_bar_data():
     """Generate categorical bar chart data."""
     return {"Category": ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"],
             "Value": [23, 45, 12, 67, 34]}
-
 
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Built-in Charts", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Streamlit bundles Vega-Lite for charts. Charts are st.* widgets.
             Wrap them in st_block() for styling. Use st_grid() for side-by-side layout.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Line chart ---
@@ -138,7 +133,7 @@ with st_grid(cols="1fr 2fr", cell_styles=bs.cell) as g:
                 stx.st_line_chart(_make_line_data())
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Charts are st.* widgets — correct per the sx/st split.
 
             Wrap charts in st_block() for borders and backgrounds.
@@ -146,4 +141,4 @@ with st_grid(cols="1fr 2fr", cell_styles=bs.cell) as g:
             Use st_grid() to place charts alongside metrics or text.
 
             Data can be dicts, lists, or pandas DataFrames.
-        """))
+        """)

@@ -24,12 +24,12 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX projects are designed for team collaboration. Shared
         blocks, consistent profiles, and AI-assisted review enable
         multiple authors to work on the same project while maintaining
         visual and structural coherence.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Shared blocks ─────────────────────────────────────────────
@@ -37,11 +37,11 @@ def build():
              toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The shared-blocks/ directory contains blocks that can be reused
         across multiple manuals. Instead of duplicating code, you place
         common blocks there and import them via LazyBlockRegistry.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -80,11 +80,11 @@ def build():
     st_write(bs.sub, "Code Review with AI", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         AI-assisted review complements human review. Use automated
         audits for structural compliance and agent-based review for
         comprehensive quality assessment.
-    """))
+    """)
     st_space("v", 1)
 
     with st_grid(cols=3, cell_styles=s.container.paddings.small_padding) as g:
@@ -144,11 +144,11 @@ def build():
     st_write(bs.sub, "Team Workflows", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         In a team setting, clear role separation and shared conventions
         prevent style drift and conflicting changes. Here is a proven
         workflow for multi-author projects.
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.tip_callout):
@@ -219,11 +219,11 @@ def build():
     st_space("v", 2)
 
     # ── Final tip ─────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: establish a review checklist early in the project. Define
         which aspects are checked by AI (structure, spacing, style
         compliance) and which require human review (content accuracy,
         tone, branding). This avoids duplicate effort and accelerates
         the review cycle.
-    """))
+    """)
     st_space("v", 1)

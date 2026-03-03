@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Rendering pipeline styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,26 +25,26 @@ def build():
         st_write(bs.sub, "Overview", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Every content call in StreamTeX (st_write, st_block,
             st_grid, etc.) ultimately generates HTML via st.html().
             The central _render() function is the dispatch point
             that converts content into an HTML string and sends it
             to Streamlit for display.
-        """))
+        """)
         st_space("v", 2)
 
         # --- 2. The _render() function ---
         st_write(bs.sub, "The _render() dispatch function", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             _render() is the heart of the rendering pipeline.
             It receives content and a Style object, builds an
             HTML string with inline CSS, and sends it to Streamlit.
             When the export buffer is active, the same HTML is
             also appended to the export buffer for later extraction.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -62,13 +59,13 @@ st_write(style, text)
         st_write(bs.sub, "Style resolution to CSS", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Style objects are resolved into CSS inline styles
             at render time. The Style's internal CSS string is
             inserted directly into the HTML element's style
             attribute. This avoids external stylesheets and
             ensures fully self-contained output.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -83,13 +80,13 @@ my_style = Style("color: red; font-weight: bold;", "my_style")
         st_write(bs.sub, "Context managers and nesting", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Context managers like st_block, st_grid, and st_list
             use a push/pop mechanism for proper nesting. When you
             enter a context, the opening HTML tag is pushed. When
             you exit, the closing tag is popped. This ensures
             correct HTML structure even with deeply nested layouts.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -108,12 +105,12 @@ with st_block(outer):
         st_write(bs.sub, "Export buffer shadowing", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             When the export buffer is active, every render call
             is shadowed: the HTML goes to both Streamlit display
             and the export buffer. This dual-render approach means
             the export output is identical to what appears on screen.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -146,7 +143,7 @@ _render(style, text, tag)
   +-> export_append(html)     [if export active]""", language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The rendering pipeline is intentionally simple:
             content in, HTML out.
 
@@ -155,4 +152,4 @@ _render(style, text, tag)
 
             This simplicity makes debugging straightforward:
             inspect the generated HTML string directly.
-        """))
+        """)

@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Export pipeline styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,12 +25,12 @@ def build():
         st_write(bs.sub, "HtmlExportBuffer", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             HtmlExportBuffer is the core data structure for
             HTML export. It accumulates HTML fragments as content
             is rendered, using push/pop for proper nesting of
             container elements like blocks and grids.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -51,12 +48,12 @@ html = buffer.generate_full_html()   # self-contained HTML""")
         st_write(bs.sub, "Dual-render architecture", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Every content call goes to both Streamlit and the
             export buffer simultaneously. This dual-render approach
             ensures the exported HTML is pixel-identical to what
             appears on screen. No separate export pass is needed.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -76,11 +73,11 @@ def _render(style, content, tag):
         st_write(bs.sub, "ExportConfig", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             ExportConfig controls the export behavior: whether
             export is enabled, the page title, the page width,
             and other formatting options for the generated HTML.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -97,12 +94,12 @@ export_cfg = ExportConfig(
         st_write(bs.sub, "st_html(): the display + buffer bridge", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_html() is the bridge function that sends HTML to
             both Streamlit's display and the export buffer. All
             content-rendering functions ultimately call st_html()
             rather than st.html() directly.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -117,13 +114,13 @@ def st_html(html: str):
         st_write(bs.sub, "Export-aware widgets", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Some Streamlit widgets (st.dataframe, st.metric, etc.)
             are interactive and cannot be captured as pure HTML.
             StreamTeX provides export-aware wrappers that render
             a static HTML equivalent into the export buffer while
             still showing the interactive widget on screen.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -153,7 +150,7 @@ Buffer lifecycle:
    +-> returns a single string ready for download""", language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The dual-render approach adds minimal overhead: the
             buffer is just a list of strings.
 
@@ -162,4 +159,4 @@ Buffer lifecycle:
 
             Export-aware widgets provide graceful degradation:
             interactive on screen, static in export.
-        """))
+        """)

@@ -4,15 +4,12 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Markdown rendering demo styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 # ---------------------------------------------------------------------------
 # Sample Markdown content for the interactive demo
@@ -69,13 +66,12 @@ stx.st_markdown(file="docs/readme.md")
 """,
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Markdown Rendering", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             **st_markdown()** renders interpreted Markdown content using
             Streamlit's native engine. Use it when you have existing Markdown
             content (README files, documentation, notes) that you want to
@@ -85,18 +81,18 @@ def build():
             Unlike **st_write()** which applies StreamTeX styles to plain text,
             st_markdown() interprets Markdown syntax and renders it as
             formatted HTML. Both can be used together in the same block.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Basic Formatting ---
         st_write(bs.sub, "Basic Formatting", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Standard Markdown syntax is fully supported: headings (#),
             bold (**), italic (*), strikethrough (~~), lists (- or 1.),
             links, blockquotes (>), and horizontal rules (---).
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/markdown/markdown_basic_formatting.py")
@@ -110,12 +106,12 @@ def build():
         st_write(bs.sub, "Tables and Code Blocks", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Markdown pipe tables and fenced code blocks with syntax
             highlighting are supported natively. Tables use the standard
             pipe syntax (| col1 | col2 |), and code blocks use triple
             backticks with an optional language identifier.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -139,12 +135,12 @@ stx.st_markdown('''
         st_write(bs.sub, "LaTeX Math in Markdown", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Streamlit's Markdown engine natively supports LaTeX math:
             use **$...$** for inline formulas and **$$...$$** for display
             equations. This means you can mix text and math in a single
             Markdown string without switching to st_latex().
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/markdown/markdown_latex_math.py")
@@ -158,12 +154,12 @@ stx.st_markdown('''
         st_write(bs.sub, "Styled Markdown", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The **style=** parameter wraps the rendered Markdown inside a
             StreamTeX st_block() container. This lets you apply CSS styling
             (background, padding, borders) around the Markdown content
             while keeping the Markdown interpretation intact.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -178,12 +174,12 @@ stx.st_markdown(
         st_write(bs.sub, "Loading from Files", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use **file=** to load Markdown from an external .md file. The
             path is resolved via resolve_static(), so relative paths search
             the configured static source directories. This is ideal for
             reusing existing documentation (README, changelogs, API docs).
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -213,7 +209,7 @@ stx.st_markdown(examples[choice])""")
             stx.st_markdown(MARKDOWN_EXAMPLES[choice])
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             **st_markdown()** uses Streamlit's native st.markdown() engine.
 
             **Parameters:**
@@ -234,4 +230,4 @@ stx.st_markdown(examples[choice])""")
             - st_write() applies StreamTeX styles to plain text → styled spans
             - Use st_markdown() for existing Markdown content
             - Use st_write() for StreamTeX-styled inline text with composition
-        """))
+        """)

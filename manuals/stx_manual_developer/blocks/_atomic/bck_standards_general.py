@@ -23,25 +23,25 @@ def build():
         st_write(bs.heading, "Coding Standards", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             These coding standards apply to all StreamTeX source code,
             block files, and documentation projects. Following them
             ensures consistency, theme compatibility, and correct
             export behaviour across the entire ecosystem.
-        """))
+        """)
         st_space("v", 2)
 
         # --- stx vs st ---
         st_write(bs.sub, "stx vs st: when to use which", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use StreamTeX functions (st_write, st_block, st_grid, st_list,
             st_code, st_image, etc.) for all content rendering. Only use
             raw Streamlit calls (st.button, st.selectbox, st.slider,
             st.text_input) for interactive widgets that StreamTeX does
             not wrap.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -64,12 +64,12 @@ def build():
         st_write(bs.sub, "No raw HTML or CSS", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Never write raw HTML or inline CSS strings. Always use
             the Style composition system. Styles are built from the
             Style constructor, composed with + and -, and applied
             through StreamTeX rendering functions.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -86,12 +86,12 @@ def build():
         st_write(bs.sub, "No hardcoded black or white", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Never hardcode color: black, color: white, background: #000,
             or background: #fff. Streamlit handles light/dark themes
             automatically. Hardcoded values break theme switching.
             Use semantic colours from your project styles instead.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Naming conventions ---
@@ -121,12 +121,12 @@ def build():
         st_write(bs.sub, "Block architecture", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Every block file must define a BlockStyles class and a
             build() function. The BlockStyles class holds all styles
             used by the block. The build() function renders the content.
             Create a shorthand bs = BlockStyles for concise access.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -146,12 +146,12 @@ def build():
         st_write(bs.sub, "Style reuse", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Define a style once and reuse it everywhere. Place
             project-wide styles in custom/styles.py. Place block-local
             styles in the BlockStyles class. Never duplicate CSS strings
             across multiple locations.
-        """))
+        """)
         st_space("v", 2)
 
         # --- One st_write for inline text ---
@@ -159,11 +159,11 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             To render inline text with mixed styles, pass a tuple of
             (style, text) pairs to a single st_write() call. Multiple
             st_write() calls stack vertically as separate blocks.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -180,11 +180,11 @@ def build():
         st_write(bs.sub, "Lint after every change", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             After every code change, run the linter before committing.
             This catches import errors, unused variables, and style
             violations early.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("uv run ruff check", language="bash")
@@ -194,11 +194,11 @@ def build():
         st_write(bs.sub, "Export-aware functions", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX wraps several Streamlit functions to support
             HTML export. Always use the stx-prefixed version so that
             content is captured during export.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols=2, cell_styles=(
@@ -222,9 +222,9 @@ def build():
             with g.cell(): st_write(s.large, "st.code()")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The full coding standards reference lives in
             .claude/references/coding_standards.md inside the
             streamtex-docs repository. When in doubt, consult that
             file — it is the single source of truth.
-        """))
+        """)

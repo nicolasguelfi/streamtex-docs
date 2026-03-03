@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Container demo styles."""
@@ -14,7 +12,6 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     demo_border = s.container.borders.solid_border + s.container.paddings.small_padding
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -26,11 +23,11 @@ def build():
         st_write(bs.sub, "st_block: vertical container", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_block wraps content in a styled container.
 
             Children stack vertically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -56,9 +53,9 @@ with st_block(s.container.bg_colors.dark_slate_gray_bg
         st_write(bs.sub, "st_span: horizontal container", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_span lays children side by side on the same line.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -80,10 +77,10 @@ with st_span(s.container.bg_colors.dark_slate_blue_bg
         st_write(bs.sub, "Nesting containers", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Containers can be nested freely:
             block inside block, span inside block, etc.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/container/nesting.py")
@@ -101,23 +98,23 @@ with st_span(s.container.bg_colors.dark_slate_blue_bg
                     st_write(s.large + s.text.colors.coral, "Span child B")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Use st_block for sections and logical grouping.
 
             Use st_span when you need side-by-side elements within a block.
-        """))
+        """)
         st_space("v", 2)
 
         # st_br
         st_write(bs.sub, "st_br: line breaks", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_br() adds vertical spacing between elements.
 
             Useful for breaking up visual density without large gaps.
             More subtle than st_space() which can be configured more explicitly.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -166,10 +163,10 @@ st_space("v", 3)  # More space
 st_write(s.large, "Section 2")""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st_br is simpler for casual spacing.
 
             st_space is better when you need control.
 
             Combine them: st_br between sentences, st_space between sections.
-        """))
+        """)

@@ -22,12 +22,12 @@ def build():
         st_write(bs.heading, "Repository Structure", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The StreamTeX repository is a single Python package with a flat module
             layout. All source code lives under `streamtex/`, tests mirror the
             package structure, and project configuration is centralised in
             `pyproject.toml`.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Top-level tree ---
@@ -50,11 +50,11 @@ def build():
         """), language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The repository follows the src-less layout: the package directory
             `streamtex/` sits at the repository root, alongside `tests/`,
             configuration files, and CI workflows.
 
             All static assets (CSS, fonts) are bundled inside `streamtex/static/`
             and shipped with the wheel.
-        """))
+        """)

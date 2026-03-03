@@ -22,22 +22,22 @@ def build():
     st_write(bs.heading, "Understanding CLAUDE.md", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         CLAUDE.md is the central configuration file that tells
         Claude Code how to behave in your project. It defines
         the AI's identity, environment rules, coding standards,
         and available components.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Identity ---
     st_write(bs.sub, "Identity Section", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The Identity section defines who the AI acts as. It sets
         the persona and specialization that shapes all responses.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -53,11 +53,11 @@ def build():
     st_write(bs.sub, "Environment Section", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The Environment section enforces mandatory runtime rules.
         The most important rule: always prefix Python commands
         with uv run.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -74,11 +74,11 @@ def build():
     st_write(bs.sub, "Context Loading Section", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Context Loading tells Claude Code which files to read
         before generating any code. This ensures the AI understands
         your project's conventions.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -94,11 +94,11 @@ def build():
     st_write(bs.sub, "Coding Standards Section", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Coding Standards define the rules the AI must follow when
         writing StreamTeX code: stx functions over raw Streamlit,
         Style composition, block structure, and more.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -116,11 +116,11 @@ def build():
     st_write(bs.sub, "Key Components Section", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Key Components provides a quick API reference so the AI
         knows which StreamTeX functions are available without
         having to search the codebase.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -140,11 +140,11 @@ def build():
     st_write(bs.sub, "Customizing CLAUDE.md", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         You can add project-specific rules to CLAUDE.md at any
         time. Add them after the generated sections to avoid
         conflicts when updating the profile.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

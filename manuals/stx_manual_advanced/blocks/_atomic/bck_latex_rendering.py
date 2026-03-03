@@ -4,15 +4,12 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """LaTeX rendering demo styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 # ---------------------------------------------------------------------------
 # Sample LaTeX fragments for the interactive demo
@@ -95,13 +92,12 @@ Full documents like this one are passed to LaTeX.js as-is.
 """,
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "LaTeX Rendering", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             If you have existing LaTeX content — articles, course notes,
             formulas — StreamTeX lets you display it directly without
             conversion. Two complementary functions cover all use cases:
@@ -111,31 +107,31 @@ def build():
               (LaTeX.js programmatic API, CDN, zero system dependency)
 
             Everything runs client-side in the browser. No LaTeX installation required.
-        """))
+        """)
         st_space("v", 2)
 
         # === When to Use What ===
         st_write(bs.sub, "When to Use What", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             - **st_latex()** — math formulas only (KaTeX via Streamlit native, fastest)
             - **st_latex_doc()** — documents with sections, lists, tables, math
               (LaTeX.js CDN, renders in an isolated iframe)
             - **st_tikz()** — TikZ diagrams (separate LaTeX pipeline, see Diagrams section)
             - **st_markdown()** — when source content is in Markdown, not LaTeX
-        """))
+        """)
         st_space("v", 2)
 
         # === SIMPLE: Math formulas ===
         st_write(bs.sub, "Simple: Math Formulas", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_latex() wraps Streamlit's native st.latex() renderer.
             Use it for inline or display math. Supports any LaTeX math
             notation: fractions, integrals, matrices, sums, etc.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -178,7 +174,7 @@ stx.st_latex(r"\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}")""")
         st_write(bs.sub, "Document Fragments (st_latex_doc)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_latex_doc() renders LaTeX fragments and full documents using
             the LaTeX.js programmatic API (parse + HtmlGenerator) loaded
             from CDN. It runs entirely client-side with zero system
@@ -187,7 +183,7 @@ stx.st_latex(r"\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}")""")
 
             - Fragments (no \\\\documentclass) are auto-wrapped in a minimal article
             - Full documents (with \\\\documentclass) are passed to LaTeX.js as-is
-        """))
+        """)
         st_space("v", 1)
 
         show_code('''\
@@ -222,11 +218,11 @@ It supports \\emph{emphasis}, \\texttt{monospace}, and basic formatting.
         st_write(bs.sub, "Coexistence with StreamTeX", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_latex() and st_latex_doc() coexist naturally with other
             StreamTeX components in the same block. Each st_latex_doc()
             call renders in its own iframe, providing full CSS/JS isolation.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -243,11 +239,11 @@ stx.st_latex_doc(r'''
         st_write(bs.sub, "Parsing Utilities", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX exports three parsing utilities for extracting
             LaTeX structures from source files. These are pure regex
             functions useful for migration and conversion tools.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -263,7 +259,7 @@ math_exprs = extract_math(latex_source)
 frames = extract_frames(beamer_source)""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             **st_latex()** uses Streamlit's native KaTeX renderer. Fast, lightweight, math only.
 
             **st_latex_doc()** uses the LaTeX.js programmatic API (parse + HtmlGenerator),
@@ -281,4 +277,4 @@ frames = extract_frames(beamer_source)""")
             **light_bg**: Forces white background (default True). Set False for transparent.
             **hyphenate**: Enables LaTeX.js hyphenation (default True).
             **file=**: Loads .tex files via resolve_static() (same as st_mermaid, st_tikz).
-        """))
+        """)

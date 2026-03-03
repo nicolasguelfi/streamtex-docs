@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Book orchestration styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,12 +25,12 @@ def build():
         st_write(bs.sub, "st_book(): the main page generator", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_book() is the top-level function that generates
             a complete page. It accepts a list of block modules
             (each with a build() function) and renders them in
             sequence, managing pagination, TOC, and navigation.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -52,11 +49,11 @@ st_book(
         st_write(bs.sub, "TOCConfig: table of contents", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             TOCConfig controls the sidebar table of contents:
             numbering mode (decimal, roman, none), maximum
             sidebar depth, and search functionality.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -73,11 +70,11 @@ toc = TOCConfig(
         st_write(bs.sub, "MarkerConfig: navigation markers", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             MarkerConfig manages auto-markers generated from the
             TOC and keyboard navigation. Markers are anchor points
             that enable quick jumps between sections.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -93,12 +90,12 @@ markers = MarkerConfig(
         st_write(bs.sub, "BannerConfig: pagination banner", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             BannerConfig controls the pagination banner that
             appears at the top and/or bottom of pages. It can
             be FULL (prev/next with title), COMPACT (arrows only),
             or HIDDEN.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -113,12 +110,12 @@ banner = BannerConfig(
         st_write(bs.sub, "Paginated vs continuous mode", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_book supports two rendering modes. In paginated
             mode, each block is a separate page with navigation.
             In continuous mode, all blocks render on a single
             scrollable page.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -133,12 +130,12 @@ st_book(blocks, paginate=False)""")
         st_write(bs.sub, "Bibliography setup", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_book can load and register bibliography sources
             (.bib files) for citation support. Once registered,
             blocks can cite references using st_cite() and a
             bibliography section is generated automatically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -155,12 +152,12 @@ st_book(
         st_write(bs.sub, "Inspector and link preview", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The inspector is an optional live code editor panel
             that lets developers inspect and modify block code
             at runtime. Link preview injects JS/CSS for hover
             cards on cross-references and external links.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -195,7 +192,7 @@ st_book(
 )""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st_book() handles all the plumbing: page state,
             sidebar TOC, pagination, keyboard shortcuts, and export.
 
@@ -204,4 +201,4 @@ st_book(
 
             Inspector mode is for development only.
             Disable it in production deployments.
-        """))
+        """)

@@ -23,12 +23,12 @@ def build():
         st_write(bs.heading, "Running Tests", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX uses pytest as its test runner. All tests live
             in the tests/ directory and follow the test_<module>.py
             naming convention. Always run tests through uv run so the
             managed virtual environment is used.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Full suite ---
@@ -45,9 +45,9 @@ def build():
         st_write(bs.sub, "Single test file", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Target a specific module's tests by passing the file path.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -60,10 +60,10 @@ def build():
         st_write(bs.sub, "Filter by keyword", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use the -k flag to run tests matching a keyword expression.
             This is useful when working on a specific feature.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -76,10 +76,10 @@ def build():
         st_write(bs.sub, "CLI shortcut", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX provides a CLI command that wraps the test
             runner with sensible defaults.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -92,10 +92,10 @@ def build():
         st_write(bs.sub, "Test coverage", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Generate a coverage report to see which lines are
             exercised by the test suite.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -140,10 +140,10 @@ def build():
             with g.cell(): st_write(s.large, "Coverage report")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             If tests fail after a git pull, run uv sync first to ensure
             dependencies are up to date.
 
             Use the --tb=short flag for condensed tracebacks, or
             --tb=long for full stack traces when debugging failures.
-        """))
+        """)

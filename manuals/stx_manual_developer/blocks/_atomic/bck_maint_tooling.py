@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Other tooling styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -30,12 +27,12 @@ def build():
 3.10""", language="text")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             This file pins the Python version for uv. When you run
             uv sync or uv run, uv reads .python-version to determine
             which Python interpreter to use. This ensures all
             developers and CI use the same Python version.
-        """))
+        """)
         st_space("v", 2)
 
         # --- .gitattributes ---
@@ -50,13 +47,13 @@ def build():
 *.woff2 filter=lfs diff=lfs merge=lfs -text""", language="text")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Binary files (images, fonts, PDFs) are tracked with
             Git LFS to keep the repository lightweight. Git stores
             pointers in the repo and the actual files on the LFS
             server. This prevents repository bloat from large
             binary assets.
-        """))
+        """)
         st_space("v", 2)
 
         # --- .env ---
@@ -70,14 +67,14 @@ STX_LOG_LEVEL=debug
 # NEVER commit secrets to .env — use .env.example as template""", language="text")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The .env file holds local environment variables.
             StreamTeX uses python-dotenv to auto-load these
             variables at startup. The .env file should be listed
             in .gitignore — never commit secrets. Provide a
             .env.example template with placeholder values for
             new developers.
-        """))
+        """)
         st_space("v", 2)
 
         # --- pytest config ---
@@ -91,12 +88,12 @@ testpaths = ["tests"]
 pythonpath = ["."]""", language="toml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Pytest is configured in pyproject.toml:
             - testpaths: tells pytest to look in tests/ by default.
             - pythonpath: adds the project root to sys.path so
               imports resolve correctly without installation.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Summary grid ---
@@ -132,9 +129,9 @@ pythonpath = ["."]""", language="toml")
                 st_write(s.large, "Pytest test paths and Python path")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             These configuration files form the foundation of the
             development environment. They ensure consistency across
             machines and CI. Review them when onboarding new
             developers to understand the project conventions.
-        """))
+        """)

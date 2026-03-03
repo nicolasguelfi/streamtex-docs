@@ -23,22 +23,22 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The stx CLI provides commands for managing AI profiles and
         workspaces. These commands bridge the gap between the StreamTeX
         library and Claude Code configuration.
-    """))
+    """)
     st_space("v", 2)
 
     # ── stx claude install ────────────────────────────────────────
     st_write(bs.sub, "stx claude install", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Install a Claude Code profile into your project. This generates
         CLAUDE.md from the profile template, copies commands, agents,
         skills, and creates settings.json with safe defaults.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -63,11 +63,11 @@ def build():
     st_write(bs.sub, "stx claude diff", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Compare your installed profile against the latest version.
         This shows which commands, agents, or skills have been added,
         modified, or removed since your last installation.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -94,11 +94,11 @@ def build():
     st_write(bs.sub, "stx claude update", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Update your installed profile to the latest version. This
         merges new components while preserving your custom additions.
         Your CLAUDE.md customizations are kept in a separate section.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -123,10 +123,10 @@ def build():
     st_write(bs.sub, "stx workspace init", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Initialize a new StreamTeX workspace. Creates the directory
         structure, stx.toml configuration, and a starter project.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -145,10 +145,10 @@ def build():
     st_write(bs.sub, "stx workspace clone", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Clone a workspace from a remote Git repository. Sets up the
         full project structure and installs dependencies.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -167,11 +167,11 @@ def build():
     st_write(bs.sub, "stx workspace link", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Link a local StreamTeX library checkout for development.
         Changes to the library source are immediately available
         in your workspace without reinstalling.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

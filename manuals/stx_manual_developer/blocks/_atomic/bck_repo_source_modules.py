@@ -23,11 +23,11 @@ def build():
         st_write(bs.heading, "Source Modules", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The `streamtex/` package contains 38 modules organised into functional
             categories. Each module has a single responsibility and exports its
             public API through `__init__.py`.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Core Rendering ---
@@ -148,10 +148,10 @@ def build():
         """), language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             All public symbols are re-exported through `streamtex/__init__.py`.
             Users should never import from internal modules directly.
 
             The `cli/` sub-package uses click groups; each file registers its
             commands with the top-level `stx` group defined in `main.py`.
-        """))
+        """)

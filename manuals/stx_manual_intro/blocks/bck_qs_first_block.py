@@ -27,12 +27,12 @@ def build():
     st_write(bs.sub, "Step 1: Create a block file", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Create a new file in blocks/ with the bck_ prefix.
 
         Every block needs a BlockStyles class, a bs alias,
         and a build() function.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -62,12 +62,12 @@ def build():
     st_write(bs.sub, "Step 2: Register in book.py", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Add your new block to the module list in book.py.
 
         The block auto-discovery in blocks/__init__.py
         makes it available as blocks.bck_hello.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -84,13 +84,13 @@ def build():
     st_write(bs.sub, "Step 3: Run the project", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Launch your project with Streamlit.
 
         The browser opens automatically.
 
         Edit any block and the page hot-reloads.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -102,10 +102,10 @@ def build():
     st_write(bs.sub, "Step 4: Next steps", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         You now have a working StreamTeX project.
         Explore these topics to go further.
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -117,10 +117,10 @@ def build():
         with l.item(): st_write(s.large, "Deploy with Docker or Hugging Face Spaces")
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Hot-reload is your best friend during development.
         Save a file and Streamlit refreshes automatically.
 
         Use uv run pytest tests/ -v after library changes.
-    """))
+    """)
     st_space("v", 1)

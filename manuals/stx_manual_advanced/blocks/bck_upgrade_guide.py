@@ -25,12 +25,12 @@ def build():
     st_write(bs.heading, "Upgrade Guide \u2014 v0.2 to v0.3", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         This guide covers everything you need to migrate a StreamTeX
         project from version 0.2 to version 0.3. It lists breaking
         changes, highlights new features, provides step-by-step
         migration instructions, and documents deprecated APIs.
-    """))
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #
@@ -39,10 +39,10 @@ def build():
     st_write(bs.sub, "Breaking Changes", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The following changes in v0.3 may require updates to existing
         projects. Review each item carefully before upgrading.
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -76,11 +76,11 @@ def build():
     st_write(bs.sub, "New Features", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Version 0.3 introduces several major features that expand
         StreamTeX's capabilities for document authoring and data
         integration.
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -129,11 +129,11 @@ def build():
     st_write(bs.sub, "Migration Steps", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Follow these steps in order to migrate your project from
         v0.2 to v0.3. Each step can be verified independently
         before moving on.
-    """))
+    """)
     st_space("v", 1)
 
     # Step 1
@@ -149,10 +149,10 @@ def build():
     st_write(bs.feature, "Step 2: Replace banner_color with BannerConfig")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The banner_color= parameter has been replaced by the
         banner= parameter which accepts a BannerConfig instance.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -169,10 +169,10 @@ def build():
     st_write(bs.feature, "Step 3: Replace inspector=True with InspectorConfig")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The boolean inspector= parameter has been replaced by
         the InspectorConfig dataclass for finer control.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -189,10 +189,10 @@ def build():
     st_write(bs.feature, "Step 4: Use export-aware widgets")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         For HTML export compatibility, replace native st.* data
         widgets with their stx.st_* counterparts.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -232,11 +232,11 @@ def build():
     st_write(bs.sub, "Deprecated APIs", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The following APIs are deprecated in v0.3. They continue
         to work for backward compatibility but will be removed in
         a future release. Update your code as described above.
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -252,9 +252,9 @@ def build():
             )
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Both deprecated parameters still work in v0.3 and emit
         a deprecation warning at runtime. They will be removed
         in a future release. Plan your migration accordingly.
-    """))
+    """)
     st_space("v", 1)

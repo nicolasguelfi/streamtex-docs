@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # _atomic/ → blocks/ → project root → manuals/ → documentation/ → repo root
@@ -15,13 +14,11 @@ _repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
 _dockerfile_path = os.path.join(_repo_root, "Dockerfile")
 _dockerignore_path = os.path.join(_repo_root, ".dockerignore")
 
-
 class BlockStyles:
     """Dockerfile block styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):

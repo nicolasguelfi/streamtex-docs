@@ -104,12 +104,12 @@ def build():
                         )
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Think of commands as tools and agents as craftspeople.
         A command does one thing well. An agent decides which
         commands to use, in what order, and adapts based on
         the results.
-    """))
+    """)
     st_space("v", 2)
 
     # ── The four agents ────────────────────────────────────────────
@@ -161,12 +161,12 @@ def build():
     st_write(bs.sub, "How Agents Are Defined", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Each agent is a Markdown file stored in the profile's agents
         directory. When invoked, the agent automatically loads its
         context — coding standards, skills, and design rules — before
         performing any action.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -182,11 +182,11 @@ def build():
     """), language="text", line_numbers=False)
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Agents auto-load their context before acting. This means
         they read the relevant skills, coding standards, and
         blueprints defined in the profile so that every generated
         block is standards-compliant from the start. You never
         need to manually paste rules into the conversation.
-    """))
+    """)
     st_space("v", 1)

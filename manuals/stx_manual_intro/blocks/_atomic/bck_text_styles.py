@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Text styles catalog."""
@@ -19,7 +17,6 @@ class BlockStyles:
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Text Styles Catalog",
@@ -30,9 +27,9 @@ def build():
         st_write(bs.sub, "Text Colors (s.text.colors.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX includes all named CSS colors as predefined styles.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/text/styles_colors.py")
@@ -57,10 +54,10 @@ def build():
         st_write(bs.sub, "Text Sizes (s.GIANT to s.tiny)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Predefined sizes from GIANT (196pt) to tiny (4pt),
             plus a factory method.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -94,9 +91,9 @@ st_write(custom_size, "Custom 42pt text")""")
         st_write(bs.sub, "Fonts (s.text.fonts.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Common font families available as predefined styles.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -118,9 +115,9 @@ st_write(s.text.fonts.font_courier_new + s.large,
         st_write(bs.sub, "Weights (s.text.weights.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control font weight: bold, light, or normal.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -140,9 +137,9 @@ st_write(s.text.weights.light_weight + s.large,
         st_write(bs.sub, "Decorations (s.text.decors.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Text decorations: italic, underline, strikethrough, and none.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -163,9 +160,9 @@ st_write(s.text.decors.underline_text + s.large,
         st_write(bs.sub, "Alignments (s.text.alignments.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control text alignment within containers.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -200,9 +197,9 @@ with st_block(bs.cell + s.container.sizes.width_full):
         st_write(bs.sub, "Text Wrap (s.text.wrap.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control text wrapping behavior: wrap or nowrap.
-        """))
+        """)
         st_space("v", 1)
 
         show_code('st_write(s.text.wrap.nowrap + s.large, "This text will not break...")')

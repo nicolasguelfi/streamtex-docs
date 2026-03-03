@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Container styles catalog."""
@@ -14,7 +12,6 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     demo_box = s.container.borders.solid_border + s.container.paddings.small_padding
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,9 +25,9 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             All named CSS background colors available as predefined styles.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/container/styles_bg_colors.py")
@@ -62,10 +59,10 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Predefined paddings from tiny (3pt) to Giant (96pt),
             plus a factory method.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -95,11 +92,11 @@ Paddings.size("10px", "20px")         # factory""")
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control spacing outside elements.
 
             Same scale as paddings.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -120,9 +117,9 @@ Margins.size("auto", "auto")          # factory""")
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Border styles, widths, and colors for containers.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -166,22 +163,22 @@ with st_block(s.container.borders.dashed_border
                     st_write("groove + thick")
         st_space("v", 1)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Border factories available.
 
             Borders.size("2px") for custom width.
 
             Borders.color(s.text.colors.red) for custom color.
-        """))
+        """)
         st_space("v", 2)
 
         # Flex
         st_write(bs.sub, "Flex (s.container.flex.*)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Flexbox utilities for advanced layouts.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -196,9 +193,9 @@ s.container.flex.center_align_items""", line_numbers=False)
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Pre-composed layout patterns for common use cases.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -218,9 +215,9 @@ s.container.layouts.span      # flex row + width:fit""", line_numbers=False)
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control container dimensions: width and height utilities.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\

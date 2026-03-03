@@ -22,22 +22,22 @@ def build():
     st_write(bs.heading, "Claude Code Settings", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The settings.json file controls which tools Claude Code is
         allowed to use in your project. It defines permission scopes
         that balance productivity with safety.
-    """))
+    """)
     st_space("v", 2)
 
     # --- File structure ---
     st_write(bs.sub, "Settings File Structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The settings file lives at .claude/settings.json inside
         your project. It uses a simple JSON structure with
         permission arrays.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -69,10 +69,10 @@ def build():
     st_write(bs.sub, "Permission Scopes", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The two main permission arrays control what Claude Code
         can and cannot do in your project.
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.good_callout):
@@ -110,12 +110,12 @@ def build():
     st_write(bs.sub, "Configuring Permissions", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         You can edit settings.json directly to add or remove
         tool permissions. Common customizations include allowing
         Docker commands or restricting file writes to specific
         directories.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

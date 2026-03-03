@@ -1,13 +1,10 @@
 """Title page — StreamTeX AI Manual hero banner with badges."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """Title page styles."""
@@ -33,9 +30,7 @@ class BlockStyles:
     badge_number = s.project.colors.ai_violet + s.bold + s.LARGE
     badge_label = s.large + s.center_txt
 
-
 bs = BlockStyles
-
 
 def build():
     """Render the AI Manual title page."""
@@ -67,7 +62,7 @@ def build():
     st_space("v", 2)
 
     # ── Introduction paragraph ────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX AI combines the power of large language models with
         structured coding standards. Instead of writing every block by
         hand, you describe what you want and an AI agent generates
@@ -75,5 +70,5 @@ def build():
         ready to deploy. This manual covers every command, agent,
         blueprint, and workflow you need to go from idea to published
         document in minutes.
-    """))
+    """)
     st_space("v", 1)

@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """CI workflow styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,7 +22,7 @@ def build():
         st_write(bs.sub, "Two repos, two CI workflows", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The StreamTeX ecosystem has two GitHub repos with separate CIs:
 
             - **streamtex** (library): lint + test on every push/PR
@@ -33,7 +30,7 @@ def build():
 
             Both use GitHub Actions and share the same pattern:
             trigger on push to main and PRs targeting main.
-        """))
+        """)
         st_space("v", 2)
 
         # ============================================================
@@ -63,11 +60,11 @@ jobs:
       - run: uv run pytest tests/ -v""", language="yaml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The library CI uses **--frozen** because the library is self-contained:
             uv.lock has no local path dependencies, so frozen installs work directly.
             Steps: install deps from lock file, lint with ruff, run full test suite.
-        """))
+        """)
         st_space("v", 2)
 
         # ============================================================
@@ -109,7 +106,7 @@ jobs:
         st_write(bs.sub, "Why UV_NO_SOURCES=1?", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             In local dev, pyproject.toml points streamtex to a sibling folder:
 
             ```toml
@@ -127,7 +124,7 @@ jobs:
 
             The Dockerfile uses the same approach: `uv sync --no-sources`
             then strips the section with sed.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Structural checks ---
@@ -165,8 +162,8 @@ jobs:
                 st_write(s.large, "Syntax error in book orchestration")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             These checks use Python AST parsing — they validate structure
             without importing streamtex or launching Streamlit. This keeps
             CI fast (~20s) while catching the most common errors.
-        """))
+        """)

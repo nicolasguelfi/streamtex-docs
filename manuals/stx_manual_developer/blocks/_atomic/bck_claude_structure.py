@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Claude directory structure styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,12 +22,12 @@ def build():
         st_write(bs.sub, "Overview", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The .claude/ directory contains all configuration and
             context files for Claude Code sessions. It defines
             the profile type, permissions, coding standards, and
             custom commands available during AI-assisted development.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Directory tree ---
@@ -64,12 +61,12 @@ CLAUDE.md                       # Root rules file (project root)""", language="t
         st_write(bs.sub, ".stx-profile", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The .stx-profile file identifies the project type.
             It contains a single keyword: library, docs, or project.
             The stx claude commands use this to determine which
             profile template to apply.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -81,20 +78,20 @@ library""", language="text")
         st_write(bs.sub, "settings.json", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The settings.json file configures permissions for
             Claude Code. It controls which tools Claude can use,
             which directories it can access, and which commands
             it is allowed to run. This is a security boundary
             for AI-assisted development.
-        """))
+        """)
         st_space("v", 2)
 
         # --- references/ ---
         st_write(bs.sub, "references/", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The references directory contains documentation that
             Claude reads before generating any code:
 
@@ -105,14 +102,14 @@ library""", language="text")
 
             These files ensure Claude generates code that follows
             project conventions consistently.
-        """))
+        """)
         st_space("v", 2)
 
         # --- developer/skills/ ---
         st_write(bs.sub, "developer/skills/", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Skills provide domain-specific knowledge to Claude:
 
             - architecture.md: describes the module structure,
@@ -122,14 +119,14 @@ library""", language="text")
 
             Claude loads these automatically when relevant tasks
             are detected.
-        """))
+        """)
         st_space("v", 2)
 
         # --- commands/ ---
         st_write(bs.sub, "commands/developer/", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Custom commands are markdown files that define
             slash-commands for Claude Code sessions:
 
@@ -139,14 +136,14 @@ library""", language="text")
 
             Each file contains instructions that Claude follows
             when the corresponding command is invoked.
-        """))
+        """)
         st_space("v", 2)
 
         # --- CLAUDE.md ---
         st_write(bs.sub, "CLAUDE.md", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             CLAUDE.md sits at the project root (not inside .claude/).
             It is the root rules file that Claude Code reads at the
             start of every session. It contains:
@@ -156,11 +153,11 @@ library""", language="text")
             - Context loading requirements.
             - Key component references.
             - Workflow instructions.
-        """))
+        """)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The .claude/ directory is committed to git and shared
             across all developers. This ensures consistent AI-assisted
             development experiences for the entire team.
-        """))
+        """)

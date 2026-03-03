@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Ruff configuration styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -72,7 +69,7 @@ select = ["E", "F", "I", "W"]
         st_write(bs.sub, "Per-file ignores", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Some files require specific rule exceptions:
 
             - __init__.py files: F401 (unused imports) and I001
@@ -82,7 +79,7 @@ select = ["E", "F", "I", "W"]
             - HTML component files (html_*.py): E501 (line length)
               is ignored because embedded HTML strings often exceed
               120 characters and splitting them harms readability.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Running ruff ---
@@ -100,27 +97,27 @@ uv run ruff check --fix streamtex/
 uv run ruff check streamtex/core/writer.py""", language="bash")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The --fix flag automatically resolves safe issues like
             import sorting and unused import removal. Always review
             the changes after running --fix before committing.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Target version ---
         st_write(bs.sub, "Target version", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             target-version = "py310" tells Ruff to flag syntax or
             patterns that are incompatible with Python 3.10. This
             ensures the codebase remains compatible with the minimum
             supported Python version.
-        """))
+        """)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Run uv run ruff check before every commit. CI will
             reject pull requests with lint errors. Use --fix for
             quick cleanup, but always verify the changes.
-        """))
+        """)

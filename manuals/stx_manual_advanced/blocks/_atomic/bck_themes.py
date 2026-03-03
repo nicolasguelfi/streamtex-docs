@@ -6,8 +6,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Theme demo styles."""
@@ -18,7 +16,6 @@ class BlockStyles:
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Themes", tag=t.div, toc_lvl="1")
@@ -28,10 +25,10 @@ def build():
         st_write(bs.sub, "How themes work", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             A theme is a Python dictionary
             mapping style_ids to replacement CSS strings.
-        """))
+        """)
         st_space("v", 1)
 
         # Read actual themes.py
@@ -56,10 +53,10 @@ dark = {
         st_write(bs.sub, "Activating a theme in book.py", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Set the theme dict in book.py
             before rendering blocks.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -74,10 +71,10 @@ sts.theme = dark""")
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The dark theme remaps specific style_ids
             for better contrast on dark backgrounds.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols="1fr 1fr 1fr", cell_styles=bs.cell) as g:
@@ -108,23 +105,23 @@ sts.theme = dark""")
                 st_write(s.large, "25% opacity (brighter on dark)")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Override only what needs dark adaptation.
 
             Most styles work well in both modes
             if you avoid hardcoded black/white.
-        """))
+        """)
         st_space("v", 2)
 
         # StyleGrid in themed layouts
         st_write(bs.sub, "StyleGrid: Per-cell styling in themes", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StyleGrid allows different cells in a grid to have different styles.
             Perfect for creating themed table layouts where each cell inherits
             the theme's overrides.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/theme/stylegrid_per_cell.py")
@@ -134,12 +131,12 @@ sts.theme = dark""")
         st_write(bs.sub, "Theme composition and merging", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Themes are dictionaries that can be composed:
             - Base theme with foundational colors
             - Light/dark variants override specific entries
             - Merge multiple themes for compound effects
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/theme/theme_composition.py")
@@ -149,10 +146,10 @@ sts.theme = dark""")
         st_write(bs.sub, "Dynamic theme switching", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use Streamlit session state to switch themes at runtime.
             Each theme change updates the global sts.theme dictionary.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/theme/theme_dynamic_switching.py")
@@ -179,10 +176,10 @@ sts.theme = dark""")
         """)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The theme system is optional. Styles work fine without themes.
 
             Themes are powerful when you need dark/light mode or brand customization.
 
             Keep themes focused on color and contrast — not layout or typography.
-        """))
+        """)

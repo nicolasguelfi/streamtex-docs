@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Grid cell styles demo."""
@@ -18,7 +16,6 @@ class BlockStyles:
                  + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Grid Cell Styles",
@@ -29,10 +26,10 @@ def build():
         st_write(bs.sub, "cell_styles as a single Style", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Pass a single Style to cell_styles
             to apply it uniformly to all cells.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -58,10 +55,10 @@ with st_grid(cols=2,
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Target specific cells with Excel-like notation
             for per-cell styling.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/grid/cell_stylegrid_create.py")
@@ -96,9 +93,9 @@ with st_grid(cols=2,
         st_write(bs.sub, "StyleGrid operators: +, -, *", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Combine, subtract, or replace cell styles with operators.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -107,9 +104,9 @@ sg1 - sg2  # remove properties
 sg1 * sg2  # replace (sg2 wins where non-empty)""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Use sg.create() for complex grids.
 
             Combine multiple sg.create() calls with +
             to build the full cell style map.
-        """))
+        """)

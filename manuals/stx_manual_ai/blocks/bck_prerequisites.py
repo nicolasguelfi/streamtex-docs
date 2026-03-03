@@ -22,21 +22,21 @@ def build():
     st_write(bs.heading, "Prerequisites", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Before using AI-powered workflows with StreamTeX, make sure
         your environment meets these requirements. The setup takes
         only a few minutes.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Python ---
     st_write(bs.sub, "Python 3.10+", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX requires Python 3.10 or later. Check your
         installed version before continuing.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -49,11 +49,11 @@ def build():
     st_write(bs.sub, "uv Package Manager (recommended)", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         uv is a fast Python package manager that replaces pip and venv.
         StreamTeX projects use uv for dependency management, virtual
         environment creation, and command execution.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -72,10 +72,10 @@ def build():
     st_write(bs.sub, "AI Tool: Claude Code or Cursor", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX AI profiles work with two AI coding tools.
         Choose the one that fits your workflow best.
-    """))
+    """)
     st_space("v", 1)
 
     with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
@@ -103,10 +103,10 @@ def build():
     st_write(bs.sub, "Install StreamTeX", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Install the StreamTeX library from PyPI. Use uv (recommended)
         or pip as your package manager.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -122,11 +122,11 @@ def build():
     st_write(bs.sub, "Optional: CLI Extras", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         For the full CLI experience (stx command), install with
         the cli extras. This adds workspace management, validation,
         and profile installation commands.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -138,10 +138,10 @@ def build():
     """), language="bash", line_numbers=False)
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The streamtex[cli] extra includes the stx command-line tool
         used throughout this manual. Without it, you can still use
         StreamTeX as a Python library, but the stx commands
         (workspace, claude install, etc.) will not be available.
-    """))
+    """)
     st_space("v", 1)

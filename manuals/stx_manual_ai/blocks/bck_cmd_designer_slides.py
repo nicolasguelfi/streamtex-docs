@@ -26,11 +26,11 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The three slide commands form a creation-validation-fix pipeline.
         First create a slide with slide-new, then validate it with
         slide-audit, and finally auto-fix any violations with slide-fix.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Command 1: slide-new ───────────────────────────────────────
@@ -194,10 +194,10 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: always run slide-audit before committing your blocks.
         Catching issues early prevents style drift across your project.
         The audit-fix cycle is designed to be run repeatedly during
         development until all blocks pass.
-    """))
+    """)
     st_space("v", 1)

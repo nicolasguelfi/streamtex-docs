@@ -27,7 +27,7 @@ def build():
     st_space("v", 2)
 
     # --- Introduction ---
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX provides two distinct LaTeX rendering functions:
 
         - **st_latex()** renders isolated math formulas using Streamlit's
@@ -39,19 +39,19 @@ def build():
         Use st_latex_doc() when you need more than math \u2014 structured
         documents, course notes, articles, or any content that relies on
         LaTeX's document model.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Section 1: Basic Usage ---
     st_write(bs.sub, "Basic Usage", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Pass a raw LaTeX string to st_latex_doc(). If the string contains
         a \\\\documentclass declaration, it is sent to LaTeX.js as-is.
         Otherwise, StreamTeX auto-wraps the fragment in a minimal
         article document.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -78,11 +78,11 @@ Hello from LaTeX!
     st_write(bs.sub, "Fragment Wrapping", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         When no \\\\documentclass is present, StreamTeX automatically wraps
         the content in a minimal article document. This lets you write
         LaTeX fragments without boilerplate.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -106,9 +106,9 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     st_write(bs.sub, "Parameters", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         st_latex_doc() accepts several parameters to control rendering:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -134,11 +134,11 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     st_write(bs.sub, "Loading from File", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Use the file parameter to load a .tex file directly. The path
         is resolved via StreamTeX's static asset resolution (same as
         st_mermaid, st_tikz).
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -153,10 +153,10 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     st_write(bs.sub, "LaTeX.js Capabilities", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         LaTeX.js supports a wide range of standard LaTeX constructs.
         Here is what works out of the box:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -211,10 +211,10 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     st_write(bs.sub, "LaTeX.js Limitations", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         LaTeX.js is a client-side parser. It does NOT support everything
         that a full LaTeX distribution provides. Key limitations:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -229,10 +229,10 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     st_write(bs.sub, "Choosing the Right Function", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX offers several LaTeX-related functions. Choose based
         on your content:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -256,7 +256,7 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
             )
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         **st_latex_doc()** uses the LaTeX.js programmatic API (parse + HtmlGenerator),
         loaded from CDN, running entirely client-side in the browser.
         No LaTeX installation required.
@@ -278,5 +278,5 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
 
         **file=**: Loads .tex files via resolve_static() (same resolution as
         st_mermaid, st_tikz). Supports any text encoding via the encoding parameter.
-    """))
+    """)
     st_space("v", 3)

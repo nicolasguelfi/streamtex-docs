@@ -24,13 +24,13 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The visual-design-rules.md skill defines 9 rules
         that every block must follow. These rules ensure
         consistent, readable, and maintainable output
         across all projects. Below are the rules with
         WRONG and CORRECT examples.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Rule 1: Style composition ────────────────────────────────
@@ -157,12 +157,12 @@ def build():
     )
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Every block file must define a BlockStyles class
         at the top. This class groups all style definitions
         for the block, keeping them organized and reusable.
         Always alias it as "bs" for concise usage.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -182,12 +182,12 @@ def build():
     )
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Every block must expose a build() function with no
         required parameters. This is the entry point called
         by the book orchestrator. All rendering logic goes
         inside build().
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -241,12 +241,12 @@ def build():
     )
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Keep text content to approximately 45 characters
         per line. This ensures comfortable reading on
         slides and prevents text from overflowing grid
         cells. Use textwrap.dedent for multi-line strings.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Rule 8: 32pt minimum ─────────────────────────────────────
@@ -257,12 +257,12 @@ def build():
     )
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Body text must use s.large (32pt) or larger. Never
         use default size or s.small for content that readers
         need to see clearly. Titles use s.Large (40pt) or
         s.LARGE (48pt).
-    """))
+    """)
     st_space("v", 2)
 
     # ── Rule 9: Consistent imports ───────────────────────────────
@@ -273,12 +273,12 @@ def build():
     )
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Every block follows the same import structure.
         Only import what you actually use. The canonical
         import order is: streamtex functions, enums,
         styles, then helpers.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -309,12 +309,12 @@ def build():
         """))
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The visual-design-rules.md skill contains the full
         specification with additional examples and edge
         cases. Agents read this skill automatically before
         generating or reviewing blocks. You can also read
         it yourself to understand exactly what the AI
         checks for during a slide audit.
-    """))
+    """)
     st_space("v", 1)

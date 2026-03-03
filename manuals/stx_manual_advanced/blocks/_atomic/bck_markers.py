@@ -28,14 +28,14 @@ def build():
     # ------------------------------------------------------------------
     # Introduction
     # ------------------------------------------------------------------
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Markers are navigation waypoints placed in your content.
 
         They power the floating navigation widget (prev/next buttons,
         popup list) and keyboard shortcuts (PageDown/PageUp by default).
 
         Markers work in both continuous and paginated book modes.
-    """))
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------
@@ -111,10 +111,10 @@ st_write(s.huge, "Appendix", toc_lvl="1", marker=False)
 st_write(s.huge, "Important Note", toc_lvl="2", marker=True)""")
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The marker= parameter only applies to headings that have a
         toc_lvl. It has no effect on non-TOC text.
 
         When marker=None (default), the auto_marker_on_toc setting
         decides whether the heading becomes a marker.
-    """))
+    """)

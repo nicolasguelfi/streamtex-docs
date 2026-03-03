@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Visibility demo styles."""
@@ -21,7 +19,6 @@ class BlockStyles:
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Visibility", tag=t.div, toc_lvl="1")
@@ -31,10 +28,10 @@ def build():
         st_write(bs.sub, "Three visibility modes", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control element visibility with three modes:
             hidden, visible, invisible.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols=3, cell_styles=bs.cell) as g:
@@ -69,10 +66,10 @@ def build():
         st_write(bs.sub, "Live demonstration", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Three boxes below —
             the middle one changes visibility mode.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/visibility/visibility_modes.py")
@@ -129,9 +126,9 @@ def build():
                 st_write("Box C")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Use hidden to completely remove an element.
 
             Use invisible to preserve layout spacing
             while hiding content.
-        """))
+        """)

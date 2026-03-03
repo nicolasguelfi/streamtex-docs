@@ -4,8 +4,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Mermaid diagrams demo styles."""
@@ -14,26 +12,24 @@ class BlockStyles:
     file_label = s.medium + s.italic + s.project.colors.neutral_gray
 bs = BlockStyles
 
-
 DIAGRAMS = {
     "Flowchart": "diagrams/flowchart.mmd",
     "Sequence Diagram": "diagrams/sequence.mmd",
     "Class Diagram": "diagrams/class_diagram.mmd",
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Mermaid Diagrams", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             stx.st_mermaid() renders Mermaid diagrams: flowcharts, sequence
             diagrams, class diagrams, and more.
 
             Live rendering uses the
             streamlit-mermaid component. HTML export generates SVG via mermaid-py.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Flowchart ---
@@ -54,11 +50,11 @@ def build():
         st_write(bs.sub, "Sequence Diagram", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Sequence diagrams show interactions between components over time.
 
             Ideal for documenting request/response flows.
-        """))
+        """)
         st_space("v", 1)
 
         show_code('stx.st_mermaid(file="diagrams/sequence.mmd", height=1000)')
@@ -75,10 +71,10 @@ def build():
         st_write(bs.sub, "Class Diagram", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Class diagrams visualize the StreamTeX style system:
             Style composition, inheritance, and block helpers.
-        """))
+        """)
         st_space("v", 1)
 
         with st_block(s.project.containers.result_box):
@@ -113,7 +109,7 @@ stx.st_mermaid(file=DIAGRAMS[choice], height=1000)""")
         show_code(file=DIAGRAMS[choice], language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Mermaid supports: flowcharts, sequence, class, state, ER, Gantt, pie, and more.
 
             stx.st_mermaid() uses streamlit-mermaid for live rendering.
@@ -121,4 +117,4 @@ stx.st_mermaid(file=DIAGRAMS[choice], height=1000)""")
             HTML export generates SVG via mermaid-py (mermaid.ink service).
 
             Static .mmd files can be loaded from the static/diagrams/ folder.
-        """))
+        """)

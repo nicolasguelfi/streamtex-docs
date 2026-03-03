@@ -25,12 +25,12 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Style commands help you maintain consistency across your entire
         project. They detect duplicate styles, extract inline CSS into
         reusable classes, and validate the structural correctness of
         every block file.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Command 1: style-audit ─────────────────────────────────────
@@ -186,11 +186,11 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The recommended workflow is: run style-audit first to identify
         problems, then style-refactor to fix them automatically. Use
         block-preview to validate individual blocks during development.
         Together, these commands keep your project styles clean and
         consistent as it grows.
-    """))
+    """)
     st_space("v", 1)

@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Editable install styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,23 +22,23 @@ def build():
         st_write(bs.sub, "Why editable install?", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             When developing the StreamTeX library alongside the docs,
             you need changes to the library to be reflected immediately
             without reinstalling. An editable install creates a live
             link between the source code and the installed package.
-        """))
+        """)
         st_space("v", 2)
 
         # --- 2. How uv handles editable installs ---
         st_write(bs.sub, "How uv handles editable installs", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             uv reads the pyproject.toml to determine how to install
             the package. When a local path dependency is declared,
             uv installs it in editable mode automatically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -60,12 +57,12 @@ streamtex = { path = "../streamtex", editable = true }""", language="toml")
         st_write(bs.sub, "Development workflow", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The typical dev loop is: edit the library source,
             then run a manual to see the effect immediately.
             No reinstall step is needed because the editable
             install points directly at the source tree.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -83,11 +80,11 @@ uv run streamlit run manuals/stx_manual_intro/book.py
         st_write(bs.sub, "Verify the editable install", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Confirm that the editable install is active by checking
             the installed package location. It should point to your
             local source directory, not to a site-packages copy.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -119,7 +116,7 @@ uv run pytest tests/ -v   (verify nothing broke)
 uv run ruff check streamtex/   (verify code style)""", language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The editable install only affects the local environment.
 
             When deploying, the docs project pulls the release
@@ -127,4 +124,4 @@ uv run ruff check streamtex/   (verify code style)""", language="text")
 
             Always run tests after editing the library to catch
             regressions before committing.
-        """))
+        """)

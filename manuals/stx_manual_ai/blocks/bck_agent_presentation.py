@@ -49,13 +49,13 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The Presentation Designer is a specialist agent for creating
         slides meant for live projection at 10 to 20 meters viewing
         distance. It is only available in the "presentation" profile
         and applies stricter formatting rules than the standard
         Slide Designer.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Special rules ──────────────────────────────────────────────
@@ -238,12 +238,12 @@ def build():
                     with l.item(): st_write(s.Large, "Type inferred automatically")
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The Presentation Designer is only available when the
         "presentation" profile is active. Switch profiles with
         the stx CLI before invoking the agent. All standard
         designer commands still work — the presentation agent
         simply applies stricter formatting constraints on top
         of the base design rules.
-    """))
+    """)
     st_space("v", 1)

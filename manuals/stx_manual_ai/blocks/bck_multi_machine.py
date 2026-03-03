@@ -24,12 +24,12 @@ def build():
     st_space("v", 2)
 
     # ── The problem ───────────────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The .claude/ directory contains your AI configuration: commands,
         agents, skills, and settings. When you work on multiple machines
         (laptop, desktop, CI server), you need a strategy to keep this
         configuration synchronized.
-    """))
+    """)
     st_space("v", 2)
 
     # ── What to sync ──────────────────────────────────────────────
@@ -70,11 +70,11 @@ def build():
     st_write(bs.sub, "Solution: claude-sync.sh Script", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         A simple shell script can synchronize the portable parts of
         .claude/ between machines. Run it after pulling changes or
         when setting up a new machine.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -111,12 +111,12 @@ def build():
              toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Instead of a sync script, you can commit .claude/ to your
         project repository. This ensures every collaborator and
         every machine gets the same configuration. Use .gitignore
         to exclude machine-specific files.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

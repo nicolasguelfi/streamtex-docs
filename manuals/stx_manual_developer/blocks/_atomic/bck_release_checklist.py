@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Release checklist styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,7 +22,7 @@ def build():
         st_write(bs.sub, "Versioning scheme", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX follows semantic versioning (semver):
             MAJOR.MINOR.PATCH (e.g. 1.2.3).
 
@@ -35,7 +32,7 @@ def build():
 
             Decide which component to bump based on the
             changes included in this release.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Step-by-step ---
@@ -125,8 +122,8 @@ git push origin main --tags
                 st_write(s.large, "Create GitHub Release from tag")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Always run tests and lint before tagging. A failed CI
             on the publish workflow means the package will not reach
             PyPI, but the tag and release will still exist on GitHub.
-        """))
+        """)

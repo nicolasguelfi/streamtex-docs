@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """DataFrames & tables demo styles."""
@@ -35,20 +33,19 @@ SAMPLE_JSON = {
     "features": ["styles", "grids", "lists", "export"],
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "DataFrames & Structured Data",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st.dataframe() = interactive table (sort, filter).
 
             st_grid() = static table with full visual control.
 
             Choose based on your needs.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: st.dataframe ---
@@ -130,9 +127,9 @@ with st_grid(cols=3, cell_styles=header_style + data_style) as g:
         st_write(bs.sub, "Side-by-Side Comparison", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st.dataframe (left) vs st_grid (right) — same data, different rendering.
-        """))
+        """)
         st_space("v", 1)
 
         cmp_cell = (s.container.borders.solid_border
@@ -156,10 +153,10 @@ with st_grid(cols=3, cell_styles=header_style + data_style) as g:
                                 st_write(str(SAMPLE_DATA[col][i]))
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st.dataframe() supports interactive sorting and filtering.
 
             st_grid() provides full visual control (colors, borders, fonts).
 
             Use st.dataframe for exploration, st_grid for presentation.
-        """))
+        """)

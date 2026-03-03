@@ -22,22 +22,22 @@ def build():
         st_write(bs.heading, "CLI Deploy Commands", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The stx deploy command group handles all deployment
             workflows. Each subcommand targets a specific platform
             or deployment step.
-        """))
+        """)
         st_space("v", 2)
 
         # --- stx deploy preflight ---
         st_write(bs.sub, "stx deploy preflight", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Run pre-deployment checks before deploying to any
             platform. Validates project structure, dependencies,
             and configuration files.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -49,11 +49,11 @@ def build():
         st_write(bs.sub, "stx deploy docker", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Build a Docker image and run it locally.
             Uses the repository Dockerfile with the correct
             FOLDER build-arg for your project.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -69,11 +69,11 @@ def build():
         st_write(bs.sub, "stx deploy render", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Deploy your project to Render.com. Generates the
             render.yaml blueprint and triggers the deployment
             pipeline.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -85,11 +85,11 @@ def build():
         st_write(bs.sub, "stx deploy huggingface", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Deploy your project to HuggingFace Spaces.
             Pushes the project as a Streamlit Space with the
             correct app configuration.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -101,11 +101,11 @@ def build():
         st_write(bs.sub, "stx deploy status", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Check the current deployment status across all
             configured platforms. Reports build state, URL,
             and last deployment timestamp.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\

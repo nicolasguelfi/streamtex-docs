@@ -1,12 +1,9 @@
 """Best Practices — Writing effective descriptions for AI commands."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation, show_details
-
 
 class BlockStyles:
     """Effective prompting block styles."""
@@ -16,9 +13,7 @@ class BlockStyles:
     bad_label = s.project.colors.error_red + s.bold + s.large
     good_label = s.project.colors.success_green + s.bold + s.large
 
-
 bs = BlockStyles
-
 
 def build():
     """Render the Effective Prompting best practices section."""
@@ -27,11 +22,11 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The quality of AI-generated output depends directly on the
         quality of your descriptions. A precise, context-rich prompt
         saves iterations and produces better blocks from the first pass.
-    """))
+    """)
     st_space("v", 2)
 
     # ── 5 Tips ────────────────────────────────────────────────────
@@ -125,11 +120,11 @@ def build():
     st_write(bs.sub, "Bad vs Good Prompts", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The following examples illustrate how adding context transforms
         a vague request into an actionable description that produces
         high-quality output on the first attempt.
-    """))
+    """)
     st_space("v", 1)
 
     # Example 1
@@ -186,10 +181,10 @@ def build():
     st_space("v", 2)
 
     # ── Final tip ─────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: the more context you give, the fewer iterations you need.
         A well-crafted prompt with audience, scope, structure, and visual
         preferences typically produces a usable block in a single pass.
         A vague prompt may require 3-5 rounds of refinement.
-    """))
+    """)
     st_space("v", 1)

@@ -26,21 +26,21 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX provides a CLI tool called stx for project
         management. It helps you create, validate, test, and
         lint your StreamTeX projects from the command line.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Installation ---
     st_write(bs.sub, "Installation", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Install the CLI extras alongside StreamTeX.
         You can use either pip or uv.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -56,11 +56,11 @@ def build():
     st_write(bs.sub, "Create a new project", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Scaffold a new StreamTeX project from the built-in
         template. This creates the full directory structure
         with book.py, blocks/, custom/, and static/ folders.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -72,10 +72,10 @@ def build():
     st_write(bs.sub, "Validate project structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Check that your project has the required files and
         directories. Reports missing or misplaced elements.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -87,11 +87,11 @@ def build():
     st_write(bs.sub, "Run the test suite", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Execute the project test suite using pytest under
         the hood. Discovers and runs all tests in the tests/
         directory.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -103,10 +103,10 @@ def build():
     st_write(bs.sub, "Run the linter", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Run ruff against your project to catch style issues,
         unused imports, and potential errors.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -114,10 +114,10 @@ def build():
     """), language="bash", line_numbers=False)
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         These are the essential day-to-day commands.
         Advanced CLI commands for deployment and publishing
         (stx deploy, stx publish, stx workspace) are covered
         in the Deploy manual.
-    """))
+    """)
     st_space("v", 1)

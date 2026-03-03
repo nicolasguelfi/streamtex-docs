@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Cloud deployment demo styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,11 +22,11 @@ def build():
         st_write(bs.sub, "General approach", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The workflow is the same on any cloud provider:
             build the Docker image, push it to a registry,
             then pull and run it on a virtual machine.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -45,10 +42,10 @@ def build():
         st_write(bs.sub, "GCP: Google Compute Engine", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Push your image to Google Artifact Registry,
             then pull it on a Compute Engine VM.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/deploy/cloud_gcp.sh", language="bash")
@@ -58,10 +55,10 @@ def build():
         st_write(bs.sub, "AWS: EC2 with ECR", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Push your image to Amazon ECR (Elastic Container Registry),
             then pull it on an EC2 instance.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/deploy/cloud_aws.sh", language="bash")
@@ -106,10 +103,10 @@ def build():
         st_space("v", 2)
 
         # --- 5. Details ---
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Open port 8501 in your cloud firewall rules.
 
             For HTTPS, set up a reverse proxy (nginx) with a TLS certificate.
 
             Cloud costs depend on VM size; a small instance is sufficient for StreamTeX.
-        """))
+        """)

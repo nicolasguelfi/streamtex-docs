@@ -23,22 +23,22 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The stx-guide skill is a global knowledge base that provides
         StreamTeX expertise to any AI assistant. Unlike project-specific
         profiles, it is available across all projects and sessions
         without any installation.
-    """))
+    """)
     st_space("v", 2)
 
     # ── What it covers ────────────────────────────────────────────
     st_write(bs.sub, "What stx-guide Covers", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The skill packages the complete StreamTeX knowledge base into
         a format that Claude Code can consume on demand.
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -68,11 +68,11 @@ def build():
     st_write(bs.sub, "How to Activate", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The stx-guide skill activates automatically when you mention
         StreamTeX in a Claude Code conversation. You can also invoke
         it explicitly using the slash command syntax.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -114,10 +114,10 @@ def build():
     st_write(bs.sub, "When to Use stx-guide", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Use stx-guide for quick lookups when you do not need the full
         profile machinery. It is ideal for these situations:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -128,10 +128,10 @@ def build():
         with l.item(): st_write(s.large, "Working in a non-StreamTeX project that needs a one-off slide")
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The stx-guide skill is maintained alongside the StreamTeX
         library. When the library is updated, the skill is updated
         automatically to reflect new functions, deprecations, and
         changed signatures.
-    """))
+    """)
     st_space("v", 1)

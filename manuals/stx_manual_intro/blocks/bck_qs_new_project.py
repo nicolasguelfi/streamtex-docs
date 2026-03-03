@@ -27,10 +27,10 @@ def build():
     st_write(bs.sub, "Step 1: Copy the template", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX provides a ready-to-use template.
         Copy it to the projects/ folder and rename it.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -42,11 +42,11 @@ def build():
     st_write(bs.sub, "Step 2: Project structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The template gives you a standard folder layout.
 
         Each folder has a specific role.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -70,11 +70,11 @@ def build():
     st_write(bs.sub, "Step 3: Configure styles", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Edit custom/styles.py to define your project colors,
         font sizes, and layout styles. Use Style composition
         with the + operator to combine styles.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -100,11 +100,11 @@ def build():
     st_write(bs.sub, "Step 4: Configure book.py", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         book.py is the entry point. It imports blocks,
         configures navigation, and calls st_book()
         to render everything.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -131,13 +131,13 @@ def build():
     st_write(bs.sub, "Step 5: Enable static serving", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Streamlit needs static serving enabled
         for images and assets.
 
         Create or edit
         .streamlit/config.toml in your project.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -147,10 +147,10 @@ def build():
     """), language="toml", line_numbers=False)
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Mandatory files: book.py, setup.py, custom/styles.py, blocks/__init__.py.
 
         The setup.py adds the streamtex library to sys.path
         so imports work correctly from any location.
-    """))
+    """)
     st_space("v", 1)

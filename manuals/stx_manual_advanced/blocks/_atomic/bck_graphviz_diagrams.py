@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Graphviz diagrams demo styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
     file_label = s.medium + s.italic + s.project.colors.neutral_gray
 bs = BlockStyles
 
-
 DIAGRAMS = {
     "Simple Graph": "diagrams/simple_graph.dot",
     "StreamTeX Flowchart": "diagrams/flowchart.dot",
@@ -24,19 +21,18 @@ DIAGRAMS = {
     "Data Flow": "diagrams/data_flow.dot",
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Graphviz Diagrams", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             stx.st_graphviz() renders DOT language diagrams.
 
             DOT is concise for describing directed graphs.
 
             Charts are interactive (pan/zoom).
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Simple graph ---
@@ -95,10 +91,10 @@ stx.st_graphviz(file=DIAGRAMS[choice])""")
         st_write(bs.sub, "Architecture Diagram", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             This diagram shows the internal architecture of StreamTeX itself:
             st_book orchestrates TOC, markers, blocks, and export.
-        """))
+        """)
         st_space("v", 1)
 
         stx.st_graphviz(file=DIAGRAMS["Architecture"])
@@ -107,7 +103,7 @@ stx.st_graphviz(file=DIAGRAMS[choice])""")
         show_code(file=DIAGRAMS["Architecture"], language="dot")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             DOT language: concise graph description (nodes, edges, attributes).
 
             stx.st_graphviz() supports pan and zoom interaction.
@@ -117,4 +113,4 @@ stx.st_graphviz(file=DIAGRAMS[choice])""")
             Requires: uv add graphviz (Python bindings).
 
             Static .dot files can be loaded from the static/diagrams/ folder.
-        """))
+        """)

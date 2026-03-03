@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Publish to PyPI styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -30,26 +27,26 @@ def build():
 stx publish check""", language="bash")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Before publishing, stx publish check verifies:
 
             - Version in pyproject.toml matches streamtex/__init__.py.
             - CHANGELOG.md contains an entry for the current version.
             - Working directory is clean (no uncommitted changes).
             - Current branch is main.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Automated publishing ---
         st_write(bs.sub, "Automated publishing (recommended)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The recommended approach is to create a GitHub Release.
             This triggers publish.yml, which builds and publishes
             the package automatically using OIDC Trusted Publishing.
             No manual steps are needed after creating the release.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -78,19 +75,19 @@ uv build
 stx publish pypi""", language="bash")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Manual publishing is available via stx publish pypi as
             a fallback. However, the automated GitHub Release flow
             is preferred because it uses Trusted Publishing (OIDC)
             and does not require any local API tokens.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Trusted Publishing ---
         st_write(bs.sub, "How Trusted Publishing works", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Trusted Publishing eliminates the need for PyPI API tokens.
             Here is how it works:
 
@@ -107,7 +104,7 @@ stx publish pypi""", language="bash")
             - No stored secrets in the repository.
             - Tokens are short-lived and scoped to the workflow.
             - Full audit trail on both GitHub and PyPI.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Command summary ---
@@ -143,8 +140,8 @@ stx publish pypi""", language="bash")
                 st_write(s.large, "Trigger automated publish via OIDC")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Always prefer the automated GitHub Release path over manual
             publishing. It provides a consistent, auditable process and
             avoids the need to manage API tokens locally.
-        """))
+        """)

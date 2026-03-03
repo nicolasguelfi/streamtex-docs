@@ -22,22 +22,22 @@ def build():
     st_write(bs.heading, "Workspace Setup", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         A StreamTeX workspace organizes multiple projects under a single
         root directory. It manages shared dependencies, AI profiles, and
         project configuration through stx.toml.
-    """))
+    """)
     st_space("v", 2)
 
     # --- stx workspace init ---
     st_write(bs.sub, "Initialize a Workspace", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Create a new workspace from scratch. This generates
         the directory structure, stx.toml configuration file,
         and a default project scaffold.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -53,11 +53,11 @@ def build():
     st_write(bs.sub, "Clone an Existing Workspace", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Clone a workspace from a Git repository. This pulls down
         the full project structure including all configured
         projects, profiles, and shared resources.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -70,11 +70,11 @@ def build():
     st_write(bs.sub, "Link to Library for Development", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Link a local StreamTeX library checkout for development.
         This sets up an editable install so changes to the library
         source are immediately reflected in your workspace.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -87,10 +87,10 @@ def build():
     st_write(bs.sub, "The stx.toml Configuration File", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Every workspace has an stx.toml file at its root. It defines
         the workspace metadata, projects, and their relationships.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -112,10 +112,10 @@ def build():
     st_write(bs.sub, "Workspace vs Standalone Project", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         You can use StreamTeX with or without a workspace.
         Here is when each approach makes sense.
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.tip_callout):
@@ -137,10 +137,10 @@ def build():
             with l.item(): st_write(s.large, "No need for shared configuration")
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         A standalone project is simply a StreamTeX project without
         a wrapping workspace. It still uses stx.toml but at the
         project level. You can always convert a standalone project
         into a workspace later using stx workspace init --from-project.
-    """))
+    """)
     st_space("v", 1)

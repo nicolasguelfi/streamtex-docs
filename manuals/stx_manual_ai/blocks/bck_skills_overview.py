@@ -35,14 +35,14 @@ def build():
     st_space("v", 2)
 
     # ── What are skills ───────────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Skills are Markdown files that agents load as
         context before performing any action. They contain
         design rules, coding patterns, syntax references,
         and template blueprints. Each skill is a focused
         knowledge base that keeps the AI aligned with
         project conventions.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Location ──────────────────────────────────────────────────
@@ -182,13 +182,13 @@ def build():
     """), language="markdown", line_numbers=False)
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The agent reads every listed skill into its context
         window before generating any code. This ensures that
         all output conforms to the project's coding standards,
         visual rules, and naming conventions — without you
         having to paste rules into the conversation.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Single source of truth ────────────────────────────────────
@@ -211,12 +211,12 @@ def build():
         """))
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         You can add custom skills by creating new .md files
         in the skills/ directory. Each skill should focus on
         a single topic and use clear, imperative language
         that the AI can follow as instructions. Keep skills
         under 2000 lines to fit comfortably in the context
         window.
-    """))
+    """)
     st_space("v", 1)

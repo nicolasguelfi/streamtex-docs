@@ -28,22 +28,22 @@ def build():
     st_write(bs.heading, "Advanced Export \u2014 ExportConfig & st_html", tag=t.h1, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX's HTML export system converts your live Streamlit app
         into a static, self-contained HTML file. This section covers the
         internal machinery: ExportConfig, the HtmlExportBuffer, the
         push/pop wrapper pattern, and the st_html() dual-render bridge.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Section 1: ExportConfig ---
     st_write(bs.sub, "ExportConfig", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         ExportConfig is a dataclass that controls how the exported HTML
         page is generated. Pass it to st_book() via the export parameter.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -70,7 +70,7 @@ def build():
     st_write(bs.sub, "How the Export Buffer Works", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         When export is enabled, StreamTeX maintains an HtmlExportBuffer
         that accumulates HTML fragments as each block renders. Every
         st_write(), st_code(), st_block(), and other stx functions append
@@ -79,7 +79,7 @@ def build():
         At the end of the render cycle, generate_full_html() assembles
         all accumulated fragments into a complete, self-contained HTML
         document.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -97,12 +97,12 @@ def build():
     st_write(bs.sub, "The Push/Pop Wrapper Pattern", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Nested containers (st_block, st_grid, st_span) use a push/pop
         pattern to maintain proper HTML nesting in the export buffer.
         When entering a container, an opening tag is pushed. When
         exiting, the closing tag is popped.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -121,11 +121,11 @@ def build():
     st_write(bs.sub, "st_html() \u2014 The Dual-Render Bridge", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         st_html() is the low-level function for injecting raw HTML into
         both the live Streamlit app and the export buffer. It supports
         two rendering modes based on the height parameter.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -200,9 +200,9 @@ def build():
     st_write(bs.sub, "Full Export Lifecycle", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The complete export cycle follows these steps:
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type="ol") as l:
@@ -219,13 +219,13 @@ def build():
     st_write(bs.sub, "CSS Bundling", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The exported HTML is fully self-contained. StreamTeX reads the
         project's default.css file and inlines it as a <style> block
         inside the generated HTML. This ensures that all styles render
         correctly when the HTML file is opened offline, without needing
         any external resources.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -247,7 +247,7 @@ def build():
         # </html>"""))
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         **ExportConfig** is a Python dataclass. All fields have sensible defaults.
         Only set enabled=True to activate export; the rest is optional.
 
@@ -270,5 +270,5 @@ def build():
         **Performance note:** The export buffer accumulates all HTML in memory.
         For very large books (hundreds of blocks), memory usage may be significant
         during the export phase.
-    """))
+    """)
     st_space("v", 3)

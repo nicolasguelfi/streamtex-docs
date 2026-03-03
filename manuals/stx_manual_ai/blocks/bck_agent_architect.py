@@ -34,11 +34,11 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The Project Architect designs a complete project structure
         from a natural language description. It reads block blueprints
         and design rules, then produces a ready-to-implement plan.
-    """))
+    """)
     st_space("v", 2)
 
     # ── What it does (5 steps) ─────────────────────────────────────
@@ -156,11 +156,11 @@ def build():
     st_write(bs.sub, "When to Use", toc_lvl="+1")
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Use the Project Architect when starting a new project from
         scratch. Describe your content goals in plain English and
         let the agent produce the full block structure. You can then
         refine the plan before handing individual blocks to the
         Slide Designer for implementation.
-    """))
+    """)
     st_space("v", 1)

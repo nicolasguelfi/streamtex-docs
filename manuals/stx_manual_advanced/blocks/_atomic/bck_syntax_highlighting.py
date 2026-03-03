@@ -1,7 +1,6 @@
 """Atomic block — Syntax Highlighting: Pygments language browser with filter."""
 
 import csv
-import textwrap
 
 import pandas as pd
 import streamlit as st
@@ -13,16 +12,13 @@ from streamtex.enums import Tags as t
 from blocks.helpers import show_explanation
 from custom.styles import Styles as s
 
-
 class BlockStyles:
     """Syntax highlighting block styles."""
 
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 
-
 bs = BlockStyles
-
 
 def build():
     """Pygments language browser with interactive text_input filter."""
@@ -33,13 +29,13 @@ def build():
         st_write(bs.sub, "Supported languages (Pygments)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The **language** parameter of **st_code()** accepts any Pygments
             lexer short name for syntax highlighting.
 
             Below is the complete list of all supported languages.
             Use the search field to filter by name or description.
-        """))
+        """)
         st_space("v", 1)
 
         # Load CSV

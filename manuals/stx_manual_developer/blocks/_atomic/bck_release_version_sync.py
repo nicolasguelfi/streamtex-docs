@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Version sync styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,10 +22,10 @@ def build():
         st_write(bs.sub, "Two places where version must match", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The package version is declared in two files. Both must
             contain the exact same version string at all times.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -45,7 +42,7 @@ __version__ = "X.Y.Z\"""", language="python")
         st_write(bs.sub, "Why both files?", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             pyproject.toml is read by build backends (uv build, pip)
             to set the version on PyPI. streamtex/__init__.py exposes
             the version at runtime so users can call:
@@ -55,7 +52,7 @@ __version__ = "X.Y.Z\"""", language="python")
 
             If these two values drift apart, published packages will
             report an incorrect version at runtime.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Verification command ---
@@ -67,13 +64,13 @@ __version__ = "X.Y.Z\"""", language="python")
 stx publish check""", language="bash")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The stx publish check command reads both files, compares
             the version strings, and reports any mismatch. It also
             verifies that CHANGELOG.md contains an entry for the
             current version and checks the git status for uncommitted
             changes. Run this command before every release.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Summary grid ---
@@ -99,8 +96,8 @@ stx publish check""", language="bash")
                 st_write(s.large, "__version__ = \"X.Y.Z\"")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             A future improvement may use dynamic versioning
             (single source of truth), but for now the two-file
             approach is explicit and easy to verify with stx publish check.
-        """))
+        """)

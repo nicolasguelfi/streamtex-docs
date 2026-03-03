@@ -41,13 +41,13 @@ def build():
     """))
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         When you press Next at the last marker of a page, the system
         switches to the next page and scrolls to its first marker.
 
         Similarly, pressing Prev at the first marker of a page returns
         to the previous page and scrolls to its last marker.
-    """))
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------
@@ -62,12 +62,12 @@ def build():
     """))
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         - Position counter showing "current / total" (e.g. "3 / 12")
         - Prev (◀) and Next (▶) buttons
         - A list button (☰) that opens a popup with all markers
         - An optional label showing the current marker name
-    """))
+    """)
     st_space("v", 1)
 
     st_write(s.large, textwrap.dedent("""\
@@ -89,7 +89,7 @@ def build():
     st_write(bs.sub, "Architecture Overview", toc_lvl="+1")
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Three files collaborate to implement the marker system:
 
         marker.py — MarkerConfig dataclass, MarkerRegistry singleton,
@@ -105,7 +105,7 @@ def build():
         to markers. When a heading has a toc_lvl and the MarkerConfig
         is active, it calls register_marker() based on auto_marker_on_toc
         and the per-heading marker= parameter.
-    """))
+    """)
     st_space("v", 1)
 
     show_code("""\

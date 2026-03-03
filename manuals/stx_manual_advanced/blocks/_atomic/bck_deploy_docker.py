@@ -5,9 +5,7 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
-
 
 class BlockStyles:
     """Docker deployment demo styles."""
@@ -20,7 +18,6 @@ _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 _repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
 _dockerfile_path = os.path.join(_repo_root, "Dockerfile")
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Deploy with Docker", tag=t.div, toc_lvl="1")
@@ -30,12 +27,12 @@ def build():
         st_write(bs.sub, "The StreamTeX Dockerfile", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The repository includes a production-ready Dockerfile.
 
             It uses uv for fast dependency installation
             and targets a specific project folder via build-arg.
-        """))
+        """)
         st_space("v", 1)
 
         # Read and display the actual Dockerfile
@@ -52,11 +49,11 @@ def build():
         st_write(bs.sub, "Build and run locally", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Build the Docker image and run it.
 
             The app will be available at http://localhost:8501.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -71,11 +68,11 @@ docker run -p 8501:8501 streamtex-app""", language="bash")
         st_write(bs.sub, "Targeting a specific project", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use --build-arg FOLDER to deploy a specific project.
 
             The default target is documentation/manuals/stx_manual_intro.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -91,10 +88,10 @@ docker run -p 8501:8501 my-project-app""", language="bash")
         st_write(bs.sub, "Environment variables", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The Dockerfile sets several ENV variables
             for headless operation and performance.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols=2, cell_styles=(
@@ -122,10 +119,10 @@ docker run -p 8501:8501 my-project-app""", language="bash")
         st_space("v", 2)
 
         # --- 5. Details ---
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The container exposes port 8501 with a health check.
 
             uv is installed from the official Docker image (ghcr.io/astral-sh/uv).
 
             Dependencies are installed in a cached layer for fast rebuilds.
-        """))
+        """)

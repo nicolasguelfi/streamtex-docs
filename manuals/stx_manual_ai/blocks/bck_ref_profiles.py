@@ -90,11 +90,11 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX provides four AI profiles, each tailored to a
         specific workflow. The project profile is recommended for
         most users. Compare features below to choose the right one.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Row 1: project + presentation ─────────────────────────────

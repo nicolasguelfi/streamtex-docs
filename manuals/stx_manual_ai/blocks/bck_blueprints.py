@@ -35,13 +35,13 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The block-blueprints.md skill contains 10 reusable
         template patterns. Each blueprint defines a proven
         layout for a specific type of content. Agents select
         the best blueprint based on your description and
         generate a standards-compliant block.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Blueprints 1-4 ────────────────────────────────────────────
@@ -214,12 +214,12 @@ def build():
         """))
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Blueprints are guidelines, not rigid templates.
         The AI adapts each pattern to your specific content
         — adjusting column counts, adding or removing
         sections, and choosing appropriate styles. Think
         of them as starting points that ensure structural
         consistency across your project.
-    """))
+    """)
     st_space("v", 1)

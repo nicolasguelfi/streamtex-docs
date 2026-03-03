@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Style system internals styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,12 +25,12 @@ def build():
         st_write(bs.sub, "The Style class", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The Style class is the fundamental building block of
             StreamTeX's styling system. It wraps a CSS string and
             a style_id that uniquely identifies it for theme
             overrides and debugging.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -50,12 +47,12 @@ my_style = Style("color: blue; font-size: 1.2em;", "my_style")
         st_write(bs.sub, "Style composition: + and -", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Styles can be composed using the + operator to merge
             CSS properties, and the - operator to remove specific
             properties. This creates a new Style without modifying
             the originals.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -76,12 +73,12 @@ result = base + bold + "padding: 8px;" - "margin" """)
         st_write(bs.sub, "Style.create() for theme overrides", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Style.create() copies an existing style with a new
             style_id. This is essential for theme overrides,
             where you want the same CSS but a different identity
             so the theme system can target it.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -96,12 +93,12 @@ my_heading = Style.create(s.bold + s.Large, "my_heading")
         st_write(bs.sub, "StxStyles: the style aggregation class", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StxStyles is the aggregation class that organizes all
             built-in styles into logical groups: Text, Container,
             Grid, Visibility, and more. Project-level styles
             (custom/styles.py) follow the same pattern.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -131,12 +128,12 @@ streamtex/styles/
         st_write(bs.sub, "Theme overrides and dark mode", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The theme system uses a dictionary mapping style_id
             to replacement CSS. When a style is rendered, the
             system checks if a theme override exists for its
             style_id and substitutes the CSS if so.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -153,7 +150,7 @@ sts.theme = dark_theme
 # the dark theme CSS instead of its original CSS""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Style composition is immutable: + and - always return
             new Style objects.
 
@@ -161,4 +158,4 @@ sts.theme = dark_theme
 
             The styles/ package is designed for extension: add new
             .py files with style classes and register them in StxStyles.
-        """))
+        """)

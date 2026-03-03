@@ -4,8 +4,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """TikZ diagrams demo styles."""
@@ -13,7 +11,6 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     file_label = s.medium + s.italic + s.project.colors.neutral_gray
 bs = BlockStyles
-
 
 DIAGRAMS = {
     "Function Plot": "diagrams/simple_shapes.tex",
@@ -24,19 +21,18 @@ DIAGRAMS = {
 # Only the automaton needs an extra TikZ library
 PREAMBLES = {"Finite Automaton": r"\usetikzlibrary{automata,positioning}"}
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "TikZ Diagrams", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             stx.st_tikz() renders TikZ diagrams via a local LaTeX pipeline:
             pdflatex + dvisvgm.
 
             LaTeX is an optional system dependency.
             If absent, a warning is shown with the raw source as fallback.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Function plot ---
@@ -57,10 +53,10 @@ def build():
         st_write(bs.sub, "Neural Network", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             TikZ excels at complex technical diagrams. This neural network
             uses foreach loops to connect layers automatically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code('stx.st_tikz(file="diagrams/neural_network.tex", height=800)')
@@ -77,10 +73,10 @@ def build():
         st_write(bs.sub, "Finite Automaton (with preamble)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The preamble parameter adds LaTeX packages. Here we use
             the automata and positioning TikZ libraries.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -125,7 +121,7 @@ stx.st_tikz(file=DIAGRAMS[choice], height=800, preamble=PREAMBLES.get(choice, ""
         show_code(file=DIAGRAMS[choice], language="latex")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             TikZ requires pdflatex + dvisvgm installed on the system.
 
             If LaTeX is absent, a warning and the raw source are displayed.
@@ -135,4 +131,4 @@ stx.st_tikz(file=DIAGRAMS[choice], height=800, preamble=PREAMBLES.get(choice, ""
             Use the preamble parameter for extra packages (pgfplots, automata, etc.).
 
             Static .tex files can be loaded from the static/diagrams/ folder.
-        """))
+        """)

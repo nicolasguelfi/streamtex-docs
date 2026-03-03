@@ -23,11 +23,11 @@ def build():
         st_write(bs.heading, "Test Coverage Matrix", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The StreamTeX test suite contains 44 test files organized
             by functional area. The target is >80% line coverage for
             all modules. Below is the full inventory grouped by area.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Core rendering ---
@@ -238,9 +238,9 @@ def build():
         st_space("v", 2)
 
         # --- Coverage target ---
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             To check current coverage for a specific module, run:
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -252,11 +252,11 @@ def build():
         """), language="bash")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The target is >80% line coverage for all modules.
 
             If coverage drops below the threshold, the CI pipeline
             will warn but not fail (soft gate). Focus coverage efforts
             on core rendering and export modules first, as they carry
             the highest risk of user-facing regressions.
-        """))
+        """)

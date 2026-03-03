@@ -22,20 +22,20 @@ def build():
         st_write(bs.heading, "CLI Publish Commands", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The stx publish command group handles package
             verification and publishing to PyPI.
-        """))
+        """)
         st_space("v", 2)
 
         # --- stx publish check ---
         st_write(bs.sub, "stx publish check", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Verify your package before publishing. This command
             runs a comprehensive set of pre-publish validations.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -46,7 +46,7 @@ def build():
         st_write(bs.sub, "Validation steps", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The publish check command performs the following
             validations:
 
@@ -63,17 +63,17 @@ def build():
 
             5. Build check — builds the sdist and wheel to
                verify packaging is correct.
-        """))
+        """)
         st_space("v", 2)
 
         # --- stx publish pypi ---
         st_write(bs.sub, "stx publish pypi", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Publish the package to PyPI. Runs stx publish check
             first, then builds and uploads the distribution.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -81,7 +81,7 @@ def build():
         """), language="bash", line_numbers=False)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             For production releases, prefer using GitHub Releases
             with OIDC trusted publishing. This provides a fully
             automated, auditable pipeline:
@@ -93,5 +93,5 @@ def build():
 
             Use stx publish pypi only for local testing or
             pre-release uploads to TestPyPI.
-        """))
+        """)
         st_space("v", 1)

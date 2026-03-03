@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Forms and session state demo styles."""
@@ -15,19 +13,18 @@ class BlockStyles:
     content = s.large
 bs = BlockStyles
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Forms & Session State", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st.form() groups inputs (no rerun between entries).
 
             st.session_state persists data across reruns.
 
             StreamTeX content re-renders reading the current state.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Basic form ---
@@ -130,7 +127,7 @@ with st_block(s.project.containers.result_box):
                             st_write(item)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             st.form() prevents reruns between input changes.
 
             st.session_state persists values across reruns.
@@ -138,4 +135,4 @@ with st_block(s.project.containers.result_box):
             StreamTeX content re-renders each time, reading the latest state.
 
             Use unique keys for all widgets to avoid conflicts.
-        """))
+        """)

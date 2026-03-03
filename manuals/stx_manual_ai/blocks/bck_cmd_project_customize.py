@@ -26,13 +26,13 @@ def build():
     st_space("v", 2)
 
     # ── Purpose ────────────────────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         /project:project-customize modifies the visual identity of an
         existing StreamTeX project. It can change color palettes, fonts,
         navigation style, and layout — all from a single natural
         language prompt. It reads the current styles, applies your
         changes, and preserves everything else.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Example prompts ────────────────────────────────────────────
@@ -149,10 +149,10 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: customize incrementally. Change one aspect at a time —
         colors first, then fonts, then layout. This makes it easy to
         revert if something does not look right, and gives the AI
         a focused task for each iteration.
-    """))
+    """)
     st_space("v", 1)

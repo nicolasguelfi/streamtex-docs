@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """CLI architecture styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,11 +22,11 @@ def build():
         st_write(bs.sub, "Entry point", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The stx command is the main entry point for the StreamTeX CLI.
             It is defined in pyproject.toml under [project.scripts] and
             points to streamtex.cli.main:app.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -48,11 +45,11 @@ stx = "streamtex.cli.main:app\"""", language="toml")
 # Registers all command groups from commands.py""", language="python")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The main.py module creates the root Click group and
             imports all subcommands from commands.py. Each subcommand
             group lives in its own file for maintainability.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Command hierarchy ---
@@ -100,14 +97,14 @@ stx                          # Root CLI group
         st_write(bs.sub, "Console helpers", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The console.py module provides Rich-based formatting
             utilities used by all CLI commands for consistent output:
 
             - Colored status messages (success, warning, error).
             - Tables for structured output.
             - Progress indicators for long-running operations.
-        """))
+        """)
         st_space("v", 2)
 
         # --- File layout ---
@@ -129,10 +126,10 @@ streamtex/cli/
  +-- publish_cmd.py        # stx publish *""", language="text")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Each command file is self-contained: it defines its Click
             group or command, handles arguments, and calls into the
             core streamtex library for actual logic. The CLI layer
             is intentionally thin — business logic lives in the
             library, not in the CLI commands.
-        """))
+        """)

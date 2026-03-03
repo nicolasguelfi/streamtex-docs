@@ -23,12 +23,12 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Agents are autonomous AI assistants that can execute multi-step
         workflows without constant user guidance. Unlike commands which
         follow a fixed script, agents make decisions, adapt to context,
         and operate according to a set of principles.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Agent vs Command ──────────────────────────────────────────
@@ -61,11 +61,11 @@ def build():
     st_write(bs.sub, "Agent File Structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Agent files live in a role-specific directory under .claude/.
         The role name (e.g., "architect", "designer") scopes the agent
         to a particular domain of expertise.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -145,12 +145,12 @@ def build():
     st_space("v", 2)
 
     # ── Tips ──────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Define clear principles that constrain the agent's behavior.
         Without principles, agents may take unexpected actions. Reference
         specific skills in the Context section so the agent has domain
         knowledge without you repeating it. Set explicit constraints
         like "never modify files" or "always ask before deleting" to
         keep the agent safe and predictable.
-    """))
+    """)
     st_space("v", 1)

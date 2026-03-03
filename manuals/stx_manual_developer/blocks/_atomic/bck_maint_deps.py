@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Dependency management styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,11 +22,11 @@ def build():
         st_write(bs.sub, "Core dependencies", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Core dependencies are declared in pyproject.toml under
             [project.dependencies]. These are installed for every
             user of the package.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -54,11 +51,11 @@ inspector = ["streamlit-inspector>=0.1"]
 cli = ["click>=8.1", "rich>=13.0"]""", language="toml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Optional dependency groups are installed with:
             uv sync --extra inspector or uv sync --extra cli.
             These are for features that not all users need.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Dev dependencies ---
@@ -75,12 +72,12 @@ dev = [
 ]""", language="toml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Dev dependencies are only needed for development and
             testing. They are declared under [dependency-groups]
             and installed by default with uv sync (unless you
             explicitly exclude them).
-        """))
+        """)
         st_space("v", 2)
 
         # --- Adding dependencies ---
@@ -110,7 +107,7 @@ uv lock
 uv sync --frozen""", language="bash")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             uv lock resolves all dependencies and writes exact
             versions to uv.lock. This file must be committed to git.
 
@@ -118,7 +115,7 @@ uv sync --frozen""", language="bash")
             without resolving or updating anything. If uv.lock is
             out of date, the command fails — ensuring that CI and
             other developers always use the same versions.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Command summary ---
@@ -159,8 +156,8 @@ uv sync --frozen""", language="bash")
                 st_write(s.large, "Sync and update lock if needed")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Always commit uv.lock after running uv lock or uv add.
             Other developers and CI rely on this file for reproducible
             installs. Never add uv.lock to .gitignore.
-        """))
+        """)

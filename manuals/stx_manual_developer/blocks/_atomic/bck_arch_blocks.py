@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Block system styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,13 +25,13 @@ def build():
         st_write(bs.sub, "ProjectBlockRegistry", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             ProjectBlockRegistry lazy-loads block modules from a
             project's blocks/ directory. It scans for bck_*.py
             files and imports them on demand when accessed via
             __getattr__. This is the registry used in each
             project's blocks/__init__.py.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -55,12 +52,12 @@ def __getattr__(name: str):
         st_write(bs.sub, "LazyBlockRegistry", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             LazyBlockRegistry extends the concept to multiple
             source directories with priority ordering. It searches
             directories in order, so project-local blocks override
             shared blocks. This enables the shared-blocks pattern.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -76,12 +73,12 @@ def __getattr__(name: str):
         st_write(bs.sub, "load_atomic_block()", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             load_atomic_block() loads a single block module from
             the _atomic/ subdirectory relative to the caller's
             file location. It uses __file__ to resolve the path,
             so it always finds the correct _atomic/ directory.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -100,12 +97,12 @@ bck_part_b = stx.load_atomic_block("bck_part_b", __file__)
         st_write(bs.sub, "The composite pattern", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             A composite block loads multiple atomic blocks and
             includes them in sequence using st_include(). This
             is the standard way to group related content into
             a single chapter or section.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -130,13 +127,13 @@ def build():
         st_write(bs.sub, "BlockHelper dependency injection", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The BlockHelper pattern uses dependency injection to
             configure show_code(), show_explanation(), and
             show_details() with project-specific styles.
             set_block_helper_config() injects the configuration
             so helpers render with the correct visual theme.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -162,12 +159,12 @@ set_block_helper_config(ProjectBlockHelperConfig())""")
         st_write(bs.sub, "Static resolution with set_static_sources()", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             set_static_sources() configures multi-directory file
             lookup for static assets (images, code examples, etc.).
             When show_code(file=...) or st_image(src=...) is called,
             the system searches configured directories in order.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -184,7 +181,7 @@ set_static_sources([
 #   2. ../shared/static/examples/demo.py""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             ProjectBlockRegistry is for single-project use.
             LazyBlockRegistry is for multi-source resolution.
 
@@ -193,4 +190,4 @@ set_static_sources([
 
             The DI pattern in helpers.py keeps block code clean:
             helpers know how to style themselves via the injected config.
-        """))
+        """)

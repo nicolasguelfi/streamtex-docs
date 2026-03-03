@@ -1,12 +1,10 @@
 """Part 8 — Reference: All Commands — complete table of 23 commands by category."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """Commands reference block styles."""
@@ -25,9 +23,7 @@ class BlockStyles:
     cmd_desc = s.large
     cmd_profiles = s.project.colors.cyber_cyan + s.medium
 
-
 bs = BlockStyles
-
 
 def _render_command(name: str, description: str, profiles: str):
     """Render a single command entry inside a card."""
@@ -38,18 +34,17 @@ def _render_command(name: str, description: str, profiles: str):
         st_space("v", 0.5)
         st_write(bs.cmd_profiles, "Profiles: ", (s.bold, profiles))
 
-
 def build():
     """Render the complete commands reference table."""
     st_space("v", 1)
     st_write(bs.heading, "Reference: All Commands", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Complete reference of all StreamTeX AI commands organized by
         category. Each entry shows the command name, its description,
         and which profiles include it.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Project Commands (5) ──────────────────────────────────────

@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Image demo styles."""
@@ -18,7 +16,6 @@ bs = BlockStyles
 theImageURL = "https://picsum.photos/seed/streamtex1/400/250"
 theImageURL2 = "https://picsum.photos/seed/streamtex2/400/250"
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Images", tag=t.div, toc_lvl="1")
@@ -28,10 +25,10 @@ def build():
         st_write(bs.sub, "st_image with URL", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Display images from URLs, local paths, or base64
             with st_image().
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -46,9 +43,9 @@ st_image(uri=theImageURL, alt="Sample landscape image")""")
         st_write(bs.sub, "Width and height control", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Control image dimensions with width and height parameters.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -66,9 +63,9 @@ st_image(uri=theImageURL,
         st_write(bs.sub, "Image with style", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Apply StreamTeX styles (borders, padding) to images.
-        """))
+        """)
         st_space("v", 1)
 
         bordered_img = (s.container.borders.solid_border
@@ -89,9 +86,9 @@ st_image(bordered_img,
         st_write(bs.sub, "Image as a link", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Wrap an image in a clickable link with the link parameter.
-        """))
+        """)
         st_space("v", 1)
 
         theURL = "https://docs.streamlit.io"
@@ -111,18 +108,18 @@ st_image(uri=theImageURL2, width="300px",
         st_write(bs.sub, "configure_image_path()", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Sets the base path for resolving relative image filenames.
-        """))
+        """)
         st_space("v", 1)
 
         show_code('configure_image_path("app/static/images")')
         st_space("v", 1)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Defaults: width="100%", height="auto", link="", hover=True.
 
             Always set the alt parameter for accessibility.
             The alt text is used by screen readers
             and displayed when images fail to load.
-        """))
+        """)

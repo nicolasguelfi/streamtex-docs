@@ -27,12 +27,12 @@ def build():
     st_write(bs.heading, "Installing an AI Profile", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         AI profiles configure Claude Code (or Cursor) for StreamTeX
         development. Each profile bundles a CLAUDE.md, custom commands,
         agents, skills, and reference documentation tailored to
         a specific workflow.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Install command ---
@@ -52,10 +52,10 @@ def build():
     st_write(bs.sub, "Available Profiles", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX ships with four AI profiles. Each one extends
         the base configuration with domain-specific rules and tools.
-    """))
+    """)
     st_space("v", 1)
 
     with st_grid(cols=2, cell_styles=bs.profile_cell) as g:
@@ -116,10 +116,10 @@ def build():
     st_write(bs.sub, "What Gets Installed", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Running the install command creates a .claude/ directory
         in your project with the following structure.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -149,10 +149,10 @@ def build():
     """), language="bash", line_numbers=False)
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Profiles are additive: installing a new profile merges
         its contents with any existing .claude/ configuration.
         You can safely install multiple profiles into the same
         project if needed.
-    """))
+    """)
     st_space("v", 1)

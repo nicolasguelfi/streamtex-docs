@@ -24,23 +24,23 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Custom commands let you teach Claude Code new workflows
         specific to your project. Each command is a Markdown file
         that describes a task, the context to load, and the steps
         to follow.
-    """))
+    """)
     st_space("v", 2)
 
     # ── File structure ────────────────────────────────────────────
     st_write(bs.sub, "Command File Structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Commands live in .claude/commands/ organized by category.
         Each .md file becomes a slash command that users can invoke
         in Claude Code.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -60,11 +60,11 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The directory name becomes the command prefix.
         For example, designer/block-new.md is invoked as
         /designer:block-new in Claude Code.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Required sections ─────────────────────────────────────────
@@ -168,11 +168,11 @@ def build():
     st_space("v", 2)
 
     # ── Tips ──────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Keep commands focused on one task. A command that tries to do
         too much becomes unreliable. If you need a multi-task workflow,
         create an agent instead. Reference skills in the context loading
         section so the AI has the knowledge it needs without duplicating
         documentation inside the command file.
-    """))
+    """)
     st_space("v", 1)

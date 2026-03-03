@@ -23,11 +23,11 @@ def build():
         st_write(bs.heading, "Common Test Patterns", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX tests follow recurring patterns. This section
             shows the most common ones with full code examples so you
             can replicate them in new test files.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Mocking st.html ---
@@ -35,11 +35,11 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Most StreamTeX functions render content via st.html().
             In tests, we mock it to capture the HTML string and assert
             on its content without needing a running Streamlit server.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -64,10 +64,10 @@ def build():
         st_write(bs.sub, "Testing style composition", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Style objects support + (merge) and - (remove) operators.
             Test composition by asserting on the resulting .css string.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -96,11 +96,11 @@ def build():
         st_write(bs.sub, "Testing context managers", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_block and st_grid are context managers that push/pop
             wrapper HTML. Test them by verifying the wrapper structure
             in the captured output.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -128,11 +128,11 @@ def build():
         st_write(bs.sub, "Fixtures from conftest.py", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The tests/conftest.py file provides shared fixtures.
             The most important ones are mock_st_html (auto-patches
             st.html) and registry resets (clean singleton state).
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -166,12 +166,12 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The AST guard test walks the source tree, parses each
             module with Python's ast module, and checks that every
             st.html() call site has a corresponding is_export_active()
             guard in the same function body.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -201,11 +201,11 @@ def build():
         st_write(bs.sub, "Testing the export buffer", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The export buffer collects HTML fragments during a page
             build. Test it by pushing a wrapper, appending content,
             popping the wrapper, and generating the final HTML.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -236,11 +236,11 @@ def build():
         """), language="python")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             When writing a new test, look at the existing test file
             for the closest module first. Most patterns are already
             established and can be copied with minor adjustments.
 
             Always pair push_wrapper / pop_wrapper calls to avoid
             buffer stack leaks between tests.
-        """))
+        """)

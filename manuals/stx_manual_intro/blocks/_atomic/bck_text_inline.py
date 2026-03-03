@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_code_inline, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Inline text styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
     wrong_label = s.project.colors.warning_red + s.bold + s.large
     correct_label = s.project.colors.success_green + s.bold + s.large
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,11 +25,11 @@ def build():
         st_write(bs.sub, "Multiple calls STACK vertically", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Multiple st_write() calls stack vertically.
 
             Use tuples for inline flow.
-        """))
+        """)
         st_space("v", 1)
 
         with st_block(s.project.containers.bad_callout):
@@ -73,10 +70,10 @@ st_write(s.large,
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Tuples let you mix styles and links inline
             within a single st_write() call.
-        """))
+        """)
         st_space("v", 1)
 
         theURL = "https://github.com"
@@ -101,9 +98,9 @@ st_write(s.large,
         st_write(bs.sub, "Links with st_write", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Wrap entire text in a link with the link= parameter.
-        """))
+        """)
         st_space("v", 1)
 
         theURL = "https://docs.streamlit.io"
@@ -128,10 +125,10 @@ st_write(link_style,
                  link=theURL, no_link_decor=True)
         st_space("v", 1)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Default: link="" (no link), no_link_decor=False, hover=True.
 
             Links default to 12pt font size.
             When surrounding text is larger,
             include font size in the link style to match.
-        """))
+        """)

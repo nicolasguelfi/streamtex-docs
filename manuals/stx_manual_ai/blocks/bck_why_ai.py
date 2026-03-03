@@ -1,12 +1,9 @@
 """Why AI? — Comparison of traditional vs AI-assisted workflows."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """Why AI block styles."""
@@ -17,9 +14,7 @@ class BlockStyles:
     metric_value_bad = s.project.colors.error_red + s.bold + s.large
     metric_value_good = s.project.colors.success_green + s.bold + s.large
 
-
 bs = BlockStyles
-
 
 def build():
     """Render the Why AI comparison section."""
@@ -96,11 +91,11 @@ def build():
     st_space("v", 2)
 
     # ── Clarification callout ─────────────────────────────────────
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         AI does not replace understanding — it accelerates creation.
         You still control the final output: review every generated
         block, adjust styles, and decide what ships. The AI handles
         the repetitive scaffolding so you can focus on content and
         design decisions.
-    """))
+    """)
     st_space("v", 1)

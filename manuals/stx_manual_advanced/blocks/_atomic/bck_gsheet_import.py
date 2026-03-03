@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
@@ -34,7 +32,6 @@ FALLBACK_DATA = [
     {"Student": "Frank", "Course": "NLP", "Grade": "84", "Semester": "S2"},
 ]
 
-
 def _load_demo_data():
     """Try loading from Google Sheets, fall back to static data."""
     try:
@@ -47,20 +44,19 @@ def _load_demo_data():
         pass
     return FALLBACK_DATA, False
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Google Sheets Data Import",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX can import data directly from Google Sheets.
 
             Supports public sheets (no auth) and private sheets (service account or OAuth2).
 
             Data integrates seamlessly with stx.st_dataframe, stx.st_table, and all chart widgets.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 1: Configuration ---
@@ -70,13 +66,13 @@ def build():
         show_code(file="examples/gsheet/config_auth_modes.py")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Credentials are resolved in order: explicit path > GSHEET_CREDENTIALS env > GOOGLE_APPLICATION_CREDENTIALS env.
 
             For deployed apps, set the GSHEET_CREDENTIALS environment variable.
 
             Cache TTL (seconds): 0 = no cache, None = cache forever, 300 = 5 minutes.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 2: Loading Data ---
@@ -137,23 +133,23 @@ def build():
         show_code(file="examples/gsheet/data_in_blocks.py")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Define GSheetSource at module level (loaded once per session).
 
             Use @st.cache_data for fine-grained caching if needed.
 
             Data flows through the standard export pipeline: stx.st_dataframe generates both Streamlit widget and HTML fallback.
-        """))
+        """)
         st_space("v", 3)
 
         # --- Section 5: Authentication Modes ---
         st_write(bs.sub, "5. Authentication Modes (AuthMode)", toc_lvl="+1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX supports 3 authentication modes for Google Sheets access.
             Choose based on your sheet's sharing settings and deployment context.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -195,10 +191,10 @@ cfg_oauth = GSheetConfig(auth_mode=AuthMode.OAUTH2)""")
 
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             For SERVICE_ACCOUNT: share the sheet with the service account email.
 
             Credentials resolution order: explicit path > GSHEET_CREDENTIALS env > GOOGLE_APPLICATION_CREDENTIALS env.
 
             For deployed apps, store credentials as environment variables or mounted secrets.
-        """))
+        """)

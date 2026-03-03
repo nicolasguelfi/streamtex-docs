@@ -24,11 +24,11 @@ def build():
     st_write(bs.heading, "More Project Commands", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Beyond project-init and project-customize, the Project category
         offers three more commands for generating courses, creating
         multi-project collections, and upgrading project boilerplate.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Command 1: course-generate ─────────────────────────────────
@@ -216,10 +216,10 @@ def build():
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Tip: run project-upgrade after updating the streamtex library
         to a new version. It ensures your boilerplate matches the
         latest conventions without touching your content blocks or
         custom styles. Always review the changes before committing.
-    """))
+    """)
     st_space("v", 1)

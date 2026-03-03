@@ -1,12 +1,10 @@
 """Part 8 — Reference: All Skills — detailed listing of all skill files."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """Skills reference block styles."""
@@ -23,9 +21,7 @@ class BlockStyles:
     label = s.project.colors.tech_blue + s.bold + s.medium
     value = s.medium
 
-
 bs = BlockStyles
-
 
 def _render_skill(name: str, description: str, used_by: str,
                   profiles: str):
@@ -39,19 +35,18 @@ def _render_skill(name: str, description: str, used_by: str,
         st_space("v", 0.3)
         st_write(bs.label, "Profiles: ", (bs.value, profiles))
 
-
 def build():
     """Render the complete skills reference."""
     st_space("v", 1)
     st_write(bs.heading, "Reference: All Skills", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Skills are Markdown files that agents automatically load as
         context before performing actions. They contain domain knowledge,
         rules, and templates that guide AI behavior. Below is the
         complete reference for all skills.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Designer Skills ───────────────────────────────────────────

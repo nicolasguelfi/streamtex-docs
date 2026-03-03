@@ -27,12 +27,12 @@ def build():
     st_write(bs.sub, "Step 1: Prerequisites", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX requires Python 3.10 or later
         and uses uv as its package manager.
 
         Make sure both are installed before continuing.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -48,12 +48,12 @@ def build():
     st_write(bs.sub, "Step 2: Clone the repository", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Clone the StreamTeX repository from GitHub.
 
         This gives you the library source, templates,
         and example projects.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -66,12 +66,12 @@ def build():
     st_write(bs.sub, "Step 3: Setup the environment", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Run uv sync to create a virtual environment
         and install all dependencies automatically.
 
         This reads pyproject.toml and resolves packages.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -84,10 +84,10 @@ def build():
     st_write(bs.sub, "Step 4: Verify installation", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Run the test suite to confirm everything
         is set up correctly. All tests should pass.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -95,12 +95,12 @@ def build():
     """), language="bash", line_numbers=False)
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Always prefix commands with uv run.
         This ensures the correct virtual environment
         and dependencies are used.
 
         Never call python,
         pytest, or streamlit directly.
-    """))
+    """)
     st_space("v", 1)

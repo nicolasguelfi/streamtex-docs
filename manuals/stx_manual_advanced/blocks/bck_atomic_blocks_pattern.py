@@ -24,38 +24,38 @@ def build():
     st_write(bs.heading, "The Atomic Block Pattern", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX uses a composite/atomic pattern to organize blocks.
         Composite blocks wire multiple atomic blocks together,
         while atomic blocks are self-contained, single-topic units.
 
         This architecture promotes reusability, testability, and
         clean separation of concerns.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Composite blocks ---
     st_write(bs.sub, "Composite Blocks", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         A composite block loads and includes multiple atomic blocks.
         It acts as a section organizer: it decides which sub-topics
         appear and in what order. Composite blocks live directly
         in the blocks/ directory.
-    """))
+    """)
     st_space("v", 2)
 
     # --- Atomic blocks ---
     st_write(bs.sub, "Atomic Blocks", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         An atomic block covers a single topic. It has its own
         BlockStyles class and build() function. Atomic blocks
         live in the blocks/_atomic/ subdirectory. They can be
         loaded by any composite block via load_atomic_block().
-    """))
+    """)
     st_space("v", 2)
 
     # --- Directory structure ---
@@ -75,11 +75,11 @@ def build():
     st_write(bs.sub, "Composite Block Code", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         A composite block imports streamtex, loads each atomic
         block by name, and includes them in build(). The BlockStyles
         class is typically empty since styling lives in the atoms.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -102,11 +102,11 @@ def build():
     st_write(bs.sub, "Atomic Block Code", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         An atomic block follows the standard block structure:
         a BlockStyles class for local styling and a build()
         function that renders the content.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -134,7 +134,7 @@ def build():
     st_write(bs.sub, "Benefits", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         Reusability \u2014 An atomic block can be included by multiple
         composite blocks across different manuals.
 
@@ -146,19 +146,19 @@ def build():
 
         Readability \u2014 Composite blocks act as a table of contents
         for the section, making the structure immediately clear.
-    """))
+    """)
     st_space("v", 2)
 
     # --- When to use ---
     st_write(bs.sub, "When to Use", toc_lvl="+1")
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         Use the atomic pattern whenever a section has two or more
         sub-topics. If a block file grows beyond a single focused
         topic, split it into a composite with atomic children.
 
         For simple, single-topic sections, a standalone block
         (no _atomic/ directory) is perfectly fine.
-    """))
+    """)
     st_space("v", 1)

@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """TOC demo styles."""
@@ -16,7 +14,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,10 +25,10 @@ def build():
         st_write(bs.sub, "TOCConfig fields", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Configure the Table of Contents
             with TOCConfig in book.py.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -95,10 +92,10 @@ toc = TOCConfig(
         st_write(bs.sub, "toc_lvl: absolute vs relative", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Register text in the TOC
             with absolute or relative level numbers.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols="1fr 1fr 1fr", cell_styles=bs.cell) as g:
@@ -136,9 +133,9 @@ toc = TOCConfig(
         st_write(bs.sub, "The label parameter", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Provide a custom short string for the sidebar TOC entry.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -146,8 +143,8 @@ st_write(s.huge, "Very Long Title...",
          toc_lvl="2", label="Short Title")""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Use absolute levels for major sections.
 
             Use relative levels (+1, -1) for subsections within a block.
-        """))
+        """)

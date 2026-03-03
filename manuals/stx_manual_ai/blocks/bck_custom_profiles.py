@@ -23,12 +23,12 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         A profile is a complete AI configuration package. It bundles
         CLAUDE.md templates, commands, agents, skills, and settings
         into a reusable unit. Profiles can extend other profiles to
         inherit and specialize behavior.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Profile structure ─────────────────────────────────────────
@@ -57,11 +57,11 @@ def build():
     st_write(bs.sub, "The manifest.toml File", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The manifest.toml file is the heart of a profile. It declares
         metadata, lists all components, and optionally specifies a
         parent profile to extend.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -106,12 +106,12 @@ def build():
     st_write(bs.sub, "Extending an Existing Profile", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The extends field in [profile] tells the installer to merge
         the parent profile's components with your additions. Your
         profile inherits all commands, agents, and skills from the
         parent, and you can add or override specific ones.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\
@@ -138,12 +138,12 @@ def build():
     st_write(bs.sub, "Creating a Profile from Scratch", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         If you do not want to extend an existing profile, omit the
         extends field. You must then provide a complete CLAUDE.md.j2
         template and all the commands, agents, and skills your
         profile needs.
-    """))
+    """)
     st_space("v", 1)
 
     show_code(textwrap.dedent("""\

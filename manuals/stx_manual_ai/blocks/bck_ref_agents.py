@@ -1,12 +1,10 @@
 """Part 8 — Reference: All Agents — detailed cards for the four AI agents."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
-
 
 class BlockStyles:
     """Agents reference block styles."""
@@ -23,9 +21,7 @@ class BlockStyles:
     label = s.project.colors.tech_blue + s.bold + s.large
     value = s.large
 
-
 bs = BlockStyles
-
 
 def build():
     """Render the complete agents reference table."""
@@ -33,12 +29,12 @@ def build():
     st_write(bs.heading, "Reference: All Agents", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         StreamTeX AI profiles include four specialized agents. Each
         agent is an autonomous workflow that reads context, makes
         decisions, and orchestrates multiple commands. Below is
         the complete reference for all four agents.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Row 1: Project Architect + Slide Designer ─────────────────

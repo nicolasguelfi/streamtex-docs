@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Dynamic & conditional content demo styles."""
@@ -28,18 +26,17 @@ STYLE_PRESETS = {
     "Amber Highlight": s.bold + s.Large + s.project.colors.highlight_amber,
 }
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Dynamic & Conditional Content",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Content changes dynamically based on user interaction.
 
             Python if/else controls what renders. Styles can be selected at runtime.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Section 1: Style switcher ---
@@ -152,7 +149,7 @@ with st_grid(cols=grid_cols, cell_styles=bs.cell) as g:
             st.rerun()
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Python if/else controls what gets rendered (true show/hide).
 
             Styles can be selected dynamically from a dict of presets.
@@ -160,4 +157,4 @@ with st_grid(cols=grid_cols, cell_styles=bs.cell) as g:
             st_grid() can be rebuilt with slider-driven dimensions.
 
             The wizard pattern uses session_state to track progress.
-        """))
+        """)

@@ -6,8 +6,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Architecture demo styles."""
@@ -17,7 +15,6 @@ class BlockStyles:
             + s.container.paddings.small_padding
             + s.container.layouts.vertical_center_layout)
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -29,10 +26,10 @@ def build():
         st_write(bs.sub, "Project folder structure", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             A StreamTeX project follows
             this standard folder layout.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/block/folder_structure.txt", language="text", line_numbers=False)
@@ -42,10 +39,10 @@ def build():
         st_write(bs.sub, "st_book: the orchestrator", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_book() takes a list of block modules
             and renders them sequentially.
-        """))
+        """)
         st_space("v", 1)
 
         # Read actual book.py
@@ -66,10 +63,10 @@ st_book([blocks.bck_01, blocks.bck_02, ...],
         st_write(bs.sub, "st_include: embedding sub-blocks", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             st_include() calls a block module's build() function
             to embed it inline.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -91,10 +88,10 @@ st_include(bck_welcome)""")
         st_write(bs.sub, "Block file structure", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Every block file must have BlockStyles,
             bs alias, and build() function.
-        """))
+        """)
         st_space("v", 1)
 
         with st_grid(cols=2, cell_styles=bs.cell) as g:
@@ -129,10 +126,10 @@ st_include(bck_welcome)""")
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Auto-discovers all bck_*.py files
             so adding a block is just creating a file.
-        """))
+        """)
         st_space("v", 1)
 
         # Read actual __init__.py
@@ -149,9 +146,9 @@ st_include(bck_welcome)""")
 # to auto-discover all bck_*.py files""")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             One concept per block.
 
             Use st_include for composition
             when blocks share sub-components.
-        """))
+        """)

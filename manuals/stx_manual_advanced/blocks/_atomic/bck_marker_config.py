@@ -30,13 +30,13 @@ def build():
     st_write(bs.heading, "MarkerConfig Reference", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         MarkerConfig is a dataclass that controls the marker navigation
         system. Pass it to st_book() via the marker_config= parameter.
 
         All fields have sensible defaults — you only need to set what
         you want to customize.
-    """))
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------
@@ -114,7 +114,7 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
     st_write(bs.sub, "Keyboard Safety", toc_lvl="+1")
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The keyboard handler automatically ignores key presses when
         the focus is on an input, textarea, select, or contentEditable
         element. This prevents marker navigation from interfering
@@ -122,7 +122,7 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
 
         Pressing Escape while the popup is open closes it without
         triggering any navigation.
-    """))
+    """)
     st_space("v", 3)
 
     # ------------------------------------------------------------------
@@ -131,10 +131,10 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
     st_write(bs.sub, "NumberingMode Enum Reference", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         NumberingMode controls how TOC heading numbers are displayed.
         Set via TOCConfig(numbering=NumberingMode.XXX).
-    """))
+    """)
     st_space("v", 1)
 
     show_code("""\
@@ -150,14 +150,14 @@ toc = TOCConfig(numbering=NumberingMode.INLINE)
 toc = TOCConfig(numbering=NumberingMode.NONE)""")
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         SIDEBAR_ONLY is the default and recommended mode for most manuals.
 
         INLINE is useful for formal documents where section numbers
         should be visible in the rendered content.
 
         NONE disables numbering entirely (useful for single-page docs).
-    """))
+    """)
 
 
 def _field_row(name: str, type_str: str, default: str, desc: str):

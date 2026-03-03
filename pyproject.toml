@@ -20,3 +20,6 @@ default-groups = ["dev"]
 # Override for local dev — points to adjacent library repo
 [tool.uv.sources]
 streamtex = { path = "../streamtex", editable = true }
+
+[tool.pyright]
+extraPaths = ["../streamtex"]

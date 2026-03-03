@@ -5,10 +5,8 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 import json
-
 
 class BlockStyles:
     """Static assets demo styles."""
@@ -20,7 +18,6 @@ bs = BlockStyles
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _static_dir = os.path.join(_project_root, "static")
 
-
 def build():
     with st_block(s.center_txt):
         st_write(bs.heading, "Static Assets", tag=t.div, toc_lvl="1")
@@ -30,11 +27,11 @@ def build():
         st_write(bs.sub, "Folder organization", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Organize static files by type under a static/ directory.
 
             Enable static serving in .streamlit/config.toml.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/static_assets/folder_organization.txt", language="text")
@@ -44,10 +41,10 @@ def build():
         st_write(bs.sub, "Local images", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use configure_image_path() to set the base directory,
             then st_image() with just the filename.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -67,10 +64,10 @@ st_image(uri="sample_gradient.png",
         st_write(bs.sub, "Text files", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Read text files with open() and display
             their content with st_code() or st_write().
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -90,10 +87,10 @@ stx.st_code(code=content, language="text")""")
         st_write(bs.sub, "PDF documents", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Embed PDFs using st_html() with an iframe
             pointing to the static-served file.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -117,11 +114,11 @@ st_html(
         st_write(bs.sub, "Audio files", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Play audio with stx.st_audio() (Streamlit native).
 
             This is an interactive widget, so st.* is correct.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -137,11 +134,11 @@ stx.st_audio(audio_path, format="audio/wav")""")
         st_write(bs.sub, "Local video files", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Play local video with stx.st_video() (Streamlit native).
 
             Place .mp4, .webm, .ogg files in static/videos/.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -157,10 +154,10 @@ stx.st_video(video_path)""")
         st_write(bs.sub, "YouTube videos", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Embed YouTube videos by reading URLs from a file
             and using stx.st_video() with the URL directly.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -181,10 +178,10 @@ stx.st_video(youtube_url)""")
         st_write(bs.sub, "Data files (JSON, CSV, ...)", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Load structured data with standard Python libraries
             and display with st_code() or st.dataframe().
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -202,7 +199,7 @@ stx.st_code(code=json.dumps(data, indent=2), language="json")""")
                    code=json.dumps(data, indent=2), language="json")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Static serving requires enableStaticServing = true in config.toml.
 
             Files under static/ are served at the app/static/ URL prefix.
@@ -210,4 +207,4 @@ stx.st_code(code=json.dumps(data, indent=2), language="json")""")
             Use st_image() for images (StreamTeX native).
 
             Use stx.st_audio(), stx.st_video() for media (Streamlit interactive widgets).
-        """))
+        """)

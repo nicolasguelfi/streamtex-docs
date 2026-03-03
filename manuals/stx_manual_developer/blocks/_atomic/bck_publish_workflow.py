@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Publish workflow styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,12 +22,12 @@ def build():
         st_write(bs.sub, "Overview", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The publish.yml workflow is triggered when a GitHub Release
             is published. It builds the package, runs final checks, and
             publishes to PyPI using OIDC Trusted Publishing — no stored
             API tokens or secrets required.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Trigger ---
@@ -43,11 +40,11 @@ on:
     types: [published]""", language="yaml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The workflow only runs when a GitHub Release is published.
             This ensures that only tagged, reviewed releases reach PyPI.
             Draft releases do not trigger publication.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Permissions ---
@@ -60,13 +57,13 @@ permissions:
   id-token: write""", language="yaml")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Two permissions are required:
 
             - contents: read — to check out the repository code.
             - id-token: write — to request an OIDC token from GitHub,
               which PyPI uses to verify the publisher identity.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Full workflow ---
@@ -152,7 +149,7 @@ jobs:
         st_write(bs.sub, "Setting up Trusted Publishing on PyPI", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Trusted Publishing uses OpenID Connect (OIDC) so GitHub Actions
             can publish to PyPI without storing any API tokens. To set it up:
 
@@ -168,11 +165,11 @@ jobs:
             The pypa/gh-action-pypi-publish action exchanges this token
             with PyPI to authenticate the upload. No long-lived secrets
             are ever stored in the repository.
-        """))
+        """)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Trusted Publishing is the recommended approach for all new
             PyPI packages. It eliminates the risk of leaked API tokens
             and provides an auditable chain of trust from GitHub to PyPI.
-        """))
+        """)

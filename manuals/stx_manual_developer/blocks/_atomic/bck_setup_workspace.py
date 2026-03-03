@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Workspace management styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,22 +22,22 @@ def build():
         st_write(bs.sub, "What is a workspace?", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             A workspace groups the StreamTeX library and its documentation
             projects so you can develop and test them side by side.
             The stx CLI provides commands to create, clone,
             and synchronize workspaces.
-        """))
+        """)
         st_space("v", 2)
 
         # --- 2. stx workspace init ---
         st_write(bs.sub, "stx workspace init", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Creates a brand-new workspace directory with the
             standard folder structure and configuration files.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -57,10 +54,10 @@ stx workspace init
         st_write(bs.sub, "stx workspace clone", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Clones an existing workspace from a remote repository
             and sets up all project links automatically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -72,11 +69,11 @@ stx workspace clone https://github.com/org/my-workspace.git""", language="bash")
         st_write(bs.sub, "stx workspace link", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Links a project into the workspace for development.
             This is how you connect streamtex-docs alongside
             the streamtex library for live testing.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -90,10 +87,10 @@ stx workspace link ../streamtex-docs
         st_write(bs.sub, "stx workspace status and sync", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Check the state of all linked projects and
             synchronize changes across the workspace.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -142,7 +139,7 @@ stx workspace sync""", language="bash")
                 st_write(s.large, "Synchronize changes")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             The workspace system lets you work with streamtex-docs
             alongside the streamtex library for live testing.
 
@@ -151,4 +148,4 @@ stx workspace sync""", language="bash")
 
             Use stx workspace status regularly to check for drift
             between linked projects.
-        """))
+        """)

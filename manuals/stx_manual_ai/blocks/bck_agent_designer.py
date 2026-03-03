@@ -34,12 +34,12 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation(textwrap.dedent("""\
+    show_explanation("""\
         The Slide Designer and Slide Reviewer are two complementary
         agents that work in tandem. The Designer creates blocks;
         the Reviewer validates them. Together they form a
         create-then-audit loop that ensures quality output.
-    """))
+    """)
     st_space("v", 2)
 
     # ── Slide Designer ─────────────────────────────────────────────
@@ -185,11 +185,11 @@ def build():
     """), language="text", line_numbers=False)
     st_space("v", 1)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The Reviewer returns a structured pass/fail report for each
         criterion. When a check fails, it includes the exact line
         number and a description of the issue. The Designer can then
         target its fixes precisely, avoiding unnecessary changes to
         passing sections.
-    """))
+    """)
     st_space("v", 1)

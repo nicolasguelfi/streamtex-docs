@@ -5,15 +5,12 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Clone and setup styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -25,11 +22,11 @@ def build():
         st_write(bs.sub, "Clone the repository", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Start by cloning the StreamTeX source repository.
             The project uses uv for dependency management,
             so all dependencies are locked in uv.lock.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -41,11 +38,11 @@ cd streamtex""", language="bash")
         st_write(bs.sub, "Install dependencies with uv", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             uv sync reads pyproject.toml and uv.lock to install
             all dependencies in an isolated virtual environment.
             This ensures reproducible builds across all machines.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -60,10 +57,10 @@ uv sync
         st_write(bs.sub, "Verify the setup", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Run the test suite and linter to confirm
             everything is working correctly.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -109,10 +106,10 @@ uv run ruff check streamtex/
                 st_write(s.large, "Run the linter")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Never call python, pip, or pytest directly.
 
             Always prefix commands with uv run to use the managed environment.
 
             If uv.lock changes after a git pull, run uv sync again.
-        """))
+        """)

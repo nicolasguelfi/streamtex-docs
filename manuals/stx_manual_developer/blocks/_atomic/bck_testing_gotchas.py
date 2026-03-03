@@ -23,23 +23,23 @@ def build():
         st_write(bs.heading, "Testing Gotchas", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             These are the most common pitfalls developers encounter
             when writing or debugging StreamTeX tests. Each one has
             caused real CI failures.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Singleton state ---
         st_write(bs.sub, "Singleton state must be reset", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             StreamTeX uses singleton registries for the table of
             contents, bibliography, export buffer, and more. If a test
             modifies one of these and does not reset it, subsequent
             tests see stale state and fail non-deterministically.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -65,13 +65,13 @@ def build():
         st_write(bs.sub, "Python builtins shadowing", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The wildcard import `from streamtex import *` can shadow
             Python builtins. The most common case is list() being
             replaced by StreamTeX's list function. In test files, be
             explicit about imports or use the list_type= parameter
             instead of calling list() directly.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -97,7 +97,7 @@ def build():
         st_write(bs.sub, "st.html vs components.html", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Streamlit has two different html() functions:
 
             - st.html() renders HTML inline without an iframe. This is
@@ -107,7 +107,7 @@ def build():
               widgets or third-party content that needs isolation.
 
             In tests, mock the correct one based on what you are testing.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -127,13 +127,13 @@ def build():
         st_write(bs.sub, "Buffer stack leaks", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             The export buffer uses a stack for nested wrappers. If a
             test calls export_push_wrapper() without a matching
             export_pop_wrapper(), the stack leaks into the next test.
             Always pair push/pop in a try/finally or use
             reset_export_buffer() in teardown.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -161,26 +161,26 @@ def build():
         st_write(bs.sub, "Streamlit context requirements", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Some Streamlit functions require a running app context.
             If you see "NoSessionContext" errors in tests, it means
             the function needs either a mock or a Streamlit test
             harness. Most StreamTeX tests avoid this by mocking
             st.html() and other Streamlit calls.
-        """))
+        """)
         st_space("v", 2)
 
         # --- Import order ---
         st_write(bs.sub, "Import order matters", toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Always import streamtex before importing custom modules
             that depend on it. The streamtex package initialises
             internal registries on import. If a custom module tries
             to use those registries before streamtex is loaded, you
             get ImportError or AttributeError.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(textwrap.dedent("""\
@@ -194,9 +194,9 @@ def build():
         """), language="python")
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             When a test fails only in CI but passes locally, the most
             common cause is singleton state leaking between tests. The
             test execution order may differ, exposing hidden
             dependencies. Add reset calls and re-run.
-        """))
+        """)

@@ -123,11 +123,11 @@ def build():
                 )
     st_space("v", 2)
 
-    show_details(textwrap.dedent("""\
+    show_details("""\
         The streamtex-claude repository is optional. You can use
         StreamTeX without any AI tooling — it is a standalone Python
         library. The AI layer simply accelerates your workflow by
         automating block scaffolding, style composition, and
         structural audits.
-    """))
+    """)
     st_space("v", 1)

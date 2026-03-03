@@ -5,8 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
-
 
 class BlockStyles:
     """Overlay demo styles."""
@@ -15,7 +13,6 @@ class BlockStyles:
     overlay_text = s.text.colors.white + s.bold + s.Large
     overlay_bg = ns("background-color: rgba(0, 0, 0, 0.5); padding: 8pt;")
 bs = BlockStyles
-
 
 def build():
     with st_block(s.center_txt):
@@ -28,10 +25,10 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Place content on top of a base element
             with absolute positioning.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/overlay/overlay_basic.py")
@@ -56,19 +53,19 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Each o.layer() accepts top, left, right, bottom
             positioning parameters.
-        """))
+        """)
         st_space("v", 1)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Integer values are treated as pixels.
 
             String values are used as-is (e.g., "50%").
 
             The base content determines the overlay container size.
-        """))
+        """)
         st_space("v", 2)
 
         # Center positioning
@@ -77,11 +74,11 @@ def build():
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use CSS transforms to center overlays.
 
             Combine with percentage positioning for responsive centering.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -102,11 +99,11 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Stack multiple overlay layers on top of each other.
 
             Each layer can have different positioning and content.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/overlay/overlay_multiple_layers.py")
@@ -118,10 +115,10 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Overlays are perfect for adding badges, sale tags, or status indicators
             to content without modifying the base structure.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/overlay/overlay_badges.py")
@@ -133,11 +130,11 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use overlays for static annotations.
 
             For interactive tooltips, consider combining with CSS hover states.
-        """))
+        """)
         st_space("v", 1)
 
         show_code("""\
@@ -159,11 +156,11 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             By default, later overlay layers appear on top.
 
             Use z-index CSS to explicitly control stacking order.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/overlay/overlay_zindex.py")
@@ -175,11 +172,11 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        show_explanation(textwrap.dedent("""\
+        show_explanation("""\
             Use percentage values for positioning to make overlays responsive.
 
             Percentages are relative to the base container.
-        """))
+        """)
         st_space("v", 1)
 
         show_code(file="examples/overlay/overlay_responsive.py")
@@ -214,10 +211,10 @@ with st_overlay(s.container.sizes.width_full) as o:
         """)
         st_space("v", 2)
 
-        show_details(textwrap.dedent("""\
+        show_details("""\
             Overlays are best for simple decorative layering.
 
             For complex interactive layouts, use st_grid or st_block instead.
 
             Remember: overlays don't affect document flow or layout.
-        """))
+        """)

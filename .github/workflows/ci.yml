@@ -11,6 +11,12 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    # UV_NO_SOURCES ignores [tool.uv.sources] for ALL uv commands in this job.
+    # In local dev, pyproject.toml points streamtex to ../streamtex (editable install).
+    # In CI only streamtex-docs is checked out, so ../streamtex doesn't exist.
+    # This env var tells uv to resolve streamtex from PyPI instead.
+    env:
+      UV_NO_SOURCES: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -23,9 +29,7 @@ jobs:
         run: uv python install
 
       - name: Install dependencies
-        # --no-sources ignores [tool.uv.sources] so uv resolves streamtex from PyPI
-        # instead of the local editable path (../streamtex) which doesn't exist in CI
-        run: uv sync --no-sources
+        run: uv sync
 
       - name: Verify streamtex import
         run: uv run python -c "import streamtex; print(f'streamtex {streamtex.__version__}')"

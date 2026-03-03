@@ -184,8 +184,46 @@ BibConfig(citation_style=CitationStyle.SUPERSCRIPT)""")
 
         st_space("v", 3)
 
-        # --- Section 7: Rendered Bibliography ---
-        st_write(bs.sub, "7. Rendered Bibliography (APA)", toc_lvl="+1")
+        # --- Section 7: Output Formats (BibFormat) ---
+        st_write(bs.sub, "7. Output Formats (BibFormat)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation(textwrap.dedent("""\
+            StreamTeX supports 5 bibliography output formats via BibFormat enum.
+            Each format styles author names, titles, journals, and dates differently.
+        """))
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.bib import BibFormat
+
+# APA (default) — Author, A. B. (Year). Title. Journal, Vol(Num), Pages.
+BibConfig(format=BibFormat.APA)
+
+# MLA — Author. "Title." Journal, vol. Vol, no. Num, Year, pp. Pages.
+BibConfig(format=BibFormat.MLA)
+
+# IEEE — [1] A. Author, "Title," Journal, vol. Vol, no. Num, pp. Pages, Year.
+BibConfig(format=BibFormat.IEEE)
+
+# Chicago — Author. "Title." Journal Vol, no. Num (Year): Pages.
+BibConfig(format=BibFormat.CHICAGO)
+
+# Harvard — Author Year, 'Title', Journal, vol. Vol, no. Num, pp. Pages.
+BibConfig(format=BibFormat.HARVARD)""")
+        st_space("v", 2)
+
+        show_details(textwrap.dedent("""\
+            The format is set once in BibConfig and applies to all st_bibliography() calls.
+
+            You can also override per-call: st_bibliography(format=BibFormat.IEEE).
+
+            Each format handles edge cases (missing fields, et al. for 3+ authors).
+        """))
+        st_space("v", 3)
+
+        # --- Section 8: Rendered Bibliography ---
+        st_write(bs.sub, "8. Rendered Bibliography (APA)", toc_lvl="+1")
         st_space("v", 2)
 
         show_code("""\
@@ -207,8 +245,8 @@ st_bibliography(
 
         st_space("v", 3)
 
-        # --- Section 8: BibTeX Export ---
-        st_write(bs.sub, "8. BibTeX Export", toc_lvl="+1")
+        # --- Section 9: BibTeX Export ---
+        st_write(bs.sub, "9. BibTeX Export", toc_lvl="+1")
         st_space("v", 2)
 
         show_code("""\
@@ -230,8 +268,8 @@ st.download_button("Download .bib", bibtex_str, "references.bib")""")
 
         st_space("v", 3)
 
-        # --- Section 9: st_refs & IDE Autocompletion ---
-        st_write(bs.sub, "9. st_refs & IDE Autocompletion", toc_lvl="+1")
+        # --- Section 10: st_refs & IDE Autocompletion ---
+        st_write(bs.sub, "10. st_refs & IDE Autocompletion", toc_lvl="+1")
         st_space("v", 2)
 
         show_explanation(textwrap.dedent("""\
@@ -251,4 +289,46 @@ st.download_button("Download .bib", bibtex_str, "references.bib")""")
             Unknown keys (added after generation) still work via __getattr__ fallback — just without completion.
 
             Regenerate with the same command when you add or modify bibliography entries.
+        """))
+        st_space("v", 3)
+
+        # --- Section 11: Custom Parsers ---
+        st_write(bs.sub, "11. Custom Parsers (register_bib_parser)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation(textwrap.dedent("""\
+            You can extend the bibliography system with custom parsers for
+            any file format. Register a parser function that takes a file path
+            and returns a list of BibEntry objects.
+        """))
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.bib import register_bib_parser, BibEntry
+
+def parse_custom_format(filepath: str) -> list[BibEntry]:
+    \"\"\"Parse a custom bibliography format.\"\"\"
+    entries = []
+    with open(filepath) as f:
+        for line in f:
+            # Parse your custom format here
+            key, title, author, year = line.strip().split("|")
+            entries.append(BibEntry(
+                key=key, title=title, authors=[author], year=year
+            ))
+    return entries
+
+# Register for .custom extension
+register_bib_parser("custom", parse_custom_format)
+
+# Now load_bib() auto-detects .custom files
+# load_bib("references.custom")""")
+        st_space("v", 2)
+
+        show_details(textwrap.dedent("""\
+            The parser function receives the file path and must return List[BibEntry].
+
+            The format name is used for file extension detection in load_bib().
+
+            Built-in parsers: bib (BibTeX), json (JSON), ris (RIS), csl-json (CSL-JSON).
         """))

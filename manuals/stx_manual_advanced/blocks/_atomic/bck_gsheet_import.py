@@ -144,3 +144,61 @@ def build():
 
             Data flows through the standard export pipeline: stx.st_dataframe generates both Streamlit widget and HTML fallback.
         """))
+        st_space("v", 3)
+
+        # --- Section 5: Authentication Modes ---
+        st_write(bs.sub, "5. Authentication Modes (AuthMode)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation(textwrap.dedent("""\
+            StreamTeX supports 3 authentication modes for Google Sheets access.
+            Choose based on your sheet's sharing settings and deployment context.
+        """))
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import GSheetConfig, AuthMode
+
+# PUBLIC — no auth required (sheet must be "Anyone with link")
+cfg_public = GSheetConfig(auth_mode=AuthMode.PUBLIC)
+
+# SERVICE_ACCOUNT — server-side auth (recommended for production)
+# Uses a JSON key file from Google Cloud Console
+cfg_sa = GSheetConfig(
+    auth_mode=AuthMode.SERVICE_ACCOUNT,
+    credentials_path="path/to/service-account.json",
+)
+
+# OAUTH2 — interactive browser-based auth (for development)
+cfg_oauth = GSheetConfig(auth_mode=AuthMode.OAUTH2)""")
+        st_space("v", 2)
+
+        cell_style = (s.container.borders.solid_border
+                      + s.container.paddings.small_padding)
+        header_style = sg.create("A1:C1", cell_style + s.bold + s.large + s.project.colors.primary_blue)
+        data_style = sg.create("A2:C4", cell_style + s.large)
+
+        with st_grid(cols=3, cell_styles=header_style + data_style) as g:
+            for col in ["Mode", "Best For", "Credentials"]:
+                with g.cell():
+                    st_write(col)
+            for row in [
+                ("PUBLIC", "Public sheets, demos, tutorials", "None required"),
+                ("SERVICE_ACCOUNT", "Production apps, CI/CD, automated pipelines",
+                 "JSON key from GCP Console"),
+                ("OAUTH2", "Development, ad-hoc data access",
+                 "OAuth2 client ID (browser auth flow)"),
+            ]:
+                for cell in row:
+                    with g.cell():
+                        st_write(cell)
+
+        st_space("v", 2)
+
+        show_details(textwrap.dedent("""\
+            For SERVICE_ACCOUNT: share the sheet with the service account email.
+
+            Credentials resolution order: explicit path > GSHEET_CREDENTIALS env > GOOGLE_APPLICATION_CREDENTIALS env.
+
+            For deployed apps, store credentials as environment variables or mounted secrets.
+        """))

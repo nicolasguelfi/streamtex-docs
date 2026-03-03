@@ -50,5 +50,44 @@ def build():
             stx.StxStyles.medium,
             "Keep blocks atomic and composable"
         )
+        st_write(
+            stx.StxStyles.medium,
+            "Use export-aware widgets (stx.st_dataframe, not st.dataframe) for HTML export"
+        )
+        st_write(
+            stx.StxStyles.medium,
+            "Use Style composition (+ / -) instead of raw CSS strings"
+        )
+        st_write(
+            stx.StxStyles.medium,
+            "Run uv run ruff check after every change"
+        )
+
+    st_space("v", 2)
+
+    st_write(
+        stx.StxStyles.large + stx.StxStyles.text.colors.reset,
+        "v0.3.0 Gotchas",
+        toc_lvl="2"
+    )
+    st_space("v", 1)
+
+    with st_list(list_type="ul"):
+        st_write(
+            stx.StxStyles.medium,
+            "from streamtex import * shadows Python builtins (list, type) — use list_type= parameter"
+        )
+        st_write(
+            stx.StxStyles.medium,
+            "Singleton registries (TOC, bib, marker) persist across reruns — call reset_*() in tests"
+        )
+        st_write(
+            stx.StxStyles.medium,
+            "st_html() height=0 uses st.html(), height>0 uses components.html() iframe"
+        )
+        st_write(
+            stx.StxStyles.medium,
+            "Export buffer push/pop must always be paired to avoid stack leaks"
+        )
 
     st_space("v", 2)

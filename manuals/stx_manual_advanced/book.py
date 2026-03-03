@@ -70,48 +70,51 @@ bib_config = BibConfig(
 )
 
 # ============================================================================
-# Orchestrate composites in pedagogical order
-#
-# Note: This includes 3 new demo blocks that showcase Phase 1 (shared blocks)
-# and Phase 2 (collections) features
+# Orchestrate composites — reorganized into logical sections
 # ============================================================================
 st_book([
     # Welcome page (gradient header + level badge)
     blocks.bck_level_badge,
 
-    # Phase 1: Multi-source blocks and static resolution
+    # --- Section 1: Architecture & Patterns ---
     blocks.bck_lazy_block_registry_demo,
     blocks.bck_shared_blocks_usage,
     blocks.bck_static_resolution_demo,
+    blocks.bck_block_helpers_patterns,
+    blocks.bck_atomic_blocks_pattern,
 
-    # Advanced features (continued from intro)
+    # --- Section 2: UI Avancee ---
     blocks.bck_overlays_positioning,
     blocks.bck_visibility_control,
     blocks.bck_custom_themes,
+    blocks.bck_hover_and_preview,
+    blocks.bck_ui_components,
+
+    # --- Section 3: Navigation & Book ---
     blocks.bck_navigation_markers,
-
-    # Library patterns and best practices
-    blocks.bck_block_helpers_patterns,
-
-    # Phase 2: Collections and multi-project management
+    blocks.bck_banner_config,
+    blocks.bck_inspector_config,
     blocks.bck_collections_and_discovery,
 
-    blocks.bck_static_assets_loading,
-    blocks.bck_export_aware_widgets,
-    blocks.bck_hover_and_preview,
-    blocks.bck_deployment_strategies,
-    blocks.bck_interactive_and_state,
-    blocks.bck_data_and_charts,
-    blocks.bck_ui_components,
-    # Document languages (Markdown & LaTeX rendering)
+    # --- Section 4: Langages documentaires ---
     blocks.bck_document_languages,
-
-    # Diagram rendering engines
+    blocks.bck_latex_documents,
     blocks.bck_diagrams_and_viz,
 
-    # Data integration and external sources
+    # --- Section 5: Donnees & Integrations ---
+    blocks.bck_data_and_charts,
     blocks.bck_gsheet_import,
     blocks.bck_bibliography_references,
+    blocks.bck_interactive_and_state,
+
+    # --- Section 6: Export ---
+    blocks.bck_export_aware_widgets,
+    blocks.bck_export_advanced,
+    blocks.bck_static_assets_loading,
+    blocks.bck_deployment_strategies,
+
+    # --- Appendix: Migration ---
+    blocks.bck_upgrade_guide,
 
     # Shared block footer
     shared_blocks.bck_footer_training,

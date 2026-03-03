@@ -123,6 +123,41 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
         Pressing Escape while the popup is open closes it without
         triggering any navigation.
     """))
+    st_space("v", 3)
+
+    # ------------------------------------------------------------------
+    # NumberingMode reference
+    # ------------------------------------------------------------------
+    st_write(bs.sub, "NumberingMode Enum Reference", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation(textwrap.dedent("""\
+        NumberingMode controls how TOC heading numbers are displayed.
+        Set via TOCConfig(numbering=NumberingMode.XXX).
+    """))
+    st_space("v", 1)
+
+    show_code("""\
+from streamtex import NumberingMode, TOCConfig
+
+# SIDEBAR_ONLY — numbers appear only in the sidebar TOC (default)
+toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY)
+
+# INLINE — numbers appear both in sidebar and inline in the content
+toc = TOCConfig(numbering=NumberingMode.INLINE)
+
+# NONE — no numbering anywhere
+toc = TOCConfig(numbering=NumberingMode.NONE)""")
+    st_space("v", 1)
+
+    show_details(textwrap.dedent("""\
+        SIDEBAR_ONLY is the default and recommended mode for most manuals.
+
+        INLINE is useful for formal documents where section numbers
+        should be visible in the rendered content.
+
+        NONE disables numbering entirely (useful for single-page docs).
+    """))
 
 
 def _field_row(name: str, type_str: str, default: str, desc: str):

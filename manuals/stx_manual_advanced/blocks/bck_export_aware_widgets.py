@@ -160,7 +160,32 @@ stx.st_line_chart(data)   # SVG chart in export
 
     st_space("v", 2)
 
-    # Section 7: Best Practices
+    # Section 7: st_graphviz SVG Export
+    st_write(bs.section, "st_graphviz — SVG Export", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "stx.st_graphviz() renders Graphviz diagrams as inline SVG in exports, "
+        "making them resolution-independent and searchable:",
+    )
+    st_space("v", 1)
+
+    with st_block(s.project.containers.code_box):
+        st_code("python", """\
+import streamtex as stx
+
+# Graphviz renders as interactive widget in Streamlit
+# and as inline SVG in HTML export
+stx.st_graphviz(\"\"\"
+    digraph {
+        A -> B -> C
+        B -> D
+    }
+\"\"\")""")
+    st_space("v", 2)
+
+    # Section 8: Best Practices
     st_write(bs.section, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 

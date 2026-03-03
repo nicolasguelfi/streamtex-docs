@@ -58,6 +58,9 @@ st_book([
     blocks.bck_render,
     blocks.bck_gcp_ansible,
     blocks.bck_ci_cd,
+
+    # CLI Reference (deploy & publish commands)
+    blocks.bck_cli_reference,
 ], toc_config=toc, marker_config=marker_config, paginate=True,
    banner=BannerConfig.full(),
    inspector=stx.InspectorConfig(enabled=True))

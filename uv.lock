@@ -1832,7 +1832,7 @@ wheels = [
 [[package]]
 name = "streamtex"
 version = "0.3.0"
-source = { registry = "https://pypi.org/simple" }
+source = { editable = "../streamtex" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "graphviz" },
@@ -1844,9 +1844,34 @@ dependencies = [
     { name = "streamlit-mermaid" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e2/05/d1b1f8761e65105858ea8cdbd01dce46edfa50f5b9c0fccb2227fb023298/streamtex-0.3.0.tar.gz", hash = "sha256:e9bdd1600292d360f20a636706060a5007580e528ccc427b6b59a0f4c3ae3b1d", size = 139693, upload-time = "2026-03-02T16:54:52.786Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/20/1be88e43bbdd0187c60c905afdb52789aeafff3c8a0f439d033afb678d03/streamtex-0.3.0-py3-none-any.whl", hash = "sha256:db2acb915067cf623ab3c77cb5344d18d91b5840202aad0834eaabedb2b37408", size = 159675, upload-time = "2026-03-02T16:54:49.567Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.10.0" },
+    { name = "click", marker = "extra == 'cli'", specifier = ">=8.0" },
+    { name = "graphviz", specifier = ">=0.21" },
+    { name = "jinja2", marker = "extra == 'cli'", specifier = ">=3.0" },
+    { name = "matplotlib", specifier = ">=3.10.8" },
+    { name = "mermaid-py", specifier = ">=0.5.0" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
+    { name = "requests", specifier = ">=2.28.0" },
+    { name = "rich", marker = "extra == 'cli'", specifier = ">=13.0" },
+    { name = "streamlit", specifier = ">=1.54.0" },
+    { name = "streamlit-ace", marker = "extra == 'inspector'", specifier = ">=0.1.1" },
+    { name = "streamlit-mermaid", specifier = ">=0.3.0" },
+    { name = "tomli", marker = "python_full_version < '3.11' and extra == 'cli'", specifier = ">=2.0" },
+    { name = "watchdog" },
+]
+provides-extras = ["inspector", "cli"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "click", specifier = ">=8.0" },
+    { name = "jinja2", specifier = ">=3.0" },
+    { name = "pytest", specifier = ">=7.0" },
+    { name = "rich", specifier = ">=13.0" },
+    { name = "ruff", specifier = ">=0.4.0" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0" },
 ]
 
 [[package]]
@@ -1864,7 +1889,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "streamtex", specifier = ">=0.3.0" }]
+requires-dist = [{ name = "streamtex", editable = "../streamtex" }]
 
 [package.metadata.requires-dev]
 dev = [

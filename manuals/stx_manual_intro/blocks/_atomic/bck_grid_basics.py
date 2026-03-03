@@ -105,3 +105,30 @@ with st_grid(cols=2, grid_style=table_style,
 
             Use # row N comments for readability in complex grids.
         """))
+        st_space("v", 3)
+
+        # responsive_cols helper
+        st_write(bs.sub, "responsive_cols() helper", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation(textwrap.dedent("""\
+            The responsive_cols() helper generates a CSS grid-template-columns
+            value using auto-fit and minmax for adaptive column layouts.
+        """))
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import responsive_cols
+
+# Returns a CSS string like:
+# "grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"
+cols_css = responsive_cols(min_width="250px")""")
+        st_space("v", 1)
+
+        show_details(textwrap.dedent("""\
+            Use this with grid_style for grids that adapt to screen width.
+
+            Columns automatically wrap when the viewport is too narrow.
+
+            Prefer st_grid(responsive=True) for most cases — it uses responsive_cols() internally.
+        """))

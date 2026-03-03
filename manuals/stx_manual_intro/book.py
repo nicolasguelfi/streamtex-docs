@@ -69,6 +69,9 @@ st_book([
     blocks.bck_navigation_and_organization,
     blocks.bck_zoom_and_responsive,
     blocks.bck_export_and_sharing,
+
+    # CLI Quick Start
+    blocks.bck_cli_quickstart,
 ], toc_config=toc, marker_config=marker_config, paginate=True,
    banner=BannerConfig.full(),
    inspector=stx.InspectorConfig(enabled=True))

@@ -191,7 +191,46 @@ st_write(
 
     st_space("v", 2)
 
-    # Section 7: Best Practices
+    # Section 7: LinkConfig API
+    st_write(bs.section, "LinkConfig API", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "Use LinkConfig to control link behavior globally:",
+    )
+    st_space("v", 1)
+
+    with st_block(s.project.containers.code_box):
+        st_code("python", """\
+from streamtex import LinkConfig, set_link_config
+
+# Configure link behavior globally
+set_link_config(LinkConfig(
+    internal_target="_self",    # Internal links open in same tab
+    external_target="_blank",   # External links open in new tab
+))""")
+
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "LinkConfig controls the ",
+        (s.text.weights.bold_weight, "target"),
+        " attribute of all generated links. Internal links (same domain) "
+        "and external links can have different targets.",
+    )
+    st_space("v", 2)
+
+    with st_block(bs.feature_box):
+        st_write(
+            s.medium,
+            (s.text.weights.bold_weight, "Target options: "),
+            "_self (same tab), _blank (new tab), _parent, _top",
+        )
+    st_space("v", 2)
+
+    # Section 8: Best Practices
     st_write(bs.section, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
@@ -214,7 +253,7 @@ st_write(
         )
         st_write(
             s.medium,
-            "Test with various URLs to see different preview formats",
+            "Use LinkConfig for global link target control",
         )
 
     st_space("v", 3)

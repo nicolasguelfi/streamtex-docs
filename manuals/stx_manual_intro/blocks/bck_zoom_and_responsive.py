@@ -134,3 +134,18 @@ def build():
         )
 
     st_space("v", 3)
+
+    # Section 6: inject_zoom_logic (low-level API)
+    st_write(bs.section, "Low-Level API: inject_zoom_logic()", toc_lvl="+1")
+    st_space("v", 1)
+
+    with st_block(bs.feature_box):
+        st_write(
+            s.medium,
+            (s.text.weights.bold_weight, "Note: "),
+            "inject_zoom_logic() is the low-level function that injects the CSS zoom "
+            "JavaScript into the page. It is called automatically by add_zoom_options(). "
+            "You typically don't need to call it directly unless you are building "
+            "a custom zoom control widget.",
+        )
+    st_space("v", 2)

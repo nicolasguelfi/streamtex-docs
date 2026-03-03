@@ -14,6 +14,7 @@ from streamtex.styles import Style
 _URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")
 _URL_ADVANCED = os.environ.get("STX_URL_TEST_ADVANCED", "http://localhost:8503")
 _URL_DEPLOY = os.environ.get("STX_URL_TEST_DEPLOY", "http://localhost:8504")
+_URL_DEVELOPER = os.environ.get("STX_URL_TEST_DEVELOPER", "http://localhost:8505")
 
 
 class BlockStyles:
@@ -102,12 +103,13 @@ def build():
         with st_list(list_type="ul"):
             st_write(s.medium, "Introduction: text, styles, grids, lists, images, code, export")
             st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
-            st_write(s.medium, "Shared blocks: reusable components across all courses")
+            st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
+            st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
 
     # === Project cards ===
     st_space("v", 2)
 
-    with st_grid(cols=3, responsive=True, grid_style=bs.grid_with_gap):
+    with st_grid(cols=4, responsive=True, grid_style=bs.grid_with_gap):
 
         # Card 1: Introduction
         with st_block(bs.card_container):
@@ -158,6 +160,23 @@ def build():
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 st.link_button("🚀 Open Course", _URL_DEPLOY, use_container_width=True)
+            st_space("v", 1)
+
+        # Card 4: Developer Guide
+        with st_block(bs.card_container):
+            st_space("v", 1)
+            st_write(s.huge + "text-align:center;", "🔧")
+            st_space("v", 1)
+            st_write(bs.project_title + "text-align:center;", "Developer Guide")
+            st_space("v", 1)
+            st_write(
+                bs.card_description + "text-align:center;",
+                "Contribute to StreamTeX: repo structure, testing, CI/CD, release process",
+            )
+            st_space("v", 2)
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.link_button("🔧 Open Guide", _URL_DEVELOPER, use_container_width=True)
             st_space("v", 1)
 
     # === Footer ===

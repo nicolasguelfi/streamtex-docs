@@ -16,6 +16,8 @@ services:
         value: https://streamtex-advanced.onrender.com
       - key: STX_URL_TEST_DEPLOY
         value: https://streamtex-deploy.onrender.com
+      - key: STX_URL_TEST_DEVELOPER
+        value: https://streamtex-developer.onrender.com
       - key: STX_PASSWORD
         value: changeme
     healthCheckPath: /_stcore/health
@@ -61,6 +63,21 @@ services:
     envVars:
       - key: FOLDER
         value: manuals/stx_manual_deploy
+      - key: STX_PASSWORD
+        value: changeme
+    healthCheckPath: /_stcore/health
+
+  - type: web
+    name: streamtex-developer
+    runtime: docker
+    repo: https://github.com/nicolasguelfi/streamtex-docs
+    branch: main
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: FOLDER
+        value: manuals/stx_manual_developer
       - key: STX_PASSWORD
         value: changeme
     healthCheckPath: /_stcore/health

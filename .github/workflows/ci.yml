@@ -23,7 +23,9 @@ jobs:
         run: uv python install
 
       - name: Install dependencies
-        run: uv sync --frozen
+        # --no-sources ignores [tool.uv.sources] so uv resolves streamtex from PyPI
+        # instead of the local editable path (../streamtex) which doesn't exist in CI
+        run: uv sync --no-sources
 
       - name: Verify streamtex import
         run: uv run python -c "import streamtex; print(f'streamtex {streamtex.__version__}')"

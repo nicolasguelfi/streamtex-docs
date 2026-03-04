@@ -267,6 +267,9 @@ set_link_config(LinkConfig(
     internal_target="_self",     # Same-domain links open in same tab
     external_target="_blank",    # External links open in new tab
 ))
+
+# Retrieve current configuration
+cfg = get_link_config()             # Returns current LinkConfig
 ```
 
 ## Predefined Styles
@@ -1207,6 +1210,9 @@ config = GSheetConfig(
 )
 set_gsheet_config(config)
 
+# Retrieve current configuration
+cfg = get_gsheet_config()               # Optional[GSheetConfig] — None if not set
+
 # Define source
 src = GSheetSource(sheet_id="abc123", tab_name="Sheet1")
 src = GSheetSource.from_url("https://docs.google.com/spreadsheets/d/abc123/...")
@@ -1403,6 +1409,16 @@ from streamtex import load_css
 
 # load_css(file_name) — load a CSS file from the static directory and inject it
 load_css("custom-theme.css")         # Reads static/{file_name} and injects <style>
+```
+
+### reset_toc_registry
+
+```python
+from streamtex import reset_toc_registry, TOCConfig
+
+# reset_toc_registry(toc_config) — clear all registered TOC entries for the current run
+reset_toc_registry()                          # Reset with default TOCConfig
+reset_toc_registry(TOCConfig(max_level=3))    # Reset with custom config
 ```
 
 ### toc_entries

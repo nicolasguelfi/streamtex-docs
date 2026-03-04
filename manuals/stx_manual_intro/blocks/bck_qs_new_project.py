@@ -22,45 +22,8 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    # --- Create workspace ---
-    st_write(bs.sub, "Step 1: Create a workspace", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_explanation("""\
-        A workspace groups documentation, Claude profiles,
-        and your projects in one folder. The --preset option
-        controls which repos are included.
-    """)
-    st_space("v", 1)
-
-    show_code("""\
-mkdir streamtex-dev && cd streamtex-dev
-stx workspace init . --preset standard  # basic | user | standard | developer
-stx workspace clone
-""", language="bash", line_numbers=False)
-    st_space("v", 1)
-
-    show_explanation("""\
-        The four presets offer increasing levels of functionality:
-
-        basic — empty workspace, no repos. Create standalone projects
-        and upgrade later when needed.
-
-        user — adds streamtex-claude (Claude AI profiles).
-        Enables stx claude install for slash commands and agents.
-
-        standard (default) — adds streamtex-docs + streamtex-claude.
-        Enables rich templates (--template project) and local
-        documentation alongside Claude profiles.
-
-        developer — adds all 3 repos (library + docs + claude).
-        Enables editable installs (stx workspace link) so library
-        source changes are reflected immediately.
-    """)
-    st_space("v", 2)
-
     # --- Create with template ---
-    st_write(bs.sub, "Step 2: Create the project", toc_lvl="+1")
+    st_write(bs.sub, "Step 1: Create the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -76,7 +39,7 @@ stx project new mon-projet --template project
     st_space("v", 2)
 
     # --- Project structure ---
-    st_write(bs.sub, "Step 3: Project structure", toc_lvl="+1")
+    st_write(bs.sub, "Step 2: Project structure", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -103,7 +66,7 @@ projects/stx-mon-projet/
     st_space("v", 2)
 
     # --- Claude profile ---
-    st_write(bs.sub, "Step 4: Install a Claude profile", toc_lvl="+1")
+    st_write(bs.sub, "Step 3: Install a Claude profile", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -120,7 +83,7 @@ stx claude install project .
     st_space("v", 2)
 
     # --- Run ---
-    st_write(bs.sub, "Step 5: Run the project", toc_lvl="+1")
+    st_write(bs.sub, "Step 4: Run the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\

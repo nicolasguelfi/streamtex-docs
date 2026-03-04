@@ -1,20 +1,22 @@
-# Render Auto-Deploy — Trigger all Render services on push to main.
+# Render Auto-Deploy — Trigger Render services on push to main.
 #
-# Render's GitHub App integration can silently stop firing after consecutive
-# build failures.  This workflow uses the Render API directly, bypassing the
-# GitHub App and guaranteeing a deploy on every push.
+# Only deploys services whose files actually changed:
+#   - Changes in manuals/stx_manual_intro/** → deploy streamtex-intro only
+#   - Changes in shared files (Dockerfile, pyproject.toml, shared-blocks/**)
+#     → deploy ALL services
+#   - workflow_dispatch (manual trigger) → deploy ALL services
+#
+# The mapping between FOLDER env vars in render.yaml and service names is
+# extracted automatically so the workflow stays in sync.
 #
 # Required secret: RENDER_API_KEY (Render Dashboard → Account Settings → API Keys)
-#
-# Service IDs are extracted at runtime from render.yaml so the workflow stays
-# in sync with the declared services without manual ID maintenance.
 
 name: Deploy to Render
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # allow manual trigger from GitHub UI
+  workflow_dispatch:   # manual trigger always deploys all services
 
 jobs:
   deploy:
@@ -23,17 +25,87 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: render.yaml
-          sparse-checkout-cone-mode: false
+          fetch-depth: 0   # full history needed for git diff
 
-      - name: Extract service names from render.yaml
-        id: services
+      - name: Build service mapping from render.yaml
+        id: mapping
         run: |
-          names=$(grep '^\s*name:' render.yaml | awk '{print $2}' | tr '\n' ' ')
-          echo "names=$names" >> "$GITHUB_OUTPUT"
-          echo "Services found: $names"
+          # Extract {service_name: folder_path} from render.yaml
+          python3 -c "
+          import re, json
+          content = open('render.yaml').read()
+          blocks = re.split(r'(?=^\s+-\s+type:)', content, flags=re.MULTILINE)
+          mapping = {}
+          for block in blocks:
+              nm = re.search(r'name:\s+(\S+)', block)
+              fm = re.search(r'key: FOLDER\n\s+value:\s+(\S+)', block)
+              if nm and fm:
+                  mapping[nm.group(1)] = fm.group(1)
+          print(json.dumps(mapping))
+          " > /tmp/svc_mapping.json
+
+          cat /tmp/svc_mapping.json
+          echo "mapping=$(cat /tmp/svc_mapping.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changed files and select services to deploy
+        id: changed
+        run: |
+          EVENT="${{ github.event_name }}"
+
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Manual trigger — deploying ALL services"
+            echo "deploy_all=true" >> "$GITHUB_OUTPUT"
+            echo "services=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Compare with the previous push SHA to capture ALL commits in the push
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            echo "Initial push — deploying ALL services"
+            echo "deploy_all=true" >> "$GITHUB_OUTPUT"
+            echo "services=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Comparing $BEFORE..$AFTER"
+          changed_files=$(git diff --name-only "$BEFORE" "$AFTER")
+          echo "Changed files:"
+          echo "$changed_files"
+
+          # Check for shared/common files that affect ALL services
+          shared_patterns="^Dockerfile|^pyproject.toml|^uv.lock|^shared-blocks/|^\.github/|^setup\.py|^scripts/"
+          if echo "$changed_files" | grep -qE "$shared_patterns"; then
+            echo "Shared files changed — deploying ALL services"
+            echo "deploy_all=true" >> "$GITHUB_OUTPUT"
+            echo "services=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Map changed paths to services
+          echo "deploy_all=false" >> "$GITHUB_OUTPUT"
+          services=$(python3 -c "
+          import json, sys
+
+          mapping = json.load(open('/tmp/svc_mapping.json'))
+          changed = '''$changed_files'''.strip().split('\n')
+
+          to_deploy = set()
+          for f in changed:
+              for svc_name, folder in mapping.items():
+                  if f.startswith(folder + '/') or f == folder:
+                      to_deploy.add(svc_name)
+
+          print(' '.join(sorted(to_deploy)))
+          ")
+
+          echo "Services to deploy: ${services:-none}"
+          echo "services=$services" >> "$GITHUB_OUTPUT"
 
       - name: Resolve service IDs and trigger deploys
+        if: steps.changed.outputs.deploy_all == 'true' || steps.changed.outputs.services != ''
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
@@ -42,14 +114,31 @@ jobs:
             exit 1
           fi
 
-          # Fetch all services from Render API
+          DEPLOY_ALL="${{ steps.changed.outputs.deploy_all }}"
+          SELECTED="${{ steps.changed.outputs.services }}"
+
+          # Determine which services to deploy
+          if [ "$DEPLOY_ALL" = "true" ]; then
+            targets=$(python3 -c "
+          import json
+          mapping = json.load(open('/tmp/svc_mapping.json'))
+          print(' '.join(sorted(mapping.keys())))
+          ")
+          else
+            targets="$SELECTED"
+          fi
+
+          echo "Deploying: $targets"
+
+          # Fetch all services from Render API (one call)
           all_services=$(curl -sf \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Accept: application/json" \
             "https://api.render.com/v1/services?limit=100")
 
           failed=0
-          for name in ${{ steps.services.outputs.names }}; do
+          deployed=0
+          for name in $targets; do
             # Resolve service ID by name
             svc_id=$(echo "$all_services" | \
               python3 -c "
@@ -77,6 +166,7 @@ jobs:
 
             if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
               echo "  ✓ $name: deploy triggered (HTTP $http_code)"
+              deployed=$((deployed + 1))
             else
               echo "::error::$name: deploy failed (HTTP $http_code)"
               cat /tmp/deploy_resp.json
@@ -84,7 +174,13 @@ jobs:
             fi
           done
 
+          echo ""
+          echo "Summary: $deployed service(s) deployed"
+
           if [ "$failed" -eq 1 ]; then
             exit 1
           fi
-          echo "All deploys triggered successfully."
+
+      - name: No deploy needed
+        if: steps.changed.outputs.deploy_all != 'true' && steps.changed.outputs.services == ''
+        run: echo "No Render services affected by this push — skipping deploy."

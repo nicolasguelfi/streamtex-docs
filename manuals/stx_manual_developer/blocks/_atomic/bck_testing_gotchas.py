@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -42,7 +41,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Always reset in teardown or use the autouse fixture
 
             def test_toc_entries():
@@ -58,7 +57,7 @@ def build():
                 # ... assertions ...
 
                 reset_toc_registry()  # clean up after yourself\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Python builtins shadowing ---
@@ -74,7 +73,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # PROBLEM — list() is shadowed after wildcard import
             from streamtex import *
             items = list(range(10))  # TypeError!
@@ -90,7 +89,7 @@ def build():
             # SOLUTION 3 — use builtins module
             import builtins
             items = builtins.list(range(10))\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- st.html vs components.html ---
@@ -110,7 +109,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # For StreamTeX content rendering
             @patch("streamlit.html")
             def test_content(mock_html):
@@ -120,7 +119,7 @@ def build():
             @patch("streamlit.components.v1.html")
             def test_iframe_widget(mock_component_html):
                 ...\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Buffer stack leaks ---
@@ -136,7 +135,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             def test_nested_export():
                 from streamtex import (
                     export_push_wrapper,
@@ -154,7 +153,7 @@ def build():
                 finally:
                     set_export_active(False)
                     reset_export_buffer()\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Streamlit context ---
@@ -183,7 +182,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # CORRECT order
             import streamtex as stx
             from custom.styles import Styles as s
@@ -191,7 +190,7 @@ def build():
             # WRONG — custom module may reference stx internals
             from custom.styles import Styles as s
             import streamtex as stx\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         show_details("""\

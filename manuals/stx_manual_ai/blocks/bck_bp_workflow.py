@@ -1,7 +1,5 @@
 """Best Practices — Optimal AI workflow and when to switch to manual coding."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -71,7 +69,7 @@ def build():
                 )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Typical session
         /project:project-init          # 1. Plan + Generate
         /designer:slide-audit          # 3. Audit all blocks
@@ -79,7 +77,7 @@ def build():
         # 5. Review in browser
         uv run streamlit run book.py
         # 6. Iterate on individual blocks
-        /designer:slide-new            # Refine or add blocks"""),
+        /designer:slide-new            # Refine or add blocks""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -103,11 +101,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Blocks with st.button, st.selectbox, or other
                     Streamlit widgets that require callback logic.
                     AI generates the structure; you wire the behavior.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.note_callout):
                 st_write(
@@ -116,11 +114,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Embedded JavaScript components, custom HTML
                     widgets, or third-party library integrations
                     that go beyond StreamTeX's rendering model.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.note_callout):
                 st_write(
@@ -129,11 +127,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Large datasets, real-time updates, or heavily
                     optimized layouts where manual profiling and
                     tuning are essential.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.note_callout):
                 st_write(
@@ -142,11 +140,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Pixel-perfect animations, advanced CSS
                     transitions, or brand-specific visual
                     requirements that need manual refinement.
-                """))
+                """)
     st_space("v", 2)
 
     # ── MEMORY.md best practices ──────────────────────────────────
@@ -195,7 +193,7 @@ def build():
                 )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Example MEMORY.md entries
         ## Project Conventions
         - All titles use section_title style (tech_blue)
@@ -210,7 +208,7 @@ def build():
         ## Block Status
         - bck_01 to bck_05: FINALIZED
         - bck_06: needs spacing review
-        - bck_07 to bck_10: in progress"""),
+        - bck_07 to bck_10: in progress""",
         language="text", line_numbers=False)
     st_space("v", 2)
 

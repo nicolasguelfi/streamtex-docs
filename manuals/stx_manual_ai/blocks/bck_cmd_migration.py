@@ -1,7 +1,5 @@
 """Migration Commands — Convert HTML content to StreamTeX blocks."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -50,10 +48,10 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /migration:html-migrate
 
-        > Convert slides/intro.html to a StreamTeX block"""),
+        > Convert slides/intro.html to a StreamTeX block""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -66,7 +64,7 @@ def build():
             with st_block(s.project.containers.bad_callout):
                 st_write(bs.label_before, "HTML Input", tag=t.div)
                 st_space("v", 1)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     <div style="text-align: center;">
                       <h1 style="color: #8B5CF6;
                           font-weight: bold;
@@ -80,13 +78,13 @@ def build():
                         <li>Topic A</li>
                         <li>Topic B</li>
                       </ul>
-                    </div>"""), language="html")
+                    </div>""", language="html")
 
         with g.cell():
             with st_block(s.project.containers.good_callout):
                 st_write(bs.label_after, "StreamTeX Output", tag=t.div)
                 st_space("v", 1)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     class BlockStyles:
                         heading = (
                             s.project.titles.section_title
@@ -111,7 +109,7 @@ def build():
                         with st_list(list_type="ul"):
                             st_write(s.large, "Topic A")
                             st_write(s.large, "Topic B")
-                    """), language="python")
+                    """, language="python")
     st_space("v", 2)
 
     # ── Command 2: html-convert-batch ──────────────────────────────
@@ -130,7 +128,7 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /migration:html-convert-batch
 
         > Convert all files in legacy_slides/ to StreamTeX blocks
@@ -143,7 +141,7 @@ def build():
           appendix.html     -> blocks/bck_appendix.py      WARN (complex table)
 
         Converted: 5 files (4 clean, 1 warning)
-        Output: blocks/ directory created"""),
+        Output: blocks/ directory created""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

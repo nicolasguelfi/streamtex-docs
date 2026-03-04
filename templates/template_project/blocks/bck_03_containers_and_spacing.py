@@ -5,7 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_tip
-import textwrap
 
 
 class BlockStyles:
@@ -23,11 +22,11 @@ def build():
     st_write(bs.sub, "st_block — Vertical Container", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_block(s.center_txt + s.large):
             st_write("Line 1 — stacked vertically")
             st_write("Line 2 — below line 1")
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(bs.demo_block):
@@ -39,11 +38,11 @@ def build():
     st_write(bs.sub, "st_span — Horizontal Container", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_span(s.bold + s.large):
             st_write("Left ")
             st_write("Right")
-    """))
+    """)
     st_space("v", 1)
 
     with st_span(s.bold + s.large):
@@ -55,7 +54,7 @@ def build():
     st_write(bs.sub, "Spacing: st_space & st_br", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         st_write(s.large, "Before vertical space")
         st_space("v", 3)          # 3em vertical gap
         st_write(s.large, "After vertical space")
@@ -65,7 +64,7 @@ def build():
         st_write(s.large, "Line A")
         st_br()                   # simple line break
         st_write(s.large, "Line B")
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(bs.demo_block):

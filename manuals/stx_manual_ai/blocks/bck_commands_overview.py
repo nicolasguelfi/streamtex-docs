@@ -1,7 +1,5 @@
 """Commands Overview — Slash commands anatomy, categories, and file structure."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -39,12 +37,12 @@ def build():
     st_write(bs.sub, "Slash Command Syntax", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /project:project-init
         /designer:slide-new
         /migration:html-migrate
         /developer:test-run
-        /presentation:presentation-audit"""), language="bash",
+        /presentation:presentation-audit""", language="bash",
         line_numbers=False)
     st_space("v", 2)
 
@@ -127,7 +125,7 @@ def build():
     )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # /project:project-init
 
         ## Description
@@ -145,7 +143,7 @@ def build():
         2. Generate custom/styles.py from project theme
         3. Create blocks/ directory with starter blocks
         4. Generate book.py to orchestrate all blocks
-        5. Validate structure with /developer:lint"""), language="markdown")
+        5. Validate structure with /developer:lint""", language="markdown")
     st_space("v", 2)
 
     # ── Summary ────────────────────────────────────────────────────

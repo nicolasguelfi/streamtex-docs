@@ -1,13 +1,9 @@
 """CLI Quick Start — stx command-line tool."""
 
-import streamlit as st
 from streamtex import *
-import streamtex as stx
-from streamtex.styles import Style as ns, StyleGrid as sg
-from streamtex.enums import Tags as t, ListTypes as lt
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -38,18 +34,18 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Install the CLI extras alongside StreamTeX.
-        You can use either pip or uv.
+        Install the CLI as a global tool with uv.
+        This makes the stx command available everywhere.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # With pip
-        pip install streamtex[cli]
+    show_code("""\
+# Recommended: install as a global tool
+uv tool install streamtex[cli]
 
-        # With uv (recommended)
-        uv add streamtex[cli]
-    """), language="bash", line_numbers=False)
+# Or as a project dependency
+uv add streamtex[cli]
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx project new ---
@@ -63,9 +59,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        stx project new myproject
-    """), language="bash", line_numbers=False)
+    show_code("""\
+# Minimal scaffold
+stx project new myproject
+
+# Rich template with 9 tutorial blocks
+stx project new myproject --template project
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx project validate ---
@@ -78,9 +78,9 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        stx project validate
-    """), language="bash", line_numbers=False)
+    show_code("""\
+stx project validate
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx test ---
@@ -94,9 +94,9 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        stx test
-    """), language="bash", line_numbers=False)
+    show_code("""\
+stx test
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx lint ---
@@ -109,9 +109,45 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        stx lint
-    """), language="bash", line_numbers=False)
+    show_code("""\
+stx lint
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- Ruff configuration ---
+    st_write(bs.sub, "Ruff configuration", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        StreamTeX projects require specific ruff ignore rules
+        in pyproject.toml. The stx project new command generates
+        this configuration automatically.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# pyproject.toml — mandatory for all StreamTeX projects
+[tool.ruff.lint]
+ignore = ["F403", "F405", "E701", "E741"]
+""", language="toml", line_numbers=False)
+    st_space("v", 2)
+
+    # --- CI configuration ---
+    st_write(bs.sub, "CI configuration", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        If your project uses [tool.uv.sources] for editable
+        installs (e.g. pointing to a local streamtex checkout),
+        set UV_NO_SOURCES=1 in CI so uv resolves from PyPI.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# GitHub Actions example
+env:
+  UV_NO_SOURCES: 1
+""", language="yaml", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\

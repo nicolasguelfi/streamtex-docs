@@ -1,7 +1,5 @@
 """Ecosystem Overview — the four StreamTeX repositories and how they connect."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -55,38 +53,38 @@ def build():
             with st_block(bs.card):
                 st_write(bs.card_name, "streamtex", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.card_desc, textwrap.dedent("""\
+                st_write(bs.card_desc, """\
                     The core Python library (PyPI). Provides st_write,
                     st_grid, Style composition, book navigation, export,
                     and every rendering function.
-                """))
+                """)
         with g.cell():
             with st_block(bs.card):
                 st_write(bs.card_name, "streamtex-docs", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.card_desc, textwrap.dedent("""\
+                st_write(bs.card_desc, """\
                     Five manuals (intro, advanced, deploy, developer, AI)
                     plus shared blocks and templates. The documentation
                     you are reading right now.
-                """))
+                """)
         with g.cell():
             with st_block(bs.card):
                 st_write(bs.card_name, "streamtex-claude", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.card_desc, textwrap.dedent("""\
+                st_write(bs.card_desc, """\
                     AI profiles, slash commands, and agent definitions.
                     Install a profile into any project to unlock
                     AI-powered generation and audit.
-                """))
+                """)
         with g.cell():
             with st_block(bs.card):
                 st_write(bs.card_name, "projects/", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.card_desc, textwrap.dedent("""\
+                st_write(bs.card_desc, """\
                     Your own StreamTeX projects. Each project has a
                     book.py, blocks/, custom/styles.py, and optional
                     .claude/ configuration.
-                """))
+                """)
     st_space("v", 2)
 
     # ── How they connect ──────────────────────────────────────────

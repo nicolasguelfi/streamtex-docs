@@ -1,6 +1,5 @@
 """Part 8 — Reference: Profile Comparison — feature matrix for all profiles."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -157,11 +156,11 @@ def build():
         st_write(s.project.titles.subsection_title,
                  "Start with the project profile", tag=t.div)
         st_space("v", 1)
-        st_write(s.large, textwrap.dedent("""\
+        st_write(s.large, """\
             The project profile covers 90% of use cases. It includes
             all project, designer, and developer commands plus three
             agents. Switch to a specialized profile only when you
             need presentation optimization, HTML migration tools,
             or library development capabilities.
-        """))
+        """)
     st_space("v", 1)

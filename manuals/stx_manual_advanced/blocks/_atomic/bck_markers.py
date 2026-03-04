@@ -8,7 +8,6 @@ from streamtex import st_write, st_block, st_space, st_marker, st_include
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -44,11 +43,11 @@ def build():
     st_write(bs.sub, "Manual Markers — st_marker()", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         Use st_marker() to place a waypoint at any position in your content.
         By default markers are invisible (height 0, used only for navigation).
         Set visible=True to show a dashed border with the marker label.
-    """))
+    """)
     st_space("v", 1)
 
     show_code('''\
@@ -79,11 +78,11 @@ st_marker()  # label = "Marker N"''')
     st_write(bs.sub, "Auto-Markers from TOC Headings", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         Instead of placing markers manually, you can bridge TOC headings
         to markers automatically via the auto_marker_on_toc setting
         in MarkerConfig:
-    """))
+    """)
     st_space("v", 1)
 
     show_code(file="examples/nav/marker_auto_toc.py")
@@ -96,11 +95,11 @@ st_marker()  # label = "Marker N"''')
              toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         Even when auto_marker_on_toc is active, you can override the
         behavior for individual headings using the marker= parameter
         on st_write:
-    """))
+    """)
     st_space("v", 1)
 
     show_code("""\

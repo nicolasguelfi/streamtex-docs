@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # Resolve path to the preflight script
@@ -37,14 +36,14 @@ def build():
         st_write(bs.sub, "Usage", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # General checks (tests + Streamlit version)
             ./deploy/preflight.sh
 
             # Project-specific checks (also validates config and assets)
             ./deploy/preflight.sh projects/your_project
             ./deploy/preflight.sh documentation/manuals/stx_manual_intro
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- What it checks ---

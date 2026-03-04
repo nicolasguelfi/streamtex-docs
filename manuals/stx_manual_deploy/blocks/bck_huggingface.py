@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -32,7 +31,7 @@ def build():
         st_write(bs.sub, "Prerequisites", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Install git-lfs (macOS)
             brew install git git-lfs
 
@@ -44,7 +43,7 @@ def build():
             huggingface-cli login
             # Create a token with Write scope at:
             # Settings → Access Tokens → New token
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Automated deployment ---
@@ -58,7 +57,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Deploy the default project
             ./deploy/huggingface.sh \\
                 https://huggingface.co/spaces/YOUR_USER/YOUR_SPACE
@@ -67,14 +66,14 @@ def build():
             ./deploy/huggingface.sh \\
                 https://huggingface.co/spaces/YOUR_USER/YOUR_SPACE \\
                 projects/project_aiai18h
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Manual steps ---
         st_write(bs.sub, "Manual deployment", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # 1. Create a Docker Space on huggingface.co/new-space
 
             # 2. Add the HF remote
@@ -87,7 +86,7 @@ def build():
 
             # 4. Push to HuggingFace
             git push hf main
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- README metadata ---
@@ -100,7 +99,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             ---
             title: My StreamTeX App
             emoji: 🚀
@@ -113,7 +112,7 @@ def build():
             pinned: false
             short_description: My StreamTeX project
             ---
-        """), language="yaml")
+        """, language="yaml")
         st_space("v", 2)
 
         show_details(

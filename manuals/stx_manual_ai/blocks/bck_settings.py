@@ -1,6 +1,5 @@
 """Part 2 — Claude Code Settings and tool permissions."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -40,7 +39,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         {
           "permissions": {
             "allowedTools": [
@@ -62,7 +61,7 @@ def build():
             ]
           }
         }
-    """), language="json", line_numbers=False)
+    """, language="json", line_numbers=False)
     st_space("v", 2)
 
     # --- Permission scopes ---
@@ -118,7 +117,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         {
           "permissions": {
             "allowedTools": [
@@ -131,7 +130,7 @@ def build():
             ]
           }
         }
-    """), language="json", line_numbers=False)
+    """, language="json", line_numbers=False)
     st_space("v", 2)
 
     # --- Tip about safe defaults ---

@@ -1,7 +1,5 @@
 """Command: project-init — Create a StreamTeX project from natural language."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -64,11 +62,11 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         > A 10-slide course on machine learning basics.
           Target audience: university students.
           Include: title page, table of contents, 8 content slides,
-          summary slide. Use a blue/purple tech theme."""),
+          summary slide. Use a blue/purple tech theme.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -86,7 +84,7 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         my_ml_course/
         ├── book.py                  # Orchestration
         ├── blocks/
@@ -100,7 +98,7 @@ def build():
         ├── custom/
         │   └── styles.py            # Blue/purple tech theme
         └── .streamlit/
-            └── config.toml          # Streamlit configuration"""),
+            └── config.toml          # Streamlit configuration""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -128,7 +126,7 @@ def build():
     st_write(bs.sub, "Example: Generated book.py", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         \"\"\"Machine Learning Basics — 10-slide course.\"\"\"
 
         from streamtex import st_book
@@ -146,7 +144,7 @@ def build():
             "bck_10_summary",
         ]
 
-        st_book(blocks, paginate=True)"""), language="python")
+        st_book(blocks, paginate=True)""", language="python")
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────

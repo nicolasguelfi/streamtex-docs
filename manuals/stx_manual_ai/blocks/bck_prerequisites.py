@@ -1,6 +1,5 @@
 """Part 2 — Prerequisites for AI-powered StreamTeX workflows."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -39,10 +38,10 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Check your Python version
         python3 --version
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- uv ---
@@ -56,7 +55,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Install uv (macOS / Linux)
         curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -65,7 +64,7 @@ def build():
 
         # Verify installation
         uv --version
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- Claude Code or Cursor ---
@@ -109,13 +108,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # With uv (recommended)
         uv add streamtex
 
         # Or with pip
         pip install streamtex
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- Optional CLI extras ---
@@ -129,13 +128,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # With uv
         uv add streamtex[cli]
 
         # Or with pip
         pip install streamtex[cli]
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\

@@ -5,7 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_tip
-import textwrap
 
 
 class BlockStyles:
@@ -22,29 +21,29 @@ def build():
     st_write(bs.sub, "Syntax-Highlighted Code", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx.st_code(code=\"\"\"
         def greet(name):
             return f"Hello, {name}!"
         \"\"\", language="python", line_numbers=True)
-    """))
+    """)
     st_space("v", 1)
 
-    stx.st_code(code=textwrap.dedent("""\
+    stx.st_code(code="""\
         def greet(name):
             return f"Hello, {name}!"
-    """), language="python", line_numbers=True)
+    """, language="python", line_numbers=True)
     st_space("v", 2)
 
     # --- Styled code box ---
     st_write(bs.sub, "Styled Code Box", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx.st_code(s.project.containers.code_box,
                    code="SELECT * FROM users WHERE active = true;",
                    language="sql", line_numbers=False)
-    """))
+    """)
     st_space("v", 1)
 
     stx.st_code(s.project.containers.code_box,
@@ -62,14 +61,14 @@ def build():
              "(JSON, logs, long strings). Lines wrap instead of scrolling.")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Default: wrap=False — horizontal scroll for long lines
         stx.st_code(code="long line...", language="python")
 
         # wrap=True — lines wrap on narrow screens
         stx.st_code(code='{"key": "value", "nested": {...}}',
                    language="json", wrap=True)
-    """))
+    """)
     st_space("v", 1)
 
     stx.st_code(s.project.containers.code_box,
@@ -86,7 +85,7 @@ def build():
              " which adapts to screen size automatically:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Responsive sizing (automatic, no code needed):
         #   Desktop  → 18pt
         #   Tablet   → 14pt  (≤1024px)
@@ -94,14 +93,14 @@ def build():
 
         # Override with explicit font_size if needed:
         stx.st_code(code="print('small')", font_size="12pt")
-    """))
+    """)
     st_space("v", 2)
 
     # --- Helper pattern ---
     st_write(bs.sub, "Reusable show_code() Helper", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # In blocks/helpers.py:
         def show_code(code_string, language="python",
                      line_numbers=True, wrap=False):
@@ -112,7 +111,7 @@ def build():
         from blocks.helpers import show_code
         show_code("print('Hello')")
         show_code('{"key": "value"}', language="json", wrap=True)
-    """))
+    """)
     st_space("v", 2)
 
     show_tip(

@@ -5,7 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_tip
-import textwrap
 
 
 class BlockStyles:
@@ -23,12 +22,12 @@ def build():
     st_write(bs.sub, "Unordered List", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_list(list_type=lt.unordered, li_style=s.large) as l:
             with l.item(): st_write("First item")
             with l.item(): st_write("Second item")
             with l.item(): st_write("Third item")
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type=lt.unordered, li_style=s.large) as l:
@@ -41,12 +40,12 @@ def build():
     st_write(bs.sub, "Ordered List", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_list(list_type=lt.ordered, li_style=s.large) as l:
             with l.item(): st_write("Step one")
             with l.item(): st_write("Step two")
             with l.item(): st_write("Step three")
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type=lt.ordered, li_style=s.large) as l:
@@ -59,7 +58,7 @@ def build():
     st_write(bs.sub, "Nested List with Styles", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_list(list_type=lt.unordered, li_style=bs.item_accent) as l:
             with l.item(): st_write("Parent A")
             with l.item():
@@ -68,7 +67,7 @@ def build():
                     with l2.item(): st_write("Child B.1")
                     with l2.item(): st_write("Child B.2")
             with l.item(): st_write("Parent C")
-    """))
+    """)
     st_space("v", 1)
 
     with st_list(list_type=lt.unordered, li_style=bs.item_accent) as l:

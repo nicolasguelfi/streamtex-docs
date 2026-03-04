@@ -1,6 +1,5 @@
 """Part 4 — Agents: Slide Designer and Slide Reviewer."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -158,7 +157,7 @@ def build():
     st_write(bs.sub, "Example Review Output", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Slide Review — bck_05_prerequisites.py
         # ─────────────────────────────────────
 
@@ -182,7 +181,7 @@ def build():
           - Line 67: missing st_space after code
 
         Result: 3/4 PASS — 1 fix required
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 1)
 
     show_details("""\

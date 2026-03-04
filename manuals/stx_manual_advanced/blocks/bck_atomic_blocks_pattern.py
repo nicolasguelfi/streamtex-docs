@@ -6,7 +6,6 @@ from streamtex import (
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -62,13 +61,13 @@ def build():
     st_write(bs.sub, "Directory Structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         blocks/
         \u251c\u2500\u2500 bck_my_section.py          # Composite: loads and includes atoms
         \u2514\u2500\u2500 _atomic/
             \u251c\u2500\u2500 bck_topic_a.py         # Atomic: one topic
             \u2514\u2500\u2500 bck_topic_b.py         # Atomic: another topic
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Composite block code ---
@@ -82,7 +81,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         import streamtex as stx
         from streamtex import st_include
 
@@ -95,7 +94,7 @@ def build():
         def build():
             st_include(bck_topic_a)
             st_include(bck_topic_b)
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Atomic block code ---
@@ -109,14 +108,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         \"\"\"Atomic block \u2014 Topic A.\"\"\"
 
         from streamtex import *
         from streamtex.enums import Tags as t
         from custom.styles import Styles as s
         from blocks.helpers import show_code, show_explanation
-        import textwrap
 
         class BlockStyles:
             heading = s.project.titles.section_title + s.center_txt
@@ -127,7 +125,7 @@ def build():
             st_write(bs.heading, "Topic A", tag=t.div, toc_lvl="1")
             st_space("v", 1)
             show_explanation("Content for topic A.")
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Benefits ---

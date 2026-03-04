@@ -1,6 +1,5 @@
 """Part 4 — Agent: Presentation Designer — specialist for live projection."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -158,11 +157,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Large venue with 50+ seats.
                     Audience far from screen.
                     Maximum readability needed.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(
@@ -171,11 +170,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Professional setting.
                     Projected on large screen.
                     Keywords beat paragraphs.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(
@@ -184,11 +183,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Teaching environment.
                     Students take notes.
                     Concise points preferred.
-                """))
+                """)
     st_space("v", 2)
 
     # ── Side-by-side comparison ────────────────────────────────────
@@ -211,12 +210,12 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     A variable is a named reference to a value
                     stored in memory. You create a variable by
                     assigning a value with the = operator.
                     Python infers the type automatically.
-                """))
+                """)
 
         with g.cell():
             with st_block(bs.presentation_card):

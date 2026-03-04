@@ -8,7 +8,6 @@ from streamtex import st_write, st_block, st_space
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -32,13 +31,13 @@ def build():
     st_write(bs.sub, "Continuous vs Paginated", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         In continuous mode (paginate=False), navigating between markers
         triggers a smooth scroll to the target element on the same page.
 
         In paginated mode (paginate=True), markers may span multiple
         pages. The navigation system handles page changes automatically:
-    """))
+    """)
     st_space("v", 1)
 
     show_explanation("""\
@@ -56,10 +55,10 @@ def build():
     st_write(bs.sub, "The Floating Widget", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         When show_nav_ui=True (default), a floating widget appears
         with the following elements:
-    """))
+    """)
     st_space("v", 1)
 
     show_explanation("""\
@@ -70,17 +69,17 @@ def build():
     """)
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         The popup lists markers from all pages. In paginated mode,
         clicking a marker on a different page triggers a page change
         followed by a scroll to the target marker.
-    """))
+    """)
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         A scroll tracker updates the current marker as you scroll
         manually, keeping the counter and popup highlight in sync.
-    """))
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------

@@ -1,6 +1,5 @@
 """Part 4 — AI Agents Overview: commands vs agents, the four agents."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -121,40 +120,40 @@ def build():
             with st_block(bs.agent_card):
                 st_write(bs.agent_name, "Project Architect", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.agent_desc, textwrap.dedent("""\
+                st_write(bs.agent_desc, """\
                     Designs full project structure from a natural
                     language description. Creates block plan, color
                     palette, and feature list.
-                """))
+                """)
         with g.cell():
             with st_block(bs.agent_card):
                 st_write(bs.agent_name, "Slide Designer", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.agent_desc, textwrap.dedent("""\
+                st_write(bs.agent_desc, """\
                     Creates visually polished, pedagogically
                     structured blocks. Enforces formatting rules
                     and detects anti-patterns.
-                """))
+                """)
         with g.cell():
             with st_block(bs.agent_card):
                 st_write(bs.agent_name, "Slide Reviewer", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.agent_desc, textwrap.dedent("""\
+                st_write(bs.agent_desc, """\
                     Reviews completed slides for compliance.
                     Checks structure, visual quality, pedagogy,
                     and formatting. Returns pass/fail per criterion.
-                """))
+                """)
         with g.cell():
             with st_block(bs.agent_card):
                 st_write(
                     bs.agent_name, "Presentation Designer", tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.agent_desc, textwrap.dedent("""\
+                st_write(bs.agent_desc, """\
                     Specialist for live projection slides.
                     Uses larger fonts, fewer items, and high
                     contrast for viewing at 10-20 meters.
-                """))
+                """)
     st_space("v", 2)
 
     # ── How agents are defined ─────────────────────────────────────
@@ -169,7 +168,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         .claude/
           designer/
             agents/
@@ -179,7 +178,7 @@ def build():
           presentation/
             agents/
               presentation-designer.md
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 1)
 
     show_details("""\

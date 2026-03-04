@@ -1,6 +1,5 @@
 """Part 7 — MEMORY.md: persistent memory for AI assistants across sessions."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -43,12 +42,12 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         .claude/
         └── projects/
             └── <project-path>/
                 └── memory/
-                    └── MEMORY.md"""),
+                    └── MEMORY.md""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -94,7 +93,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # StreamTeX Ecosystem — Claude Memory
 
         ## Workspace Layout
@@ -120,7 +119,7 @@ def build():
 
         ## Key Decisions
         - All manuals share one Dockerfile
-        - FOLDER env var selects which manual to serve"""),
+        - FOLDER env var selects which manual to serve""",
         language="markdown")
     st_space("v", 2)
 

@@ -1,6 +1,5 @@
 """Part 2 — Workspace Setup for StreamTeX projects."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -40,13 +39,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Create a new workspace
         stx workspace init my-workspace
 
         # Navigate into it
         cd my-workspace
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx workspace clone ---
@@ -60,10 +59,10 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Clone from a Git repository
         stx workspace clone https://github.com/org/my-workspace.git
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx workspace link ---
@@ -77,10 +76,10 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Link local streamtex library (editable install)
         stx workspace link ../streamtex
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx.toml ---
@@ -93,7 +92,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         [workspace]
         name = "my-workspace"
         version = "0.1.0"
@@ -105,7 +104,7 @@ def build():
         [workspace.defaults]
         profile = "project"
         python = "3.12"
-    """), language="toml")
+    """, language="toml")
     st_space("v", 2)
 
     # --- Workspace vs standalone ---

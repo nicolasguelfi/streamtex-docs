@@ -1,6 +1,5 @@
 """Quick Start — Installation."""
 
-import textwrap
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -17,7 +16,7 @@ bs = BlockStyles
 
 
 def build():
-    """Quick Start Step 1: Install StreamTeX and verify the environment."""
+    """Quick Start Step 1: Install StreamTeX and set up the workspace."""
     st_space("v", 1)
     st_write(bs.heading, "Quick Start — Installation",
              tag=t.div, toc_lvl="1")
@@ -28,71 +27,71 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        StreamTeX requires Python 3.10 or later
-        and uses uv as its package manager.
+        StreamTeX requires Python 3.10 or later, git,
+        and uv as its package manager.
 
-        Make sure both are installed before continuing.
+        Make sure all three are installed before continuing.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # Check Python version (3.10+ required)
-        python3 --version
+    show_code("""\
+# Check Python version (3.10+ required)
+python3 --version
 
-        # Install uv (if not already installed)
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-    """), language="bash", line_numbers=False)
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Clone the repository ---
-    st_write(bs.sub, "Step 2: Clone the repository", toc_lvl="+1")
+    # --- Install CLI ---
+    st_write(bs.sub, "Step 2: Install the StreamTeX CLI", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Clone the StreamTeX repository from GitHub.
-
-        This gives you the library source, templates,
-        and example projects.
+        Install the stx command-line tool globally with uv.
+        This gives you project scaffolding, workspace management,
+        and Claude profile installation commands.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        git clone https://github.com/your-org/streamtex.git
-        cd streamtex
-    """), language="bash", line_numbers=False)
+    show_code("""\
+uv tool install streamtex[cli]
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Setup the environment ---
-    st_write(bs.sub, "Step 3: Setup the environment", toc_lvl="+1")
+    # --- Create workspace ---
+    st_write(bs.sub, "Step 3: Create a workspace", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Run uv sync to create a virtual environment
-        and install all dependencies automatically.
+        A workspace groups the StreamTeX library, documentation,
+        Claude profiles, and your projects in one folder.
 
-        This reads pyproject.toml and resolves packages.
+        Three commands set everything up.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # Install all dependencies (creates .venv/)
-        uv sync
-    """), language="bash", line_numbers=False)
+    show_code("""\
+mkdir streamtex-dev && cd streamtex-dev
+stx workspace init .
+stx workspace clone     # clones streamtex, streamtex-docs, streamtex-claude
+stx workspace link      # configures editable installs
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Verify installation ---
+    # --- Verify ---
     st_write(bs.sub, "Step 4: Verify installation", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Run the test suite to confirm everything
-        is set up correctly. All tests should pass.
+        Check that the StreamTeX library can be imported
+        from inside your workspace.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        uv run pytest tests/ -v
-    """), language="bash", line_numbers=False)
+    show_code("""\
+uv run python -c "import streamtex; print(streamtex.__version__)"
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\

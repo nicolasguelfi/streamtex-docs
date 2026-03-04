@@ -1,6 +1,5 @@
 """Part 7 — Creating and extending profiles: manifest.toml and templates."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -35,7 +34,7 @@ def build():
     st_write(bs.sub, "Profile Directory Structure", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         streamtex-claude/
         └── profiles/
             └── my-profile/
@@ -49,7 +48,7 @@ def build():
                 ├── agents/
                 │   └── my-agent.md
                 └── skills/
-                    └── my-knowledge.md"""),
+                    └── my-knowledge.md""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -64,7 +63,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         [profile]
         name = "my-profile"
         description = "Custom profile for data science presentations"
@@ -98,7 +97,7 @@ def build():
             "coding_standards",
             "streamtex_api",
             "data_visualization",  # Custom skill for this profile
-        ]"""),
+        ]""",
         language="toml")
     st_space("v", 2)
 
@@ -114,7 +113,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         [profile]
         name = "presentation"
         description = "Extended profile for live presentations"
@@ -130,7 +129,7 @@ def build():
         [agents]
         agents = [
             "presentation-designer-agent",  # Overrides standard designer
-        ]"""),
+        ]""",
         language="toml")
     st_space("v", 2)
 
@@ -146,7 +145,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         [profile]
         name = "standalone"
         description = "Minimal standalone profile"
@@ -160,7 +159,7 @@ def build():
         agents = []
 
         [skills]
-        skills = ["streamtex_api"]"""),
+        skills = ["streamtex_api"]""",
         language="toml")
     st_space("v", 2)
 

@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -40,7 +39,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             [project]
             name = "streamtex"
             version = "X.Y.Z"
@@ -52,7 +51,7 @@ def build():
 
             [tool.ruff]          # Linting & formatting rules
             [tool.pytest.ini_options]  # Test configuration\
-        """), language="toml")
+        """, language="toml")
         st_space("v", 1)
 
         show_details("""\
@@ -67,11 +66,11 @@ def build():
         st_write(bs.sub, ".github/workflows/", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             .github/workflows/
             ├── ci.yml       # Runs on every PR: lint, test, type-check
             └── publish.yml  # Triggered on tag push: build & publish to PyPI\
-        """), language="text")
+        """, language="text")
         st_space("v", 1)
 
         show_explanation("""\
@@ -115,14 +114,14 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             ## [X.Y.Z] - YYYY-MM-DD
             ### Added
             - New feature description
 
             ### Fixed
             - Bug fix description\
-        """), language="markdown")
+        """, language="markdown")
         st_space("v", 2)
 
         # --- LICENSE ---

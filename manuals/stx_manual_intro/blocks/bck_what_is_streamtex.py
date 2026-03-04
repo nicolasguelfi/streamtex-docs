@@ -5,8 +5,6 @@ storefront: every feature is shown live with syntax-highlighted
 code alongside the rendered result.
 """
 
-import textwrap
-
 from streamtex import *
 import streamtex as stx
 from streamtex.styles import Style, StyleGrid as sg
@@ -110,23 +108,23 @@ def build():
     with st_block(bs.before_box):
         st_write(bs.label_before, "Raw Streamlit")
         st_space("v", 0.5)
-        show_code(textwrap.dedent("""\
+        show_code("""\
             st.markdown(
                 '<div style="color:navy; font-size:1.2em; font-weight:bold;">'
                 'Hello World</div>',
                 unsafe_allow_html=True
             )
-        """), line_numbers=False)
+        """, line_numbers=False)
 
     st_space("v", 1)
 
     with st_block(bs.after_box):
         st_write(bs.label_after, "With StreamTeX")
         st_space("v", 0.5)
-        show_code(textwrap.dedent("""\
+        show_code("""\
             title = Style("color:navy; font-size:1.2em; font-weight:bold;", "title")
             st_write(title, "Hello World")
-        """), line_numbers=False)
+        """, line_numbers=False)
 
     st_space("v", 2)
 
@@ -198,12 +196,12 @@ def build():
 
     # --- 4. CSS Grid ---
     _section("CSS Grid Layouts")
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_grid(cols=3, cell_styles=cell) as g:
             with g.cell(): st_write(s.large, "Column A")
             with g.cell(): st_write(s.large, "Column B")
             with g.cell(): st_write(s.large, "Column C")
-    """), line_numbers=False)
+    """, line_numbers=False)
     st_space("v", 0.5)
     with st_block(bs.result):
         st_write(bs.result_label, "Result:")
@@ -219,13 +217,13 @@ def build():
 
     # --- 5. Styled Containers ---
     _section("Styled Containers")
-    show_code(textwrap.dedent("""\
+    show_code("""\
         gradient = Style(
             "background: linear-gradient(135deg, #667eea, #764ba2);"
             "border-radius: 8px; padding: 20px;", "gradient")
         with st_block(gradient):
             st_write(white + s.Large, "Gradient container")
-    """), line_numbers=False)
+    """, line_numbers=False)
     st_space("v", 0.5)
     with st_block(bs.result):
         st_write(bs.result_label, "Result:")
@@ -240,13 +238,13 @@ def build():
 
     # --- 6. Lists ---
     _section("Styled Lists")
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_list(list_type=lt.unordered,
                      l_style=s.container.lists.g_docs,
                      li_style=s.large) as l:
             with l.item(): st_write("Styled bullet points")
             with l.item(): st_write("Custom symbols per level")
-    """), line_numbers=False)
+    """, line_numbers=False)
     st_space("v", 0.5)
     with st_block(bs.result):
         st_write(bs.result_label, "Result:")

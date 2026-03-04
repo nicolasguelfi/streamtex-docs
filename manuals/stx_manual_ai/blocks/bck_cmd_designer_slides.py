@@ -1,7 +1,5 @@
 """Designer: Slide Commands — slide-new, slide-audit, slide-fix pipeline."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -49,23 +47,22 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:slide-new
 
         > Create a slide comparing Python vs Java performance.
           Use a two-column layout with bullet points.
-          Include a code snippet in each column."""),
+          Include a code snippet in each column.""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
     st_write(s.large, "The AI generates:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # bck_python_vs_java.py (generated)
         \"\"\"Comparison slide — Python vs Java performance.\"\"\"
 
-        import textwrap
         from streamtex import st_write, st_space, st_block, st_grid
         from streamtex.enums import Tags as t
         from custom.styles import Styles as s
@@ -86,7 +83,7 @@ def build():
                 with g.cell():
                     # Python column ...
                 with g.cell():
-                    # Java column ..."""), language="python")
+                    # Java column ...""", language="python")
     st_space("v", 2)
 
     # ── Command 2: slide-audit ─────────────────────────────────────
@@ -130,7 +127,7 @@ def build():
             )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:slide-audit
 
         === Slide Audit Report ===
@@ -139,7 +136,7 @@ def build():
         bck_05_unsupervised.py ......... FAIL: inline CSS on line 42
         bck_06_neural_nets.py .......... PASS
         ---
-        Result: 2 PASS, 1 WARN, 1 FAIL"""),
+        Result: 2 PASS, 1 WARN, 1 FAIL""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -159,7 +156,7 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:slide-fix
 
         Fixing bck_05_unsupervised.py ...
@@ -167,7 +164,7 @@ def build():
           - Replaced raw style string with bs.highlight
         Fixing bck_04_supervised.py ...
           - Split block into bck_04a and bck_04b (text density)
-        Done: 2 files fixed, 0 errors."""),
+        Done: 2 files fixed, 0 errors.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

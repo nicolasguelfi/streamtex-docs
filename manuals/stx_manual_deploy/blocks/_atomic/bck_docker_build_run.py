@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -27,7 +26,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Build the image (default project)
             docker build -t streamtex-app .
 
@@ -35,7 +34,7 @@ def build():
             docker run -p 8501:8501 streamtex-app
 
             # Open http://localhost:8501
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- 2. Targeting a specific project ---
@@ -48,7 +47,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Deploy a user project
             docker build \\
                 --build-arg FOLDER=projects/project_aiai18h \\
@@ -66,7 +65,7 @@ def build():
                 --build-arg FOLDER=documentation/manuals/stx_manual_deploy \\
                 -t deploy-manual .
             docker run -p 8503:8501 deploy-manual
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- 3. Health check ---
@@ -79,7 +78,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Check if the app is healthy
             curl --fail http://localhost:8501/_stcore/health
 
@@ -88,7 +87,7 @@ def build():
 
             # View logs
             docker logs <container_id>
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         show_details(

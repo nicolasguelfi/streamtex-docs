@@ -6,7 +6,6 @@ from streamtex import (
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -44,7 +43,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import InspectorConfig
 
         InspectorConfig(
@@ -53,7 +52,7 @@ def build():
             panel_width="35vw",     # CSS width of the sidebar panel
             backup=True,            # Create .bak files before saving
         )
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Usage in st_book() ---
@@ -66,14 +65,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import st_book, InspectorConfig
 
         st_book(
             [bck_intro, bck_chapter_1, bck_chapter_2],
             inspector=InspectorConfig(enabled=True),
         )
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Features ---
@@ -110,13 +109,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Fixed-width panel
         InspectorConfig(enabled=True, panel_width="700px")
 
         # Extra-large panel for wide monitors
         InspectorConfig(enabled=True, panel_width="1100px")
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Password protection ---
@@ -130,13 +129,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Password-protected inspector
         InspectorConfig(
             enabled=True,
             password="secret",
         )
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Excluded directories ---

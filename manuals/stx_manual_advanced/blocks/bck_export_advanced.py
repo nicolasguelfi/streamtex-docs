@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -46,7 +45,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import ExportConfig
 
         export_cfg = ExportConfig(
@@ -56,7 +55,7 @@ def build():
             page_padding="20px",     # padding around the page
         )
 
-        st_book(blocks, export=export_cfg)"""))
+        st_book(blocks, export=export_cfg)""")
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -82,7 +81,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Simplified internal flow:
         #
         # 1. st_book() calls reset() on the buffer
@@ -90,7 +89,7 @@ def build():
         #    - st_write() appends <div>...</div> to buffer
         #    - st_code() appends <pre><code>...</code></pre> to buffer
         #    - st_block() pushes/pops wrapper divs
-        # 3. After all blocks: generate_full_html() produces the file"""))
+        # 3. After all blocks: generate_full_html() produces the file""")
     st_space("v", 2)
 
     # --- Section 3: Push/Pop Pattern ---
@@ -105,7 +104,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Internal mechanism (you don't call this directly):
         export_push_wrapper('<div style="display:flex; gap:16px;">')
         # ... content rendered inside appends to the buffer ...
@@ -114,7 +113,7 @@ def build():
         # This happens automatically when you use context managers:
         with st_block(my_style):
             st_write(s.medium, "Content inside the block")
-            # push on __enter__, pop on __exit__"""))
+            # push on __enter__, pop on __exit__""")
     st_space("v", 2)
 
     # --- Section 4: st_html() ---
@@ -128,14 +127,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import st_html
 
         # Inline mode (height=0): renders via st.html()
         st_html(html_string, height=0)
 
         # Iframe mode (height>0): renders via components.html()
-        st_html(html_string, height=400, light_bg=True, scrolling=True)"""))
+        st_html(html_string, height=400, light_bg=True, scrolling=True)""")
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -179,12 +178,12 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # WRONG - disappears in export
         st.dataframe(df)
 
         # CORRECT - visible in both live app and exported HTML
-        stx.st_dataframe(df)"""))
+        stx.st_dataframe(df)""")
     st_space("v", 1)
 
     with st_block(bs.tip_box):
@@ -228,7 +227,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Simplified generate_full_html() output structure:
         #
         # <!DOCTYPE html>
@@ -244,7 +243,7 @@ def build():
         #     {accumulated_html_fragments}
         #   </div>
         # </body>
-        # </html>"""))
+        # </html>""")
     st_space("v", 2)
 
     show_details("""\

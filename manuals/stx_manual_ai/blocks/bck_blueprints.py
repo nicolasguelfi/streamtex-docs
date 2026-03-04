@@ -1,6 +1,5 @@
 """Part 5 — Block Blueprints: visual catalog of the 10 template patterns."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -55,42 +54,42 @@ def build():
                 st_write(bs.bp_number, "1", tag=t.div)
                 st_write(bs.bp_name, "Title", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Course or project title page with
                     author info, date, and subtitle.
                     Always the first block in a project.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "2", tag=t.div)
                 st_write(bs.bp_name, "Section Header", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Section divider with part number.
                     Marks the start of a new thematic
                     group of blocks.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "3", tag=t.div)
                 st_write(bs.bp_name, "Content", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Title plus bullet points. The most
                     common blueprint — used for teaching
                     concepts, listing features, or explaining
                     ideas.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "4", tag=t.div)
                 st_write(bs.bp_name, "Comparison", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Two-column X vs Y layout. Ideal for
                     contrasting approaches, tools, or
                     before/after views.
-                """))
+                """)
     st_space("v", 1)
 
     # ── Blueprints 5-8 ────────────────────────────────────────────
@@ -104,41 +103,41 @@ def build():
                 st_write(bs.bp_number, "5", tag=t.div)
                 st_write(bs.bp_name, "Image + Text", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Image paired with explanatory text.
                     Used for diagrams, screenshots, or
                     visual examples alongside descriptions.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "6", tag=t.div)
                 st_write(bs.bp_name, "Code Demo", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Code snippet with rendered output.
                     Shows both the source code and its
                     visual result side by side.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "7", tag=t.div)
                 st_write(bs.bp_name, "Timeline", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Numbered steps or workflow sequence.
                     Perfect for installation guides,
                     processes, and step-by-step tutorials.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "8", tag=t.div)
                 st_write(bs.bp_name, "Quote", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Highlighted citation or key message.
                     Draws attention to an important
                     insight, motto, or principle.
-                """))
+                """)
     st_space("v", 1)
 
     # ── Blueprints 9-10 ──────────────────────────────────────────
@@ -152,21 +151,21 @@ def build():
                 st_write(bs.bp_number, "9", tag=t.div)
                 st_write(bs.bp_name, "Gallery", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Grid of images arranged in columns.
                     Used for showcasing multiple visuals,
                     icons, or example outputs together.
-                """))
+                """)
         with g.cell():
             with st_block(bs.bp_card):
                 st_write(bs.bp_number, "10", tag=t.div)
                 st_write(bs.bp_name, "Conclusion", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.bp_use, textwrap.dedent("""\
+                st_write(bs.bp_use, """\
                     Synthesis of key takeaways. Wraps up
                     a section or project with a summary
                     of the most important points.
-                """))
+                """)
     st_space("v", 2)
 
     # ── How blueprints are used ──────────────────────────────────
@@ -182,7 +181,7 @@ def build():
     )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # User prompt:
         "Create a block comparing Python vs JavaScript
         for data science."
@@ -194,7 +193,7 @@ def build():
         #   - Right column: JavaScript strengths
         #   - BlockStyles class + build() function
         #   - All styles from custom/styles.py
-    """), language="python", line_numbers=False)
+    """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Composability tip ────────────────────────────────────────
@@ -204,14 +203,14 @@ def build():
             "Blueprints are composable",
         )
         st_space("v", 1)
-        st_write(s.large, textwrap.dedent("""\
+        st_write(s.large, """\
             You can combine multiple blueprint patterns in
             a single block. For example, a Content blueprint
             followed by a Code Demo section, ending with a
             Quote callout. The AI understands these
             combinations and will merge patterns naturally
             when your description calls for it.
-        """))
+        """)
     st_space("v", 1)
 
     show_details("""\

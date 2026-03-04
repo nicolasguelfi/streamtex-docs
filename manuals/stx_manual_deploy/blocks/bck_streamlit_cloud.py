@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -67,7 +66,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Generate requirements.txt from pyproject.toml
             ./deploy/gen-requirements.sh > requirements.txt
 
@@ -75,14 +74,14 @@ def build():
             git add requirements.txt
             git commit -m "Add requirements.txt for Streamlit Cloud"
             git push
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Step 2: Create the app ---
         st_write(bs.sub, "Step 2: Create the app", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Steps on share.streamlit.io:
             # 1. Click "New app"
             # 2. Select your GitHub repo
@@ -91,7 +90,7 @@ def build():
             #    OR: projects/your_project/book.py
             # 4. Set Python version to 3.13 (optional)
             # 5. Click "Deploy"
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         # --- Step 3: Verify ---

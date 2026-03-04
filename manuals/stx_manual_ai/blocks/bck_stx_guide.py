@@ -1,6 +1,5 @@
 """Part 7 — The stx-guide global skill: StreamTeX expertise for any session."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -75,12 +74,12 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Automatic activation — just mention StreamTeX
         > How do I create a grid layout in StreamTeX?
 
         # Explicit invocation
-        /stx-guide"""),
+        /stx-guide""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

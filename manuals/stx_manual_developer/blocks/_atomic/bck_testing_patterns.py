@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -42,7 +41,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             from unittest.mock import patch, MagicMock
 
             @patch("streamlit.html")
@@ -57,7 +56,7 @@ def build():
                 html_output = mock_html.call_args[0][0]
                 assert "Hello" in html_output
                 assert "color: red" in html_output\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Testing style composition ---
@@ -70,7 +69,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             def test_style_addition():
                 from streamtex.styles import Style
 
@@ -89,7 +88,7 @@ def build():
 
                 assert "color: red" not in result.css
                 assert "font-size: 16px" in result.css\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Testing context managers ---
@@ -103,7 +102,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             @patch("streamlit.html")
             def test_block_wraps_content(mock_html):
                 from streamtex import st_block, st_write
@@ -121,7 +120,7 @@ def build():
 
                 assert "padding: 10px" in full_html
                 assert "Inside block" in full_html\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Fixtures from conftest ---
@@ -135,7 +134,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # tests/conftest.py (excerpt)
 
             import pytest
@@ -158,7 +157,7 @@ def build():
                 reset_toc_registry()
                 reset_bib_registry()
                 reset_export_buffer()\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- AST guard ---
@@ -174,7 +173,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Simplified version of the AST guard test
 
             import ast
@@ -194,7 +193,7 @@ def build():
                                     f"{node.name}() calls st.html() "
                                     f"without is_export_active() guard"
                                 )\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Testing export buffer ---
@@ -208,7 +207,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             def test_export_buffer_lifecycle():
                 from streamtex import (
                     export_push_wrapper,
@@ -233,7 +232,7 @@ def build():
 
                 set_export_active(False)
                 reset_export_buffer()\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         show_details("""\

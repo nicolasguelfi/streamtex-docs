@@ -1,6 +1,5 @@
 """Part 7 — Creating custom agents: autonomous, multi-step AI assistants."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -68,7 +67,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         .claude/
         ├── architect/
         │   └── agents/
@@ -79,7 +78,7 @@ def build():
         │       └── presentation-designer-agent.md
         └── developer/
             └── agents/
-                └── developer-agent.md"""),
+                └── developer-agent.md""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -110,7 +109,7 @@ def build():
     st_write(bs.sub, "Example: Custom Agent File", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Agent: Quality Reviewer
 
         ## Role
@@ -140,7 +139,7 @@ def build():
         - Flag issues but do not auto-fix without user approval
         - Prioritize accessibility issues over style preferences
         - Be specific: include file name, line number, and fix suggestion
-        - If all blocks pass, confirm compliance explicitly"""),
+        - If all blocks pass, confirm compliance explicitly""",
         language="markdown")
     st_space("v", 2)
 

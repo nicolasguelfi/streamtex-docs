@@ -1,7 +1,5 @@
 """Command: project-customize — Modify theme, colors, and navigation."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -117,9 +115,9 @@ def build():
             tag=t.div,
         )
         st_space("v", 1)
-        show_code(textwrap.dedent("""\
+        show_code("""\
             > Change to an ocean theme: deep navy backgrounds,
-              teal accents, white text. Keep the current layout."""),
+              teal accents, white text. Keep the current layout.""",
             language="bash", line_numbers=False)
 
     st_space("v", 1)
@@ -138,13 +136,13 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # custom/styles.py — before
         ai_violet = Style("color: #8B5CF6;", "ai_violet")
 
         # custom/styles.py — after
         ocean_navy = Style("color: #1E3A5F;", "ocean_navy")
-        ocean_teal = Style("color: #14B8A6;", "ocean_teal")"""),
+        ocean_teal = Style("color: #14B8A6;", "ocean_teal")""",
         language="python")
     st_space("v", 2)
 

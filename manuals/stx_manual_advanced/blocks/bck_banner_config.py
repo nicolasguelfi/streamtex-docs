@@ -6,7 +6,6 @@ from streamtex import (
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -65,7 +64,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import BannerConfig
 
         # Full banner with all features enabled
@@ -76,7 +75,7 @@ def build():
 
         # Hidden banner (no banner rendered)
         banner = BannerConfig.hidden()
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Custom BannerConfig ---
@@ -89,7 +88,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import BannerConfig, BannerMode
 
         banner = BannerConfig(
@@ -98,7 +97,7 @@ def build():
             show_progress=True,
             show_page_count=True,
         )
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # --- Visual description of each mode ---
@@ -131,7 +130,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         from streamtex import st_book, BannerConfig
 
         st_book(
@@ -149,7 +148,7 @@ def build():
                 show_page_count=False,
             ),
         )
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     show_details("""\

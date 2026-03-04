@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # Resolve path to docker-compose.yml
@@ -47,7 +46,7 @@ def build():
         st_write(bs.sub, "Docker Compose commands", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Build and run all 3 projects
             docker compose up --build
 
@@ -62,7 +61,7 @@ def build():
 
             # Follow logs for a specific project
             docker compose logs -f intro
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Port mapping ---

@@ -1,6 +1,5 @@
 """Part 5 — Skills Overview: .md knowledge bases loaded by agents."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -57,7 +56,7 @@ def build():
     )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         .claude/
           designer/
             skills/
@@ -68,7 +67,7 @@ def build():
           references/
             coding_standards.md
             streamtex_cheatsheet_en.md
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # ── Skills catalog ────────────────────────────────────────────
@@ -84,11 +83,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     10 template patterns for block creation.
                     Each blueprint defines a reusable layout
                     (title, content, comparison, gallery, etc.)
-                """))
+                """)
         with g.cell():
             with st_block(bs.skill_card):
                 st_write(
@@ -97,11 +96,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     Styling, layout, and typography rules.
                     Covers font sizes, line lengths, spacing,
                     color usage, and grid conventions.
-                """))
+                """)
         with g.cell():
             with st_block(bs.skill_card):
                 st_write(
@@ -110,11 +109,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     Naming conventions and style composition
                     patterns. How to create, combine, and
                     reuse Style objects across blocks.
-                """))
+                """)
         with g.cell():
             with st_block(bs.skill_card):
                 st_write(
@@ -123,11 +122,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     Syntax reference for all stx functions.
                     Covers st_write, st_grid, st_block,
                     st_list, st_space, and more.
-                """))
+                """)
     st_space("v", 1)
 
     with st_grid(cols=2) as g:
@@ -139,11 +138,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     Full coding standards document. The single
                     source of truth for all StreamTeX code.
                     Shared across every profile and agent.
-                """))
+                """)
         with g.cell():
             with st_block(bs.skill_card):
                 st_write(
@@ -152,11 +151,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(bs.skill_desc, textwrap.dedent("""\
+                st_write(bs.skill_desc, """\
                     Quick syntax cheatsheet for rapid lookup.
                     Compact reference for the most common
                     stx function signatures and patterns.
-                """))
+                """)
     st_space("v", 2)
 
     # ── How agents reference skills ───────────────────────────────
@@ -172,14 +171,14 @@ def build():
     )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Context Loading
         Read the following files before proceeding:
         - block-blueprints.md
         - visual-design-rules.md
         - style-conventions.md
         - coding_standards.md
-    """), language="markdown", line_numbers=False)
+    """, language="markdown", line_numbers=False)
     st_space("v", 1)
 
     show_explanation("""\
@@ -201,14 +200,14 @@ def build():
             "coding_standards.md is the master reference",
         )
         st_space("v", 1)
-        st_write(s.large, textwrap.dedent("""\
+        st_write(s.large, """\
             All agents and commands ultimately defer to
             coding_standards.md for definitive rules. Other
             skills (blueprints, design rules, cheatsheet) are
             specialized extracts that help agents focus on
             specific tasks — but when in doubt, the coding
             standards document wins.
-        """))
+        """)
     st_space("v", 1)
 
     show_details("""\

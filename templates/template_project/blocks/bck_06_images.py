@@ -5,7 +5,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_tip
-import textwrap
 
 
 class BlockStyles:
@@ -22,11 +21,11 @@ def build():
     st_write(bs.sub, "Basic Image", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         st_image(uri="https://placehold.co/600x200/4A90D9/white?text=StreamTeX",
                  width="600px", height="200px",
                  alt="Placeholder image")
-    """))
+    """)
     st_space("v", 1)
 
     st_image(uri="https://placehold.co/600x200/4A90D9/white?text=StreamTeX",
@@ -38,13 +37,13 @@ def build():
     st_write(bs.sub, "Clickable Image with Hover", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         st_image(uri="https://placehold.co/400x150/2EC4B6/white?text=Click+me",
                  width="400px", height="150px",
                  alt="Clickable image",
                  link="https://github.com/",
                  hover=True)
-    """))
+    """)
     st_space("v", 1)
 
     st_image(uri="https://placehold.co/400x150/2EC4B6/white?text=Click+me",
@@ -58,7 +57,7 @@ def build():
     st_write(bs.sub, "Images in a Grid", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_grid(cols=3, cell_styles=s.center_txt) as g:
             with g.cell():
                 st_image(uri="https://placehold.co/200/E74C3C/white?text=1",
@@ -69,7 +68,7 @@ def build():
             with g.cell():
                 st_image(uri="https://placehold.co/200/27AE60/white?text=3",
                          width="200px", height="200px")
-    """))
+    """)
     st_space("v", 1)
 
     with st_grid(cols=3, cell_styles=s.center_txt) as g:

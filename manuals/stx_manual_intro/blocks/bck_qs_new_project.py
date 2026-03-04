@@ -1,6 +1,5 @@
 """Quick Start — Create a Project."""
 
-import textwrap
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -23,19 +22,20 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    # --- Copy the template ---
-    st_write(bs.sub, "Step 1: Copy the template", toc_lvl="+1")
+    # --- Create with CLI ---
+    st_write(bs.sub, "Step 1: Create the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        StreamTeX provides a ready-to-use template.
-        Copy it to the projects/ folder and rename it.
+        Use the stx CLI to scaffold a new project.
+        The --template project flag includes 9 tutorial blocks
+        that demonstrate all major StreamTeX features.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        cp -r documentation/template_project/ projects/my_project/
-    """), language="bash", line_numbers=False)
+    show_code("""\
+stx project new mon-projet --template project
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- Project structure ---
@@ -43,114 +43,99 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        The template gives you a standard folder layout.
-
-        Each folder has a specific role.
+        The CLI generates a complete project layout
+        with all required files and configuration.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        projects/my_project/
-        +-- book.py              # Entry point (orchestrates blocks)
-        +-- setup.py             # Adds streamtex to sys.path
-        +-- custom/
-        |   +-- styles.py        # Project-specific style definitions
-        |   +-- themes.py        # Theme overrides (dark/light)
-        +-- blocks/
-        |   +-- __init__.py      # Block auto-discovery (ProjectBlockRegistry)
-        |   +-- helpers.py       # Project-specific helper config
-        |   +-- bck_welcome.py   # Your first block
-        +-- static/              # Images, fonts, assets
-        +-- .streamlit/
-            +-- config.toml      # Static serving configuration
-    """), language="text", line_numbers=False)
+    show_code("""\
+projects/stx-mon-projet/
++-- pyproject.toml           # Dependencies + ruff config
++-- book.py                  # Entry point (orchestrates blocks)
++-- custom/
+|   +-- styles.py            # Project-specific style definitions
++-- blocks/
+|   +-- __init__.py          # Block registry (auto-discovery)
+|   +-- helpers.py           # Project-specific helper config
+|   +-- bck_01_welcome.py    # Tutorial blocks (9 total)
++-- static/
+|   +-- images/              # Static assets
++-- .streamlit/
+    +-- config.toml          # Static serving enabled
+""", language="text", line_numbers=False)
     st_space("v", 2)
 
-    # --- Configure styles ---
-    st_write(bs.sub, "Step 3: Configure styles", toc_lvl="+1")
+    # --- Run the project ---
+    st_write(bs.sub, "Step 3: Run the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Edit custom/styles.py to define your project colors,
-        font sizes, and layout styles. Use Style composition
-        with the + operator to combine styles.
+        Navigate to the project folder and launch it
+        with Streamlit. The template project is ready
+        to run immediately.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # custom/styles.py
-        from streamtex.styles import Style
-        import streamtex as stx
-
-        _sts = stx.StxStyles
-
-        class ProjectStyles:
-            class titles:
-                main = Style(
-                    "color: #4A90D9; font-weight: bold; font-size: 80pt;",
-                    "main_title"
-                )
-
-        class Styles(_sts.__class__):
-            project = ProjectStyles
-    """))
+    show_code("""\
+cd projects/stx-mon-projet
+uv run streamlit run book.py
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Configure book.py ---
-    st_write(bs.sub, "Step 4: Configure book.py", toc_lvl="+1")
+    # --- Explore the structure ---
+    st_write(bs.sub, "Step 4: Explore the structure", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        book.py is the entry point. It imports blocks,
-        configures navigation, and calls st_book()
-        to render everything.
+        The key files to understand are:
+
+        book.py — the entry point that imports blocks
+        and calls st_book() to render them.
+
+        custom/styles.py — where you define project colors,
+        font sizes, and layout styles.
+
+        blocks/ — each file contains a build() function
+        that renders one section of your project.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # book.py
-        import streamlit as st
-        import setup
-        from streamtex import st_book, TOCConfig, BannerConfig
-        import blocks
+    show_code("""\
+# book.py — entry point
+from streamtex import st_book, TOCConfig, BannerConfig
+import blocks
 
-        st.set_page_config(page_title="My Project", layout="wide",
-                           initial_sidebar_state="expanded")
-
-        toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY, toc_position=0,
-                        sidebar_max_level=2, search=True)
-
-        st_book([
-            blocks.bck_welcome,
-        ], toc_config=toc, paginate=True,
-           banner=BannerConfig.full())
-    """))
+st_book([
+    blocks.bck_01_welcome,
+    blocks.bck_02_text_styles,
+    # ... more blocks
+], toc_config=TOCConfig(...), paginate=True,
+   banner=BannerConfig.full())
+""", language="python", line_numbers=False)
     st_space("v", 2)
 
-    # --- Static serving ---
-    st_write(bs.sub, "Step 5: Enable static serving", toc_lvl="+1")
+    # --- Install Claude profile ---
+    st_write(bs.sub, "Step 5: Install a Claude profile", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Streamlit needs static serving enabled
-        for images and assets.
-
-        Create or edit
-        .streamlit/config.toml in your project.
+        Add AI-powered slash commands and agents
+        to your project. This enables zero-code workflows
+        with Claude Code or Cursor.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        # .streamlit/config.toml
-        [server]
-        enableStaticServing = true
-    """), language="toml", line_numbers=False)
+    show_code("""\
+stx claude install project .
+""", language="bash", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\
-        Mandatory files: book.py, setup.py, custom/styles.py, blocks/__init__.py.
+        The stx project new command generates pyproject.toml
+        with the mandatory ruff config and .streamlit/config.toml
+        with static serving enabled. No manual setup required.
 
-        The setup.py adds the streamtex library to sys.path
-        so imports work correctly from any location.
+        Without --template, a minimal scaffold is created
+        with a single bck_hello.py starter block.
     """)
     st_space("v", 1)

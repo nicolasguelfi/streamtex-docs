@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -42,10 +41,10 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Example: streamtex/my_feature.py
             # or:      streamtex/cli/cmd_my_feature.py\
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         # --- Step 2: Define public API ---
@@ -59,7 +58,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # streamtex/my_feature.py
 
             from __future__ import annotations
@@ -71,7 +70,7 @@ def build():
             def _internal_helper(text: str, style: Style | None) -> str:
                 \"\"\"Not exported — underscore prefix.\"\"\"
                 ...\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Step 3: Export in __init__.py ---
@@ -85,7 +84,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # In streamtex/__init__.py
 
             from streamtex.my_feature import my_public_function   # new import
@@ -94,7 +93,7 @@ def build():
                 ...
                 "my_public_function",    # add to __all__
             ]\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Step 4: Follow existing patterns ---
@@ -140,13 +139,13 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             def _render(style, content, tag):
                 html = f'<{tag} style="{style.css}">{content}</{tag}>'
                 st.html(html)
                 if is_export_active():
                     export_append(html)\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Step 6: Write tests ---
@@ -159,7 +158,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # tests/test_my_feature.py
 
             import pytest
@@ -169,14 +168,14 @@ def build():
             def test_basic_output(mock_st_html):
                 result = my_public_function("hello")
                 assert "hello" in result\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Step 7: Run checks ---
         st_write(bs.sub, "7. Run the full check suite", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run all tests
             uv run pytest tests/ -v
 
@@ -184,7 +183,7 @@ def build():
             uv run ruff check streamtex/
 
             # Both must pass before committing\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         show_details("""\

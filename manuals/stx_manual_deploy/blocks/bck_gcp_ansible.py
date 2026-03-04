@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # Resolve paths to ansible files
@@ -72,7 +71,7 @@ def build():
         st_write(bs.sub, "Step 1: Create the VM", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # In GCP Console:
             # 1. Compute Engine → VM instances → Create Instance
             # 2. Name: streamtex-vm
@@ -81,14 +80,14 @@ def build():
             # 5. Boot disk: Ubuntu 22.04
             # 6. Firewall: Allow HTTP + HTTPS traffic
             # 7. Note the External IP (e.g. 12.34.56.78)
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         # --- Step 2: SSH ---
         st_write(bs.sub, "Step 2: Configure SSH", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Generate SSH key (if not already done)
             ssh-keygen -t ed25519 -C "your-email@example.com"
 
@@ -98,7 +97,7 @@ def build():
 
             # Test SSH access
             ssh -i ~/.ssh/id_ed25519 your-user@12.34.56.78
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Step 3: Configure Ansible ---
@@ -111,13 +110,13 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Copy the inventory template
             cp deploy/ansible/inventory.ini.example deploy/ansible/inventory.ini
 
             # Edit with your VM IP and username
             # Then edit deploy/ansible/deploy.yml with your repo URL and project folder
-        """), language="bash")
+        """, language="bash")
         st_space("v", 1)
 
         # Show inventory template
@@ -154,7 +153,7 @@ def build():
         st_write(bs.sub, "Step 5: Deploy and verify", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run the playbook
             ansible-playbook -i deploy/ansible/inventory.ini deploy/ansible/deploy.yml
 
@@ -164,18 +163,18 @@ def build():
 
             # Open in browser
             # http://12.34.56.78:8501
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Maintenance ---
         st_write(bs.sub, "Updating the deployment", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Push changes to GitHub, then re-run the playbook:
             ansible-playbook -i deploy/ansible/inventory.ini deploy/ansible/deploy.yml
             # The playbook does git pull + restarts the service
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         show_details(

@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -44,7 +43,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # CORRECT — StreamTeX for content
             st_write(style, "Hello, world!")
             with st_block(container_style):
@@ -57,7 +56,7 @@ def build():
             # WRONG — never use st.write or st.markdown for content
             st.write("Don't do this")
             st.markdown("Or this")\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- No raw HTML/CSS ---
@@ -72,14 +71,14 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # CORRECT — Style composition
             bold_blue = Style("font-weight: bold; color: #3366cc;", "bold_blue")
             st_write(bold_blue, "Styled text")
 
             # WRONG — raw HTML
             st.html('<span style="font-weight:bold;color:#3366cc;">text</span>')\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- No hardcoded black/white ---
@@ -129,7 +128,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             class BlockStyles:
                 heading = s.project.titles.section_title + s.center_txt
                 sub = s.project.titles.section_subtitle
@@ -139,7 +138,7 @@ def build():
             def build():
                 st_write(bs.heading, "My Section", tag=t.div, toc_lvl="1")
                 st_write(bs.sub, "Subsection", toc_lvl="+1")\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Style reuse ---
@@ -166,14 +165,14 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # CORRECT — single call, inline mix
             st_write(base_style, (bold, "Name: "), (normal, "StreamTeX"))
 
             # WRONG — two calls create two blocks
             st_write(bold, "Name: ")
             st_write(normal, "StreamTeX")\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         # --- Lint after every change ---

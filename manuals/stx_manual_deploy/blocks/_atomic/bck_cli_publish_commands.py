@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -38,9 +37,9 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx publish check
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         st_write(bs.sub, "Validation steps", toc_lvl="+1")
@@ -76,9 +75,9 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx publish pypi
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         show_details("""\

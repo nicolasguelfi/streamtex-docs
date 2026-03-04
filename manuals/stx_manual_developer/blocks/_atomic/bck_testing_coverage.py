@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -243,13 +242,13 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Coverage for a single module
             uv run pytest tests/test_write.py --cov=streamtex.write -v
 
             # Full coverage report
             uv run pytest --cov=streamtex --cov-report=term-missing tests/\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         show_details("""\

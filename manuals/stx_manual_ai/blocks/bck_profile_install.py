@@ -1,6 +1,5 @@
 """Part 2 — Installing an AI Profile into a StreamTeX project."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -39,13 +38,13 @@ def build():
     st_write(bs.sub, "The Install Command", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Syntax
         stx claude install [profile] [project_path]
 
         # Example: install the project profile into ./my-presentation
         stx claude install project ./my-presentation
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- The 4 profiles ---
@@ -122,7 +121,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         my-presentation/
         +-- .claude/
         |   +-- commands/       # Slash commands (/project:init, etc.)
@@ -131,14 +130,14 @@ def build():
         |   +-- references/     # Coding standards, cheatsheets
         |   +-- settings.json   # Tool permissions
         +-- CLAUDE.md           # AI behavior configuration
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Example ---
     st_write(bs.sub, "Full Example", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Create a new project and install the project profile
         stx project new my-presentation
         stx claude install project ./my-presentation
@@ -146,7 +145,7 @@ def build():
         # Navigate and start working with Claude Code
         cd my-presentation
         claude
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\

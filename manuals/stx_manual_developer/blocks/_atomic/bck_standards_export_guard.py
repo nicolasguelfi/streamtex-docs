@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -37,13 +36,13 @@ def build():
         st_write(bs.sub, "The canonical pattern", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             def _render(style, content, tag):
                 html = f'<{tag} style="{style.css}">{content}</{tag}>'
                 st.html(html)
                 if is_export_active():
                     export_append(html)\
-        """), language="python")
+        """, language="python")
         st_space("v", 1)
 
         show_explanation("""\
@@ -88,20 +87,20 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run the AST guard test specifically
             uv run pytest tests/test_export.py -v -k "ast_guard"
 
             # Or run it as part of the full suite
             uv run pytest tests/ -v\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Common mistakes ---
         st_write(bs.sub, "Common mistakes", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # WRONG — missing export guard
             def render_badge(style, label):
                 html = f'<span style="{style.css}">{label}</span>'
@@ -118,7 +117,7 @@ def build():
             # ALSO CORRECT — use a shared _render() helper
             def render_badge(style, label):
                 _render(style, label, tag="span")\
-        """), language="python")
+        """, language="python")
         st_space("v", 2)
 
         show_details("""\

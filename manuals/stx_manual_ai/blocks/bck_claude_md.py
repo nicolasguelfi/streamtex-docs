@@ -1,6 +1,5 @@
 """Part 2 — Understanding CLAUDE.md, the AI behavior configuration file."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -40,13 +39,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Identity
         You are a **StreamTeX Expert** specialized in creating
         presentations and interactive documents.
         You NEVER write standard Streamlit code for content rendering.
         You ALWAYS use the `streamtex` library (`stx.*` functions).
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Environment ---
@@ -60,14 +59,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Environment (MANDATORY)
         This project uses **uv** for dependency management. You MUST:
         - **ALWAYS** prefix Python commands with `uv run`
         - **NEVER** call `python`, `pip`, `pytest`, or `streamlit` directly
         - Use `uv add <package>` to add dependencies
         - Run `uv sync` if `uv.lock` or `pyproject.toml` changed
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Context Loading ---
@@ -81,13 +80,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Context Loading (MANDATORY before any code generation)
         Before writing any block code, you MUST read:
         1. `.claude/references/coding_standards.md`
         2. `.claude/references/streamtex_cheatsheet_en.md`
         3. The target manual's `book.py`
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Coding Standards ---
@@ -101,7 +100,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Coding Standards
         - **stx for content, st for interactivity only**
         - **One st_write() with tuples for inline mixed-style text**
@@ -109,7 +108,7 @@ def build():
         - **No hardcoded black/white** — let Streamlit handle themes
         - **Block files** need BlockStyles class + build() function
         - **After every code change**, run `uv run ruff check`
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Key Components ---
@@ -123,7 +122,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Key Components
         ### Core Rendering
         - `st_write(style, text|tuple)` — Text rendering
@@ -133,7 +132,7 @@ def build():
 
         ### Organization
         - `st_book(blocks, paginate=True)` — Book orchestration
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Customization ---
@@ -147,12 +146,12 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         ## Project-Specific Rules
         - This project uses a dark theme — never override with light colors
         - All titles must use French language
         - Maximum 5 blocks per page section
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- Template tip ---

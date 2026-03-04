@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -54,14 +53,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         st_latex_doc(r\"\"\"
         \\\\documentclass{article}
         \\\\begin{document}
         \\\\section{Introduction}
         Hello from LaTeX!
         \\\\end{document}
-        \"\"\")"""))
+        \"\"\")""")
     st_space("v", 1)
 
     with st_block(s.project.containers.result_box):
@@ -85,13 +84,13 @@ Hello from LaTeX!
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # No \\\\documentclass needed — StreamTeX wraps it automatically
         st_latex_doc(r\"\"\"
         \\\\section{Quick Note}
         This fragment is auto-wrapped in an article document.
         Supports \\\\textbf{bold}, \\\\emph{italic}, and math: $E = mc^2$.
-        \"\"\", height=180)"""))
+        \"\"\", height=180)""")
     st_space("v", 1)
 
     with st_block(s.project.containers.result_box):
@@ -120,14 +119,14 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
         with l.item(): st_write(s.medium, (bs.param_label, "encoding"), " \u2014 file encoding (default utf-8)")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Customizing rendering parameters
         st_latex_doc(
             latex_source,
             height=400,          # taller iframe
             light_bg=False,      # transparent background
             hyphenate=False,     # disable hyphenation
-        )"""))
+        )""")
     st_space("v", 2)
 
     # --- Section 4: Loading from File ---
@@ -141,12 +140,12 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Load a LaTeX document from a file
         st_latex_doc(file="documents/my_article.tex")
 
         # With custom encoding
-        st_latex_doc(file="documents/french_text.tex", encoding="latin-1")"""))
+        st_latex_doc(file="documents/french_text.tex", encoding="latin-1")""")
     st_space("v", 2)
 
     # --- Section 5: LaTeX.js Capabilities ---
@@ -169,7 +168,7 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
         with l.item(): st_write(s.medium, "Footnotes: \\\\footnote{...}")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         st_latex_doc(r\"\"\"
         \\\\section{Structured Content}
         \\\\begin{itemize}
@@ -185,7 +184,7 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
           Bob & 87 \\\\\\\\
           \\\\hline
         \\\\end{tabular}
-        \"\"\", height=350)"""))
+        \"\"\", height=350)""")
     st_space("v", 1)
 
     with st_block(s.project.containers.result_box):

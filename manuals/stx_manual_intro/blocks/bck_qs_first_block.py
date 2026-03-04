@@ -1,6 +1,5 @@
 """Quick Start — First Block & Run."""
 
-import textwrap
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -35,7 +34,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # blocks/bck_hello.py
         from streamtex import *
         import streamtex as stx
@@ -55,7 +54,7 @@ def build():
             st_write(bs.title, "Hello StreamTeX!", tag=t.h1, toc_lvl="1")
             st_space("v", 1)
             st_write(bs.body, "This is my first block.")
-    """))
+    """)
     st_space("v", 2)
 
     # --- Register in book.py ---
@@ -70,14 +69,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # book.py — add your block to st_book
         st_book([
             blocks.bck_welcome,
             blocks.bck_hello,      # <-- your new block
         ], toc_config=toc, paginate=True,
            banner=BannerConfig.full())
-    """))
+    """)
     st_space("v", 2)
 
     # --- Run the project ---
@@ -93,9 +92,9 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         uv run streamlit run projects/my_project/book.py
-    """), language="bash", line_numbers=False)
+    """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- Next steps ---

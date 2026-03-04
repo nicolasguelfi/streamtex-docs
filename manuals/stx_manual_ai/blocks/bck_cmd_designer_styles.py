@@ -1,7 +1,5 @@
 """Designer: Style Commands — style-audit, style-refactor, block-preview."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -68,7 +66,7 @@ def build():
             )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:style-audit
 
         === Style Audit Report ===
@@ -89,7 +87,7 @@ def build():
           - bck_11.py line 22: "rgb(59, 130, 246)"
             -> Recommendation: use project color classes
 
-        Summary: 6 issues found (3 duplicate, 1 inline, 2 hardcoded)"""),
+        Summary: 6 issues found (3 duplicate, 1 inline, 2 hardcoded)""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -108,7 +106,7 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:style-refactor
 
         Refactoring 6 issues ...
@@ -124,7 +122,7 @@ def build():
            bck_05.py: "#FF5733" -> s.project.colors.error_red
            bck_11.py: "rgb(...)" -> s.project.colors.tech_blue
 
-        Done: 6 issues fixed across 5 files."""),
+        Done: 6 issues fixed across 5 files.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -170,7 +168,7 @@ def build():
             )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /designer:block-preview bck_03_what_is_ml.py
 
         === Block Structure Check ===
@@ -181,7 +179,7 @@ def build():
         bs = BlockStyles alias ....... PASS
         No raw st.* calls ............ PASS
         ---
-        Result: VALID block structure"""),
+        Result: VALID block structure""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

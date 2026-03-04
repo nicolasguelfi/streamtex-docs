@@ -1,7 +1,5 @@
 """Best Practices — Multi-user collaboration and cross-manual reuse."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -44,7 +42,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         streamtex-docs/
         └── manuals/
             ├── shared-blocks/           # Shared block library
@@ -54,11 +52,11 @@ def build():
             ├── stx_manual_intro/
             │   └── blocks/              # Manual-specific blocks
             └── stx_manual_advanced/
-                └── blocks/              # Manual-specific blocks"""),
+                └── blocks/              # Manual-specific blocks""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # In book.py — importing shared blocks
         from streamtex import LazyBlockRegistry
 
@@ -73,7 +71,7 @@ def build():
             "bck_01_intro",      # Found in local blocks/
             "bck_02_content",    # Found in local blocks/
             "bck_footer",        # Found in shared-blocks/
-        ]"""), language="python")
+        ]""", language="python")
     st_space("v", 2)
 
     # ── Code review with AI ───────────────────────────────────────
@@ -96,11 +94,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Use slide-audit for fast, rule-based
                     checking of structure, spacing, style
                     usage, and text density.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(
@@ -109,11 +107,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Use the Slide Reviewer agent for
                     comprehensive review: pedagogy,
                     visual quality, and compliance.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.tip_callout):
                 st_write(
@@ -122,21 +120,21 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Combine AI review with human judgment
                     for content accuracy, tone, and
                     audience appropriateness.
-                """))
+                """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Review pipeline
         /designer:slide-audit          # Step 1: automated checks
         /designer:slide-fix            # Step 2: auto-fix violations
         # Step 3: agent-based comprehensive review
         # (invoke the Slide Reviewer agent)
         # Step 4: human review in browser
-        uv run streamlit run book.py"""),
+        uv run streamlit run book.py""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -189,7 +187,7 @@ def build():
                 )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Team setup — every team member runs:
         stx claude install designer
 
@@ -197,7 +195,7 @@ def build():
         # .claude/CLAUDE.md          — shared AI rules
         # .claude/settings.json      — shared permissions
         # .claude/designer/          — commands, agents, skills
-        # custom/styles.py           — shared style definitions"""),
+        # custom/styles.py           — shared style definitions""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

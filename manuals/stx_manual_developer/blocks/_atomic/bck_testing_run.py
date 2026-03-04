@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -35,10 +34,10 @@ def build():
         st_write(bs.sub, "Full test suite", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run every test with verbose output
             uv run pytest tests/ -v\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Single file ---
@@ -50,10 +49,10 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run only the st_write tests
             uv run pytest tests/test_write.py -v\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- By keyword ---
@@ -66,10 +65,10 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run all tests with "style" in their name
             uv run pytest tests/ -k "test_style" -v\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- CLI shortcut ---
@@ -82,10 +81,10 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Equivalent to uv run pytest tests/ -v
             stx test\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Coverage ---
@@ -98,13 +97,13 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Run tests with coverage measurement
             uv run pytest --cov=streamtex tests/
 
             # Generate an HTML coverage report
             uv run pytest --cov=streamtex --cov-report=html tests/\
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- Command summary ---

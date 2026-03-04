@@ -1,6 +1,5 @@
 """Part 4 — Agent: Project Architect — designs full project structures."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -82,11 +81,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Each block covers exactly one concept.
                     No mixing of unrelated topics in a
                     single block file.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(
@@ -95,11 +94,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     A project should have at most 15 blocks.
                     If content exceeds that, split into
                     multiple projects or parts.
-                """))
+                """)
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(
@@ -108,11 +107,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                st_write(s.large, textwrap.dedent("""\
+                st_write(s.large, """\
                     Blocks progress from foundational
                     concepts to advanced topics. Each block
                     builds on the previous ones.
-                """))
+                """)
     st_space("v", 2)
 
     # ── Example ────────────────────────────────────────────────────
@@ -123,16 +122,16 @@ def build():
     st_write(s.project.titles.subsection_title, "User prompt:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         Create a course on Python basics for beginners.
         Cover variables, loops, functions, and data structures.
-    """), language="text", line_numbers=False)
+    """, language="text", line_numbers=False)
     st_space("v", 1)
 
     st_write(s.project.titles.subsection_title, "Architect output:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Block Plan
         bck_01_title.py          # Course title and overview
         bck_02_variables.py      # Variables and data types
@@ -149,7 +148,7 @@ def build():
 
         # Theme: Fresh Green palette (#10B981 primary)
         # Features: code examples, exercises, key takeaways
-    """), language="python", line_numbers=False)
+    """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── When to use ────────────────────────────────────────────────

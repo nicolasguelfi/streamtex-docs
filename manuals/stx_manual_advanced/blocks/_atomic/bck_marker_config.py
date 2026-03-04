@@ -11,7 +11,6 @@ from streamtex.enums import Tags as t
 from streamtex.styles import Style, StyleGrid
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -82,10 +81,10 @@ def build():
     st_write(bs.sub, "Keyboard Modifier Syntax", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, textwrap.dedent("""\
+    st_write(s.large, """\
         Key definitions use the JavaScript KeyboardEvent.key values.
         Combine a modifier with a key using the + separator:
-    """))
+    """)
     st_space("v", 1)
 
     show_code("""\

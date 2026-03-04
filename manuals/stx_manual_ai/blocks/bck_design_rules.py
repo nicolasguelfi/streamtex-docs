@@ -1,6 +1,5 @@
 """Part 5 — Visual Design Rules: 9 rules with WRONG/CORRECT examples."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -50,7 +49,7 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_write(
                         Style("color: red; "
                               "font-weight: bold; "
@@ -58,7 +57,7 @@ def build():
                               "my_style"),
                         "Important text",
                     )
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
         with g.cell():
             with st_block(s.project.containers.good_callout):
                 st_write(
@@ -67,13 +66,13 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_write(
                         s.project.colors.error_red
                         + s.bold + s.Large,
                         "Important text",
                     )
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 2: One st_write with tuples ─────────────────────────
@@ -90,11 +89,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_write(s.bold, "Name: ")
                     st_write(s.large, "Alice")
                     # Two calls = two vertical lines
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
         with g.cell():
             with st_block(s.project.containers.good_callout):
                 st_write(
@@ -103,14 +102,14 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_write(
                         s.large,
                         (s.bold, "Name: "),
                         "Alice",
                     )
                     # One call = one inline line
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 3: No hardcoded colors ──────────────────────────────
@@ -127,12 +126,12 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     title = Style(
                         "color: #8B5CF6;",
                         "title",
                     )
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
         with g.cell():
             with st_block(s.project.containers.good_callout):
                 st_write(
@@ -141,12 +140,12 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     title = (
                         s.project.colors.ai_violet
                         + s.bold
                     )
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 4: BlockStyles class ────────────────────────────────
@@ -165,13 +164,13 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         class BlockStyles:
             heading = s.project.titles.section_title
             sub = s.project.titles.section_subtitle
 
         bs = BlockStyles
-    """), language="python", line_numbers=False)
+    """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 5: build() function ─────────────────────────────────
@@ -190,14 +189,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         def build():
             st_space("v", 1)
             st_write(bs.heading, "Title",
                      tag=t.div, toc_lvl="1")
             st_space("v", 2)
             # ... content ...
-    """), language="python", line_numbers=False)
+    """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 6: st_space for spacing ─────────────────────────────
@@ -214,11 +213,11 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_write(s.large, "")
                     st_write(s.large, "")
                     # Empty writes for spacing
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
         with g.cell():
             with st_block(s.project.containers.good_callout):
                 st_write(
@@ -227,10 +226,10 @@ def build():
                     tag=t.div,
                 )
                 st_space("v", 0.5)
-                show_code(textwrap.dedent("""\
+                show_code("""\
                     st_space("v", 2)
                     # Semantic spacing function
-                """), language="python", line_numbers=False)
+                """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Rule 7: ~45-char lines ───────────────────────────────────
@@ -245,7 +244,7 @@ def build():
         Keep text content to approximately 45 characters
         per line. This ensures comfortable reading on
         slides and prevents text from overflowing grid
-        cells. Use textwrap.dedent for multi-line strings.
+        cells. Multi-line strings are auto-dedented.
     """)
     st_space("v", 2)
 
@@ -281,8 +280,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
-        import textwrap
+    show_code("""\
         from streamtex import (
             st_write, st_space, st_block, st_grid,
         )
@@ -291,7 +289,7 @@ def build():
         from blocks.helpers import (
             show_code, show_explanation,
         )
-    """), language="python", line_numbers=False)
+    """, language="python", line_numbers=False)
     st_space("v", 2)
 
     # ── Summary ──────────────────────────────────────────────────
@@ -301,12 +299,12 @@ def build():
             "Why these rules matter",
         )
         st_space("v", 1)
-        st_write(s.large, textwrap.dedent("""\
+        st_write(s.large, """\
             These 9 rules are enforced by the Slide Reviewer
             agent. Every block is checked against them before
             being accepted. Following the rules from the start
             means fewer review iterations and faster delivery.
-        """))
+        """)
     st_space("v", 1)
 
     show_details("""\

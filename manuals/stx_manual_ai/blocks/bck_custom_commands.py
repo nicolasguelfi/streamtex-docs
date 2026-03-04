@@ -1,6 +1,5 @@
 """Part 7 — Creating custom commands for Claude Code."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -43,7 +42,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         .claude/
         └── commands/
             ├── project/
@@ -56,7 +55,7 @@ def build():
             │   └── styles-update.md
             └── developer/
                 ├── test-run.md
-                └── lint.md"""),
+                └── lint.md""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
@@ -140,7 +139,7 @@ def build():
     st_write(bs.sub, "Example: Custom Command File", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Command: block-new
 
         ## Description
@@ -163,7 +162,7 @@ def build():
         4. Generate the block file following BlockStyles + build() pattern
         5. Register the block in book.py
         6. Run `uv run ruff check` on the new file
-        7. Show the user a summary of what was created"""),
+        7. Show the user a summary of what was created""",
         language="markdown")
     st_space("v", 2)
 

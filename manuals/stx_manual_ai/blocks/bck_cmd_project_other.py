@@ -1,7 +1,5 @@
 """More Project Commands — course-generate, collection-new, project-upgrade."""
 
-import textwrap
-
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -54,7 +52,7 @@ def build():
     )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # blocks.csv
         bck_01_title, Welcome to the Course, 0
         bck_02_overview, Course Overview, 1
@@ -65,13 +63,13 @@ def build():
         bck_07_classes, Classes and Objects, 2
         bck_08_inheritance, Inheritance, 2
         bck_09_practice, Practice Exercises, 1
-        bck_10_summary, Course Summary, 1"""), language="python")
+        bck_10_summary, Course Summary, 1""", language="python")
     st_space("v", 1)
 
     st_write(s.large, "The generated book.py:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         \"\"\"Auto-generated course orchestration.\"\"\"
 
         from streamtex import st_book
@@ -89,7 +87,7 @@ def build():
             "bck_10_summary",
         ]
 
-        st_book(blocks, paginate=True)"""), language="python")
+        st_book(blocks, paginate=True)""", language="python")
     st_space("v", 2)
 
     # ── Command 2: collection-new ──────────────────────────────────
@@ -108,20 +106,20 @@ def build():
         )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /project:collection-new
 
         > Create a collection hub linking:
           - Introduction Manual (streamtex-intro.onrender.com)
           - Advanced Manual (streamtex-advanced.onrender.com)
-          - Deploy Manual (streamtex-deploy.onrender.com)"""),
+          - Deploy Manual (streamtex-deploy.onrender.com)""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
     st_write(s.large, "The AI generates a collection book.py using st_collection:")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         \"\"\"Collection hub — links all manuals together.\"\"\"
 
         from streamtex import st_collection
@@ -147,7 +145,7 @@ def build():
             ],
         }
 
-        st_collection(config)"""), language="python")
+        st_collection(config)""", language="python")
     st_space("v", 2)
 
     # ── Command 3: project-upgrade ─────────────────────────────────
@@ -196,7 +194,7 @@ def build():
             )
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         /project:project-upgrade
 
         Checking project version ...
@@ -211,7 +209,7 @@ def build():
           custom/styles.py ........... SKIPPED (custom code preserved)
           blocks/bck_*.py ............ SKIPPED (custom code preserved)
 
-        Done: 4 files updated, 2 skipped (custom)."""),
+        Done: 4 files updated, 2 skipped (custom).""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

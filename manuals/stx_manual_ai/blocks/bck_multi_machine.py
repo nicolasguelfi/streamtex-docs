@@ -1,6 +1,5 @@
 """Part 7 — Multi-machine synchronization for .claude/ configuration."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -77,7 +76,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         #!/bin/bash
         # claude-sync.sh — Sync .claude/ configuration between machines
         set -euo pipefail
@@ -102,7 +101,7 @@ def build():
             echo "  Synced CLAUDE.md"
         fi
 
-        echo "Done. Skipped: memory/, settings.json" """),
+        echo "Done. Skipped: memory/, settings.json" """,
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -119,10 +118,10 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # .gitignore — exclude machine-specific .claude/ files
         .claude/projects/*/memory/
-        .claude/settings.json"""),
+        .claude/settings.json""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

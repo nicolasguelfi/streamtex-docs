@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # Resolve path to the workflow file
@@ -89,7 +88,7 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # The workflow triggers automatically on:
             # - Push to main branch
             # - Pull request targeting main
@@ -100,7 +99,7 @@ def build():
             # 3. See the workflow runs and their status
 
             # Failed runs block PR merges (if branch protection is enabled)
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         show_details(

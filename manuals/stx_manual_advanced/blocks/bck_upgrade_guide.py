@@ -7,7 +7,6 @@ from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -140,9 +139,9 @@ def build():
     st_write(bs.feature, "Step 1: Update dependency")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         uv add streamtex --upgrade
-    """), language="bash")
+    """, language="bash")
     st_space("v", 2)
 
     # Step 2
@@ -155,14 +154,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Before (v0.2)
         st_book(blocks, banner_color="rgba(211, 47, 47, 0.8)")
 
         # After (v0.3)
         from streamtex import BannerConfig
         st_book(blocks, banner=BannerConfig.full(color="rgba(211, 47, 47, 0.8)"))
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # Step 3
@@ -175,14 +174,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Before (v0.2)
         st_book(blocks, inspector=True)
 
         # After (v0.3)
         from streamtex import InspectorConfig
         st_book(blocks, inspector=InspectorConfig(enabled=True))
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # Step 4
@@ -195,7 +194,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Before (v0.2)
         import streamlit as st
         st.dataframe(df)
@@ -205,25 +204,25 @@ def build():
         import streamtex as stx
         stx.st_dataframe(df)
         stx.st_metric("Revenue", "$1.2M")
-    """), language="python")
+    """, language="python")
     st_space("v", 2)
 
     # Step 5
     st_write(bs.feature, "Step 5: Run linter to catch import issues")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         uv run ruff check
-    """), language="bash")
+    """, language="bash")
     st_space("v", 2)
 
     # Step 6
     st_write(bs.feature, "Step 6: Run tests to verify")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         uv run pytest tests/ -v
-    """), language="bash")
+    """, language="bash")
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #

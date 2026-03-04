@@ -6,7 +6,6 @@ from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_tip
 import blocks
-import textwrap
 
 
 class BlockStyles:
@@ -24,10 +23,10 @@ def build():
     st_write(bs.sub, "st_include — Reuse Blocks", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Include another block's content here:
         st_include(block_file_module=blocks.sub_block)
-    """))
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.callout):
@@ -38,13 +37,13 @@ def build():
     st_write(bs.sub, "st_overlay — Absolute Positioning", toc_lvl="+1")
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         with st_overlay() as o:
             st_image(uri="https://placehold.co/800x300/4A90D9/4A90D9",
                      width="800px", height="300px")
             with o.layer(top=120, left=250):
                 st_write(bs.overlay_text, "Overlay Text")
-    """))
+    """)
     st_space("v", 1)
 
     with st_overlay() as o:

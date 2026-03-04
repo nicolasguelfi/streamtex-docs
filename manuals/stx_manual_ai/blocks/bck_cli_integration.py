@@ -1,6 +1,5 @@
 """Part 7 — CLI integration commands: install, diff, update, and workspace."""
 
-import textwrap
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -41,7 +40,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Install the default 'project' profile
         stx claude install
 
@@ -55,7 +54,7 @@ def build():
         #   Installed 3 agents
         #   Installed 4 skills
         #   Created settings.json
-        # Done. Profile 'project' installed successfully."""),
+        # Done. Profile 'project' installed successfully.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -70,7 +69,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx claude diff
 
         # Example output:
@@ -86,7 +85,7 @@ def build():
         # Skills:
         #   + data_visualization.md          (new)
         #
-        # Run 'stx claude update' to apply changes."""),
+        # Run 'stx claude update' to apply changes.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -101,7 +100,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         # Update to latest version
         stx claude update
 
@@ -115,7 +114,7 @@ def build():
         #   Updated 1 agent (architect-agent.md)
         #   Added 1 skill (data_visualization.md)
         #   Preserved CLAUDE.md custom sections
-        # Done. Profile updated to v1.3.0."""),
+        # Done. Profile updated to v1.3.0.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -129,7 +128,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx workspace init my-workspace
 
         # Example output:
@@ -137,7 +136,7 @@ def build():
         #   Created stx.toml
         #   Created projects/ directory
         #   Created pyproject.toml
-        # Done. Run 'cd my-workspace' to get started."""),
+        # Done. Run 'cd my-workspace' to get started.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -151,7 +150,7 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx workspace clone https://github.com/org/my-workspace.git
 
         # Example output:
@@ -159,7 +158,7 @@ def build():
         #   Cloned repository
         #   Found 3 projects in stx.toml
         #   Running uv sync...
-        # Done. Workspace ready."""),
+        # Done. Workspace ready.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -174,14 +173,14 @@ def build():
     """)
     st_space("v", 1)
 
-    show_code(textwrap.dedent("""\
+    show_code("""\
         stx workspace link ../streamtex
 
         # Example output:
         # Linking StreamTeX library from ../streamtex...
         #   Added editable source to pyproject.toml
         #   Running uv sync...
-        # Done. Library linked for development."""),
+        # Done. Library linked for development.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

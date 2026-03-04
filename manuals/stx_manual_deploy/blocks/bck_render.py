@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 import os
 
 # Resolve path to render.yaml
@@ -68,13 +67,13 @@ def build():
         )
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Deploy the default project
             ./deploy/render.sh
 
             # Deploy a specific project
             ./deploy/render.sh projects/project_aiai18h
-        """), language="bash")
+        """, language="bash")
         st_space("v", 2)
 
         # --- render.yaml ---
@@ -102,7 +101,7 @@ def build():
         st_write(bs.sub, "Manual setup on Render.com", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Steps on dashboard.render.com:
             # 1. Click New → Web Service
             # 2. Connect your GitHub repo
@@ -115,7 +114,7 @@ def build():
             # 5. Set health check path: /_stcore/health
             # 6. Choose plan (Free or Starter)
             # 7. Click Create Web Service
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         # --- Multiple projects ---

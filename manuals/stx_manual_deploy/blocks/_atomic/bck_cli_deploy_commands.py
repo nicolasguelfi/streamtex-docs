@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -40,9 +39,9 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx deploy preflight
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         # --- stx deploy docker ---
@@ -56,13 +55,13 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             # Build and run with default settings
             stx deploy docker
 
             # Specify a custom port
             stx deploy docker --port 8502
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         # --- stx deploy render ---
@@ -76,9 +75,9 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx deploy render
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         # --- stx deploy huggingface ---
@@ -92,9 +91,9 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx deploy huggingface
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)
 
         # --- stx deploy status ---
@@ -108,7 +107,7 @@ def build():
         """)
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             stx deploy status
-        """), language="bash", line_numbers=False)
+        """, language="bash", line_numbers=False)
         st_space("v", 2)

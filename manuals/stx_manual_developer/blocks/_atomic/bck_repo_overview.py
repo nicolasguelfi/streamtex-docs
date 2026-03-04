@@ -6,7 +6,6 @@ import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
-import textwrap
 
 
 class BlockStyles:
@@ -34,7 +33,7 @@ def build():
         st_write(bs.sub, "Top-Level Layout", toc_lvl="+1")
         st_space("v", 1)
 
-        show_code(textwrap.dedent("""\
+        show_code("""\
             streamtex/
             ├── streamtex/           # Main Python package (38 modules)
             │   ├── __init__.py      # Public API exports
@@ -47,7 +46,7 @@ def build():
             ├── pyproject.toml       # Build system & deps
             ├── CHANGELOG.md         # Version history
             └── uv.lock              # Pinned dependencies\
-        """), language="text")
+        """, language="text")
         st_space("v", 2)
 
         show_details("""\

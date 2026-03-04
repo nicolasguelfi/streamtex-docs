@@ -101,19 +101,15 @@ def build():
     st_write(bs.sub, "Step 4: Next steps", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        You now have a working StreamTeX project.
-        Explore these topics to go further.
-    """)
-    st_space("v", 1)
-
-    with st_list(list_type="ul") as l:
-        with l.item(): st_write(s.large, "Add styles with the Style() constructor and + operator")
-        with l.item(): st_write(s.large, "Use st_grid() for multi-column layouts")
-        with l.item(): st_write(s.large, "Add images with st_image() and base64 encoding")
-        with l.item(): st_write(s.large, "Use show_code() and show_explanation() helpers in blocks")
-        with l.item(): st_write(s.large, "Enable dark mode with custom themes")
-        with l.item(): st_write(s.large, "Deploy with Docker or Hugging Face Spaces")
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.large, "You now have a working StreamTeX project. Explore these topics to go further.")
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.large, "Add styles with the Style() constructor and + operator")
+            with l.item(): st_write(s.large, "Use st_grid() for multi-column layouts")
+            with l.item(): st_write(s.large, "Add images with st_image() and base64 encoding")
+            with l.item(): st_write(s.large, "Use show_code() and show_explanation() helpers in blocks")
+            with l.item(): st_write(s.large, "Enable dark mode with custom themes")
+            with l.item(): st_write(s.large, "Deploy with Docker or Hugging Face Spaces")
     st_space("v", 2)
 
     show_details("""\

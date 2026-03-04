@@ -78,20 +78,21 @@ uv tool install streamtex[cli]
 mkdir streamtex-dev && cd streamtex-dev
 stx workspace init . --preset standard  # basic | user | standard | developer
 stx workspace clone
+# Shared commands (like /stx-guide) are installed globally to ~/.claude/commands/
 """, language="bash", line_numbers=False)
     st_space("v", 1)
 
-    show_explanation("The four presets offer increasing levels of functionality:")
-
-    with st_list(li_style=s.large, list_type="ul") as l:
-        with l.item():
-            st_write(s.large, (s.bold, "basic"), " — empty workspace, no repos. Create standalone projects and upgrade later when needed.")
-        with l.item():
-            st_write(s.large, (s.bold, "user"), " — adds streamtex-claude (Claude AI profiles). Enables stx claude install for slash commands and agents.")
-        with l.item():
-            st_write(s.large, (s.bold, "standard"), " (default) — adds streamtex-docs + streamtex-claude. Enables rich templates (--template project) and local documentation alongside Claude profiles.")
-        with l.item():
-            st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs (stx workspace link) so library source changes are reflected immediately.")
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.large, "The four presets offer increasing levels of functionality:")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, (s.bold, "basic"), " — empty workspace, no repos. Create standalone projects and upgrade later when needed.")
+            with l.item():
+                st_write(s.large, (s.bold, "user"), " — adds streamtex-claude (Claude AI profiles). Enables stx claude install for slash commands and agents.")
+            with l.item():
+                st_write(s.large, (s.bold, "standard"), " (default) — adds streamtex-docs + streamtex-claude. Enables rich templates (--template project) and local documentation alongside Claude profiles.")
+            with l.item():
+                st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs (stx workspace link) so library source changes are reflected immediately.")
     st_space("v", 2)
 
     # --- Create and run a project ---

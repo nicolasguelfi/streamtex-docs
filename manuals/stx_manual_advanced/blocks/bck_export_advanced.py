@@ -56,11 +56,12 @@ def build():
         st_book(blocks, export=export_cfg)""")
     st_space("v", 1)
 
-    with st_list(list_type="ul") as l:
-        with l.item(): st_write(s.medium, (bs.param_label, "enabled"), " \u2014 toggle export on or off (default False)")
-        with l.item(): st_write(s.medium, (bs.param_label, "page_title"), " \u2014 the HTML page title in the exported file")
-        with l.item(): st_write(s.medium, (bs.param_label, "page_width"), " \u2014 CSS max-width for the page container (default 90%)")
-        with l.item(): st_write(s.medium, (bs.param_label, "page_padding"), " \u2014 CSS padding around the main content area")
+    with st_block(s.project.containers.explanation_box):
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, (bs.param_label, "enabled"), " \u2014 toggle export on or off (default False)")
+            with l.item(): st_write(s.medium, (bs.param_label, "page_title"), " \u2014 the HTML page title in the exported file")
+            with l.item(): st_write(s.medium, (bs.param_label, "page_width"), " \u2014 CSS max-width for the page container (default 90%)")
+            with l.item(): st_write(s.medium, (bs.param_label, "page_padding"), " \u2014 CSS padding around the main content area")
     st_space("v", 2)
 
     # --- Section 2: HtmlExportBuffer ---
@@ -135,31 +136,32 @@ def build():
         st_html(html_string, height=400, light_bg=True, scrolling=True)""")
     st_space("v", 1)
 
-    with st_list(list_type="ul") as l:
-        with l.item():
-            st_write(
-                s.medium,
-                (bs.param_label, "height=0"),
-                " \u2014 inline rendering via st.html() (no iframe, content flows with page)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                (bs.param_label, "height>0"),
-                " \u2014 iframe rendering via components.html() (isolated, fixed height in px)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                (bs.param_label, "light_bg"),
-                " \u2014 injects color-scheme: light for white backgrounds inside the iframe",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                (bs.param_label, "scrolling"),
-                " \u2014 enables scrollbar in iframe mode (default False)",
-            )
+    with st_block(s.project.containers.explanation_box):
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.medium,
+                    (bs.param_label, "height=0"),
+                    " \u2014 inline rendering via st.html() (no iframe, content flows with page)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    (bs.param_label, "height>0"),
+                    " \u2014 iframe rendering via components.html() (isolated, fixed height in px)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    (bs.param_label, "light_bg"),
+                    " \u2014 injects color-scheme: light for white backgrounds inside the iframe",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    (bs.param_label, "scrolling"),
+                    " \u2014 enables scrollbar in iframe mode (default False)",
+                )
     st_space("v", 2)
 
     # --- Section 5: Export-Aware Widgets ---
@@ -197,19 +199,16 @@ def build():
     st_write(bs.sub, "Full Export Lifecycle", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        The complete export cycle follows these steps:
-    """)
-    st_space("v", 1)
-
-    with st_list(list_type="ol") as l:
-        with l.item(): st_write(s.medium, "st_book() detects export is enabled and calls buffer.reset()")
-        with l.item(): st_write(s.medium, "The book renders all blocks in order (paginated or continuous)")
-        with l.item(): st_write(s.medium, "Each stx function appends its HTML fragment to the buffer")
-        with l.item(): st_write(s.medium, "Nested containers use push/pop to maintain proper HTML structure")
-        with l.item(): st_write(s.medium, "After all blocks render, generate_full_html() assembles the output")
-        with l.item(): st_write(s.medium, "CSS from default.css is inlined into the HTML document")
-        with l.item(): st_write(s.medium, "The final HTML file is offered for download via Streamlit")
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.medium, "The complete export cycle follows these steps:")
+        with st_list(list_type="ol") as l:
+            with l.item(): st_write(s.medium, "st_book() detects export is enabled and calls buffer.reset()")
+            with l.item(): st_write(s.medium, "The book renders all blocks in order (paginated or continuous)")
+            with l.item(): st_write(s.medium, "Each stx function appends its HTML fragment to the buffer")
+            with l.item(): st_write(s.medium, "Nested containers use push/pop to maintain proper HTML structure")
+            with l.item(): st_write(s.medium, "After all blocks render, generate_full_html() assembles the output")
+            with l.item(): st_write(s.medium, "CSS from default.css is inlined into the HTML document")
+            with l.item(): st_write(s.medium, "The final HTML file is offered for download via Streamlit")
     st_space("v", 2)
 
     # --- Section 7: CSS Bundling ---

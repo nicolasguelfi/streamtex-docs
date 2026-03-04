@@ -35,35 +35,35 @@ def build():
     st_write(bs.sub, "Breaking Changes", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        The following changes in v0.3 may require updates to existing
-        projects. Review each item carefully before upgrading.
-    """)
-    st_space("v", 1)
-
-    with st_list(list_type="ul") as l:
-        with l.item():
-            st_write(
-                s.medium,
-                "Style system refactored: styles/ is now a package "
-                "(core.py, text.py, container.py, visibility.py, base.py)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Import changes: from streamtex.styles import Style still works "
-                "(backward compatible)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "BannerConfig replaces the banner_color parameter in st_book()",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "InspectorConfig is now a proper dataclass (previously dict)",
-            )
+    with st_block(s.project.containers.explanation_box):
+        st_write(
+            s.medium,
+            "The following changes in v0.3 may require updates to existing "
+            "projects. Review each item carefully before upgrading.",
+        )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Style system refactored: styles/ is now a package "
+                    "(core.py, text.py, container.py, visibility.py, base.py)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Import changes: from streamtex.styles import Style still works "
+                    "(backward compatible)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "BannerConfig replaces the banner_color parameter in st_book()",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "InspectorConfig is now a proper dataclass (previously dict)",
+                )
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #
@@ -72,51 +72,51 @@ def build():
     st_write(bs.sub, "New Features", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        Version 0.3 introduces several major features that expand
-        StreamTeX's capabilities for document authoring and data
-        integration.
-    """)
-    st_space("v", 1)
-
-    with st_list(list_type="ul") as l:
-        with l.item():
-            st_write(
-                s.medium,
-                "Bibliography system (bib.py): multi-format import, "
-                "inline citations, hover preview",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Google Sheets integration (gsheet.py): public + "
-                "authenticated sheet access",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "LaTeX document rendering (st_latex_doc): full LaTeX.js support",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Export-aware widgets: stx.st_dataframe, stx.st_metric, etc.",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Block helpers DI pattern (BlockHelperConfig)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Collection system (st_collection)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Link preview scaffold",
-            )
+    with st_block(s.project.containers.explanation_box):
+        st_write(
+            s.medium,
+            "Version 0.3 introduces several major features that expand "
+            "StreamTeX's capabilities for document authoring and data "
+            "integration.",
+        )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Bibliography system (bib.py): multi-format import, "
+                    "inline citations, hover preview",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Google Sheets integration (gsheet.py): public + "
+                    "authenticated sheet access",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "LaTeX document rendering (st_latex_doc): full LaTeX.js support",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Export-aware widgets: stx.st_dataframe, stx.st_metric, etc.",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Block helpers DI pattern (BlockHelperConfig)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Collection system (st_collection)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Link preview scaffold",
+                )
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #
@@ -228,24 +228,24 @@ def build():
     st_write(bs.sub, "Deprecated APIs", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        The following APIs are deprecated in v0.3. They continue
-        to work for backward compatibility but will be removed in
-        a future release. Update your code as described above.
-    """)
-    st_space("v", 1)
-
-    with st_list(list_type="ul") as l:
-        with l.item():
-            st_write(
-                s.medium,
-                "banner_color parameter (use BannerConfig instead)",
-            )
-        with l.item():
-            st_write(
-                s.medium,
-                "Direct inspector=True (use InspectorConfig instead)",
-            )
+    with st_block(s.project.containers.explanation_box):
+        st_write(
+            s.medium,
+            "The following APIs are deprecated in v0.3. They continue "
+            "to work for backward compatibility but will be removed in "
+            "a future release. Update your code as described above.",
+        )
+        with st_list(list_type="ul") as l:
+            with l.item():
+                st_write(
+                    s.medium,
+                    "banner_color parameter (use BannerConfig instead)",
+                )
+            with l.item():
+                st_write(
+                    s.medium,
+                    "Direct inspector=True (use InspectorConfig instead)",
+                )
     st_space("v", 1)
 
     show_details("""\

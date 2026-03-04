@@ -57,12 +57,14 @@ stx workspace init . --preset developer
         show_explanation("""\
             Clones all repos declared in stx.toml. The number of
             repos depends on the workspace preset. Already-cloned
-            repos are skipped.
+            repos are skipped. Shared commands (like /stx-guide)
+            are also installed globally to ~/.claude/commands/.
         """)
         st_space("v", 1)
 
         show_code("""\
 # Clone repos declared in stx.toml
+# Also installs shared commands globally (~/.claude/commands/)
 stx workspace clone""", language="bash")
         st_space("v", 2)
 
@@ -137,7 +139,7 @@ stx workspace sync""", language="bash")
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace clone")
             with g.cell():
-                st_write(s.large, "Clone repos from stx.toml")
+                st_write(s.large, "Clone repos + install global commands")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace link")

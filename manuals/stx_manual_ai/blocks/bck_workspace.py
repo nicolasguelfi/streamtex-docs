@@ -54,12 +54,14 @@ def build():
     show_explanation("""\
         Clone all repos declared in stx.toml. The number of repos
         depends on the workspace preset. Already-cloned repos
-        are skipped.
+        are skipped. Shared commands (like /stx-guide) are also
+        installed globally to ~/.claude/commands/.
     """)
     st_space("v", 1)
 
     show_code("""\
         stx workspace clone
+        # Also installs shared commands globally (~/.claude/commands/)
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 

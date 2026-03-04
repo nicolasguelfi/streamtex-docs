@@ -22,12 +22,12 @@ def build():
 
     show_code("""\
         # Include another block's content here:
-        st_include(block_file_module=blocks.sub_block)
+        st_include(block_file_module=blocks.bck_sub_block)
     """)
     st_space("v", 1)
 
     with st_block(s.project.containers.callout):
-        st_include(block_file_module=blocks.sub_block)
+        st_include(block_file_module=blocks.bck_sub_block)
     st_space("v", 2)
 
     # --- st_overlay ---

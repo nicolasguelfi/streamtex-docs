@@ -27,10 +27,10 @@ stx publish check""", language="bash")
         show_explanation("""\
             Before publishing, stx publish check verifies:
 
-            - Version in pyproject.toml matches streamtex/__init__.py.
-            - CHANGELOG.md contains an entry for the current version.
+            - Version in **pyproject.toml** matches **streamtex/__init__.py**.
+            - **CHANGELOG.md** contains an entry for the current version.
             - Working directory is clean (no uncommitted changes).
-            - Current branch is main.
+            - Current branch is **main**.
         """)
         st_space("v", 2)
 
@@ -88,19 +88,19 @@ stx publish pypi""", language="bash")
             Trusted Publishing eliminates the need for PyPI API tokens.
             Here is how it works:
 
-            1. When publish.yml runs, GitHub mints a short-lived OIDC
-               token that identifies the repository and workflow.
-            2. The pypa/gh-action-pypi-publish action sends this token
+            1. When publish.yml runs, GitHub mints a **short-lived OIDC
+               token** that identifies the repository and workflow.
+            2. The **pypa/gh-action-pypi-publish** action sends this token
                to PyPI along with the built package.
-            3. PyPI verifies the token against the trusted publisher
+            3. PyPI **verifies the token** against the trusted publisher
                configuration you set up in your project settings.
-            4. If the token is valid, PyPI accepts the upload.
+            4. If the token is valid, PyPI **accepts the upload**.
 
             Benefits:
 
-            - No stored secrets in the repository.
-            - Tokens are short-lived and scoped to the workflow.
-            - Full audit trail on both GitHub and PyPI.
+            - **No stored secrets** in the repository.
+            - **Tokens are short-lived** and scoped to the workflow.
+            - **Full audit trail** on both GitHub and PyPI.
         """)
         st_space("v", 2)
 

@@ -26,7 +26,7 @@ def build():
 
         show_explanation(
             "Before deploying to any platform, run the preflight script. "
-            "It validates tests, configuration, static assets, and git status."
+            "It validates **tests**, **configuration**, **static assets**, and **git status**."
         )
         st_space("v", 2)
 
@@ -97,7 +97,7 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "Exit code 0 means all checks passed.\n\n"
-            "Exit code 1 means a critical check failed (tests, config).\n\n"
-            "Warnings (git dirty, missing static/) do not block deployment."
+            "**Exit code 0** means all checks passed.\n\n"
+            "**Exit code 1** means a critical check failed (tests, config).\n\n"
+            "**Warnings** (git dirty, missing static/) do not block deployment."
         )

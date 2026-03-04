@@ -1,7 +1,7 @@
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -76,8 +76,11 @@ def build():
         st_write(s.large, "Line B")
     st_space("v", 2)
 
-    show_tip(
-        'st_space("v", N) adds N em of vertical space. '
-        'st_space("h", "Npx") adds horizontal space. '
-        "st_br() inserts a simple line break."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        with st_list(s.large, s.large):
+            st_write(s.large, (s.bold, 'st_space("v", N)'), " — adds N em of vertical space")
+            st_write(s.large, (s.bold, 'st_space("h", "Npx")'), " — adds horizontal space")
+            st_write(s.large, (s.bold, "st_br()"), " — inserts a simple line break")
+    st_space("v", 1)

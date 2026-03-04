@@ -95,12 +95,12 @@ stx                          # Root CLI group
         st_space("v", 1)
 
         show_explanation("""\
-            The console.py module provides Rich-based formatting
+            The **console.py** module provides Rich-based formatting
             utilities used by all CLI commands for consistent output:
 
-            - Colored status messages (success, warning, error).
-            - Tables for structured output.
-            - Progress indicators for long-running operations.
+            - **Colored status messages** (success, warning, error).
+            - **Tables** for structured output.
+            - **Progress indicators** for long-running operations.
         """)
         st_space("v", 2)
 

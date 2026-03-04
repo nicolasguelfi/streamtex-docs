@@ -71,8 +71,8 @@ def build():
         )
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.medium, "Registry: LazyBlockRegistry, shared blocks, static resolution")
-            with l.item(): st_write(s.medium, "Advanced: overlays, themes, helpers, collections")
-            with l.item(): st_write(s.medium, "Production: export, deployment, data visualization")
+            with l.item(): st_write(s.medium, (s.bold, "Registry"), ": LazyBlockRegistry, shared blocks, static resolution")
+            with l.item(): st_write(s.medium, (s.bold, "Advanced"), ": overlays, themes, helpers, collections")
+            with l.item(): st_write(s.medium, (s.bold, "Production"), ": export, deployment, data visualization")
 
     st_space("v", 2)

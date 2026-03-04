@@ -7,7 +7,7 @@ Collections enable project discovery, navigation, and organization.
 from custom.styles import Styles as s
 
 from blocks.helpers import show_code, show_details, show_explanation
-from streamtex import Style, st_block, st_space, st_write
+from streamtex import Style, st_block, st_list, st_space, st_write
 from streamtex.enums import Tags as t
 
 
@@ -273,23 +273,34 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
     st_write(s.project.titles.section_title, "Project vs Collection", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-**Single Project** (st_book):
-- One application/course/documentation
-- Self-contained on one port
-- Example: "Python Training Course"
+    st_write(s.large, (s.bold, "Single Project"), " (st_book):")
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "One application/course/documentation")
+        with l.item():
+            st_write(s.large, "Self-contained on one port")
+        with l.item():
+            st_write(s.large, "Example: \"Python Training Course\"")
 
-**Collection** (st_collection or custom st_book):
-- Multiple projects in one hub
-- Project discovery and navigation
-- Each project runs on its own port
-- Example: "Training Platform" with Intro, Advanced, Deploy courses
+    st_write(s.large, (s.bold, "Collection"), " (st_collection or custom st_book):")
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Multiple projects in one hub")
+        with l.item():
+            st_write(s.large, "Project discovery and navigation")
+        with l.item():
+            st_write(s.large, "Each project runs on its own port")
+        with l.item():
+            st_write(s.large, "Example: \"Training Platform\" with Intro, Advanced, Deploy courses")
 
-**When to use Collections:**
-- Multiple independent projects to manage
-- Need centralized project hub
-- Building platform (multi-course, multi-doc)
-    """)
+    st_write(s.large, (s.bold, "When to use Collections:"))
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Multiple independent projects to manage")
+        with l.item():
+            st_write(s.large, "Need centralized project hub")
+        with l.item():
+            st_write(s.large, "Building platform (multi-course, multi-doc)")
 
     st_space("v", 2)
 
@@ -299,22 +310,32 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
     st_write(s.project.titles.section_title, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-**Configuration:**
-- Use TOML for static collections (easier to maintain)
-- Use programmatic CollectionConfig for dynamic collections (loaded from database, API, etc.)
-- Always specify project_url correctly (must match running port)
+    st_write(s.large, (s.bold, "Configuration:"))
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Use TOML for static collections (easier to maintain)")
+        with l.item():
+            st_write(s.large, "Use programmatic CollectionConfig for dynamic collections (loaded from database, API, etc.)")
+        with l.item():
+            st_write(s.large, "Always specify ", (s.bold, "project_url"), " correctly (must match running port)")
 
-**Content:**
-- Use meaningful project titles and descriptive descriptions
-- Use cover images for visual appeal (recommended size: 300x200px)
-- Set correct order (1, 2, 3...) to control project sequence
+    st_write(s.large, (s.bold, "Content:"))
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Use meaningful project titles and descriptive descriptions")
+        with l.item():
+            st_write(s.large, "Use cover images for visual appeal (recommended size: 300x200px)")
+        with l.item():
+            st_write(s.large, "Set correct order (1, 2, 3...) to control project sequence")
 
-**Deployment:**
-- Test all project URLs before deploying collection
-- Use STX_URL_* environment variables for production URLs
-- Each project must be running on its configured port
-    """)
+    st_write(s.large, (s.bold, "Deployment:"))
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Test all project URLs before deploying collection")
+        with l.item():
+            st_write(s.large, "Use ", (s.bold, "STX_URL_*"), " environment variables for production URLs")
+        with l.item():
+            st_write(s.large, "Each project must be running on its configured port")
 
     st_space("v", 2)
 

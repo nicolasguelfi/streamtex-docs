@@ -179,11 +179,11 @@ set_static_sources([
         st_space("v", 2)
 
         show_details("""\
-            ProjectBlockRegistry is for single-project use.
-            LazyBlockRegistry is for multi-source resolution.
+            **ProjectBlockRegistry** is for single-project use.
+            **LazyBlockRegistry** is for multi-source resolution.
 
-            Atomic blocks are self-contained and reusable.
-            Composite blocks are assembly points.
+            **Atomic blocks** are self-contained and reusable.
+            **Composite blocks** are assembly points.
 
             The DI pattern in helpers.py keeps block code clean:
             helpers know how to style themselves via the injected config.

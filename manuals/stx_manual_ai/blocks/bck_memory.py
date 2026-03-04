@@ -59,12 +59,12 @@ def build():
         st_write(s.project.titles.subsection_title, "GOOD: Store These")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Project conventions and naming patterns")
-            with l.item(): st_write(s.large, "Color palette and typography decisions")
-            with l.item(): st_write(s.large, "Architecture decisions and rationale")
-            with l.item(): st_write(s.large, "Recurring patterns discovered during development")
-            with l.item(): st_write(s.large, "Infrastructure details (service IDs, URLs, ports)")
-            with l.item(): st_write(s.large, "Known gotchas and workarounds")
+            with l.item(): st_write(s.large, (s.bold, "Project conventions"), " and naming patterns")
+            with l.item(): st_write(s.large, (s.bold, "Color palette"), " and typography decisions")
+            with l.item(): st_write(s.large, (s.bold, "Architecture decisions"), " and rationale")
+            with l.item(): st_write(s.large, (s.bold, "Recurring patterns"), " discovered during development")
+            with l.item(): st_write(s.large, (s.bold, "Infrastructure details"), " (service IDs, URLs, ports)")
+            with l.item(): st_write(s.large, (s.bold, "Known gotchas"), " and workarounds")
     st_space("v", 2)
 
     # ── What NOT to store ─────────────────────────────────────────
@@ -75,11 +75,11 @@ def build():
         st_write(s.project.colors.error_red + s.bold, "AVOID: Do Not Store These")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Session-specific context or temporary state")
-            with l.item(): st_write(s.large, "Duplicates of what is already in CLAUDE.md")
-            with l.item(): st_write(s.large, "Secrets, API keys, or credentials")
-            with l.item(): st_write(s.large, "Verbose logs or debug output")
-            with l.item(): st_write(s.large, "Information that changes every session")
+            with l.item(): st_write(s.large, (s.bold, "Session-specific context"), " or temporary state")
+            with l.item(): st_write(s.large, (s.bold, "Duplicates"), " of what is already in CLAUDE.md")
+            with l.item(): st_write(s.large, (s.bold, "Secrets"), ", API keys, or credentials")
+            with l.item(): st_write(s.large, (s.bold, "Verbose logs"), " or debug output")
+            with l.item(): st_write(s.large, (s.bold, "Information that changes"), " every session")
     st_space("v", 2)
 
     # ── Example ───────────────────────────────────────────────────

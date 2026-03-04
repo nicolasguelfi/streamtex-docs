@@ -37,7 +37,11 @@ def build():
                 "Automatic Feature: ",
             ),
             "StreamTeX automatically adds a zoom control button in the sidebar. "
-            "This uses CSS zoom property (Baseline 2024) for pixel-perfect scaling.",
+            "This uses ",
+            (s.bold, "CSS zoom property"),
+            " (",
+            (s.bold, "Baseline 2024"),
+            ") for pixel-perfect scaling.",
         )
     st_space("v", 2)
 
@@ -62,7 +66,11 @@ def build():
                 "CSS zoom property: ",
             ),
             "Scales the entire element and descendants without changing layout flow. "
-            "Perfect for presentations or accessibility.",
+            "Perfect for ",
+            (s.bold, "presentations"),
+            " or ",
+            (s.bold, "accessibility"),
+            ".",
         )
     st_space("v", 1)
 

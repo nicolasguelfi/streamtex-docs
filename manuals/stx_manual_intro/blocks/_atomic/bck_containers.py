@@ -133,19 +133,21 @@ st_write(s.large, "Third line of text")""")
         st_write(bs.sub, "st_br vs st_space: when to use each", toc_lvl="+1")
         st_space("v", 1)
 
-        st_write(s.large, """
-**st_br()** — Implicit spacing
-- Simple line break
-- Fixed height (consistent)
-- No parameters
-- Use: Quick spacing between related elements
+        st_write(s.large + s.bold, "st_br() — Implicit spacing")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item(): st_write("Simple line break")
+            with l.item(): st_write("Fixed height (consistent)")
+            with l.item(): st_write("No parameters")
+            with l.item(): st_write("Use: Quick spacing between related elements")
 
-**st_space(direction, amount)** — Explicit sizing
-- Configurable height/width
-- Control exact spacing
-- Takes "v" or "h" + amount
-- Use: Precise layout control, responsive spacing
-        """)
+        st_space("v", 1)
+
+        st_write(s.large + s.bold, "st_space(direction, amount) — Explicit sizing")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item(): st_write("Configurable height/width")
+            with l.item(): st_write("Control exact spacing")
+            with l.item(): st_write("Takes \"v\" or \"h\" + amount")
+            with l.item(): st_write("Use: Precise layout control, responsive spacing")
         st_space("v", 1)
 
         show_code("""\

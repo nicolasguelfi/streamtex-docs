@@ -4,7 +4,7 @@ Covers continuous vs paginated behaviour, cross-page navigation,
 the floating widget internals, and the 3-file architecture.
 """
 
-from streamtex import st_write, st_space
+from streamtex import st_list, st_write, st_space
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -61,12 +61,15 @@ def build():
     """)
     st_space("v", 1)
 
-    show_explanation("""\
-        - Position counter showing "current / total" (e.g. "3 / 12")
-        - Prev (◀) and Next (▶) buttons
-        - A list button (☰) that opens a popup with all markers
-        - An optional label showing the current marker name
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Position counter"), " showing \"current / total\" (e.g. \"3 / 12\")")
+        with l.item():
+            st_write(s.large, (s.bold, "Prev"), " and ", (s.bold, "Next"), " buttons")
+        with l.item():
+            st_write(s.large, "A ", (s.bold, "list button"), " that opens a popup with all markers")
+        with l.item():
+            st_write(s.large, "An optional ", (s.bold, "label"), " showing the current marker name")
     st_space("v", 1)
 
     st_write(s.large, """\

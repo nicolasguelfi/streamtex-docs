@@ -92,9 +92,9 @@ library""", language="text")
             The references directory contains documentation that
             Claude reads before generating any code:
 
-            - coding_standards.md: the single source of truth for
+            - **coding_standards.md**: the single source of truth for
               all coding conventions (style, naming, patterns).
-            - streamtex_cheatsheet_en.md: a quick-reference for
+            - **streamtex_cheatsheet_en.md**: a quick-reference for
               StreamTeX API syntax and common patterns.
 
             These files ensure Claude generates code that follows
@@ -109,9 +109,9 @@ library""", language="text")
         show_explanation("""\
             Skills provide domain-specific knowledge to Claude:
 
-            - architecture.md: describes the module structure,
+            - **architecture.md**: describes the module structure,
               dependency graph, and design patterns used.
-            - testing-patterns.md: documents testing conventions,
+            - **testing-patterns.md**: documents testing conventions,
               fixtures, and common test patterns.
 
             Claude loads these automatically when relevant tasks
@@ -127,9 +127,9 @@ library""", language="text")
             Custom commands are markdown files that define
             slash-commands for Claude Code sessions:
 
-            - test-run.md: /test-run — runs the test suite.
-            - lint.md: /lint — runs the linter.
-            - deploy.md: /deploy — runs deployment checks.
+            - **test-run.md**: /test-run — runs the test suite.
+            - **lint.md**: /lint — runs the linter.
+            - **deploy.md**: /deploy — runs deployment checks.
 
             Each file contains instructions that Claude follows
             when the corresponding command is invoked.
@@ -141,15 +141,15 @@ library""", language="text")
         st_space("v", 1)
 
         show_explanation("""\
-            CLAUDE.md sits at the project root (not inside .claude/).
+            **CLAUDE.md** sits at the project root (not inside .claude/).
             It is the root rules file that Claude Code reads at the
             start of every session. It contains:
 
-            - Project identity and terminology.
-            - Mandatory environment rules (always use uv run).
-            - Context loading requirements.
-            - Key component references.
-            - Workflow instructions.
+            - **Project identity** and terminology.
+            - **Mandatory environment rules** (always use uv run).
+            - **Context loading requirements**.
+            - **Key component references**.
+            - **Workflow instructions**.
         """)
         st_space("v", 2)
 

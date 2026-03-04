@@ -26,12 +26,16 @@ def build():
     st_write(bs.sub, "Step 1: Prerequisites", toc_lvl="+1")
     st_space("v", 1)
 
-    show_explanation("""\
-        StreamTeX requires Python 3.10 or later, git,
-        and uv as its package manager.
-
-        Make sure all three are installed before continuing.
-    """)
+    st_write(
+        s.large,
+        "StreamTeX requires ",
+        (s.bold, "Python 3.10"),
+        " or later, ",
+        (s.bold, "git"),
+        ", and ",
+        (s.bold, "uv"),
+        " as its package manager. Make sure all three are installed before continuing.",
+    )
     st_space("v", 1)
 
     show_code("""\
@@ -77,23 +81,17 @@ stx workspace clone
 """, language="bash", line_numbers=False)
     st_space("v", 1)
 
-    show_explanation("""\
-        The four presets offer increasing levels of functionality:
+    show_explanation("The four presets offer increasing levels of functionality:")
 
-        basic — empty workspace, no repos. Create standalone projects
-        and upgrade later when needed.
-
-        user — adds streamtex-claude (Claude AI profiles).
-        Enables stx claude install for slash commands and agents.
-
-        standard (default) — adds streamtex-docs + streamtex-claude.
-        Enables rich templates (--template project) and local
-        documentation alongside Claude profiles.
-
-        developer — adds all 3 repos (library + docs + claude).
-        Enables editable installs (stx workspace link) so library
-        source changes are reflected immediately.
-    """)
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "basic"), " — empty workspace, no repos. Create standalone projects and upgrade later when needed.")
+        with l.item():
+            st_write(s.large, (s.bold, "user"), " — adds streamtex-claude (Claude AI profiles). Enables stx claude install for slash commands and agents.")
+        with l.item():
+            st_write(s.large, (s.bold, "standard"), " (default) — adds streamtex-docs + streamtex-claude. Enables rich templates (--template project) and local documentation alongside Claude profiles.")
+        with l.item():
+            st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs (stx workspace link) so library source changes are reflected immediately.")
     st_space("v", 2)
 
     # --- Create and run a project ---

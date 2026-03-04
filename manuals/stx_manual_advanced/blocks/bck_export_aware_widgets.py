@@ -39,8 +39,10 @@ def build():
 
     st_write(
         s.medium,
-        "When you enable HTML export (st_book(..., export=True)), native st.* widgets "
-        "(st.dataframe, st.line_chart, st.table, etc.) become invisible because they use "
+        "When you enable HTML export (st_book(..., export=True)), native st.* widgets (",
+        (s.text.weights.bold_weight, "st.dataframe"), ", ",
+        (s.text.weights.bold_weight, "st.line_chart"), ", ",
+        (s.text.weights.bold_weight, "st.table"), ", etc.) become invisible because they use "
         "Streamlit's React pipeline which doesn't export to static HTML.",
     )
     st_space("v", 2)

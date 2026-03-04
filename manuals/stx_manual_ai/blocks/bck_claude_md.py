@@ -158,11 +158,12 @@ def build():
     with st_block(s.project.containers.tip_callout):
         st_write(s.project.titles.tip_label, "Tip")
         st_space("v", 1)
-        st_write(s.large, (
-            "CLAUDE.md is auto-generated from a profile template "
-            "(CLAUDE.md.j2). When you run stx claude install, the "
-            "template is rendered with your project's configuration. "
-            "You can modify the generated file freely — it will not "
-            "be overwritten unless you explicitly reinstall."
-        ))
+        st_write(s.large,
+                 "CLAUDE.md is auto-generated from a profile template (",
+                 (s.bold, "CLAUDE.md.j2"),
+                 "). When you run ",
+                 (s.bold, "stx claude install"),
+                 ", the template is rendered with your project's configuration. "
+                 "You can modify the generated file freely — it will not "
+                 "be overwritten unless you explicitly reinstall.")
     st_space("v", 1)

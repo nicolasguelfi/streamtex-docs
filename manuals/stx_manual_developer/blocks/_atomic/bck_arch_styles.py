@@ -151,8 +151,8 @@ sts.theme = dark_theme
             Style composition is immutable: + and - always return
             new Style objects.
 
-            Use Style.create() when you need theme-targetable styles.
+            Use **Style.create()** when you need theme-targetable styles.
 
-            The styles/ package is designed for extension: add new
+            The **styles/** package is designed for extension: add new
             .py files with style classes and register them in StxStyles.
         """)

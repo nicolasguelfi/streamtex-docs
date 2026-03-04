@@ -80,10 +80,10 @@ def build():
     st_write(bs.sub, "Keyboard Modifier Syntax", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """\
-        Key definitions use the JavaScript KeyboardEvent.key values.
-        Combine a modifier with a key using the + separator:
-    """)
+    st_write(s.large,
+        "Key definitions use the JavaScript ", (s.bold, "KeyboardEvent.key"),
+        " values. Combine a modifier with a key using the ", (s.bold, "+"), " separator:",
+    )
     st_space("v", 1)
 
     show_code("""\

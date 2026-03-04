@@ -2,7 +2,7 @@ from streamtex import *
 import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -112,8 +112,11 @@ def build():
     """)
     st_space("v", 2)
 
-    show_tip(
-        "stx.st_code() uses Pygments for syntax highlighting. "
-        "Font size adapts automatically to screen size via --stx-code-size. "
-        "Use wrap=True for JSON/logs, wrap=False (default) for aligned code."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        with st_list(s.large, s.large):
+            st_write(s.large, (s.bold, "st_code()"), " uses ", (s.bold, "Pygments"), " for syntax highlighting")
+            st_write(s.large, "Font size adapts automatically via ", (s.bold, "--stx-code-size"))
+            st_write(s.large, "Use ", (s.bold, "wrap=True"), " for JSON/logs, ", (s.bold, "wrap=False"), " (default) for aligned code")
+    st_space("v", 1)

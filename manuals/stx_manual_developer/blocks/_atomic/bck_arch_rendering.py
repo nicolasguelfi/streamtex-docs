@@ -144,7 +144,7 @@ _render(style, text, tag)
             The rendering pipeline is intentionally simple:
             content in, HTML out.
 
-            No virtual DOM, no diffing. Each call produces
+            **No virtual DOM**, **no diffing**. Each call produces
             one st.html() invocation.
 
             This simplicity makes debugging straightforward:

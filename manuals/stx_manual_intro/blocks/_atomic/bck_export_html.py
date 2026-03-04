@@ -152,24 +152,29 @@ st_book([
         st_write(bs.sub, "Export file size optimization", toc_lvl="+1")
         st_space("v", 1)
 
-        st_write(s.large, """\
-**What increases file size:**
-- High-resolution images (use 72dpi or 96dpi)
-- Many large images (prefer diagrams/SVG)
-- Embedded fonts (if ever supported)
-- Minified CSS (small benefit)
+        st_write(s.large + s.bold, "What increases file size:")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item(): st_write("High-resolution images (use 72dpi or 96dpi)")
+            with l.item(): st_write("Many large images (prefer diagrams/SVG)")
+            with l.item(): st_write("Embedded fonts (if ever supported)")
+            with l.item(): st_write("Minified CSS (small benefit)")
 
-**Typical sizes:**
-- Text-only document: 50-200 KB
-- With images (optimized): 500 KB - 2 MB
-- Complex layouts: 1-5 MB
+        st_space("v", 1)
 
-**Best practices:**
-- Compress images before including
-- Use CSS instead of images for simple graphics
-- Remove interactive elements from exported content
-- Test export size regularly
-        """)
+        st_write(s.large + s.bold, "Typical sizes:")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item(): st_write("Text-only document: 50-200 KB")
+            with l.item(): st_write("With images (optimized): 500 KB - 2 MB")
+            with l.item(): st_write("Complex layouts: 1-5 MB")
+
+        st_space("v", 1)
+
+        st_write(s.large + s.bold, "Best practices:")
+        with st_list(li_style=s.large, list_type="ul") as l:
+            with l.item(): st_write("Compress images before including")
+            with l.item(): st_write("Use CSS instead of images for simple graphics")
+            with l.item(): st_write("Remove interactive elements from exported content")
+            with l.item(): st_write("Test export size regularly")
         st_space("v", 2)
 
         # --- 10. Advanced: multi-format export ---

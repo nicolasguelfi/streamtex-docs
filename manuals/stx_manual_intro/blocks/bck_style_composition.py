@@ -4,7 +4,7 @@ This block explains how to compose, combine, and modify styles using + and - ope
 Essential for DRY styling practices in StreamTeX.
 """
 
-from streamtex import st_write, st_block, st_space, Style
+from streamtex import st_write, st_block, st_list, st_space, Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -237,20 +237,22 @@ with st_block(dark_box):
     st_write(s.project.titles.section_title, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-✓ **DO:**
-- Use + to combine related styles
-- Place overrides on the right side
-- Name composed styles meaningfully
-- Create base styles for reuse
-- Use - when removing is clearer than rewriting
+    st_write(s.large + s.bold, "✓ DO:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("Use + to combine related styles")
+        with l.item(): st_write("Place overrides on the right side")
+        with l.item(): st_write("Name composed styles meaningfully")
+        with l.item(): st_write("Create base styles for reuse")
+        with l.item(): st_write("Use - when removing is clearer than rewriting")
 
-✗ **DON'T:**
-- Create new styles when composition works
-- Use overly complex chains (style_a + b + c + d + e)
-- Rely on + for conflicting properties (use - then +)
-- Mix logical operations (hard to understand)
-    """)
+    st_space("v", 1)
+
+    st_write(s.large + s.bold, "✗ DON'T:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("Create new styles when composition works")
+        with l.item(): st_write("Use overly complex chains (style_a + b + c + d + e)")
+        with l.item(): st_write("Rely on + for conflicting properties (use - then +)")
+        with l.item(): st_write("Mix logical operations (hard to understand)")
 
     st_space("v", 2)
 

@@ -1,7 +1,7 @@
 from streamtex import *
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -77,7 +77,9 @@ def build():
         with l.item(): st_write("Parent C")
     st_space("v", 2)
 
-    show_tip(
-        "Nest st_list() context managers for multi-level lists. "
-        "l_style controls the container, li_style controls each item."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, "Nest ", (s.bold, "st_list()"), " context managers for multi-level lists. ",
+                 (s.bold, "l_style"), " controls the container, ", (s.bold, "li_style"), " controls each item.")
+    st_space("v", 1)

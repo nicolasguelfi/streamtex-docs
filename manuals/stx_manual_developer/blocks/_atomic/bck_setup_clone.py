@@ -104,9 +104,9 @@ uv run ruff check streamtex/
         st_space("v", 2)
 
         show_details("""\
-            Never call python, pip, or pytest directly.
+            Never call **python**, **pip**, or **pytest** directly.
 
-            Always prefix commands with uv run to use the managed environment.
+            Always prefix commands with **uv run** to use the managed environment.
 
-            If uv.lock changes after a git pull, run uv sync again.
+            If uv.lock changes after a git pull, run **uv sync** again.
         """)

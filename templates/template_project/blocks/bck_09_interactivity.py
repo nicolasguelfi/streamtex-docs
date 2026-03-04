@@ -3,7 +3,7 @@ from streamtex import *
 from streamtex.styles import Style as ns
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -16,10 +16,11 @@ def build():
     st_write(bs.heading, "Interactivity", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_tip(
-        "Widgets are st.* (interactivity). Their return values drive "
-        "what stx.* renders. Styles can be built dynamically at runtime."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, "Widgets are ", (s.bold, "st.*"), " (interactivity). Their return values drive what ",
+                 (s.bold, "stx.*"), " renders. Styles can be built dynamically at runtime.")
     st_space("v", 2)
 
     # --- Button & Toggle ---
@@ -82,8 +83,10 @@ def build():
         st_write(color_style + s.Large + s.bold, "Colored text!")
     st_space("v", 2)
 
-    show_tip(
-        "Always use st.* for interactivity and stx.* for content rendering. "
-        "Style() objects can be built dynamically with f-strings: "
-        "ns(f\"font-size: {val}px;\")."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, "Always use ", (s.bold, "st.*"), " for interactivity and ", (s.bold, "stx.*"),
+                 " for content rendering. ", (s.bold, "Style()"), " objects can be built dynamically with f-strings: ",
+                 (s.bold, 'ns(f"font-size: {val}px;")'), ".")
+    st_space("v", 1)

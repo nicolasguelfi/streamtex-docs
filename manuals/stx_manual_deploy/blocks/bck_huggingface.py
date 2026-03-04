@@ -49,9 +49,9 @@ def build():
         st_space("v", 1)
 
         show_explanation(
-            "Use the deployment script. It checks prerequisites, "
-            "runs preflight validation, configures the git remote, "
-            "sets up LFS, and offers to push."
+            "Use the deployment script. It **checks prerequisites**, "
+            "**runs preflight validation**, **configures the git remote**, "
+            "**sets up LFS**, and **offers to push**."
         )
         st_space("v", 1)
 
@@ -114,8 +114,8 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "Free tier: apps may sleep after inactivity.\n\n"
-            "To deploy a different project, change the ARG FOLDER default in the Dockerfile "
+            "**Free tier**: apps may sleep after inactivity.\n\n"
+            "To deploy a different project, change the **ARG FOLDER** default in the Dockerfile "
             "or configure build args in the Space settings.\n\n"
             "If push is rejected, try: git pull hf main --allow-unrelated-histories"
         )

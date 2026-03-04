@@ -186,27 +186,42 @@ with st_overlay(s.container.sizes.width_full) as o:
                  toc_lvl="+1")
         st_space("v", 1)
 
-        st_write(s.large, """\
-**DO:**
-- Use overlays for static decorative elements
-- Position labels, badges, and annotations
-- Layer related content (image + caption)
-- Use percentage positioning for responsiveness
-- Keep overlay content minimal (text or icons)
+        st_write(s.large, (s.bold, "DO:"))
+        with st_list(s.large, s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, "Use overlays for static decorative elements")
+            with l.item():
+                st_write(s.large, "Position labels, badges, and annotations")
+            with l.item():
+                st_write(s.large, "Layer related content (image + caption)")
+            with l.item():
+                st_write(s.large, "Use percentage positioning for responsiveness")
+            with l.item():
+                st_write(s.large, "Keep overlay content minimal (text or icons)")
 
-**DON'T:**
-- Hide important content under overlays
-- Create overlays that block navigation
-- Use overlays for layouts (use st_grid instead)
-- Put interactive elements in overlays (not clickable)
-- Overlap too many layers (becomes unreadable)
+        st_write(s.large, (s.bold, "DON'T:"))
+        with st_list(s.large, s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, "Hide important content under overlays")
+            with l.item():
+                st_write(s.large, "Create overlays that block navigation")
+            with l.item():
+                st_write(s.large, "Use overlays for layouts (use st_grid instead)")
+            with l.item():
+                st_write(s.large, "Put interactive elements in overlays (not clickable)")
+            with l.item():
+                st_write(s.large, "Overlap too many layers (becomes unreadable)")
 
-**Limitations:**
-- Overlays are not interactive (no click events)
-- Complex nested overlays can be hard to maintain
-- Sizing depends on base container height
-- Export to HTML may not preserve all positioning
-        """)
+        st_write(s.large, (s.bold, "Limitations:"))
+        with st_list(s.large, s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, "Overlays are not interactive (no click events)")
+            with l.item():
+                st_write(s.large, "Complex nested overlays can be hard to maintain")
+            with l.item():
+                st_write(s.large, "Sizing depends on base container height")
+            with l.item():
+                st_write(s.large, "Export to HTML may not preserve all positioning")
         st_space("v", 2)
 
         show_details("""\

@@ -1,7 +1,7 @@
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -80,8 +80,11 @@ def build():
                      width="200px", height="200px")
     st_space("v", 2)
 
-    show_tip(
-        "For local images, place files in static/images/ and reference them "
-        "as static/images/filename.png. Ensure enableStaticServing = true in "
-        ".streamlit/config.toml."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, "For local images, place files in ", (s.bold, "static/images/"),
+                 " and reference them as ", (s.bold, "static/images/filename.png"),
+                 ". Ensure ", (s.bold, "enableStaticServing = true"), " in ",
+                 (s.bold, ".streamlit/config.toml"), ".")
+    st_space("v", 1)

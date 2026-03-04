@@ -4,7 +4,7 @@ This block explains how to customize ul/ol lists with ListStyle.
 Control symbols, levels, nesting, and list styling.
 """
 
-from streamtex import st_write, st_block, st_space, Style
+from streamtex import st_write, st_block, st_list, st_space, Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -294,20 +294,22 @@ st_list(structure, style=toc_style)
     st_write(s.project.titles.section_title, "Best Practices", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-✓ **DO:**
-- Define ListStyle once, reuse everywhere
-- Use meaningful symbols (emoji, arrows, bullets)
-- Provide enough symbols for expected nesting
-- Style the container (padding, margins) not symbols
-- Combine ListStyles with + for theme variations
+    st_write(s.large + s.bold, "✓ DO:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("Define ListStyle once, reuse everywhere")
+        with l.item(): st_write("Use meaningful symbols (emoji, arrows, bullets)")
+        with l.item(): st_write("Provide enough symbols for expected nesting")
+        with l.item(): st_write("Style the container (padding, margins) not symbols")
+        with l.item(): st_write("Combine ListStyles with + for theme variations")
 
-✗ **DON'T:**
-- Create new ListStyle for each list (not DRY)
-- Mix symbols and numbering (confusing)
-- Use too many different symbols (hard to read)
-- Put CSS in symbol names (won't work)
-    """)
+    st_space("v", 1)
+
+    st_write(s.large + s.bold, "✗ DON'T:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("Create new ListStyle for each list (not DRY)")
+        with l.item(): st_write("Mix symbols and numbering (confusing)")
+        with l.item(): st_write("Use too many different symbols (hard to read)")
+        with l.item(): st_write("Put CSS in symbol names (won't work)")
 
     st_space("v", 2)
 

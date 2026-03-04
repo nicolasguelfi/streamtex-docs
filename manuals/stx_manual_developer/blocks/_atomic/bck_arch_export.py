@@ -148,12 +148,12 @@ Buffer lifecycle:
         st_space("v", 2)
 
         show_details("""\
-            The dual-render approach adds minimal overhead: the
+            The **dual-render** approach adds minimal overhead: the
             buffer is just a list of strings.
 
-            Push/pop nesting ensures correct HTML structure even
+            **Push/pop nesting** ensures correct HTML structure even
             with deeply nested grids inside blocks.
 
-            Export-aware widgets provide graceful degradation:
+            **Export-aware widgets** provide graceful degradation:
             interactive on screen, static in export.
         """)

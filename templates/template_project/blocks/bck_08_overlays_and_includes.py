@@ -1,7 +1,7 @@
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 import blocks
 
 
@@ -50,7 +50,10 @@ def build():
             st_write(bs.overlay_text, "Overlay Text")
     st_space("v", 2)
 
-    show_tip(
-        "st_include() lets you compose pages from reusable sub-blocks. "
-        "st_overlay() places layers at absolute pixel positions over a base element."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        with st_list(s.large, s.large):
+            st_write(s.large, (s.bold, "st_include()"), " — compose pages from reusable sub-blocks")
+            st_write(s.large, (s.bold, "st_overlay()"), " — place layers at absolute pixel positions over a base element")
+    st_space("v", 1)

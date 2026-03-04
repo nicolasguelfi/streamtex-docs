@@ -47,18 +47,18 @@ def build():
             The publish check command performs the following
             validations:
 
-            1. Version sync — ensures pyproject.toml version
+            1. **Version sync** — ensures pyproject.toml version
                matches __version__ in the package source.
 
-            2. Changelog check — verifies that CHANGELOG.md
+            2. **Changelog check** — verifies that CHANGELOG.md
                contains an entry for the current version.
 
-            3. Test suite — runs the full test suite and
+            3. **Test suite** — runs the full test suite and
                requires all tests to pass.
 
-            4. Lint check — runs ruff to confirm zero warnings.
+            4. **Lint check** — runs ruff to confirm zero warnings.
 
-            5. Build check — builds the sdist and wheel to
+            5. **Build check** — builds the sdist and wheel to
                verify packaging is correct.
         """)
         st_space("v", 2)
@@ -83,10 +83,10 @@ def build():
             with OIDC trusted publishing. This provides a fully
             automated, auditable pipeline:
 
-            1. Create a GitHub Release with the version tag.
-            2. The CI workflow builds, checks, and publishes
-               to PyPI using OIDC (no API tokens needed).
-            3. The release is signed and traceable.
+            1. **Create a GitHub Release** with the version tag.
+            2. **CI builds, checks, and publishes** to PyPI
+               using OIDC (no API tokens needed).
+            3. **The release is signed** and traceable.
 
             Use stx publish pypi only for local testing or
             pre-release uploads to TestPyPI.

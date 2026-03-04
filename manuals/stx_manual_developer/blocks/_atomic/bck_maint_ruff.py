@@ -69,11 +69,11 @@ select = ["E", "F", "I", "W"]
         show_explanation("""\
             Some files require specific rule exceptions:
 
-            - __init__.py files: F401 (unused imports) and I001
+            - **__init__.py** files: **F401** (unused imports) and **I001**
               (import order) are ignored because these files
               re-export symbols for public API convenience.
 
-            - HTML component files (html_*.py): E501 (line length)
+            - HTML component files (html_*.py): **E501** (line length)
               is ignored because embedded HTML strings often exceed
               120 characters and splitting them harms readability.
         """)

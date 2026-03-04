@@ -2,7 +2,7 @@ from streamtex import *
 from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_tip
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -88,7 +88,9 @@ def build():
         with g.cell(): st_write("B2 — large")
     st_space("v", 2)
 
-    show_tip(
-        "sg.create(range, style) targets cells by Excel-like ranges. "
-        "Multiply (*) to replace styles, add (+) to combine them."
-    )
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, (s.bold, "sg.create(range, style)"), " targets cells by Excel-like ranges. ",
+                 "Multiply (", (s.bold, "*"), ") to replace styles, add (", (s.bold, "+"), ") to combine them.")
+    st_space("v", 1)

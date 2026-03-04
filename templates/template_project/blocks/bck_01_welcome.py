@@ -17,9 +17,7 @@ def build():
         st_space("v", 2)
         st_write(bs.subtitle, "Built with StreamTeX", tag=t.div)
         st_space("v", 3)
-        st_write(bs.description,
-                 "This template demonstrates every major StreamTeX feature.")
-        st_br()
-        st_write(bs.description,
-                 "Navigate with the sidebar Table of Contents or PageDown/PageUp keys.")
+        with st_list(s.large, s.large):
+            st_write(s.large, "This template demonstrates every major StreamTeX feature.")
+            st_write(s.large, "Navigate with the sidebar Table of Contents or PageDown/PageUp keys.")
         st_space("v", 3)

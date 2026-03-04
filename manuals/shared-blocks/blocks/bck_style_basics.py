@@ -32,8 +32,8 @@ def build():
     )
 
     with st_list(list_type="ul") as l:
-        with l.item(): st_write(stx.StxStyles.medium, "Styles combine using the + operator")
-        with l.item(): st_write(stx.StxStyles.medium, "Custom styles inherit from StxStyles")
+        with l.item(): st_write(stx.StxStyles.medium, "Styles combine using the ", (stx.StxStyles.bold, "+ operator"))
+        with l.item(): st_write(stx.StxStyles.medium, "Custom styles inherit from ", (stx.StxStyles.bold, "StxStyles"))
         with l.item(): st_write(stx.StxStyles.medium, "No hardcoded colors — let Streamlit handle themes")
         with l.item(): st_write(stx.StxStyles.medium, "Reuse generic styles instead of creating duplicates")
 

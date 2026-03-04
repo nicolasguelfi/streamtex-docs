@@ -39,13 +39,15 @@ def build():
     with st_block(s.project.containers.ai_callout):
         st_write(bs.cmd_title, "Convert a Single HTML File", tag=t.div)
         st_space("v", 1)
-        st_write(
-            s.large,
-            "Converts one HTML file into a StreamTeX block. The AI ",
-            "maps HTML tags to stx functions, converts inline styles ",
-            "to Style objects, and generates a complete block with ",
-            "BlockStyles class and build() function.",
-        )
+        st_write(s.large, "Converts one HTML file into a StreamTeX block. The AI:")
+        st_space("v", 0.5)
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(s.large, (s.bold, "Maps"), " HTML tags to stx functions")
+            with l.item():
+                st_write(s.large, (s.bold, "Converts"), " inline styles to Style objects")
+            with l.item():
+                st_write(s.large, (s.bold, "Generates"), " a complete block with BlockStyles class and build() function")
     st_space("v", 1)
 
     show_code("""\
@@ -122,8 +124,8 @@ def build():
         st_space("v", 1)
         st_write(
             s.large,
-            "Processes all .html files in a directory and creates a ",
-            "blocks/ directory with the converted StreamTeX files. ",
+            "Processes all ", (s.bold, ".html"), " files in a directory and creates a ",
+            (s.bold, "blocks/"), " directory with the converted StreamTeX files. ",
             "Each HTML file becomes one block, named after the source.",
         )
     st_space("v", 1)

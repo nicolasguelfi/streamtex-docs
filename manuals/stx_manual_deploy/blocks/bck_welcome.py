@@ -110,7 +110,7 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "All Docker-based deployments use the same Dockerfile at the repository root. "
-            "The FOLDER build-arg selects which project to deploy.\n\n"
-            "Before deploying, always run the preflight checks (next section)."
+            "All Docker-based deployments use the same **Dockerfile** at the repository root. "
+            "The **FOLDER build-arg** selects which project to deploy.\n\n"
+            "Before deploying, always run the **preflight checks** (next section)."
         )

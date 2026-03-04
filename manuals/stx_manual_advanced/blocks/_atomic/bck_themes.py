@@ -156,21 +156,31 @@ sts.theme = dark""")
         st_write(bs.sub, "Creating custom themes: best practices", toc_lvl="+1")
         st_space("v", 1)
 
-        st_write(s.large, """\
-**DO:**
-- Use consistent color palettes (same hue, different lightness)
-- Override only what changes between themes (not everything)
-- Use RGBA colors for backgrounds to support transparency
-- Document which style_ids are overridden in comments
-- Test both light and dark modes
+        st_write(s.large, (s.bold, "DO:"))
+        with st_list(s.large, s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, "Use consistent color palettes (same hue, different lightness)")
+            with l.item():
+                st_write(s.large, "Override only what changes between themes (not everything)")
+            with l.item():
+                st_write(s.large, "Use RGBA colors for backgrounds to support transparency")
+            with l.item():
+                st_write(s.large, "Document which style_ids are overridden in comments")
+            with l.item():
+                st_write(s.large, "Test both light and dark modes")
 
-**DON'T:**
-- Hardcode black (#000000) or white (#FFFFFF)
-- Override every single style_id (most work in both modes)
-- Mix color schemes (don't mix warm and cool accents)
-- Use opaque colors that hide content (use transparency)
-- Assume all users have same display brightness
-        """)
+        st_write(s.large, (s.bold, "DON'T:"))
+        with st_list(s.large, s.large, list_type="ul") as l:
+            with l.item():
+                st_write(s.large, "Hardcode black (#000000) or white (#FFFFFF)")
+            with l.item():
+                st_write(s.large, "Override every single style_id (most work in both modes)")
+            with l.item():
+                st_write(s.large, "Mix color schemes (don't mix warm and cool accents)")
+            with l.item():
+                st_write(s.large, "Use opaque colors that hide content (use transparency)")
+            with l.item():
+                st_write(s.large, "Assume all users have same display brightness")
         st_space("v", 2)
 
         show_details("""\

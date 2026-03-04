@@ -77,9 +77,8 @@ Each project can combine its own local blocks with shared ones.""",
 
     st_write(
         s.medium,
-        """\
-The registry is defined in streamtex/blocks.py and exposed via
-the top-level streamtex namespace as stx.LazyBlockRegistry.""",
+        "The registry is defined in streamtex/blocks.py and exposed via the top-level streamtex namespace as ",
+        (s.text.weights.bold_weight, "stx.LazyBlockRegistry"), ".",
     )
     st_space("v", 3)
 

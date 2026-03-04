@@ -39,11 +39,11 @@ def build():
         st_write(s.project.titles.subsection_title, "SYNC: These Files")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "commands/ — all custom command .md files")
-            with l.item(): st_write(s.large, "agents/ — all agent definition files")
-            with l.item(): st_write(s.large, "skills/ — knowledge base files")
-            with l.item(): st_write(s.large, "references/ — coding standards, cheatsheets")
-            with l.item(): st_write(s.large, "CLAUDE.md — the main behavior configuration")
+            with l.item(): st_write(s.large, (s.bold, "commands/"), " — all custom command .md files")
+            with l.item(): st_write(s.large, (s.bold, "agents/"), " — all agent definition files")
+            with l.item(): st_write(s.large, (s.bold, "skills/"), " — knowledge base files")
+            with l.item(): st_write(s.large, (s.bold, "references/"), " — coding standards, cheatsheets")
+            with l.item(): st_write(s.large, (s.bold, "CLAUDE.md"), " — the main behavior configuration")
     st_space("v", 1)
 
     with st_block(s.project.containers.bad_callout):
@@ -52,13 +52,11 @@ def build():
         st_space("v", 1)
         with st_list(list_type="ul") as l:
             with l.item():
-                st_write(s.large, (
-                    "memory/ — machine-specific, contains local context"
-                ))
+                st_write(s.large,
+                         (s.bold, "memory/"), " — machine-specific, contains local context")
             with l.item():
-                st_write(s.large, (
-                    "settings.json — contains path-dependent permissions"
-                ))
+                st_write(s.large,
+                         (s.bold, "settings.json"), " — contains path-dependent permissions")
             with l.item():
                 st_write(s.large, (
                     "Any files with absolute paths or machine-specific config"

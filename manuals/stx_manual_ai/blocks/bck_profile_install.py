@@ -65,11 +65,12 @@ def build():
                 st_space("v", 0.5)
                 st_write(s.bold + s.large, "Standard (recommended)")
                 st_space("v", 0.5)
-                st_write(s.large, (
-                    "The default profile for most users. "
-                    "Includes commands for project scaffolding, "
-                    "block creation, and style management."
-                ))
+                st_write(s.large,
+                         "The default profile for most users. "
+                         "Includes commands for ",
+                         (s.bold, "project scaffolding"), ", ",
+                         (s.bold, "block creation"), ", and ",
+                         (s.bold, "style management"), ".")
 
         # Profile: presentation
         with g.cell():
@@ -78,11 +79,11 @@ def build():
                 st_space("v", 0.5)
                 st_write(s.bold + s.large, "Extends project")
                 st_space("v", 0.5)
-                st_write(s.large, (
-                    "Adds live projection rules, slide design agents, "
-                    "and presentation-specific skills like slide layout "
-                    "and transition management."
-                ))
+                st_write(s.large,
+                         "Adds ", (s.bold, "live projection rules"), ", ",
+                         (s.bold, "slide design agents"),
+                         ", and presentation-specific skills like slide layout "
+                         "and transition management.")
 
         # Profile: documentation
         with g.cell():

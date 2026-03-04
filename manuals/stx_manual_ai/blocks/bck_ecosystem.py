@@ -53,11 +53,13 @@ def build():
             with st_block(bs.card):
                 st_write(bs.card_name, "streamtex", tag=t.div)
                 st_space("v", 0.5)
-                st_write(bs.card_desc, """\
-                    The core Python library (PyPI). Provides st_write,
-                    st_grid, Style composition, book navigation, export,
-                    and every rendering function.
-                """)
+                st_write(bs.card_desc,
+                         "The core Python library (PyPI). Provides ",
+                         (s.bold, "st_write"), ", ",
+                         (s.bold, "st_grid"), ", ",
+                         (s.bold, "Style composition"),
+                         ", book navigation, export, "
+                         "and every rendering function.")
         with g.cell():
             with st_block(bs.card):
                 st_write(bs.card_name, "streamtex-docs", tag=t.div)

@@ -24,9 +24,9 @@ def build():
             which Claude configuration is applied. There are three
             profile types:
 
-            - library: for the StreamTeX library itself.
-            - docs: for documentation projects (manuals).
-            - project: for end-user StreamTeX applications.
+            - **library**: for the StreamTeX library itself.
+            - **docs**: for documentation projects (manuals).
+            - **project**: for end-user StreamTeX applications.
 
             The profile type is stored in .claude/.stx-profile and
             determines which templates, skills, and commands are

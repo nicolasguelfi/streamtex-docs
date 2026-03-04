@@ -96,9 +96,9 @@ def build():
         show_explanation("""\
             Streamlit has two different html() functions:
 
-            - st.html() renders HTML inline without an iframe. This is
+            - **st.html()** renders HTML inline without an iframe. This is
               what StreamTeX uses for all content rendering.
-            - streamlit.components.v1.html() renders inside an iframe
+            - **streamlit.components.v1.html()** renders inside an iframe
               with a specified height. Use this only for embedded
               widgets or third-party content that needs isolation.
 

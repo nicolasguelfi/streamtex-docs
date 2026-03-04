@@ -46,8 +46,13 @@ def build():
             (s.bold, '"10-slide course on Python basics"'),
             ' instead of ',
             (s.bold, '"make a course"'),
-            '. Include the number of slides, the topic scope, and '
-            'the depth of coverage you expect.',
+            '. Include the ',
+            (s.bold, 'number of slides'),
+            ', the ',
+            (s.bold, 'topic scope'),
+            ', and the ',
+            (s.bold, 'depth of coverage'),
+            ' you expect.',
         )
     st_space("v", 1)
 
@@ -64,7 +69,10 @@ def build():
             (s.bold, '"for university students"'),
             ' differs significantly from one ',
             (s.bold, '"for a conference keynote"'),
-            '. The audience drives vocabulary, depth, and visual density.',
+            '. The audience drives ',
+            (s.bold, 'vocabulary'), ', ',
+            (s.bold, 'depth'), ', and ',
+            (s.bold, 'visual density'), '.',
         )
     st_space("v", 1)
 

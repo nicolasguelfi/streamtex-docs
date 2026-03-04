@@ -77,10 +77,12 @@ knowing their exact filesystem location.""",
 
     st_write(
         s.medium,
-        """\
-The resolution system is defined in streamtex/blocks.py and exposed
-as stx.set_static_sources(), stx.get_static_sources(), and stx.resolve_static().
-The st_image() function uses it internally for automatic image discovery.""",
+        "The resolution system is defined in streamtex/blocks.py and exposed as ",
+        (s.text.weights.bold_weight, "stx.set_static_sources()"), ", ",
+        (s.text.weights.bold_weight, "stx.get_static_sources()"), ", and ",
+        (s.text.weights.bold_weight, "stx.resolve_static()"), ". ",
+        "The ", (s.text.weights.bold_weight, "st_image()"),
+        " function uses it internally for automatic image discovery.",
     )
     st_space("v", 3)
 

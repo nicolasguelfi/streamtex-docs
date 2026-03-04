@@ -38,22 +38,22 @@ def build():
         st_write(s.project.titles.subsection_title, "Agent")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Autonomous — makes decisions independently")
-            with l.item(): st_write(s.large, "Multi-step — chains several operations")
-            with l.item(): st_write(s.large, "Context-aware — reads skills and adapts")
-            with l.item(): st_write(s.large, "Principle-driven — follows guiding rules")
-            with l.item(): st_write(s.large, "Best for: complex creative or structural tasks")
+            with l.item(): st_write(s.large, (s.bold, "Autonomous"), " — makes decisions independently")
+            with l.item(): st_write(s.large, (s.bold, "Multi-step"), " — chains several operations")
+            with l.item(): st_write(s.large, (s.bold, "Context-aware"), " — reads skills and adapts")
+            with l.item(): st_write(s.large, (s.bold, "Principle-driven"), " — follows guiding rules")
+            with l.item(): st_write(s.large, (s.bold, "Best for"), ": complex creative or structural tasks")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Command")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Scripted — follows a fixed step sequence")
-            with l.item(): st_write(s.large, "Single-task — one clearly defined outcome")
-            with l.item(): st_write(s.large, "User-guided — may ask questions at each step")
-            with l.item(): st_write(s.large, "Template-driven — produces predictable output")
-            with l.item(): st_write(s.large, "Best for: repetitive, well-defined tasks")
+            with l.item(): st_write(s.large, (s.bold, "Scripted"), " — follows a fixed step sequence")
+            with l.item(): st_write(s.large, (s.bold, "Single-task"), " — one clearly defined outcome")
+            with l.item(): st_write(s.large, (s.bold, "User-guided"), " — may ask questions at each step")
+            with l.item(): st_write(s.large, (s.bold, "Template-driven"), " — produces predictable output")
+            with l.item(): st_write(s.large, (s.bold, "Best for"), ": repetitive, well-defined tasks")
     st_space("v", 2)
 
     # ── File structure ────────────────────────────────────────────

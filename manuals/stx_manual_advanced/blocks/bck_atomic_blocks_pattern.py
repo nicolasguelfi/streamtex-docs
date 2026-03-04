@@ -133,16 +133,16 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Reusability \u2014 An atomic block can be included by multiple
+        - **Reusability** \u2014 An atomic block can be included by multiple
         composite blocks across different manuals.
 
-        Testability \u2014 Each atomic block can be tested in isolation.
+        - **Testability** \u2014 Each atomic block can be tested in isolation.
         Its build() function is self-contained.
 
-        Modularity \u2014 Adding or removing a sub-topic is a one-line
+        - **Modularity** \u2014 Adding or removing a sub-topic is a one-line
         change in the composite block. No refactoring needed.
 
-        Readability \u2014 Composite blocks act as a table of contents
+        - **Readability** \u2014 Composite blocks act as a table of contents
         for the section, making the structure immediately clear.
     """)
     st_space("v", 2)

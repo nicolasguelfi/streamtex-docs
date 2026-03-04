@@ -39,16 +39,20 @@ def build():
         st_write(
             s.large,
             "Creates a complete book.py orchestration file from a ",
-            (s.bold, "blocks.csv "),
-            "file. Each row in the CSV defines a block name, its title, ",
-            "and the table-of-contents level.",
+            (s.bold, "blocks.csv"),
+            " file. Each row in the CSV defines a ",
+            (s.bold, "block name"), ", its ",
+            (s.bold, "title"), ", and the ",
+            (s.bold, "toc_level"), ".",
         )
     st_space("v", 1)
 
     st_write(
         s.large,
         (s.bold, "CSV format: "),
-        "block_name, title, toc_level",
+        (s.bold, "block_name"), ", ",
+        (s.bold, "title"), ", ",
+        (s.bold, "toc_level"),
     )
     st_space("v", 1)
 

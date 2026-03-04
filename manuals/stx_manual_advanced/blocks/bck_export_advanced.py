@@ -245,26 +245,26 @@ def build():
     st_space("v", 2)
 
     show_details("""\
-        **ExportConfig** is a Python dataclass. All fields have sensible defaults.
+        - **ExportConfig** is a Python dataclass. All fields have sensible defaults.
         Only set enabled=True to activate export; the rest is optional.
 
-        **HtmlExportBuffer** is a singleton managed by StreamTeX internally.
+        - **HtmlExportBuffer** is a singleton managed by StreamTeX internally.
         You never instantiate it directly. It is reset at the start of each
         st_book() render cycle.
 
-        **push/pop wrappers** are called automatically by context managers
+        - **push/pop wrappers** are called automatically by context managers
         (st_block, st_grid, st_span). You only need to use export_push_wrapper
         and export_pop_wrapper if you are building custom container components.
 
-        **st_html()** is the low-level bridge. Most users never call it directly.
-        Higher-level functions (st_latex_doc, st_mermaid, st_tikz) use st_html()
+        - **st_html()** is the low-level bridge. Most users never call it directly.
+        Higher-level functions (st_latex_doc, st_mermaid, st_tikz) use **st_html()**
         internally for iframe-based rendering.
 
-        **CSS inlining** ensures the exported file works offline. If you add
+        - **CSS inlining** ensures the exported file works offline. If you add
         custom CSS files, they must be registered with StreamTeX to be included
         in the export bundle.
 
-        **Performance note:** The export buffer accumulates all HTML in memory.
+        - **Performance note:** The export buffer accumulates all HTML in memory.
         For very large books (hundreds of blocks), memory usage may be significant
         during the export phase.
     """)

@@ -25,8 +25,8 @@ def build():
         st_space("v", 2)
 
         show_explanation(
-            "Production-ready hosting with a free tier (750h/month) and custom domains. "
-            "No credit card required. Supports Docker and auto-deploys from GitHub."
+            "Production-ready hosting with a **free tier** (750h/month) and **custom domains**. "
+            "No credit card required. Supports **Docker** and **auto-deploys** from GitHub."
         )
         st_space("v", 2)
 
@@ -153,8 +153,8 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "Render auto-deploys on every push to main.\n\n"
-            "Free tier: one always-on app fits in 750h/month (31 days x 24h = 744h). "
+            "Render **auto-deploys** on every push to main.\n\n"
+            "**Free tier**: one always-on app fits in 750h/month (31 days x 24h = 744h). "
             "Two apps won't fit in the free quota.\n\n"
-            "Custom domains get auto-SSL via Let's Encrypt."
+            "**Custom domains** get **auto-SSL** via Let's Encrypt."
         )

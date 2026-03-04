@@ -57,8 +57,8 @@ permissions:
         show_explanation("""\
             Two permissions are required:
 
-            - contents: read — to check out the repository code.
-            - id-token: write — to request an OIDC token from GitHub,
+            - **contents: read** — to check out the repository code.
+            - **id-token: write** — to request an OIDC token from GitHub,
               which PyPI uses to verify the publisher identity.
         """)
         st_space("v", 2)
@@ -150,13 +150,13 @@ jobs:
             Trusted Publishing uses OpenID Connect (OIDC) so GitHub Actions
             can publish to PyPI without storing any API tokens. To set it up:
 
-            1. Go to pypi.org and navigate to your project settings.
-            2. Under "Publishing", click "Add a new publisher".
-            3. Select "GitHub Actions" as the provider.
-            4. Enter the repository owner and name (e.g. nicolasguelfi/streamtex).
-            5. Set the workflow name to "publish.yml".
-            6. Optionally set the environment name (leave blank for default).
-            7. Save — PyPI will now accept tokens from that workflow.
+            1. **Go to pypi.org** and navigate to your project settings.
+            2. **Add a new publisher** under "Publishing".
+            3. **Select "GitHub Actions"** as the provider.
+            4. **Enter the repository** owner and name (e.g. nicolasguelfi/streamtex).
+            5. **Set the workflow name** to "publish.yml".
+            6. **Set the environment name** (optional, leave blank for default).
+            7. **Save** — PyPI will now accept tokens from that workflow.
 
             When the workflow runs, GitHub mints a short-lived OIDC token.
             The pypa/gh-action-pypi-publish action exchanges this token

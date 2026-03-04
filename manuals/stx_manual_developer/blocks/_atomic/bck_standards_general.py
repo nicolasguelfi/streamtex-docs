@@ -32,8 +32,8 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Use StreamTeX functions (st_write, st_block, st_grid, st_list,
-            st_code, st_image, etc.) for all content rendering. Only use
+            Use StreamTeX functions (**st_write**, **st_block**, **st_grid**, **st_list**,
+            **st_code**, **st_image**, etc.) for all content rendering. Only use
             raw Streamlit calls (st.button, st.selectbox, st.slider,
             st.text_input) for interactive widgets that StreamTeX does
             not wrap.
@@ -118,10 +118,10 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Every block file must define a BlockStyles class and a
-            build() function. The BlockStyles class holds all styles
+            Every block file must define a **BlockStyles** class and a
+            **build()** function. The BlockStyles class holds all styles
             used by the block. The build() function renders the content.
-            Create a shorthand bs = BlockStyles for concise access.
+            Create a shorthand **bs = BlockStyles** for concise access.
         """)
         st_space("v", 1)
 

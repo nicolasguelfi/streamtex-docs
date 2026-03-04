@@ -77,17 +77,17 @@ def build():
     with st_block(s.project.containers.good_callout):
         st_write(s.project.titles.subsection_title, "allowedTools")
         st_space("v", 1)
-        st_write(s.large, (
-            "Lists the tools and command patterns that Claude Code "
-            "can use without asking for permission. Supports glob "
-            "patterns for flexible matching."
-        ))
+        st_write(s.large,
+                 "Lists the tools and command patterns that Claude Code "
+                 "can use without asking for permission. Supports ",
+                 (s.bold, "glob patterns"),
+                 " for flexible matching.")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, 'Bash(uv run *) — allows all uv run commands')
-            with l.item(): st_write(s.large, 'Bash(git *) — allows all git operations')
-            with l.item(): st_write(s.large, 'Read, Write, Edit — file operations')
-            with l.item(): st_write(s.large, 'Glob, Grep — search operations')
+            with l.item(): st_write(s.large, (s.bold, "Bash(uv run *)"), " — allows all uv run commands")
+            with l.item(): st_write(s.large, (s.bold, "Bash(git *)"), " — allows all git operations")
+            with l.item(): st_write(s.large, (s.bold, "Read, Write, Edit"), " — file operations")
+            with l.item(): st_write(s.large, (s.bold, "Glob, Grep"), " — search operations")
     st_space("v", 1)
 
     with st_block(s.project.containers.bad_callout):
@@ -100,9 +100,9 @@ def build():
         ))
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, 'Bash(rm -rf *) — prevents recursive deletion')
-            with l.item(): st_write(s.large, 'Bash(pip install *) — enforces uv usage')
-            with l.item(): st_write(s.large, 'Bash(python *) — enforces uv run prefix')
+            with l.item(): st_write(s.large, (s.bold, "Bash(rm -rf *)"), " — prevents recursive deletion")
+            with l.item(): st_write(s.large, (s.bold, "Bash(pip install *)"), " — enforces uv usage")
+            with l.item(): st_write(s.large, (s.bold, "Bash(python *)"), " — enforces uv run prefix")
     st_space("v", 2)
 
     # --- How to configure ---

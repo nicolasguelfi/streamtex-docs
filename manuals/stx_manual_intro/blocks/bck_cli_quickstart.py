@@ -22,11 +22,20 @@ def build():
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    show_explanation("""\
-        StreamTeX provides a CLI tool called stx for project
-        management. It helps you create, validate, test, and
-        lint your StreamTeX projects from the command line.
-    """)
+    st_write(
+        s.large,
+        "StreamTeX provides a CLI tool called ",
+        (s.bold, "stx"),
+        " for project management. It helps you ",
+        (s.bold, "create"),
+        ", ",
+        (s.bold, "validate"),
+        ", ",
+        (s.bold, "test"),
+        ", and ",
+        (s.bold, "lint"),
+        " your StreamTeX projects from the command line.",
+    )
     st_space("v", 2)
 
     # --- Installation ---

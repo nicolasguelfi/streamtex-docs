@@ -130,19 +130,19 @@ def build():
         st_write(s.project.titles.tip_label, "Workspace (recommended)")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Multiple related projects (presentations, courses)")
-            with l.item(): st_write(s.large, "Shared AI profiles across projects")
-            with l.item(): st_write(s.large, "Centralized dependency management")
-            with l.item(): st_write(s.large, "Team collaboration on the same repository")
+            with l.item(): st_write(s.large, (s.bold, "Multiple related projects"), " (presentations, courses)")
+            with l.item(): st_write(s.large, (s.bold, "Shared AI profiles"), " across projects")
+            with l.item(): st_write(s.large, (s.bold, "Centralized dependency management"))
+            with l.item(): st_write(s.large, (s.bold, "Team collaboration"), " on the same repository")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Standalone Project")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Single presentation or document")
-            with l.item(): st_write(s.large, "Quick prototyping or experimentation")
-            with l.item(): st_write(s.large, "No need for shared configuration")
+            with l.item(): st_write(s.large, (s.bold, "Single presentation"), " or document")
+            with l.item(): st_write(s.large, (s.bold, "Quick prototyping"), " or experimentation")
+            with l.item(): st_write(s.large, (s.bold, "No need"), " for shared configuration")
     st_space("v", 2)
 
     show_details("""\

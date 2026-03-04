@@ -113,11 +113,13 @@ with st.popover("Show info card"):
                 st_write(s.large + s.bold + s.project.colors.primary_blue,
                          "StreamTeX Info")
                 st_space("v", 1)
-                st_write(s.large, "Version: 0.2.0")
-                st_br()
-                st_write(s.large, "Python >= 3.10")
-                st_br()
-                st_write(s.large, "Streamlit >= 1.54.0")
+                with st_list(s.large, s.large, list_type="ul") as l:
+                    with l.item():
+                        st_write(s.large, (s.bold, "Version"), ": 0.2.0")
+                    with l.item():
+                        st_write(s.large, (s.bold, "Python"), " >= 3.10")
+                    with l.item():
+                        st_write(s.large, (s.bold, "Streamlit"), " >= 1.54.0")
         st_space("v", 2)
 
         # --- Section 4: Nesting ---

@@ -222,7 +222,10 @@ set_link_config(LinkConfig(
         st_write(
             s.medium,
             (s.text.weights.bold_weight, "Target options: "),
-            "_self (same tab), _blank (new tab), _parent, _top",
+            (s.text.weights.bold_weight, "_self"), " (same tab), ",
+            (s.text.weights.bold_weight, "_blank"), " (new tab), ",
+            (s.text.weights.bold_weight, "_parent"), ", ",
+            (s.text.weights.bold_weight, "_top"),
         )
     st_space("v", 2)
 

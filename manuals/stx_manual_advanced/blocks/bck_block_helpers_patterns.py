@@ -4,7 +4,7 @@ This block explains the hybrid block helpers system available in StreamTeX.
 Shows all 3 patterns with live code examples.
 """
 
-from streamtex import st_write, st_space
+from streamtex import st_write, st_space, st_list
 from custom.styles import Styles as s
 from blocks.helpers import (
     show_code, show_explanation, show_details,
@@ -48,11 +48,13 @@ All helpers automatically use your styles globally.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    st_write(s.large, """
-1. Define ProjectBlockHelperConfig with your styles
-2. Call set_block_helper_config() once at startup
-3. All show_code(), show_explanation(), etc. use your styles automatically
-    """)
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, "Define ", (s.bold, "ProjectBlockHelperConfig"), " with your styles")
+        with l.item():
+            st_write(s.large, "Call ", (s.bold, "set_block_helper_config()"), " once at startup")
+        with l.item():
+            st_write(s.large, "All ", (s.bold, "show_code()"), ", ", (s.bold, "show_explanation()"), ", etc. use your styles automatically")
 
     st_write(s.project.titles.feature_title, "Code example:")
     show_code("""
@@ -74,12 +76,15 @@ show_code("print('hello')")  # Uses s.project.containers.code_box
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    st_write(s.large, """
-✓ DRY: Define styles once, use everywhere
-✓ Simple: No parameters needed
-✓ Global: Consistent styling across all blocks
-✓ Flexible: Can still override per-call with style= parameter
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "DRY"), ": Define styles once, use everywhere")
+        with l.item():
+            st_write(s.large, (s.bold, "Simple"), ": No parameters needed")
+        with l.item():
+            st_write(s.large, (s.bold, "Global"), ": Consistent styling across all blocks")
+        with l.item():
+            st_write(s.large, (s.bold, "Flexible"), ": Can still override per-call with style= parameter")
 
     st_space("v", 2)
 
@@ -98,11 +103,13 @@ Can override style per-call if needed.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    st_write(s.large, """
-1. Import helpers from streamtex or local blocks
-2. Call them directly with optional style= override
-3. Styles from config are used automatically
-    """)
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, "Import helpers from ", (s.bold, "streamtex"), " or local blocks")
+        with l.item():
+            st_write(s.large, "Call them directly with optional ", (s.bold, "style="), " override")
+        with l.item():
+            st_write(s.large, "Styles from config are used automatically")
 
     st_write(s.project.titles.feature_title, "Code example:")
     show_code("""
@@ -123,12 +130,15 @@ Just call the function!
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    st_write(s.large, """
-✓ Minimalist: No classes or complexity
-✓ Flexible: Can override style per-call
-✓ Intuitive: Just call the function
-✓ Works with Config Injection
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Minimalist"), ": No classes or complexity")
+        with l.item():
+            st_write(s.large, (s.bold, "Flexible"), ": Can override style per-call")
+        with l.item():
+            st_write(s.large, (s.bold, "Intuitive"), ": Just call the function")
+        with l.item():
+            st_write(s.large, "Works with Config Injection")
 
     st_space("v", 2)
 
@@ -147,12 +157,15 @@ Add custom methods specific to your project.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    st_write(s.large, """
-1. Subclass BlockHelper or ProjectBlockHelper
-2. Override methods to add custom logic
-3. Add new project-specific methods
-4. Instantiate and use in your blocks
-    """)
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, "Subclass ", (s.bold, "BlockHelper"), " or ", (s.bold, "ProjectBlockHelper"))
+        with l.item():
+            st_write(s.large, "Override methods to add custom logic")
+        with l.item():
+            st_write(s.large, "Add new project-specific methods")
+        with l.item():
+            st_write(s.large, "Instantiate and use in your blocks")
 
     st_write(s.project.titles.feature_title, "Code example:")
     show_code("""
@@ -180,12 +193,15 @@ helper.show_comparison("old_code()", "new_code()")
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    st_write(s.large, """
-✓ Extensible: Add custom logic before/after parent calls
-✓ Organized: Group related helpers in a class
-✓ Type-safe: IDEs can autocomplete methods
-✓ Chainable: Use super() to leverage parent behavior
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Extensible"), ": Add custom logic before/after parent calls")
+        with l.item():
+            st_write(s.large, (s.bold, "Organized"), ": Group related helpers in a class")
+        with l.item():
+            st_write(s.large, (s.bold, "Type-safe"), ": IDEs can autocomplete methods")
+        with l.item():
+            st_write(s.large, (s.bold, "Chainable"), ": Use super() to leverage parent behavior")
 
     st_space("v", 2)
 
@@ -204,12 +220,15 @@ Maximum flexibility when you need it.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    st_write(s.large, """
-1. Config Injection provides global styles (Pattern 1)
-2. OOP class adds custom methods (Pattern 3)
-3. Function calls can still override with style= (Pattern 2)
-4. Chain everything together
-    """)
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Config Injection"), " provides global styles (Pattern 1)")
+        with l.item():
+            st_write(s.large, (s.bold, "OOP class"), " adds custom methods (Pattern 3)")
+        with l.item():
+            st_write(s.large, (s.bold, "Function calls"), " can still override with style= (Pattern 2)")
+        with l.item():
+            st_write(s.large, "Chain everything together")
 
     st_write(s.project.titles.feature_title, "Code example:")
     show_code("""
@@ -230,12 +249,15 @@ show_code("print('world')", style=s.custom.style)
     """, language="python")
 
     st_write(s.project.titles.feature_title, "When to use:")
-    st_write(s.large, """
-✓ Complex projects with varied requirements
-✓ Need both global config + custom logic
-✓ Runtime overrides for special cases
-✓ Advanced developers who understand all patterns
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "Complex projects with varied requirements")
+        with l.item():
+            st_write(s.large, "Need both global config + custom logic")
+        with l.item():
+            st_write(s.large, "Runtime overrides for special cases")
+        with l.item():
+            st_write(s.large, "Advanced developers who understand all patterns")
 
     st_space("v", 2)
 
@@ -251,27 +273,19 @@ Comparison of all patterns.
 Choose based on your project's needs and complexity level.
     """)
 
-    st_write(s.large, """
-Pattern 1 (Config Injection)
-  Complexity: ⭐ Easy
-  Setup: One config class + set_block_helper_config()
-  Use when: Most projects, simple to medium complexity
-
-Pattern 2 (Standalone Functions)
-  Complexity: ⭐ Very Easy
-  Setup: Just import and call
-  Use when: Minimal setup, direct function usage
-
-Pattern 3 (OOP Inheritance)
-  Complexity: ⭐⭐⭐ Advanced
-  Setup: Subclass BlockHelper, override methods
-  Use when: Need custom logic, organize helpers
-
-Pattern 4 (Expert)
-  Complexity: ⭐⭐⭐⭐ Very Advanced
-  Setup: Config + Class + Runtime overrides
-  Use when: Maximum flexibility needed
-    """)
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Pattern 1 (Config Injection)"),
+                     " — Complexity: Easy. Setup: One config class + set_block_helper_config(). Use when: Most projects, simple to medium complexity")
+        with l.item():
+            st_write(s.large, (s.bold, "Pattern 2 (Standalone Functions)"),
+                     " — Complexity: Very Easy. Setup: Just import and call. Use when: Minimal setup, direct function usage")
+        with l.item():
+            st_write(s.large, (s.bold, "Pattern 3 (OOP Inheritance)"),
+                     " — Complexity: Advanced. Setup: Subclass BlockHelper, override methods. Use when: Need custom logic, organize helpers")
+        with l.item():
+            st_write(s.large, (s.bold, "Pattern 4 (Expert)"),
+                     " — Complexity: Very Advanced. Setup: Config + Class + Runtime overrides. Use when: Maximum flexibility needed")
 
     st_space("v", 2)
 
@@ -287,27 +301,42 @@ Guidelines for using block helpers effectively.
 Follow these to keep your helpers clean and maintainable.
     """)
 
-    st_write(s.large, """
-1. Start with Pattern 1 (Config Injection)
-   - It covers 90% of use cases
-   - Simple to understand and maintain
-
-2. Add project-specific helpers
-   - Create helpers unique to your project
-   - Keep them in blocks/helpers.py
-
-3. Only use OOP when you need it
-   - Don't over-engineer simple cases
-   - Use when you have custom logic to add
-
-4. Document your helpers
-   - Add docstrings explaining purpose
-   - Show usage examples in docstrings
-
-5. Keep helper functions pure
-   - Same input → same output
-   - No side effects (unless intentional)
-    """)
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Start with Pattern 1"), " (Config Injection)")
+            with st_list(s.medium, s.medium, list_type="ul") as sub:
+                with sub.item():
+                    st_write(s.medium, "It covers 90% of use cases")
+                with sub.item():
+                    st_write(s.medium, "Simple to understand and maintain")
+        with l.item():
+            st_write(s.large, (s.bold, "Add project-specific helpers"))
+            with st_list(s.medium, s.medium, list_type="ul") as sub:
+                with sub.item():
+                    st_write(s.medium, "Create helpers unique to your project")
+                with sub.item():
+                    st_write(s.medium, "Keep them in blocks/helpers.py")
+        with l.item():
+            st_write(s.large, (s.bold, "Only use OOP when you need it"))
+            with st_list(s.medium, s.medium, list_type="ul") as sub:
+                with sub.item():
+                    st_write(s.medium, "Don't over-engineer simple cases")
+                with sub.item():
+                    st_write(s.medium, "Use when you have custom logic to add")
+        with l.item():
+            st_write(s.large, (s.bold, "Document your helpers"))
+            with st_list(s.medium, s.medium, list_type="ul") as sub:
+                with sub.item():
+                    st_write(s.medium, "Add docstrings explaining purpose")
+                with sub.item():
+                    st_write(s.medium, "Show usage examples in docstrings")
+        with l.item():
+            st_write(s.large, (s.bold, "Keep helper functions pure"))
+            with st_list(s.medium, s.medium, list_type="ul") as sub:
+                with sub.item():
+                    st_write(s.medium, "Same input → same output")
+                with sub.item():
+                    st_write(s.medium, "No side effects (unless intentional)")
 
     st_space("v", 2)
 
@@ -359,20 +388,31 @@ Block helpers are a flexible system for rendering styled content.
 Choose what works for your project.
     """)
 
-    st_write(s.large, """
-🎯 Recommended path:
-  1. Start with Config Injection (Pattern 1)
-  2. Add project-specific helpers
-  3. Use OOP only if needed (Pattern 3)
-  4. Expert pattern for edge cases
+    st_write(s.project.titles.feature_title, "Recommended path:")
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, "Start with ", (s.bold, "Config Injection"), " (Pattern 1)")
+        with l.item():
+            st_write(s.large, "Add project-specific helpers")
+        with l.item():
+            st_write(s.large, "Use ", (s.bold, "OOP"), " only if needed (Pattern 3)")
+        with l.item():
+            st_write(s.large, "Expert pattern for edge cases")
 
-📚 Learn more:
-  - See stx_manual_intro/blocks/helpers.py for minimal example
-  - See stx_manual_advanced/blocks/helpers.py for complete showcase
-  - See documentation/template_project/blocks/helpers.py for annotated template
+    st_write(s.project.titles.feature_title, "Learn more:")
+    with st_list(s.large, s.large, list_type="ul") as l:
+        with l.item():
+            st_write(s.large, "See ", (s.bold, "stx_manual_intro/blocks/helpers.py"), " for minimal example")
+        with l.item():
+            st_write(s.large, "See ", (s.bold, "stx_manual_advanced/blocks/helpers.py"), " for complete showcase")
+        with l.item():
+            st_write(s.large, "See ", (s.bold, "documentation/template_project/blocks/helpers.py"), " for annotated template")
 
-🚀 Next steps:
-  1. Try each pattern in a small block
-  2. Find your preferred pattern
-  3. Build your project's helpers
-    """)
+    st_write(s.project.titles.feature_title, "Next steps:")
+    with st_list(s.large, s.large, list_type="ol") as l:
+        with l.item():
+            st_write(s.large, "Try each pattern in a small block")
+        with l.item():
+            st_write(s.large, "Find your preferred pattern")
+        with l.item():
+            st_write(s.large, "Build your project's helpers")

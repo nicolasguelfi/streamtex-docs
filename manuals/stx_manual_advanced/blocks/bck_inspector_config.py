@@ -80,15 +80,15 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Live code editor \u2014 Edit any block file directly in the
+        - **Live code editor** \u2014 Edit any block file directly in the
         browser. Changes are saved to disk and the page reloads
         automatically.
 
-        File browser \u2014 Navigate the project directory tree.
+        - **File browser** \u2014 Navigate the project directory tree.
         Open any file for viewing or editing. Certain directories
         are excluded (see below).
 
-        Per-block edit button \u2014 Each block displays a small edit
+        - **Per-block edit button** \u2014 Each block displays a small edit
         icon. Clicking it opens that block's source file in the
         inspector editor.
     """)
@@ -102,10 +102,10 @@ def build():
         The panel_width field accepts any valid CSS width value.
         Common presets:
 
-        Default \u2014 "35vw" (35% of viewport width).
-        Medium  \u2014 "700px" for a fixed medium-width panel.
-        Large   \u2014 "900px" for wider code editing.
-        XL      \u2014 "1100px" for full code visibility.
+        - **Default** \u2014 "35vw" (35% of viewport width).
+        - **Medium** \u2014 "700px" for a fixed medium-width panel.
+        - **Large** \u2014 "900px" for wider code editing.
+        - **XL** \u2014 "1100px" for full code visibility.
     """)
     st_space("v", 1)
 
@@ -146,11 +146,11 @@ def build():
         The file browser automatically excludes certain directories
         to keep the tree clean and avoid exposing sensitive files:
 
-        .venv/     \u2014 Virtual environment.
-        .git/      \u2014 Git internals.
-        __pycache__/ \u2014 Python bytecode cache.
-        .ruff_cache/ \u2014 Linter cache.
-        node_modules/ \u2014 Node.js dependencies (if present).
+        - **.venv/** \u2014 Virtual environment.
+        - **.git/** \u2014 Git internals.
+        - **__pycache__/** \u2014 Python bytecode cache.
+        - **.ruff_cache/** \u2014 Linter cache.
+        - **node_modules/** \u2014 Node.js dependencies (if present).
     """)
     st_space("v", 2)
 

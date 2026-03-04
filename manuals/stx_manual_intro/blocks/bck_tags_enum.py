@@ -4,7 +4,7 @@ This block explains the Tags enum used in StreamTeX for semantic markup.
 Tags help create properly structured HTML with semantic meaning.
 """
 
-from streamtex import st_write, st_space
+from streamtex import st_write, st_list, st_space
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -121,22 +121,30 @@ st_write(s.large,
     st_write(s.project.titles.section_title, "Complete Tag Reference", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-**Heading Tags:**
-- h1: Main page title
-- h2: Section heading
-- h3-h6: Subsection headings
+    st_write(s.large + s.bold, "Heading Tags:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("h1: Main page title")
+        with l.item(): st_write("h2: Section heading")
+        with l.item(): st_write("h3-h6: Subsection headings")
 
-**Block Tags:**
-- p: Paragraph
-- div: Generic container
+    st_space("v", 1)
 
-**Inline Tags:**
-- span: Inline container
+    st_write(s.large + s.bold, "Block Tags:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("p: Paragraph")
+        with l.item(): st_write("div: Generic container")
 
-**Special:**
-- None: No semantic tag (default)
-    """)
+    st_space("v", 1)
+
+    st_write(s.large + s.bold, "Inline Tags:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("span: Inline container")
+
+    st_space("v", 1)
+
+    st_write(s.large + s.bold, "Special:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("None: No semantic tag (default)")
 
     st_space("v", 2)
 
@@ -182,21 +190,23 @@ st_toc(toc_config)
     st_write(s.project.titles.section_title, "Why Semantic Tags Matter", toc_lvl="+1")
     st_space("v", 1)
 
-    st_write(s.large, """
-**Benefits of semantic tags:**
-1. **Accessibility**: Screen readers understand document structure
-2. **SEO**: Search engines recognize proper heading hierarchy
-3. **Structure**: TOC generation works correctly
-4. **Styling**: CSS can target semantic elements
-5. **Readability**: Humans understand document organization
+    st_write(s.large + s.bold, "Benefits of semantic tags:")
+    with st_list(li_style=s.large, list_type="ol") as l:
+        with l.item(): st_write((s.bold, "Accessibility"), ": Screen readers understand document structure")
+        with l.item(): st_write((s.bold, "SEO"), ": Search engines recognize proper heading hierarchy")
+        with l.item(): st_write((s.bold, "Structure"), ": TOC generation works correctly")
+        with l.item(): st_write((s.bold, "Styling"), ": CSS can target semantic elements")
+        with l.item(): st_write((s.bold, "Readability"), ": Humans understand document organization")
 
-**Best practices:**
-- Use h1 for main page title (only one per page)
-- Use h2+ for section hierarchy
-- Don't skip heading levels (h1 → h3 is bad)
-- Use p for paragraphs
-- Use span for inline styling only
-    """)
+    st_space("v", 1)
+
+    st_write(s.large + s.bold, "Best practices:")
+    with st_list(li_style=s.large, list_type="ul") as l:
+        with l.item(): st_write("Use h1 for main page title (only one per page)")
+        with l.item(): st_write("Use h2+ for section hierarchy")
+        with l.item(): st_write("Don't skip heading levels (h1 → h3 is bad)")
+        with l.item(): st_write("Use p for paragraphs")
+        with l.item(): st_write("Use span for inline styling only")
 
     st_space("v", 2)
 

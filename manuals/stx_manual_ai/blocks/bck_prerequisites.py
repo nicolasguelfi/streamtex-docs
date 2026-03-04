@@ -1,6 +1,6 @@
 """Part 2 — Prerequisites for AI-powered StreamTeX workflows."""
 
-from streamtex import st_write, st_space, st_block, st_grid
+from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -82,20 +82,18 @@ def build():
             with st_block(s.project.containers.ai_callout):
                 st_write(s.project.titles.subsection_title, "Claude Code (CLI)")
                 st_space("v", 1)
-                st_write(s.large, (
-                    "Terminal-based AI assistant by Anthropic. "
-                    "Works in any editor. Full profile support with "
-                    "commands, agents, and skills."
-                ))
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "Terminal-based AI assistant by Anthropic")
+                    with l.item(): st_write(s.large, "Works in any editor")
+                    with l.item(): st_write(s.large, "Full profile support with commands, agents, and skills")
         with g.cell():
             with st_block(s.project.containers.tip_callout):
                 st_write(s.project.titles.subsection_title, "Cursor IDE")
                 st_space("v", 1)
-                st_write(s.large, (
-                    "VS Code fork with built-in AI. "
-                    "Uses .cursor/rules/ for project rules. "
-                    "StreamTeX profiles can be adapted for Cursor."
-                ))
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "VS Code fork with built-in AI")
+                    with l.item(): st_write(s.large, "Uses .cursor/rules/ for project rules")
+                    with l.item(): st_write(s.large, "StreamTeX profiles can be adapted for Cursor")
     st_space("v", 2)
 
     # --- StreamTeX installation ---

@@ -87,8 +87,8 @@ def build():
         st_space("v", 1)
 
         show_explanation(
-            "The .dockerignore excludes files not needed in production images: "
-            "tests, IDE config, .git, .venv, documentation markdown files, etc. "
+            "The **.dockerignore** excludes files not needed in production images: "
+            "**tests**, **IDE config**, **.git**, **.venv**, documentation markdown files, etc. "
             "This reduces image size and build time."
         )
         st_space("v", 1)
@@ -103,7 +103,7 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "The container exposes port 8501 with a built-in health check.\n\n"
-            "uv is installed from the official Docker image (ghcr.io/astral-sh/uv).\n\n"
-            "Dependencies are installed in a cached layer for fast rebuilds."
+            "The container exposes **port 8501** with a built-in **health check**.\n\n"
+            "**uv** is installed from the official Docker image (ghcr.io/astral-sh/uv).\n\n"
+            "Dependencies are installed in a **cached layer** for fast rebuilds."
         )

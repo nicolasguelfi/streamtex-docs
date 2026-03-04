@@ -1,6 +1,6 @@
 """Part 8 — FAQ & Troubleshooting — common questions and error resolution."""
 
-from streamtex import st_write, st_space, st_block
+from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
@@ -31,20 +31,20 @@ class BlockStyles:
 
 bs = BlockStyles
 
-def _render_qa(question: str, answer: str):
+def _render_qa(question, *answer_parts):
     """Render a question-answer pair in a styled card."""
     with st_block(bs.question_card):
         st_write(bs.question_text, question, tag=t.div)
         st_space("v", 1)
-        st_write(bs.answer_text, answer)
+        st_write(bs.answer_text, *answer_parts)
 
-def _render_error(error: str, fix: str):
+def _render_error(error, *fix_parts):
     """Render a troubleshooting entry with error and fix."""
     with st_block(bs.error_card):
         st_write(bs.error_title, error, tag=t.div)
         st_space("v", 1)
         st_write(bs.fix_label, "Fix: ", tag=t.span)
-        st_write(bs.answer_text, fix)
+        st_write(bs.answer_text, *fix_parts)
 
 def build():
     """Render the FAQ and troubleshooting section."""
@@ -76,19 +76,31 @@ def build():
     # Q2
     _render_qa(
         "Which profile should I choose?",
-        "Start with the project profile — it covers 90% of use cases "
-        "with 20 commands and 3 agents. Choose presentation for live "
-        "events, documentation for HTML migration workflows, or "
-        "library if you contribute to the StreamTeX library itself.",
+        "Start with the ",
+        (s.bold, "project"),
+        " profile — it covers 90% of use cases "
+        "with 20 commands and 3 agents. Choose ",
+        (s.bold, "presentation"),
+        " for live events, ",
+        (s.bold, "documentation"),
+        " for HTML migration workflows, or ",
+        (s.bold, "library"),
+        " if you contribute to the StreamTeX library itself.",
     )
     st_space("v", 1)
 
     # Q3
     _render_qa(
         "Can I use Cursor instead of Claude Code?",
-        "Yes. StreamTeX profiles work with both Claude Code and "
-        "Cursor IDE. For Cursor, profiles are adapted to use "
-        ".cursor/rules/ instead of .claude/. The commands, agents, "
+        "Yes. StreamTeX profiles work with both ",
+        (s.bold, "Claude Code"),
+        " and ",
+        (s.bold, "Cursor IDE"),
+        ". For Cursor, profiles are adapted to use ",
+        (s.bold, ".cursor/rules/"),
+        " instead of ",
+        (s.bold, ".claude/"),
+        ". The commands, agents, "
         "and skills are identical in both environments.",
     )
     st_space("v", 1)
@@ -96,8 +108,12 @@ def build():
     # Q4
     _render_qa(
         "How do I update my profile?",
-        "Use the stx claude update command to pull the latest profile "
-        "version. Alternatively, use stx claude diff to see what "
+        "Use the ",
+        (s.bold, "stx claude update"),
+        " command to pull the latest profile "
+        "version. Alternatively, use ",
+        (s.bold, "stx claude diff"),
+        " to see what "
         "changed before applying the update. This updates commands, "
         "agents, skills, and settings without affecting your content.",
     )
@@ -106,22 +122,39 @@ def build():
     # Q5
     _render_qa(
         "Can I create custom commands?",
-        "Yes. Add a .md file to the .claude/commands/ directory in "
+        "Yes. Add a .md file to the ",
+        (s.bold, ".claude/commands/"),
+        " directory in "
         "your project. The file name becomes the command name. Follow "
-        "the standard structure: description, context loading, and "
-        "a step-by-step workflow. Custom commands appear alongside "
+        "the standard structure: ",
+        (s.bold, "description"),
+        ", ",
+        (s.bold, "context loading"),
+        ", and a step-by-step ",
+        (s.bold, "workflow"),
+        ". Custom commands appear alongside "
         "built-in ones.",
     )
     st_space("v", 1)
 
     # Q6
-    _render_qa(
-        "Why does my block not show up?",
-        "Check three things: (1) the file name matches the bck_* "
-        "pattern, (2) the file has a build() function at module level, "
-        "(3) the block is registered in book.py. Also verify there "
-        "are no import errors by running uv run ruff check.",
-    )
+    with st_block(bs.question_card):
+        st_write(bs.question_text, "Why does my block not show up?", tag=t.div)
+        st_space("v", 1)
+        st_write(bs.answer_text, "Check three things:")
+        with st_list(list_type="ol") as l:
+            with l.item():
+                st_write(bs.answer_text,
+                         "The file name matches the ", (s.bold, "bck_*"), " pattern")
+            with l.item():
+                st_write(bs.answer_text,
+                         "The file has a ", (s.bold, "build()"), " function at module level")
+            with l.item():
+                st_write(bs.answer_text,
+                         "The block is registered in ", (s.bold, "book.py"))
+        st_write(bs.answer_text,
+                 "Also verify there are no import errors by running ",
+                 (s.bold, "uv run ruff check"), ".")
     st_space("v", 1)
 
     # Q7
@@ -160,8 +193,9 @@ def build():
     _render_error(
         "ModuleNotFoundError: No module named 'streamtex'",
         "StreamTeX is not installed in the current environment. "
-        "Run uv add streamtex or pip install streamtex. If using "
-        "uv, make sure you prefix commands with uv run.",
+        "Run ", (s.bold, "uv add streamtex"), " or ",
+        (s.bold, "pip install streamtex"), ". If using "
+        "uv, make sure you prefix commands with ", (s.bold, "uv run"), ".",
     )
     st_space("v", 1)
 
@@ -185,10 +219,12 @@ def build():
     # Error 4
     _render_error(
         "Style composition error: unsupported operand type",
-        "You are trying to combine incompatible types. Use Style + "
-        "Style for composition. If combining with a string, the "
+        "You are trying to combine incompatible types. Use ",
+        (s.bold, "Style + Style"),
+        " for composition. If combining with a string, the "
         "string must be a valid CSS property. Check that both "
-        "operands are Style instances.",
+        "operands are ",
+        (s.bold, "Style instances"), ".",
     )
     st_space("v", 1)
 

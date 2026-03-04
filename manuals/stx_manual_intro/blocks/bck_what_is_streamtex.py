@@ -93,10 +93,13 @@ def build():
         st_space("v", 1)
         st_write(
             s.large + s.center_txt + s.project.colors.neutral_gray,
-            "StreamTeX is a library built on Streamlit that replaces "
-            "raw HTML/CSS with composable Style objects and high-level "
-            "components — so you write clean Python and get themed, "
-            "exportable documents.",
+            (s.bold, "StreamTeX"),
+            " is a library built on ",
+            (s.bold, "Streamlit"),
+            " that replaces raw HTML/CSS with composable ",
+            (s.bold, "Style objects"),
+            " and high-level components — so you write clean Python "
+            "and get themed, exportable documents.",
             tag=t.div,
         )
     st_space("v", 2)
@@ -302,20 +305,28 @@ def build():
         _card(
             "Book Navigation",
             "st_book()",
-            "Paginated or continuous documents with table of contents, "
+            (s.bold, "Paginated"),
+            " or continuous documents with table of contents, "
             "slide-like markers, PageUp/PageDown, and configurable banners.",
         )
         _card(
             "HTML Export",
             "st_export()",
-            "Generate self-contained HTML files. Dual rendering pipeline: "
+            "Generate ",
+            (s.bold, "self-contained HTML"),
+            " files. Dual rendering pipeline: "
             "live Streamlit app and static HTML from the same source code.",
         )
         _card(
             "Diagrams",
             "st_mermaid() / st_plantuml() / st_tikz()",
-            "Render Mermaid, PlantUML, and TikZ diagrams with "
-            "pan/zoom support, directly from Python.",
+            "Render ",
+            (s.bold, "Mermaid"),
+            ", ",
+            (s.bold, "PlantUML"),
+            ", and ",
+            (s.bold, "TikZ"),
+            " diagrams with pan/zoom support, directly from Python.",
         )
         _card(
             "Deploy Anywhere",
@@ -355,11 +366,11 @@ def _section(title: str):
     st_space("v", 0.5)
 
 
-def _card(title: str, api: str, description: str):
+def _card(title: str, api: str, *description):
     """Capability card with API keyword highlighted as code."""
     with st_block(bs.card):
         st_write(bs.feature_title, title)
         st_space("v", 0.3)
         st_code(None, code=api, language="python")
         st_space("v", 0.5)
-        st_write(s.large, description)
+        st_write(s.large, *description)

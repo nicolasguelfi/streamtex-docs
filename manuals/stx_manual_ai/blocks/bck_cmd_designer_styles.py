@@ -41,7 +41,7 @@ def build():
         st_write(
             s.large,
             "Scans every block and the project styles file to find ",
-            "inconsistencies. It detects three categories of problems:",
+            "inconsistencies. It detects ", (s.bold, "three categories"), " of problems:",
         )
     st_space("v", 1)
 
@@ -102,7 +102,7 @@ def build():
             s.large,
             "Takes the audit results and performs automated refactoring. ",
             "Duplicate styles are consolidated into named classes in ",
-            "custom/styles.py, and all references are updated.",
+            (s.bold, "custom/styles.py"), ", and all references are updated.",
         )
     st_space("v", 1)
 

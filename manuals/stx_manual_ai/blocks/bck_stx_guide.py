@@ -91,22 +91,22 @@ def build():
         st_write(s.project.titles.subsection_title, "stx-guide (Global Skill)")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Read-only knowledge base")
-            with l.item(): st_write(s.large, "Available in any project, any session")
-            with l.item(): st_write(s.large, "No commands or agents — pure reference")
-            with l.item(): st_write(s.large, "Answers API questions, explains syntax")
-            with l.item(): st_write(s.large, "Does not modify project files")
+            with l.item(): st_write(s.large, (s.bold, "Read-only"), " knowledge base")
+            with l.item(): st_write(s.large, (s.bold, "Available"), " in any project, any session")
+            with l.item(): st_write(s.large, (s.bold, "No commands or agents"), " — pure reference")
+            with l.item(): st_write(s.large, (s.bold, "Answers"), " API questions, explains syntax")
+            with l.item(): st_write(s.large, (s.bold, "Does not modify"), " project files")
     st_space("v", 1)
 
     with st_block(s.project.containers.note_callout):
         st_write(s.project.titles.warning_label, "Project Profile (Installed)")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Full behavior configuration (CLAUDE.md)")
-            with l.item(): st_write(s.large, "Includes commands, agents, and skills")
-            with l.item(): st_write(s.large, "Project-specific — must be installed")
-            with l.item(): st_write(s.large, "Can create and modify files")
-            with l.item(): st_write(s.large, "Defines coding standards and constraints")
+            with l.item(): st_write(s.large, (s.bold, "Full behavior configuration"), " (CLAUDE.md)")
+            with l.item(): st_write(s.large, (s.bold, "Includes"), " commands, agents, and skills")
+            with l.item(): st_write(s.large, (s.bold, "Project-specific"), " — must be installed")
+            with l.item(): st_write(s.large, (s.bold, "Can create"), " and modify files")
+            with l.item(): st_write(s.large, (s.bold, "Defines"), " coding standards and constraints")
     st_space("v", 2)
 
     # ── When to use ──────────────────────────────────────────────
@@ -120,11 +120,11 @@ def build():
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
-        with l.item(): st_write(s.large, "Quick questions about a specific API function")
-        with l.item(): st_write(s.large, "Syntax help when writing blocks from memory")
-        with l.item(): st_write(s.large, "Debugging a rendering issue")
-        with l.item(): st_write(s.large, "Exploring what StreamTeX can do before starting a project")
-        with l.item(): st_write(s.large, "Working in a non-StreamTeX project that needs a one-off slide")
+        with l.item(): st_write(s.large, (s.bold, "Quick questions"), " about a specific API function")
+        with l.item(): st_write(s.large, (s.bold, "Syntax help"), " when writing blocks from memory")
+        with l.item(): st_write(s.large, (s.bold, "Debugging"), " a rendering issue")
+        with l.item(): st_write(s.large, (s.bold, "Exploring"), " what StreamTeX can do before starting a project")
+        with l.item(): st_write(s.large, (s.bold, "Working"), " in a non-StreamTeX project that needs a one-off slide")
     st_space("v", 2)
 
     show_details("""\

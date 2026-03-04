@@ -66,8 +66,13 @@ def build():
         st_space("v", 1)
         st_write(
             bs.description,
-            "This course teaches the fundamentals of StreamTeX step by step. "
-            "Each section demonstrates one concept with live examples.",
+            "This course teaches the ",
+            (s.bold, "fundamentals"),
+            " of StreamTeX ",
+            (s.bold, "step by step"),
+            ". Each section demonstrates one concept with ",
+            (s.bold, "live examples"),
+            ".",
         )
         st_space("v", 1)
         with st_list(list_type="ul") as l:

@@ -41,14 +41,14 @@ def build():
         BannerMode is an enum with three values that control
         how the banner is rendered:
 
-        FULL \u2014 Full-height banner with title, progress bar,
+        - **FULL** \u2014 Full-height banner with title, progress bar,
         and page count. Best for formal documents and manuals.
 
-        COMPACT \u2014 Slim banner with a condensed layout. Shows
+        - **COMPACT** \u2014 Slim banner with a condensed layout. Shows
         the title and a thin progress indicator. Suitable for
         presentations and lightweight projects.
 
-        HIDDEN \u2014 No banner at all. The content starts
+        - **HIDDEN** \u2014 No banner at all. The content starts
         immediately at the top of the page. Use when you need
         maximum vertical space.
     """)
@@ -105,17 +105,17 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        FULL mode \u2014 A tall header bar spanning the full width.
+        - **FULL mode** \u2014 A tall header bar spanning the full width.
         Displays the project title centered, a horizontal progress
         bar below the title, and a page counter (e.g. "3 / 12")
         on the right side. Background uses the configured color.
 
-        COMPACT mode \u2014 A thin strip at the top of the page.
+        - **COMPACT mode** \u2014 A thin strip at the top of the page.
         The title appears left-aligned in a smaller font. A narrow
         progress line runs along the bottom edge of the strip.
         Page count is hidden by default.
 
-        HIDDEN mode \u2014 Nothing is rendered. The page content
+        - **HIDDEN mode** \u2014 Nothing is rendered. The page content
         begins at the very top with no header spacing.
     """)
     st_space("v", 2)

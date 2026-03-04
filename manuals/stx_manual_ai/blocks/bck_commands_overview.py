@@ -125,6 +125,18 @@ def build():
     )
     st_space("v", 1)
 
+    with st_list(list_type="ol") as l:
+        with l.item():
+            st_write(s.large, (s.bold, "Description"),
+                     " — what the command does")
+        with l.item():
+            st_write(s.large, (s.bold, "Context Loading"),
+                     " — files the AI must read before proceeding")
+        with l.item():
+            st_write(s.large, (s.bold, "Workflow"),
+                     " — step-by-step instructions for the AI")
+    st_space("v", 1)
+
     show_code("""\
         # /project:project-init
 

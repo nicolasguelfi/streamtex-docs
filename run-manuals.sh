@@ -269,10 +269,10 @@ print_pids() {
     echo "==========================================================="
     [ "$LAUNCH_COLLECTION" = true ] && echo "  Collection:  http://localhost:$COLLECTION_PORT (PID: $(pgrep -f "stx_manuals_collection" | head -1 || echo '—'))"
     [ "$LAUNCH_INTRO" = true ] && echo "  Intro:       http://localhost:$INTRO_PORT (PID: $(pgrep -f "stx_manual_intro" | head -1 || echo '—'))"
+    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT (PID: $(pgrep -f "stx_manual_ai" | head -1 || echo '—'))"
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT (PID: $(pgrep -f "stx_manual_advanced" | head -1 || echo '—'))"
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT (PID: $(pgrep -f "stx_manual_deploy" | head -1 || echo '—'))"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT (PID: $(pgrep -f "stx_manual_developer" | head -1 || echo '—'))"
-    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT (PID: $(pgrep -f "stx_manual_ai" | head -1 || echo '—'))"
     echo ""
     echo "Logs: $LOG_DIR"
     [ "$WATCH_MODE" = false ] && echo "Utilisez --kill pour arrêter tous les processus"
@@ -348,6 +348,10 @@ if [ "$LAUNCH_INTRO" = true ]; then
     launch_project "$INTRO_PROJECT" "Intro" "$INTRO_PORT" "$INTRO_LOG"
 fi
 
+if [ "$LAUNCH_AI" = true ]; then
+    launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
+fi
+
 if [ "$LAUNCH_ADVANCED" = true ]; then
     launch_project "$ADVANCED_PROJECT" "Advanced" "$ADVANCED_PORT" "$ADVANCED_LOG"
 fi
@@ -358,10 +362,6 @@ fi
 
 if [ "$LAUNCH_DEVELOPER" = true ]; then
     launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
-fi
-
-if [ "$LAUNCH_AI" = true ]; then
-    launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
 fi
 
 print_pids
@@ -382,6 +382,10 @@ if [ "$WATCH_MODE" = true ]; then
             echo "Intro est arrêté. Redémarrage..."
             launch_project "$INTRO_PROJECT" "Intro" "$INTRO_PORT" "$INTRO_LOG"
         fi
+        if [ "$LAUNCH_AI" = true ] && ! pgrep -f "streamlit run.*stx_manual_ai" > /dev/null 2>&1; then
+            echo "AI est arrêté. Redémarrage..."
+            launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
+        fi
         if [ "$LAUNCH_ADVANCED" = true ] && ! pgrep -f "streamlit run.*stx_manual_advanced" > /dev/null 2>&1; then
             echo "Advanced est arrêté. Redémarrage..."
             launch_project "$ADVANCED_PROJECT" "Advanced" "$ADVANCED_PORT" "$ADVANCED_LOG"
@@ -394,10 +398,6 @@ if [ "$WATCH_MODE" = true ]; then
             echo "Developer est arrêté. Redémarrage..."
             launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
         fi
-        if [ "$LAUNCH_AI" = true ] && ! pgrep -f "streamlit run.*stx_manual_ai" > /dev/null 2>&1; then
-            echo "AI est arrêté. Redémarrage..."
-            launch_project "$AI_PROJECT" "AI" "$AI_PORT" "$AI_LOG"
-        fi
     done
 else
     # Attendre un peu puis ouvrir dans Chrome
@@ -407,10 +407,10 @@ else
     echo "Ouverture dans Chrome:"
     [ "$LAUNCH_COLLECTION" = true ] && echo "  Collection:  http://localhost:$COLLECTION_PORT" && open -a "Google Chrome" "http://localhost:$COLLECTION_PORT"
     [ "$LAUNCH_INTRO" = true ] && echo "  Intro:       http://localhost:$INTRO_PORT" && open -a "Google Chrome" "http://localhost:$INTRO_PORT"
+    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT"
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT"
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT"
-    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT"
     echo ""
     echo "Utilisez './run-manuals.sh --kill' pour arrêter tous les manuels"
     echo ""

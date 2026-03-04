@@ -16,7 +16,7 @@ bs = BlockStyles
 
 
 def build():
-    """Quick Start Step 2: Create a project with a workspace (standard)."""
+    """Quick Start Step 2: Create a project with a workspace."""
     st_space("v", 1)
     st_write(bs.heading, "Quick Start — Create a Project",
              tag=t.div, toc_lvl="1")
@@ -28,16 +28,35 @@ def build():
 
     show_explanation("""\
         A workspace groups documentation, Claude profiles,
-        and your projects in one folder. The default standard
-        preset clones streamtex-docs and streamtex-claude.
+        and your projects in one folder. The --preset option
+        controls which repos are included.
     """)
     st_space("v", 1)
 
     show_code("""\
 mkdir streamtex-dev && cd streamtex-dev
-stx workspace init .
+stx workspace init . --preset standard  # basic | user | standard | developer
 stx workspace clone
 """, language="bash", line_numbers=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        The four presets offer increasing levels of functionality:
+
+        basic — empty workspace, no repos. Create standalone projects
+        and upgrade later when needed.
+
+        user — adds streamtex-claude (Claude AI profiles).
+        Enables stx claude install for slash commands and agents.
+
+        standard (default) — adds streamtex-docs + streamtex-claude.
+        Enables rich templates (--template project) and local
+        documentation alongside Claude profiles.
+
+        developer — adds all 3 repos (library + docs + claude).
+        Enables editable installs (stx workspace link) so library
+        source changes are reflected immediately.
+    """)
     st_space("v", 2)
 
     # --- Create with template ---
@@ -123,8 +142,8 @@ uv run streamlit run book.py
         Without --template, a minimal scaffold is created
         with a single bck_hello.py starter block.
 
-        For Claude profiles only (no docs): use --preset user.
-        For full developer setup: use --preset developer
-        then stx workspace link for editable installs.
+        To upgrade an existing workspace to a higher preset:
+        stx workspace upgrade developer
+        stx workspace clone
     """)
     st_space("v", 1)

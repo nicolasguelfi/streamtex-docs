@@ -68,12 +68,10 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 ```
 streamtex-docs/
 ├── manuals/
-│   ├── stx_manual_intro/       # Introduction course (port 8502)
-│   ├── stx_manual_advanced/    # Advanced features (port 8503)
-│   ├── stx_manual_deploy/      # Deployment guide (port 8504)
-│   ├── stx_manual_developer/   # Developer guide (port 8505)
-│   ├── stx_manual_ai/          # AI workflows guide (port 8506)
-│   ├── stx_manuals_collection/ # Collection hub (port 8501)
+│   ├── stx_manual_intro/       # Introduction course
+│   ├── stx_manual_advanced/    # Advanced features
+│   ├── stx_manual_deploy/      # Deployment guide
+│   ├── stx_manuals_collection/ # Collection hub
 │   └── shared-blocks/          # Shared block library
 ├── references/
 │   ├── coding_standards.md     # Coding standards
@@ -85,36 +83,11 @@ streamtex-docs/
 
 ## Running Manuals
 ```bash
-./run-manuals.sh --all            # Launch all 6 manuals
-./run-manuals.sh --developer      # Launch only developer manual (port 8505)
-./run-manuals.sh --ai             # Launch only AI manual (port 8506)
-./run-manuals.sh --kill           # Stop all manuals
-# Or individually:
 uv run streamlit run manuals/stx_manual_intro/book.py
-uv run streamlit run manuals/stx_manual_developer/book.py
+uv run streamlit run manuals/stx_manual_advanced/book.py
+uv run streamlit run manuals/stx_manual_deploy/book.py
+uv run streamlit run manuals/stx_manuals_collection/book.py
 ```
-
-## Infrastructure (CRITICAL — read before any CI/deploy change)
-
-### UV_NO_SOURCES pattern
-- `pyproject.toml` has `[tool.uv.sources]` pointing streamtex to `../streamtex` (editable, LOCAL ONLY)
-- **CI**: `UV_NO_SOURCES=1` as job-level env var — ignores local sources, resolves from PyPI
-- **Docker**: `uv sync --no-sources` + `sed` to strip the section from pyproject.toml
-- **NEVER** use `--frozen` in this repo's CI (lock file encodes the local editable path)
-
-### Render deployment
-- **5 services**, same Dockerfile, different `FOLDER` env var
-- `render.yaml` is declarative only — does NOT create services on Render
-- Create services via **Render API** (`POST /v1/services`) — CLI v2 cannot create
-- **Env vars MUST be set separately** via `PUT /v1/services/{id}/env-vars`
-- API key is in `~/.render/cli.yaml` (field `api.key`), NOT in `$RENDER_API_KEY`
-- Collection hub needs `STX_URL_TEST_*` env vars for each manual's Render URL
-
-### Key infra files
-- `Dockerfile` — shared Docker build (--no-sources + sed pattern)
-- `render.yaml` — all 5 service declarations
-- `.github/workflows/ci.yml` — structural checks (UV_NO_SOURCES=1)
-- `run-manuals.sh` — local launcher for all manuals
 
 ## Workflows
 1. **New Block** -> Read coding_standards.md, inspect existing blocks (`/designer:block-new`)

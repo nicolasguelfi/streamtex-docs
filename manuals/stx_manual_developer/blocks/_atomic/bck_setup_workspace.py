@@ -1,8 +1,5 @@
-import streamlit as st
 from streamtex import *
-import streamtex as stx
-from streamtex.styles import Style as ns, StyleGrid as sg
-from streamtex.enums import Tags as t, ListTypes as lt
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
@@ -23,10 +20,10 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            A workspace groups the StreamTeX library and its documentation
-            projects so you can develop and test them side by side.
-            The stx CLI provides commands to create, clone,
-            and synchronize workspaces.
+            A workspace groups the StreamTeX library, documentation,
+            and Claude profiles so you can develop and test them
+            side by side. The stx CLI provides commands to create,
+            clone, link, and upgrade workspaces.
         """)
         st_space("v", 2)
 
@@ -35,19 +32,22 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Creates a brand-new workspace directory with the
-            standard folder structure and configuration files.
+            Creates a new workspace with stx.toml and a projects/
+            directory. Use --preset to control which repos
+            are declared (default: standard).
         """)
         st_space("v", 1)
 
         show_code("""\
-# Create a new workspace in the current directory
-stx workspace init
+# Create a standard workspace (docs + claude)
+stx workspace init .
+
+# Developer workspace (all 3 repos)
+stx workspace init . --preset developer
 
 # Creates:
-#   workspace.toml   — workspace configuration
-#   projects/        — directory for linked projects
-#   .stx/            — workspace metadata""", language="bash")
+#   stx.toml    — workspace configuration
+#   projects/   — directory for user projects""", language="bash")
         st_space("v", 2)
 
         # --- 3. stx workspace clone ---
@@ -55,14 +55,15 @@ stx workspace init
         st_space("v", 1)
 
         show_explanation("""\
-            Clones an existing workspace from a remote repository
-            and sets up all project links automatically.
+            Clones all repos declared in stx.toml. The number of
+            repos depends on the workspace preset. Already-cloned
+            repos are skipped.
         """)
         st_space("v", 1)
 
         show_code("""\
-# Clone an existing workspace
-stx workspace clone https://github.com/org/my-workspace.git""", language="bash")
+# Clone repos declared in stx.toml
+stx workspace clone""", language="bash")
         st_space("v", 2)
 
         # --- 4. stx workspace link ---
@@ -70,26 +71,41 @@ stx workspace clone https://github.com/org/my-workspace.git""", language="bash")
         st_space("v", 1)
 
         show_explanation("""\
-            Links a project into the workspace for development.
-            This is how you connect streamtex-docs alongside
-            the streamtex library for live testing.
+            Runs uv sync in docs and project repos for editable
+            installs. Only needed with the developer preset when
+            you want library changes reflected immediately.
         """)
         st_space("v", 1)
 
         show_code("""\
-# Link the docs project into the workspace
-stx workspace link ../streamtex-docs
-
-# Link creates a symlink so changes are reflected immediately""", language="bash")
+# Developer preset: configure editable installs
+stx workspace link""", language="bash")
         st_space("v", 2)
 
-        # --- 5. stx workspace status and sync ---
+        # --- 5. stx workspace upgrade ---
+        st_write(bs.sub, "stx workspace upgrade", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Upgrade a workspace to a higher preset. Adds missing
+            repo sections to stx.toml. Run stx workspace clone
+            after to fetch the new repos.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# Upgrade from standard to developer
+stx workspace upgrade developer
+stx workspace clone""", language="bash")
+        st_space("v", 2)
+
+        # --- 6. stx workspace status and sync ---
         st_write(bs.sub, "stx workspace status and sync", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            Check the state of all linked projects and
-            synchronize changes across the workspace.
+            Check the git state of all repos and synchronize
+            dependencies across the workspace.
         """)
         st_space("v", 1)
 
@@ -97,11 +113,11 @@ stx workspace link ../streamtex-docs
 # Check workspace state
 stx workspace status
 
-# Synchronize changes across linked projects
+# Run uv sync in all repos
 stx workspace sync""", language="bash")
         st_space("v", 2)
 
-        # --- 6. Command summary ---
+        # --- 7. Command summary ---
         st_write(bs.sub, "Command reference", toc_lvl="+1")
         st_space("v", 1)
 
@@ -121,12 +137,17 @@ stx workspace sync""", language="bash")
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace clone")
             with g.cell():
-                st_write(s.large, "Clone an existing workspace")
+                st_write(s.large, "Clone repos from stx.toml")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace link")
             with g.cell():
-                st_write(s.large, "Link a project for development")
+                st_write(s.large, "Editable installs (developer)")
+            with g.cell():
+                st_write(s.project.colors.neutral_gray + s.large,
+                         "stx workspace upgrade")
+            with g.cell():
+                st_write(s.large, "Upgrade to a higher preset")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace status")
@@ -136,15 +157,15 @@ stx workspace sync""", language="bash")
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace sync")
             with g.cell():
-                st_write(s.large, "Synchronize changes")
+                st_write(s.large, "Run uv sync in all repos")
         st_space("v", 2)
 
         show_details("""\
-            The workspace system lets you work with streamtex-docs
-            alongside the streamtex library for live testing.
-
-            Edit the library code, then immediately see the effect
-            in your documentation manuals without reinstalling.
+            The workspace presets are: basic (no repos), user
+            (claude only), standard (docs + claude), and developer
+            (all 3 repos). The developer preset lets you work with
+            streamtex-docs alongside the streamtex library for live
+            testing via editable installs.
 
             Use stx workspace status regularly to check for drift
             between linked projects.

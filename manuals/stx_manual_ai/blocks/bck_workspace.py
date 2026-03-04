@@ -33,52 +33,50 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Create a new workspace from scratch. This generates
-        the directory structure, stx.toml configuration file,
-        and a default project scaffold.
+        Create a new workspace with stx.toml. The --preset option
+        controls which repos are declared. Default is standard
+        (docs + claude profiles).
     """)
     st_space("v", 1)
 
     show_code("""\
-        # Create a new workspace
-        stx workspace init my-workspace
-
-        # Navigate into it
-        cd my-workspace
+        mkdir streamtex-dev && cd streamtex-dev
+        stx workspace init .                     # standard (default)
+        stx workspace init . --preset user       # Claude profiles only
+        stx workspace init . --preset developer  # all 3 repos
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx workspace clone ---
-    st_write(bs.sub, "Clone an Existing Workspace", toc_lvl="+1")
+    st_write(bs.sub, "Clone Workspace Repos", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Clone a workspace from a Git repository. This pulls down
-        the full project structure including all configured
-        projects, profiles, and shared resources.
+        Clone all repos declared in stx.toml. The number of repos
+        depends on the workspace preset. Already-cloned repos
+        are skipped.
     """)
     st_space("v", 1)
 
     show_code("""\
-        # Clone from a Git repository
-        stx workspace clone https://github.com/org/my-workspace.git
+        stx workspace clone
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     # --- stx workspace link ---
-    st_write(bs.sub, "Link to Library for Development", toc_lvl="+1")
+    st_write(bs.sub, "Link for Development", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Link a local StreamTeX library checkout for development.
-        This sets up an editable install so changes to the library
-        source are immediately reflected in your workspace.
+        Run uv sync in docs and project repos for editable installs.
+        Only needed with the developer preset when you want library
+        source changes reflected immediately.
     """)
     st_space("v", 1)
 
     show_code("""\
-        # Link local streamtex library (editable install)
-        stx workspace link ../streamtex
+        # Developer preset only
+        stx workspace link
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -88,22 +86,33 @@ def build():
 
     show_explanation("""\
         Every workspace has an stx.toml file at its root. It defines
-        the workspace metadata, projects, and their relationships.
+        the workspace preset, declared repos, deploy settings,
+        and Claude profile source.
     """)
     st_space("v", 1)
 
     show_code("""\
         [workspace]
-        name = "my-workspace"
-        version = "0.1.0"
+        name = "streamtex-dev"
+        created = "2026-03-04T12:00:00Z"
+        preset = "standard"
 
-        [workspace.projects]
-        my-presentation = { path = "projects/my-presentation" }
-        my-course = { path = "projects/my-course" }
+        [repos]
 
-        [workspace.defaults]
-        profile = "project"
-        python = "3.12"
+        [repos.streamtex-docs]
+        url = "https://github.com/nicolasguelfi/streamtex-docs.git"
+        path = "streamtex-docs"
+        type = "docs"
+
+        [repos.streamtex-claude]
+        url = "https://github.com/nicolasguelfi/streamtex-claude.git"
+        path = "streamtex-claude"
+        type = "claude"
+
+        [deploy]
+
+        [claude]
+        source = "streamtex-claude"
     """, language="toml")
     st_space("v", 2)
 
@@ -137,9 +146,12 @@ def build():
     st_space("v", 2)
 
     show_details("""\
-        A standalone project is simply a StreamTeX project without
-        a wrapping workspace. It still uses stx.toml but at the
-        project level. You can always convert a standalone project
-        into a workspace later using stx workspace init --from-project.
+        A standalone project is simply a StreamTeX project created
+        without a workspace (stx project new outside a workspace).
+        You can always create a workspace later and move the project
+        into its projects/ directory.
+
+        Use stx workspace upgrade to move to a higher preset
+        (e.g. from user to standard) without recreating the workspace.
     """)
     st_space("v", 1)

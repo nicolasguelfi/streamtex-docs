@@ -16,14 +16,32 @@ bs = BlockStyles
 
 
 def build():
-    """Quick Start Step 2: Create a new project from the template."""
+    """Quick Start Step 2: Create a project with a workspace (standard)."""
     st_space("v", 1)
     st_write(bs.heading, "Quick Start — Create a Project",
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
-    # --- Create with CLI ---
-    st_write(bs.sub, "Step 1: Create the project", toc_lvl="+1")
+    # --- Create workspace ---
+    st_write(bs.sub, "Step 1: Create a workspace", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A workspace groups documentation, Claude profiles,
+        and your projects in one folder. The default standard
+        preset clones streamtex-docs and streamtex-claude.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+mkdir streamtex-dev && cd streamtex-dev
+stx workspace init .
+stx workspace clone
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- Create with template ---
+    st_write(bs.sub, "Step 2: Create the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -39,7 +57,7 @@ stx project new mon-projet --template project
     st_space("v", 2)
 
     # --- Project structure ---
-    st_write(bs.sub, "Step 2: Project structure", toc_lvl="+1")
+    st_write(bs.sub, "Step 3: Project structure", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -65,57 +83,8 @@ projects/stx-mon-projet/
 """, language="text", line_numbers=False)
     st_space("v", 2)
 
-    # --- Run the project ---
-    st_write(bs.sub, "Step 3: Run the project", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_explanation("""\
-        Navigate to the project folder and launch it
-        with Streamlit. The template project is ready
-        to run immediately.
-    """)
-    st_space("v", 1)
-
-    show_code("""\
-cd projects/stx-mon-projet
-uv run streamlit run book.py
-""", language="bash", line_numbers=False)
-    st_space("v", 2)
-
-    # --- Explore the structure ---
-    st_write(bs.sub, "Step 4: Explore the structure", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_explanation("""\
-        The key files to understand are:
-
-        book.py — the entry point that imports blocks
-        and calls st_book() to render them.
-
-        custom/styles.py — where you define project colors,
-        font sizes, and layout styles.
-
-        blocks/ — each file contains a build() function
-        that renders one section of your project.
-    """)
-    st_space("v", 1)
-
-    show_code("""\
-# book.py — entry point
-from streamtex import st_book, TOCConfig, BannerConfig
-import blocks
-
-st_book([
-    blocks.bck_01_welcome,
-    blocks.bck_02_text_styles,
-    # ... more blocks
-], toc_config=TOCConfig(...), paginate=True,
-   banner=BannerConfig.full())
-""", language="python", line_numbers=False)
-    st_space("v", 2)
-
-    # --- Install Claude profile ---
-    st_write(bs.sub, "Step 5: Install a Claude profile", toc_lvl="+1")
+    # --- Claude profile ---
+    st_write(bs.sub, "Step 4: Install a Claude profile", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -126,7 +95,23 @@ st_book([
     st_space("v", 1)
 
     show_code("""\
+cd projects/stx-mon-projet
 stx claude install project .
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- Run ---
+    st_write(bs.sub, "Step 5: Run the project", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Launch the project with Streamlit.
+        The template project is ready to run immediately.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+uv run streamlit run book.py
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -137,5 +122,9 @@ stx claude install project .
 
         Without --template, a minimal scaffold is created
         with a single bck_hello.py starter block.
+
+        For Claude profiles only (no docs): use --preset user.
+        For full developer setup: use --preset developer
+        then stx workspace link for editable installs.
     """)
     st_space("v", 1)

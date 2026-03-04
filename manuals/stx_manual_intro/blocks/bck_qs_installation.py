@@ -16,7 +16,7 @@ bs = BlockStyles
 
 
 def build():
-    """Quick Start Step 1: Install StreamTeX and set up the workspace."""
+    """Quick Start Step 1: Install StreamTeX (minimal, no workspace)."""
     st_space("v", 1)
     st_write(bs.heading, "Quick Start — Installation",
              tag=t.div, toc_lvl="1")
@@ -59,47 +59,49 @@ uv tool install streamtex[cli]
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Create workspace ---
-    st_write(bs.sub, "Step 3: Create a workspace", toc_lvl="+1")
+    # --- Create project (no workspace) ---
+    st_write(bs.sub, "Step 3: Create a project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        A workspace groups the StreamTeX library, documentation,
-        Claude profiles, and your projects in one folder.
-
-        Three commands set everything up.
+        Create a minimal project directly, without a workspace.
+        This is the fastest way to start.
     """)
     st_space("v", 1)
 
     show_code("""\
-mkdir streamtex-dev && cd streamtex-dev
-stx workspace init .
-stx workspace clone     # clones streamtex, streamtex-docs, streamtex-claude
-stx workspace link      # configures editable installs
+stx project new mon-projet
+cd stx-mon-projet
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- Verify ---
-    st_write(bs.sub, "Step 4: Verify installation", toc_lvl="+1")
+    # --- Run ---
+    st_write(bs.sub, "Step 4: Run the project", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Check that the StreamTeX library can be imported
-        from inside your workspace.
+        Sync dependencies and launch the project
+        with Streamlit. The scaffold is ready to run immediately.
     """)
     st_space("v", 1)
 
     show_code("""\
-uv run python -c "import streamtex; print(streamtex.__version__)"
+uv sync
+uv run streamlit run book.py
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
     show_details("""\
-        Always prefix commands with uv run.
-        This ensures the correct virtual environment
-        and dependencies are used.
+        This minimal installation creates a standalone project
+        without a workspace. To unlock rich templates, Claude AI
+        profiles, and local documentation, see the next section
+        (Create a Project with a workspace).
 
-        Never call python,
-        pytest, or streamlit directly.
+        Manual installation without the stx CLI:
+        pip install streamtex
+        git clone https://github.com/nicolasguelfi/streamtex-claude.git
+        mkdir my-project && cd my-project
+        python ../streamtex-claude/install.py project .
+        uv run streamlit run book.py
     """)
     st_space("v", 1)

@@ -123,20 +123,21 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Initialize a new StreamTeX workspace. Creates the directory
-        structure, stx.toml configuration, and a starter project.
+        Initialize a new StreamTeX workspace with stx.toml.
+        The --preset option controls which repos are declared.
+        Default preset is standard (docs + claude).
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace init my-workspace
+        stx workspace init .
+        stx workspace init . --preset user       # Claude profiles only
+        stx workspace init . --preset developer   # all 3 repos
 
         # Example output:
-        # Creating workspace 'my-workspace'...
-        #   Created stx.toml
-        #   Created projects/ directory
-        #   Created pyproject.toml
-        # Done. Run 'cd my-workspace' to get started.""",
+        # Workspace initialized: /path/to/workspace
+        #   stx.toml created (name='my-workspace', preset='standard')
+        #   projects/ directory created""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -145,20 +146,19 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Clone a workspace from a remote Git repository. Sets up the
-        full project structure and installs dependencies.
+        Clone all repos declared in stx.toml. The number of repos
+        depends on the workspace preset. Repos that already exist
+        locally are skipped.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace clone https://github.com/org/my-workspace.git
+        stx workspace clone
 
-        # Example output:
-        # Cloning workspace from https://github.com/org/my-workspace.git...
-        #   Cloned repository
-        #   Found 3 projects in stx.toml
-        #   Running uv sync...
-        # Done. Workspace ready.""",
+        # Example output (standard preset):
+        #   streamtex-docs: cloned
+        #   streamtex-claude: cloned
+        # Done: 2 cloned, 0 skipped""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -167,20 +167,41 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Link a local StreamTeX library checkout for development.
-        Changes to the library source are immediately available
-        in your workspace without reinstalling.
+        Run uv sync in docs and project repos for editable installs.
+        Only needed with the developer preset when you want changes
+        to the library source reflected immediately.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace link ../streamtex
+        stx workspace link
 
         # Example output:
-        # Linking StreamTeX library from ../streamtex...
-        #   Added editable source to pyproject.toml
-        #   Running uv sync...
-        # Done. Library linked for development.""",
+        #   streamtex-docs: running uv sync...
+        #   streamtex-docs: ok
+        # Done: 1 synced, 0 skipped""",
+        language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # ── stx workspace upgrade ─────────────────────────────────────
+    st_write(bs.sub, "stx workspace upgrade", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Upgrade a workspace to a higher preset. Adds missing repo
+        sections to stx.toml without touching existing configuration.
+        Run stx workspace clone after to fetch new repos.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        stx workspace upgrade developer
+        stx workspace clone
+
+        # Example output:
+        # Upgraded from 'standard' to 'developer'.
+        #   + streamtex
+        # Run stx workspace clone to clone the new repos.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

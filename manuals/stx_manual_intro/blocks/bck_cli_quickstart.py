@@ -114,6 +114,45 @@ stx lint
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
+    # --- Workspace presets ---
+    st_write(bs.sub, "Workspace presets", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Workspaces support 4 presets that control which repos
+        are cloned. Use --preset with stx workspace init,
+        or upgrade an existing workspace.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# basic — workspace only, no repos
+stx workspace init . --preset basic
+
+# user — Claude AI profiles only
+stx workspace init . --preset user
+
+# standard (default) — docs + Claude profiles
+stx workspace init .
+
+# developer — all 3 repos (library + docs + Claude)
+stx workspace init . --preset developer
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    show_explanation("""\
+        Upgrade an existing workspace to a higher preset.
+        This adds the missing repos to stx.toml without
+        touching existing configuration.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+stx workspace upgrade developer
+stx workspace clone    # clones newly declared repos
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
     # --- Ruff configuration ---
     st_write(bs.sub, "Ruff configuration", toc_lvl="+1")
     st_space("v", 1)

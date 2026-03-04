@@ -113,7 +113,7 @@ with st.popover("Show info card"):
                 st_write(s.large + s.bold + s.project.colors.primary_blue,
                          "StreamTeX Info")
                 st_space("v", 1)
-                with st_list(s.large, s.large, list_type="ul") as l:
+                with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
                     with l.item():
                         st_write(s.large, (s.bold, "Version"), ": 0.2.0")
                     with l.item():

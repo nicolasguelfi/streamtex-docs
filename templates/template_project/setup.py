@@ -1,7 +1,1 @@
-try:
-    import streamtex
-except ImportError:
-    import os
-    import sys
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-    
+"""Setup for template project."""

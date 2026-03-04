@@ -61,7 +61,7 @@ def build():
     """)
     st_space("v", 1)
 
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Position counter"), " showing \"current / total\" (e.g. \"3 / 12\")")
         with l.item():

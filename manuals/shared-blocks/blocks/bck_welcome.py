@@ -9,6 +9,7 @@ from streamtex.enums import Tags as t
 class BlockStyles:
     """Welcome block styles."""
     pass
+bs = BlockStyles
 
 
 def build():

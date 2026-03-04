@@ -8,6 +8,7 @@ import streamtex as stx
 class BlockStyles:
     """Shared footer styles."""
     pass
+bs = BlockStyles
 
 
 def build():

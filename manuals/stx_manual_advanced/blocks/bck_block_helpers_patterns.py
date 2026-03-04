@@ -48,7 +48,7 @@ All helpers automatically use your styles globally.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Define ", (s.bold, "ProjectBlockHelperConfig"), " with your styles")
         with l.item():
@@ -76,7 +76,7 @@ show_code("print('hello')")  # Uses s.project.containers.code_box
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "DRY"), ": Define styles once, use everywhere")
         with l.item():
@@ -103,7 +103,7 @@ Can override style per-call if needed.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Import helpers from ", (s.bold, "streamtex"), " or local blocks")
         with l.item():
@@ -130,7 +130,7 @@ Just call the function!
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Minimalist"), ": No classes or complexity")
         with l.item():
@@ -157,7 +157,7 @@ Add custom methods specific to your project.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Subclass ", (s.bold, "BlockHelper"), " or ", (s.bold, "ProjectBlockHelper"))
         with l.item():
@@ -193,7 +193,7 @@ helper.show_comparison("old_code()", "new_code()")
     """, language="python")
 
     st_write(s.project.titles.feature_title, "Benefits:")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Extensible"), ": Add custom logic before/after parent calls")
         with l.item():
@@ -220,7 +220,7 @@ Maximum flexibility when you need it.
     """)
 
     st_write(s.project.titles.feature_title, "How it works:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Config Injection"), " provides global styles (Pattern 1)")
         with l.item():
@@ -249,7 +249,7 @@ show_code("print('world')", style=s.custom.style)
     """, language="python")
 
     st_write(s.project.titles.feature_title, "When to use:")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Complex projects with varied requirements")
         with l.item():
@@ -273,7 +273,7 @@ Comparison of all patterns.
 Choose based on your project's needs and complexity level.
     """)
 
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Pattern 1 (Config Injection)"),
                      " — Complexity: Easy. Setup: One config class + set_block_helper_config(). Use when: Most projects, simple to medium complexity")
@@ -301,38 +301,38 @@ Guidelines for using block helpers effectively.
 Follow these to keep your helpers clean and maintainable.
     """)
 
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, (s.bold, "Start with Pattern 1"), " (Config Injection)")
-            with st_list(s.medium, s.medium, list_type="ul") as sub:
+            with st_list(list_type="ul", l_style=s.medium, li_style=s.medium) as sub:
                 with sub.item():
                     st_write(s.medium, "It covers 90% of use cases")
                 with sub.item():
                     st_write(s.medium, "Simple to understand and maintain")
         with l.item():
             st_write(s.large, (s.bold, "Add project-specific helpers"))
-            with st_list(s.medium, s.medium, list_type="ul") as sub:
+            with st_list(list_type="ul", l_style=s.medium, li_style=s.medium) as sub:
                 with sub.item():
                     st_write(s.medium, "Create helpers unique to your project")
                 with sub.item():
                     st_write(s.medium, "Keep them in blocks/helpers.py")
         with l.item():
             st_write(s.large, (s.bold, "Only use OOP when you need it"))
-            with st_list(s.medium, s.medium, list_type="ul") as sub:
+            with st_list(list_type="ul", l_style=s.medium, li_style=s.medium) as sub:
                 with sub.item():
                     st_write(s.medium, "Don't over-engineer simple cases")
                 with sub.item():
                     st_write(s.medium, "Use when you have custom logic to add")
         with l.item():
             st_write(s.large, (s.bold, "Document your helpers"))
-            with st_list(s.medium, s.medium, list_type="ul") as sub:
+            with st_list(list_type="ul", l_style=s.medium, li_style=s.medium) as sub:
                 with sub.item():
                     st_write(s.medium, "Add docstrings explaining purpose")
                 with sub.item():
                     st_write(s.medium, "Show usage examples in docstrings")
         with l.item():
             st_write(s.large, (s.bold, "Keep helper functions pure"))
-            with st_list(s.medium, s.medium, list_type="ul") as sub:
+            with st_list(list_type="ul", l_style=s.medium, li_style=s.medium) as sub:
                 with sub.item():
                     st_write(s.medium, "Same input → same output")
                 with sub.item():
@@ -389,7 +389,7 @@ Choose what works for your project.
     """)
 
     st_write(s.project.titles.feature_title, "Recommended path:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Start with ", (s.bold, "Config Injection"), " (Pattern 1)")
         with l.item():
@@ -400,7 +400,7 @@ Choose what works for your project.
             st_write(s.large, "Expert pattern for edge cases")
 
     st_write(s.project.titles.feature_title, "Learn more:")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "See ", (s.bold, "stx_manual_intro/blocks/helpers.py"), " for minimal example")
         with l.item():
@@ -409,7 +409,7 @@ Choose what works for your project.
             st_write(s.large, "See ", (s.bold, "documentation/template_project/blocks/helpers.py"), " for annotated template")
 
     st_write(s.project.titles.feature_title, "Next steps:")
-    with st_list(s.large, s.large, list_type="ol") as l:
+    with st_list(list_type="ol", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Try each pattern in a small block")
         with l.item():

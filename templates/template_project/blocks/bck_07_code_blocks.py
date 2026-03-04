@@ -115,7 +115,7 @@ def build():
     st_space("v", 1)
     with st_block(s.project.containers.callout):
         st_write(s.project.colors.accent + s.bold, "Tip")
-        with st_list(s.large, s.large):
+        with st_list(l_style=s.large, li_style=s.large):
             st_write(s.large, (s.bold, "st_code()"), " uses ", (s.bold, "Pygments"), " for syntax highlighting")
             st_write(s.large, "Font size adapts automatically via ", (s.bold, "--stx-code-size"))
             st_write(s.large, "Use ", (s.bold, "wrap=True"), " for JSON/logs, ", (s.bold, "wrap=False"), " (default) for aligned code")

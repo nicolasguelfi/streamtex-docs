@@ -53,7 +53,7 @@ def build():
     st_space("v", 1)
     with st_block(s.project.containers.callout):
         st_write(s.project.colors.accent + s.bold, "Tip")
-        with st_list(s.large, s.large):
+        with st_list(l_style=s.large, li_style=s.large):
             st_write(s.large, (s.bold, "st_include()"), " — compose pages from reusable sub-blocks")
             st_write(s.large, (s.bold, "st_overlay()"), " — place layers at absolute pixel positions over a base element")
     st_space("v", 1)

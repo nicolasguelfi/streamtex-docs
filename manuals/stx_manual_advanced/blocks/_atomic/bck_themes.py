@@ -157,7 +157,7 @@ sts.theme = dark""")
         st_space("v", 1)
 
         st_write(s.large, (s.bold, "DO:"))
-        with st_list(s.large, s.large, list_type="ul") as l:
+        with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
             with l.item():
                 st_write(s.large, "Use consistent color palettes (same hue, different lightness)")
             with l.item():
@@ -170,7 +170,7 @@ sts.theme = dark""")
                 st_write(s.large, "Test both light and dark modes")
 
         st_write(s.large, (s.bold, "DON'T:"))
-        with st_list(s.large, s.large, list_type="ul") as l:
+        with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
             with l.item():
                 st_write(s.large, "Hardcode black (#000000) or white (#FFFFFF)")
             with l.item():

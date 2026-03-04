@@ -36,20 +36,21 @@ def build():
  |-- .stx-profile              # Profile type identifier
  |-- settings.json              # Claude Code permission config
  |
- |-- references/
+ |-- references/                # Shared (read-only, from shared/references/)
  |    |-- coding_standards.md   # Full coding standards
  |    +-- streamtex_cheatsheet_en.md  # Syntax reference
+ |
+ |-- commands/
+ |    |-- stx-guide.md          # Shared (read-only, from shared/commands/)
+ |    +-- developer/
+ |         |-- test-run.md      # /test-run command
+ |         |-- lint.md          # /lint command
+ |         +-- deploy.md        # /deploy command
  |
  |-- developer/
  |    +-- skills/
  |         |-- architecture.md  # Architecture knowledge
  |         +-- testing-patterns.md  # Testing patterns
- |
- +-- commands/
-      +-- developer/
-           |-- test-run.md      # /test-run command
-           |-- lint.md          # /lint command
-           +-- deploy.md        # /deploy command
 
 CLAUDE.md                       # Root rules file (project root)""", language="text")
         st_space("v", 2)

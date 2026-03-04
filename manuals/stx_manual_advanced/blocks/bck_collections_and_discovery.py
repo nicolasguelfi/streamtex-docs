@@ -274,7 +274,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
     st_space("v", 1)
 
     st_write(s.large, (s.bold, "Single Project"), " (st_book):")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "One application/course/documentation")
         with l.item():
@@ -283,7 +283,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
             st_write(s.large, "Example: \"Python Training Course\"")
 
     st_write(s.large, (s.bold, "Collection"), " (st_collection or custom st_book):")
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Multiple projects in one hub")
         with l.item():
@@ -294,7 +294,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
             st_write(s.large, "Example: \"Training Platform\" with Intro, Advanced, Deploy courses")
 
     st_write(s.large, (s.bold, "When to use Collections:"))
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Multiple independent projects to manage")
         with l.item():
@@ -311,7 +311,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
     st_space("v", 1)
 
     st_write(s.large, (s.bold, "Configuration:"))
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Use TOML for static collections (easier to maintain)")
         with l.item():
@@ -320,7 +320,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
             st_write(s.large, "Always specify ", (s.bold, "project_url"), " correctly (must match running port)")
 
     st_write(s.large, (s.bold, "Content:"))
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Use meaningful project titles and descriptive descriptions")
         with l.item():
@@ -329,7 +329,7 @@ STX_URL_TEST_ADVANCED=https://advanced.onrender.com
             st_write(s.large, "Set correct order (1, 2, 3...) to control project sequence")
 
     st_write(s.large, (s.bold, "Deployment:"))
-    with st_list(s.large, s.large, list_type="ul") as l:
+    with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
         with l.item():
             st_write(s.large, "Test all project URLs before deploying collection")
         with l.item():

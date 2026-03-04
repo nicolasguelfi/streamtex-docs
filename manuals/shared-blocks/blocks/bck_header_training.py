@@ -14,20 +14,21 @@ class BlockStyles:
         "training_header"
     )
     header_text = Style("color: white;", "training_header_text")
+bs = BlockStyles
 
 
 def build():
     """Render a standard training course header."""
     st_space("v", 1)
 
-    with st_block(BlockStyles.header):
+    with st_block(bs.header):
         st_write(
-            stx.StxStyles.huge + stx.StxStyles.bold + BlockStyles.header_text,
+            stx.StxStyles.huge + stx.StxStyles.bold + bs.header_text,
             "StreamTeX Training Course",
             tag=t.div
         )
         st_write(
-            stx.StxStyles.large + BlockStyles.header_text,
+            stx.StxStyles.large + bs.header_text,
             "A Streamlit-based content rendering framework",
             tag=t.div
         )

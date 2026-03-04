@@ -187,7 +187,7 @@ with st_overlay(s.container.sizes.width_full) as o:
         st_space("v", 1)
 
         st_write(s.large, (s.bold, "DO:"))
-        with st_list(s.large, s.large, list_type="ul") as l:
+        with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
             with l.item():
                 st_write(s.large, "Use overlays for static decorative elements")
             with l.item():
@@ -200,7 +200,7 @@ with st_overlay(s.container.sizes.width_full) as o:
                 st_write(s.large, "Keep overlay content minimal (text or icons)")
 
         st_write(s.large, (s.bold, "DON'T:"))
-        with st_list(s.large, s.large, list_type="ul") as l:
+        with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
             with l.item():
                 st_write(s.large, "Hide important content under overlays")
             with l.item():
@@ -213,7 +213,7 @@ with st_overlay(s.container.sizes.width_full) as o:
                 st_write(s.large, "Overlap too many layers (becomes unreadable)")
 
         st_write(s.large, (s.bold, "Limitations:"))
-        with st_list(s.large, s.large, list_type="ul") as l:
+        with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
             with l.item():
                 st_write(s.large, "Overlays are not interactive (no click events)")
             with l.item():

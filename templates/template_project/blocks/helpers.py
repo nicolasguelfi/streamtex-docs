@@ -56,21 +56,16 @@ set_block_helper_config(ProjectBlockHelperConfig())
 
 
 # ============================================================================
-# Project-specific helpers (add your own below)
+# Project-specific helpers
 # ============================================================================
-# Examples:
-#
-# def show_welcome_box(title: str, subtitle: str):
-#     """Homepage welcome section."""
-#     with st_block(s.project.welcome_style):
-#         st_write(s.titles.page_title, title)
-#         st_write(s.titles.subtitle, subtitle)
-#
-#
-# def show_feature_box(icon: str, name: str, description: str):
-#     """Feature highlight card."""
-#     with st_block(s.project.feature_style):
-#         st_write(s.project.feature_icon, icon)
-#         st_write(s.titles.feature_title, name)
-#         st_space("v", 1)
-#         st_write(s.body, description)
+
+def show_tip(text: str):
+    """Render a tip callout box with the project's callout style."""
+    from streamtex import st_block, st_write, st_space
+    from custom.styles import Styles as s
+
+    st_space("v", 1)
+    with st_block(s.project.containers.callout):
+        st_write(s.project.colors.accent + s.bold, "Tip")
+        st_write(s.large, text)
+    st_space("v", 1)

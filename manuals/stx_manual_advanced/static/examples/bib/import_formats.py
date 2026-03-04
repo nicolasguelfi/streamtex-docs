@@ -11,6 +11,6 @@ def parse_yaml(path):
     import yaml
     with open(path) as f:
         data = yaml.safe_load(f)
-    return [BibEntry(key=d["key"], ...) for d in data]
+    return [BibEntry(key=d["key"], title=d["title"]) for d in data]
 
 register_bib_parser("yaml", parse_yaml)

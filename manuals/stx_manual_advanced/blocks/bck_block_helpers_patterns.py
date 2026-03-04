@@ -4,11 +4,10 @@ This block explains the hybrid block helpers system available in StreamTeX.
 Shows all 3 patterns with live code examples.
 """
 
-from streamtex import st_write, st_block, st_space, st_br
+from streamtex import st_write, st_space
 from custom.styles import Styles as s
 from blocks.helpers import (
     show_code, show_explanation, show_details,
-    ProjectBlockHelper, ExpertBlockHelper,
     demonstrate_simple_pattern,
     demonstrate_config_pattern,
     demonstrate_oop_pattern,

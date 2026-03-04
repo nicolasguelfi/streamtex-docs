@@ -4,7 +4,6 @@ from streamtex import (
     BlockHelperConfig, set_block_helper_config,
     show_code, show_code_inline, show_explanation, show_details,  # noqa: F401
 )
-from custom.styles import Styles as s
 
 
 class ProjectBlockHelperConfig(BlockHelperConfig):

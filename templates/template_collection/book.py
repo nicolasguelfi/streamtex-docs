@@ -1,7 +1,6 @@
 """StreamTeX Collection - Hub for multiple projects."""
 
 import streamlit as st
-import setup
 from streamtex import st_collection, CollectionConfig
 from custom.styles import Styles as s
 from custom.themes import dark

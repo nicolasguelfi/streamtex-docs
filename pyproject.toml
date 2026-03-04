@@ -12,6 +12,7 @@ dependencies = [
 dev = [
     "pytest>=7.0",
     "ruff>=0.4.0",
+    "pre-commit>=3.0",
 ]
 
 [tool.uv]
@@ -20,6 +21,15 @@ default-groups = ["dev"]
 # Override for local dev — points to adjacent library repo
 [tool.uv.sources]
 streamtex = { path = "../streamtex", editable = true }
+
+[tool.ruff.lint]
+ignore = ["F403", "F405", "E701", "E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# Code snippet files shown in manuals — intentionally partial (no imports)
+"**/static/examples/**/*.py" = ["F821", "F811", "E501", "E402"]
+# Template setup.py — intentional import-for-side-effect pattern
+"templates/**/setup.py" = ["F401"]
 
 [tool.pyright]
 extraPaths = ["../streamtex"]

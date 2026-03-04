@@ -1,8 +1,5 @@
-import streamlit as st
 from streamtex import *
-import streamtex as stx
-from streamtex.styles import Style as ns, StyleGrid as sg
-from streamtex.enums import Tags as t, ListTypes as lt
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
@@ -120,4 +117,41 @@ uv run ruff check streamtex/core/writer.py""", language="bash")
             Run uv run ruff check before every commit. CI will
             reject pull requests with lint errors. Use --fix for
             quick cleanup, but always verify the changes.
+        """)
+        st_space("v", 2)
+
+        # --- Pre-commit hooks ---
+        st_write(bs.sub, "Pre-commit hooks", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Every StreamTeX repo uses pre-commit to auto-run ruff
+            before each commit. This catches import ordering (I001)
+            and other issues before they reach CI.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# .pre-commit-config.yaml (identical in every repo)
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.2
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]""", language="yaml")
+        st_space("v", 1)
+
+        show_code("""\
+# Setup (once per repo)
+uv sync                       # installs pre-commit
+uv run pre-commit install     # activates the git hook
+
+# Workspace-wide install
+stx workspace hooks           # all repos + projects/""", language="bash")
+        st_space("v", 1)
+
+        show_explanation("""\
+            --exit-non-zero-on-fix aborts the commit when ruff
+            modifies files. This lets you review changes, re-stage,
+            and commit again with clean code.
         """)

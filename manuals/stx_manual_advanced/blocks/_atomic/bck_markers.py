@@ -4,7 +4,7 @@ Covers: manual markers (visible/invisible), auto-markers from TOC,
 and the marker= parameter on st_write.
 """
 
-from streamtex import st_write, st_block, st_space, st_marker, st_include
+from streamtex import st_write, st_space, st_marker
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details

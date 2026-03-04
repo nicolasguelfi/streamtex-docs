@@ -4,7 +4,7 @@ Covers continuous vs paginated behaviour, cross-page navigation,
 the floating widget internals, and the 3-file architecture.
 """
 
-from streamtex import st_write, st_block, st_space
+from streamtex import st_write, st_space
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details

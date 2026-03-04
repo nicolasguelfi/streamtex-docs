@@ -1,6 +1,5 @@
 """Shared best practices block for training courses."""
 
-import streamlit as st
 from streamtex import *
 import streamtex as stx
 

@@ -20,9 +20,7 @@ from streamtex import (
     BlockHelperConfig, BlockHelper,  # noqa: F401
     show_code, show_code_inline, show_explanation, show_details,  # noqa: F401
     set_block_helper_config,
-    st_write, st_block, st_space,
 )
-from custom.styles import Styles as s
 
 
 # ============================================================================

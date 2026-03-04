@@ -1,6 +1,5 @@
 """Shared welcome block for training courses."""
 
-import streamlit as st
 from streamtex import *
 from streamtex.styles import Style
 import streamtex as stx

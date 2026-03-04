@@ -1,6 +1,5 @@
 """Developer Guide welcome page — prerequisites and overview."""
 
-import streamlit as st
 from custom.styles import Styles as s
 import streamtex as stx
 from streamtex import *

@@ -1,4 +1,3 @@
-from streamtex.export import ExportConfig
 
 # Print-friendly CSS for exports
 export_css = """

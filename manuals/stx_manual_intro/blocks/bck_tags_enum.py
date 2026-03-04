@@ -4,7 +4,7 @@ This block explains the Tags enum used in StreamTeX for semantic markup.
 Tags help create properly structured HTML with semantic meaning.
 """
 
-from streamtex import st_write, st_block, st_space
+from streamtex import st_write, st_space
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details

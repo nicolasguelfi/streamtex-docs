@@ -1,7 +1,6 @@
 """StreamTeX Advanced Course - Test Project (Advanced Level + Phase 1/2 Features)."""
 
 import streamlit as st
-import setup
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig
 from streamtex.bib import BibConfig, BibFormat, CitationStyle

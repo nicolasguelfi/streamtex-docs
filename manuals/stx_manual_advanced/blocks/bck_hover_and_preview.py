@@ -1,6 +1,5 @@
 """Hover effects and link preview demonstration."""
 
-import streamlit as st
 from streamtex import *
 from streamtex.styles import Style
 from streamtex.enums import Tags as t

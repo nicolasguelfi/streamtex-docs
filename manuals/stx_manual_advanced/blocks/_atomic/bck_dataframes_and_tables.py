@@ -1,8 +1,7 @@
-import streamlit as st
 from streamtex import *
 import streamtex as stx
-from streamtex.styles import Style as ns, StyleGrid as sg
-from streamtex.enums import Tags as t, ListTypes as lt
+from streamtex.styles import StyleGrid as sg
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 

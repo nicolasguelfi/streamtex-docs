@@ -1,4 +1,4 @@
-from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig
+from streamtex import st_book, MarkerConfig, BannerConfig
 
 marker_config = MarkerConfig(
     auto_marker_on_toc=1,             # Level-1 TOC headings = markers

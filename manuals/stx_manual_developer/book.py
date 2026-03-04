@@ -1,10 +1,8 @@
 """StreamTeX Developer Guide - Library Contributors Manual."""
 
 import streamlit as st
-import setup
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig
-from pathlib import Path
 
 from custom.styles import Styles as s
 from custom.themes import dark

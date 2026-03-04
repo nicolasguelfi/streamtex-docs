@@ -1,8 +1,6 @@
 """Welcome block — deployment overview and decision matrix."""
 
-import streamlit as st
 from streamtex import *
-import streamtex as stx
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation, show_details

@@ -7,7 +7,7 @@ code alongside the rendered result.
 
 from streamtex import *
 import streamtex as stx
-from streamtex.styles import Style, StyleGrid as sg
+from streamtex.styles import Style
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_code_inline

@@ -4,7 +4,7 @@ This block explains how to customize ul/ol lists with ListStyle.
 Control symbols, levels, nesting, and list styling.
 """
 
-from streamtex import st_write, st_block, st_space, st_list, ListStyle, Style
+from streamtex import st_write, st_block, st_space, Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details

@@ -1,13 +1,11 @@
 """Export-aware widgets demonstration (Phase 1 feature)."""
 
-import streamlit as st
 from streamtex import *
 import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 import pandas as pd
-import numpy as np
 
 
 class BlockStyles:

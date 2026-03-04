@@ -1,7 +1,7 @@
 """Banner Configuration — BannerMode and BannerConfig reference."""
 
 from streamtex import (
-    st_write, st_block, st_space, st_grid,
+    st_write, st_space,
 )
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s

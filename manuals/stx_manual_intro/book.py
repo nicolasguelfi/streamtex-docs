@@ -1,7 +1,6 @@
 """StreamTeX Introduction Course - Test Project (Intro Level)."""
 
 import streamlit as st
-import setup
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig
 from pathlib import Path

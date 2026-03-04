@@ -5,10 +5,9 @@ example, and keyboard safety notes.
 """
 
 from streamtex import (
-    st_write, st_block, st_space, st_grid,
+    st_write, st_block, st_space,
 )
 from streamtex.enums import Tags as t
-from streamtex.styles import Style, StyleGrid
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
@@ -164,6 +163,6 @@ def _field_row(name: str, type_str: str, default: str, desc: str):
     with st_block(s.project.containers.explanation_box):
         st_write(bs.field_name, f"{name}")
         st_write(s.large,
-                 (s.bold, f"Type: "), f"{type_str}  —  ",
+                 (s.bold, "Type: "), f"{type_str}  —  ",
                  (s.bold, "Default: "), f"{default}")
         st_write(bs.field_desc, desc)

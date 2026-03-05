@@ -14,8 +14,8 @@
 name: Deploy to Render
 
 on:
-  push:
-    branches: [main]
+  # push:              # DISABLED — manual deploy only (free tier limits)
+  #   branches: [main] # Uncomment to re-enable auto-deploy when docs are stable
   workflow_dispatch:   # manual trigger always deploys all services
 
 jobs:

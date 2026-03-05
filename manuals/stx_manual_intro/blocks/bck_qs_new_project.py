@@ -107,6 +107,6 @@ uv run streamlit run book.py
 
         To upgrade an existing workspace to a higher preset:
         stx workspace upgrade developer
-        stx workspace clone
+        stx workspace update
     """)
     st_space("v", 1)

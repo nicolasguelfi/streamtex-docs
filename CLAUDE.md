@@ -70,7 +70,9 @@ streamtex-docs/
 ├── manuals/
 │   ├── stx_manual_intro/       # Introduction course
 │   ├── stx_manual_advanced/    # Advanced features
+│   ├── stx_manual_ai/          # AI & Claude integration
 │   ├── stx_manual_deploy/      # Deployment guide
+│   ├── stx_manual_developer/   # Developer guide
 │   ├── stx_manuals_collection/ # Collection hub
 │   └── shared-blocks/          # Shared block library
 ├── references/
@@ -88,6 +90,38 @@ uv run streamlit run manuals/stx_manual_advanced/book.py
 uv run streamlit run manuals/stx_manual_deploy/book.py
 uv run streamlit run manuals/stx_manuals_collection/book.py
 ```
+
+## Gotchas critiques (generation de code)
+
+### `show_explanation()` est une fonction, PAS un context manager
+`show_explanation("texte")` cree un cadre, ecrit le texte, et **ferme le cadre** en retournant.
+Tout ce qui suit (st_list, st_write, etc.) est rendu **en dehors** du cadre.
+- **MAUVAIS** : `show_explanation("intro")` suivi de `st_list(...)` → liste hors du cadre
+- **BON** : `with st_block(s.project.containers.explanation_box):` puis `st_write(...)` + `st_list(...)` a l'interieur
+- Meme logique pour `show_details()` et `show_code()` — ce sont des fonctions, pas des context managers
+
+### `from streamtex import *` masque `list()`
+`st_list` ecrase le builtin Python `list()`. Utiliser `[*iterable]` au lieu de `list(iterable)`.
+
+### Styles inline multiples : UN seul `st_write` avec des tuples
+Plusieurs appels `st_write` s'empilent verticalement. Pour du texte inline avec des styles differents :
+`st_write(s.Large, (s.red, "Rouge "), (s.blue, "Bleu"))` — un seul appel.
+
+## Release workflow (publication PyPI)
+1. Bumper la version dans `pyproject.toml` + `streamtex/__init__.py` (dans le repo `streamtex`)
+2. `uv run pytest tests/ -v && uv run ruff check streamtex/`
+3. `uv lock && git add pyproject.toml streamtex/__init__.py uv.lock && git commit && git push`
+4. `gh release create vX.Y.Z -R nicolasguelfi/streamtex` → declenche publish.yml → PyPI
+
+## Render Deploy — Mode Manuel Actif
+Le trigger `push` est **desactive** dans `.github/workflows/render-deploy.yml` (free tier limits).
+- Les deploys se font **uniquement** via : `gh workflow run render-deploy.yml -R nicolasguelfi/streamtex-docs`
+- **Apres une serie de commits importants sur les manuels**, propose a l'utilisateur de declencher un deploy manuel
+- Pour reactiver l'auto-deploy quand la doc est stable : decommenter les lignes `push` dans le workflow
+
+## CLI — Commande unifiee install/upgrade
+Toujours utiliser `uv tool install "streamtex[cli]" -U` dans la doc et les instructions utilisateur.
+Cette commande fonctionne pour l'installation ET la mise a jour. Ne PAS utiliser `uv tool upgrade` (echoue si pas deja installe).
 
 ## Workflows
 1. **New Block** -> Read coding_standards.md, inspect existing blocks (`/designer:block-new`)

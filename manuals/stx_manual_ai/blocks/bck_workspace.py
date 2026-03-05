@@ -16,7 +16,7 @@ bs = BlockStyles
 
 
 def build():
-    """Workspace Setup — init, clone, link, and stx.toml."""
+    """Workspace Setup — init, update, and stx.toml."""
     st_space("v", 1)
     st_write(bs.heading, "Workspace Setup", tag=t.div, toc_lvl="1")
     st_space("v", 2)
@@ -47,38 +47,25 @@ def build():
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- stx workspace clone ---
-    st_write(bs.sub, "Clone Workspace Repos", toc_lvl="+1")
+    # --- stx workspace update ---
+    st_write(bs.sub, "Update a Workspace", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Clone all repos declared in stx.toml. The number of repos
-        depends on the workspace preset. Already-cloned repos
-        are skipped. Shared commands (like /stx-guide) are also
-        installed globally to ~/.claude/commands/.
+        The single command for all workspace operations: clone repos,
+        pull latest changes, sync dependencies, install pre-commit
+        hooks, update Claude profiles, and install global commands.
+        Use it after init and whenever you need to update.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace clone
-        # Also installs shared commands globally (~/.claude/commands/)
-    """, language="bash", line_numbers=False)
-    st_space("v", 2)
-
-    # --- stx workspace link ---
-    st_write(bs.sub, "Link for Development", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_explanation("""\
-        Run uv sync in docs and project repos for editable installs.
-        Only needed with the developer preset when you want library
-        source changes reflected immediately.
-    """)
-    st_space("v", 1)
-
-    show_code("""\
-        # Developer preset only
-        stx workspace link
+        stx workspace update
+        # Fine-grained control
+        stx workspace update --skip-sync      # skip uv sync
+        stx workspace update --skip-profiles  # skip Claude profile update
+        stx workspace update --dry-run        # show steps without executing
+        stx workspace update --repair         # fix broken venv, missing __init__.py
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 

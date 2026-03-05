@@ -172,18 +172,18 @@ stx lint                    # Lance ruff check streamtex/
 stx lint -- --fix           # Auto-fix des problemes de lint
 ```
 
-### Workspace
+### Workspace (4 commandes essentielles)
 
 ```bash
 stx workspace init [PATH]         # Initialise un workspace (cree stx.toml + projects/)
   --name NAME                     # Nom du workspace (defaut: nom du repertoire)
   --preset PRESET                 # Preset d'installation: basic, user, standard (defaut), developer
 
-stx workspace clone               # Clone tous les repos declares dans stx.toml
-
-stx workspace link                # uv sync dans les repos docs/project (editable installs)
-
-stx workspace sync                # uv sync dans TOUS les repos du workspace
+stx workspace update              # Pull + clone + sync + hooks + profiles + global commands
+  --skip-sync                     # Skip uv sync
+  --skip-profiles                 # Skip mise a jour des profils Claude
+  --dry-run                       # Affiche les etapes sans executer
+  --repair                        # Active les checks de reparation (venv, __init__.py, paths)
 
 stx workspace status              # Git status de tous les repos (branche, clean/dirty, ahead/behind)
 
@@ -192,6 +192,9 @@ stx workspace upgrade PRESET      # Upgrade le workspace vers un preset superieu
                                   # Ajoute les repos manquants dans stx.toml
                                   # Ne permet pas de downgrade
 ```
+
+> **Commandes deprecees** : `clone`, `sync`, `link`, `hooks` fonctionnent encore
+> mais affichent un avertissement et redirigent vers `stx workspace update`.
 
 ### Claude profiles
 
@@ -303,20 +306,15 @@ mkdir streamtex-dev && cd streamtex-dev
 # 2. Initialiser le workspace
 stx workspace init .
 
-# 3. (Optionnel) Decommentez les repos souhaites dans stx.toml
+# 3. Tout installer (clone + sync + hooks + profiles + global commands)
+stx workspace update
 
-# 4. Cloner tous les repos
-stx workspace clone
-
-# 5. Configurer les editable installs
-stx workspace link
-
-# 6. Verifier l'etat
+# 4. Verifier l'etat
 stx workspace status
 
-# 7. (Optionnel) Upgrader vers un preset superieur
+# 5. (Optionnel) Upgrader vers un preset superieur
 stx workspace upgrade developer    # Ajoute les repos manquants (library, docs, claude)
-stx workspace clone                # Clone les nouveaux repos ajoutes
+stx workspace update               # Clone + sync les nouveaux repos
 ```
 
 ### 4.2 Creation d'un nouveau projet
@@ -411,13 +409,39 @@ stx deploy render . --env STX_PASSWORD=secret --env DEBUG=true
 # 3. Connecter le repo sur https://dashboard.render.com
 ```
 
-#### Auto-deploy via GitHub Actions (filtrage intelligent)
+#### Deploy Render — mode manuel vs auto-deploy
 
-Les repos avec un `render.yaml` utilisent un workflow GitHub Actions
-(`.github/workflows/render-deploy.yml`) pour declencher automatiquement
-le deploiement des services Render **affectes** a chaque push sur `main`.
+Le workflow GitHub Actions (`.github/workflows/render-deploy.yml`) supporte
+deux modes :
 
-**Filtrage intelligent** : le workflow ne redéploie que les services dont les fichiers ont changé :
+**Mode actuel : MANUEL UNIQUEMENT** (free tier — economise les build minutes)
+
+Le trigger `push` est desactive. Les deploys se font uniquement a la demande :
+
+```bash
+# Deployer tous les services manuellement :
+gh workflow run render-deploy.yml -R nicolasguelfi/<repo>
+
+# Ou via le bouton "Run workflow" sur GitHub Actions
+```
+
+> **Conseil** : pendant le developpement actif de la documentation, garder
+> le mode manuel pour ne pas consommer les minutes du plan gratuit Render.
+> Penser a deployer manuellement apres une serie de commits importants.
+
+**Mode auto-deploy** (a reactiver quand la doc est stable)
+
+Pour reactiver l'auto-deploy, decommenter les lignes `push` dans le workflow :
+
+```yaml
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+```
+
+Quand l'auto-deploy est actif, le **filtrage intelligent** ne redéploie que
+les services dont les fichiers ont changé :
 - Modification dans `manuals/stx_manual_intro/**` → redéploie uniquement `streamtex-intro`
 - Modification dans `manuals/stx_manual_advanced/**` → redéploie uniquement `streamtex-advanced`
 - Modification de fichiers partagés (`Dockerfile`, `pyproject.toml`, `shared-blocks/`, `.github/`, `scripts/`) → redéploie **TOUS** les services
@@ -428,9 +452,6 @@ Le mapping service↔dossier est extrait automatiquement de la variable `FOLDER`
 ```bash
 # Setup (une seule fois par repo) :
 gh secret set RENDER_API_KEY -R nicolasguelfi/<repo> --body "<cle-api-render>"
-
-# Declenchement manuel (deploie tous les services) :
-gh workflow run render-deploy.yml -R nicolasguelfi/<repo>
 ```
 
 > **Note** : le workflow bypasse la GitHub App de Render qui peut silencieusement
@@ -595,7 +616,7 @@ uv sync                       # Installe pre-commit (dev dep)
 uv run pre-commit install     # Active le hook git
 
 # Installation dans tout le workspace
-stx workspace hooks           # Tous les repos + projects/
+stx workspace update           # Installe les hooks dans tous les repos + projects/
 
 # Lancer manuellement sur tous les fichiers
 uv run pre-commit run --all-files
@@ -699,7 +720,7 @@ Le binaire `stx` installe via `uv tool` est une copie figee.
 Il faut le mettre a jour pour qu'il connaisse les derniers changements :
 
 ```bash
-uv tool upgrade streamtex[cli]
+uv tool install "streamtex[cli]" -U
 stx --version    # doit afficher X.Y.Z
 ```
 
@@ -715,47 +736,39 @@ stx claude check           # tout doit etre "up to date"
 
 | Changement | Quoi publier | Action utilisateur |
 |---|---|---|
-| Librairie seulement | PyPI (phase 2) | `uv tool upgrade` + `stx workspace sync` |
-| Profils Claude seulement | git push (phase 3) | `stx workspace clone` + `stx claude update --all` |
+| Librairie seulement | PyPI (phase 2) | `uv tool install "streamtex[cli]" -U` + `stx workspace update` |
+| Profils Claude seulement | git push (phase 3) | `stx workspace update` + `stx claude update --all` |
 | Librairie + profils | Phases 2 + 3 + 4 | Workflow complet (voir 4.11) |
-| Docs seulement | git push (phase 3) | `stx workspace clone` (Render deploie automatiquement) |
+| Docs seulement | git push (phase 3) | `stx workspace update` (Render deploie automatiquement) |
 
 ---
 
 ### 4.11 Mise a jour — workflow utilisateur (topic: `update`)
 
 Apres une nouvelle release StreamTeX, voici comment mettre a jour son
-workspace et tous ses projets.
+workspace et tous ses projets. **Seulement 2 commandes** :
 
 **Etape 1 — Mettre a jour le CLI**
 
 ```bash
-uv tool upgrade streamtex[cli]
+uv tool install "streamtex[cli]" -U
 ```
 
 > Important : sans cette etape, `stx` utilise l'ancienne version du code
 > et ne detecte/propage pas les nouveaux fichiers (ex: shared/commands/).
 
-**Etape 2 — Mettre a jour les repos du workspace**
+**Etape 2 — Mettre a jour le workspace**
 
 ```bash
 cd streamtex-dev/
-stx workspace clone          # git pull sur tous les repos declares dans stx.toml
+stx workspace update         # pull + clone + sync + hooks + profiles + global commands
 ```
 
-**Etape 3 — Mettre a jour les dependances Python**
+> `stx workspace update` fait tout : git pull, clone des nouveaux repos,
+> uv sync, installation des hooks pre-commit, mise a jour des profils Claude,
+> et installation des commandes globales.
 
-```bash
-stx workspace sync           # uv sync dans tous les repos et projets
-```
-
-**Etape 4 — Propager les profils Claude**
-
-```bash
-stx claude update --all      # propage les commandes, skills, agents, references
-```
-
-**Etape 5 — Verifier**
+**Verifier** (optionnel) :
 
 ```bash
 stx claude check             # doit afficher "up to date" pour chaque projet
@@ -764,8 +777,8 @@ stx claude check             # doit afficher "up to date" pour chaque projet
 **Nouveaux utilisateurs** : tout est automatique a l'installation :
 
 ```bash
-uv tool install streamtex[cli]
-stx workspace init . && stx workspace clone && stx workspace link
+uv tool install "streamtex[cli]"
+stx workspace init . && stx workspace update
 stx project new mon-projet
 # → derniere version PyPI + derniers profils GitHub
 ```
@@ -828,10 +841,8 @@ stx project new mon-projet
 | Tache | Commande |
 |-------|----------|
 | Initialiser un workspace | `stx workspace init .` |
-| Cloner tous les repos | `stx workspace clone` |
+| Tout mettre a jour | `stx workspace update` |
 | Etat du workspace | `stx workspace status` |
-| Synchroniser les deps | `stx workspace sync` |
-| Installer pre-commit hooks | `stx workspace hooks` |
 | Upgrader le preset | `stx workspace upgrade developer` |
 | Creer un projet (minimal) | `stx project new <name>` |
 | Creer un projet (template riche) | `stx project new <name> --template project` |

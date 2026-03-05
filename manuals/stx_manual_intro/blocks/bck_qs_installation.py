@@ -77,8 +77,8 @@ uv tool install streamtex[cli]
     show_code("""\
 mkdir streamtex-dev && cd streamtex-dev
 stx workspace init . --preset standard  # basic | user | standard | developer
-stx workspace clone
-# Shared commands (like /stx-guide) are installed globally to ~/.claude/commands/
+stx workspace update
+# Clones repos, syncs deps, installs hooks, updates profiles and global commands
 """, language="bash", line_numbers=False)
     st_space("v", 1)
 
@@ -92,7 +92,7 @@ stx workspace clone
             with l.item():
                 st_write(s.large, (s.bold, "standard"), " (default) — adds streamtex-docs + streamtex-claude. Enables rich templates (--template project) and local documentation alongside Claude profiles.")
             with l.item():
-                st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs (stx workspace link) so library source changes are reflected immediately.")
+                st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs so library source changes are reflected immediately.")
     st_space("v", 2)
 
     # --- Create and run a project ---

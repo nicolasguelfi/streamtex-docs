@@ -158,7 +158,7 @@ stx workspace init . --preset developer
 
     show_code("""\
 stx workspace upgrade developer
-stx workspace clone    # clones newly declared repos
+stx workspace update   # clones + syncs newly declared repos
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 

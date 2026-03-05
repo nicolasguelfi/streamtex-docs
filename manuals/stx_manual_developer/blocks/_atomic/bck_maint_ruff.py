@@ -147,7 +147,7 @@ uv sync                       # installs pre-commit
 uv run pre-commit install     # activates the git hook
 
 # Workspace-wide install
-stx workspace hooks           # all repos + projects/""", language="bash")
+stx workspace update           # installs hooks in all repos + projects/""", language="bash")
         st_space("v", 1)
 
         show_explanation("""\

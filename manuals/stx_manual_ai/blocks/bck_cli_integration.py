@@ -141,45 +141,34 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # ── stx workspace clone ───────────────────────────────────────
-    st_write(bs.sub, "stx workspace clone", toc_lvl="+1")
+    # ── stx workspace update ──────────────────────────────────────
+    st_write(bs.sub, "stx workspace update", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Clone all repos declared in stx.toml. The number of repos
-        depends on the workspace preset. Repos that already exist
-        locally are skipped.
+        The single command for all workspace operations: clone repos,
+        pull latest changes, sync dependencies, install pre-commit
+        hooks, update Claude profiles, and install global commands.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace clone
+        stx workspace update
 
-        # Example output (standard preset):
-        #   streamtex-docs: cloned
-        #   streamtex-claude: cloned
-        # Done: 2 cloned, 0 skipped""",
-        language="bash", line_numbers=False)
-    st_space("v", 2)
-
-    # ── stx workspace link ────────────────────────────────────────
-    st_write(bs.sub, "stx workspace link", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_explanation("""\
-        Run uv sync in docs and project repos for editable installs.
-        Only needed with the developer preset when you want changes
-        to the library source reflected immediately.
-    """)
-    st_space("v", 1)
-
-    show_code("""\
-        stx workspace link
+        # Fine-grained control
+        stx workspace update --skip-sync      # skip uv sync
+        stx workspace update --skip-profiles  # skip Claude profile update
+        stx workspace update --dry-run        # show steps without executing
+        stx workspace update --repair         # fix broken venv, missing __init__.py
 
         # Example output:
-        #   streamtex-docs: running uv sync...
-        #   streamtex-docs: ok
-        # Done: 1 synced, 0 skipped""",
+        #   Step 1/6: git pull (2 repos)
+        #   Step 2/6: clone missing repos (0 new)
+        #   Step 3/6: uv sync (2 repos)
+        #   Step 4/6: update Claude profiles
+        #   Step 5/6: install global commands
+        #   Step 6/6: install pre-commit hooks
+        # Done.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -190,18 +179,18 @@ def build():
     show_explanation("""\
         Upgrade a workspace to a higher preset. Adds missing repo
         sections to stx.toml without touching existing configuration.
-        Run stx workspace clone after to fetch new repos.
+        Run stx workspace update after to fetch new repos.
     """)
     st_space("v", 1)
 
     show_code("""\
         stx workspace upgrade developer
-        stx workspace clone
+        stx workspace update
 
         # Example output:
         # Upgraded from 'standard' to 'developer'.
         #   + streamtex
-        # Run stx workspace clone to clone the new repos.""",
+        # Run stx workspace update to clone the new repos.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

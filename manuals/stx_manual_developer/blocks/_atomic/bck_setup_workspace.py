@@ -50,47 +50,37 @@ stx workspace init . --preset developer
 #   projects/   — directory for user projects""", language="bash")
         st_space("v", 2)
 
-        # --- 3. stx workspace clone ---
-        st_write(bs.sub, "stx workspace clone", toc_lvl="+1")
+        # --- 3. stx workspace update ---
+        st_write(bs.sub, "stx workspace update", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            Clones all repos declared in stx.toml. The number of
-            repos depends on the workspace preset. Already-cloned
-            repos are skipped. Shared commands (like /stx-guide)
-            are also installed globally to ~/.claude/commands/.
+            The single command for all workspace operations: clone
+            repos, pull latest changes, sync dependencies, install
+            pre-commit hooks, update Claude profiles, and install
+            global commands. Use it after init and whenever you
+            need to update.
         """)
         st_space("v", 1)
 
         show_code("""\
-# Clone repos declared in stx.toml
-# Also installs shared commands globally (~/.claude/commands/)
-stx workspace clone""", language="bash")
+# Clone + pull + sync + hooks + profiles + global commands
+stx workspace update
+
+# Fine-grained control
+stx workspace update --skip-sync      # skip uv sync
+stx workspace update --skip-profiles  # skip Claude profile update
+stx workspace update --dry-run        # show steps without executing
+stx workspace update --repair         # fix broken venv, missing __init__.py""", language="bash")
         st_space("v", 2)
 
-        # --- 4. stx workspace link ---
-        st_write(bs.sub, "stx workspace link", toc_lvl="+1")
-        st_space("v", 1)
-
-        show_explanation("""\
-            Runs uv sync in docs and project repos for editable
-            installs. Only needed with the developer preset when
-            you want library changes reflected immediately.
-        """)
-        st_space("v", 1)
-
-        show_code("""\
-# Developer preset: configure editable installs
-stx workspace link""", language="bash")
-        st_space("v", 2)
-
-        # --- 5. stx workspace upgrade ---
+        # --- 4. stx workspace upgrade ---
         st_write(bs.sub, "stx workspace upgrade", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
             Upgrade a workspace to a higher preset. Adds missing
-            repo sections to stx.toml. Run stx workspace clone
+            repo sections to stx.toml. Run stx workspace update
             after to fetch the new repos.
         """)
         st_space("v", 1)
@@ -98,25 +88,21 @@ stx workspace link""", language="bash")
         show_code("""\
 # Upgrade from standard to developer
 stx workspace upgrade developer
-stx workspace clone""", language="bash")
+stx workspace update""", language="bash")
         st_space("v", 2)
 
-        # --- 6. stx workspace status and sync ---
-        st_write(bs.sub, "stx workspace status and sync", toc_lvl="+1")
+        # --- 5. stx workspace status ---
+        st_write(bs.sub, "stx workspace status", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            Check the git state of all repos and synchronize
-            dependencies across the workspace.
+            Check the git state of all repos in the workspace.
         """)
         st_space("v", 1)
 
         show_code("""\
 # Check workspace state
-stx workspace status
-
-# Run uv sync in all repos
-stx workspace sync""", language="bash")
+stx workspace status""", language="bash")
         st_space("v", 2)
 
         # --- 7. Command summary ---
@@ -137,19 +123,9 @@ stx workspace sync""", language="bash")
                 st_write(s.large, "Create a new workspace")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
-                         "stx workspace clone")
+                         "stx workspace update")
             with g.cell():
-                st_write(s.large, "Clone repos + install global commands")
-            with g.cell():
-                st_write(s.project.colors.neutral_gray + s.large,
-                         "stx workspace link")
-            with g.cell():
-                st_write(s.large, "Editable installs (developer)")
-            with g.cell():
-                st_write(s.project.colors.neutral_gray + s.large,
-                         "stx workspace upgrade")
-            with g.cell():
-                st_write(s.large, "Upgrade to a higher preset")
+                st_write(s.large, "Clone + pull + sync + hooks + profiles")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "stx workspace status")
@@ -157,9 +133,9 @@ stx workspace sync""", language="bash")
                 st_write(s.large, "Check workspace state")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
-                         "stx workspace sync")
+                         "stx workspace upgrade")
             with g.cell():
-                st_write(s.large, "Run uv sync in all repos")
+                st_write(s.large, "Upgrade to a higher preset")
         st_space("v", 2)
 
         show_details("""\

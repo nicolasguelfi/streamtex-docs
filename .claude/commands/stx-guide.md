@@ -409,39 +409,13 @@ stx deploy render . --env STX_PASSWORD=secret --env DEBUG=true
 # 3. Connecter le repo sur https://dashboard.render.com
 ```
 
-#### Deploy Render — mode manuel vs auto-deploy
+#### Auto-deploy via GitHub Actions (filtrage intelligent)
 
-Le workflow GitHub Actions (`.github/workflows/render-deploy.yml`) supporte
-deux modes :
+Les repos avec un `render.yaml` utilisent un workflow GitHub Actions
+(`.github/workflows/render-deploy.yml`) pour declencher automatiquement
+le deploiement des services Render **affectes** a chaque push sur `main`.
 
-**Mode actuel : MANUEL UNIQUEMENT** (free tier — economise les build minutes)
-
-Le trigger `push` est desactive. Les deploys se font uniquement a la demande :
-
-```bash
-# Deployer tous les services manuellement :
-gh workflow run render-deploy.yml -R nicolasguelfi/<repo>
-
-# Ou via le bouton "Run workflow" sur GitHub Actions
-```
-
-> **Conseil** : pendant le developpement actif de la documentation, garder
-> le mode manuel pour ne pas consommer les minutes du plan gratuit Render.
-> Penser a deployer manuellement apres une serie de commits importants.
-
-**Mode auto-deploy** (a reactiver quand la doc est stable)
-
-Pour reactiver l'auto-deploy, decommenter les lignes `push` dans le workflow :
-
-```yaml
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-```
-
-Quand l'auto-deploy est actif, le **filtrage intelligent** ne redéploie que
-les services dont les fichiers ont changé :
+**Filtrage intelligent** : le workflow ne redéploie que les services dont les fichiers ont changé :
 - Modification dans `manuals/stx_manual_intro/**` → redéploie uniquement `streamtex-intro`
 - Modification dans `manuals/stx_manual_advanced/**` → redéploie uniquement `streamtex-advanced`
 - Modification de fichiers partagés (`Dockerfile`, `pyproject.toml`, `shared-blocks/`, `.github/`, `scripts/`) → redéploie **TOUS** les services
@@ -452,6 +426,9 @@ Le mapping service↔dossier est extrait automatiquement de la variable `FOLDER`
 ```bash
 # Setup (une seule fois par repo) :
 gh secret set RENDER_API_KEY -R nicolasguelfi/<repo> --body "<cle-api-render>"
+
+# Declenchement manuel (deploie tous les services) :
+gh workflow run render-deploy.yml -R nicolasguelfi/<repo>
 ```
 
 > **Note** : le workflow bypasse la GitHub App de Render qui peut silencieusement
@@ -544,18 +521,12 @@ stx claude check
 #### Workflow de mise a jour (apres une modification des profils)
 
 Quand des fichiers sont modifies dans `streamtex-claude/` (nouvelles commandes,
-mise a jour des skills, standards, etc.), voici comment propager les changements :
+mise a jour des skills, standards, etc.), la commande unifiee fait tout :
 
 ```bash
-# 1. Mettre a jour le repo source
-cd streamtex-dev/streamtex-claude
-git pull
-
-# 2. Propager a tous les projets du workspace
-stx claude update --all
-
-# 3. Verifier que tout est synchronise
-stx claude check
+cd streamtex-dev/
+stx workspace update          # git pull + uv sync + profils + commandes globales
+stx claude check              # verifier que tout est synchronise
 ```
 
 #### Ce qui est propage
@@ -565,7 +536,7 @@ L'installeur et la commande `update` copient ces fichiers depuis `streamtex-clau
 | Source | Destination dans chaque projet |
 |--------|------|
 | `shared/references/*.md` | `.claude/references/` |
-| `shared/commands/*.md` | `.claude/commands/` |
+| `shared/commands/*.md` | `.claude/commands/` (par projet) + `~/.claude/commands/` (global via clone) |
 | `profiles/<profil>/commands/` | `.claude/commands/` |
 | `profiles/<profil>/*/skills/` | `.claude/*/skills/` |
 | `profiles/<profil>/*/agents/` | `.claude/*/agents/` |
@@ -573,6 +544,10 @@ L'installeur et la commande `update` copient ces fichiers depuis `streamtex-clau
 
 Les fichiers partages (`references/` et `commands/`) sont proteges en
 lecture seule (0o444) pour signaler qu'ils sont geres automatiquement.
+
+> **Commandes globales** : `stx workspace update` copie aussi `shared/commands/`
+> vers `~/.claude/commands/`, rendant `/stx-guide` accessible depuis n'importe
+> quel repertoire, meme sans profil Claude installe.
 
 #### Pourquoi CLAUDE.md est preserve
 
@@ -616,7 +591,7 @@ uv sync                       # Installe pre-commit (dev dep)
 uv run pre-commit install     # Active le hook git
 
 # Installation dans tout le workspace
-stx workspace update           # Installe les hooks dans tous les repos + projects/
+stx workspace update           # Tous les repos + projects/
 
 # Lancer manuellement sur tous les fichiers
 uv run pre-commit run --all-files
@@ -737,8 +712,8 @@ stx claude check           # tout doit etre "up to date"
 | Changement | Quoi publier | Action utilisateur |
 |---|---|---|
 | Librairie seulement | PyPI (phase 2) | `uv tool install "streamtex[cli]" -U` + `stx workspace update` |
-| Profils Claude seulement | git push (phase 3) | `stx workspace update` + `stx claude update --all` |
-| Librairie + profils | Phases 2 + 3 + 4 | Workflow complet (voir 4.11) |
+| Profils Claude seulement | git push (phase 3) | `stx workspace update` |
+| Librairie + profils | Phases 2 + 3 + 4 | `uv tool install "streamtex[cli]" -U` + `stx workspace update` |
 | Docs seulement | git push (phase 3) | `stx workspace update` (Render deploie automatiquement) |
 
 ---
@@ -746,7 +721,7 @@ stx claude check           # tout doit etre "up to date"
 ### 4.11 Mise a jour — workflow utilisateur (topic: `update`)
 
 Apres une nouvelle release StreamTeX, voici comment mettre a jour son
-workspace et tous ses projets. **Seulement 2 commandes** :
+workspace et tous ses projets.
 
 **Etape 1 — Mettre a jour le CLI**
 
@@ -757,18 +732,21 @@ uv tool install "streamtex[cli]" -U
 > Important : sans cette etape, `stx` utilise l'ancienne version du code
 > et ne detecte/propage pas les nouveaux fichiers (ex: shared/commands/).
 
-**Etape 2 — Mettre a jour le workspace**
+**Etape 2 — Mettre a jour le workspace (tout en une commande)**
 
 ```bash
 cd streamtex-dev/
-stx workspace update         # pull + clone + sync + hooks + profiles + global commands
+stx workspace update
+# → git pull tous les repos, uv sync, installe commandes globales, met a jour profils Claude
 ```
 
-> `stx workspace update` fait tout : git pull, clone des nouveaux repos,
-> uv sync, installation des hooks pre-commit, mise a jour des profils Claude,
-> et installation des commandes globales.
+Fine-grained control :
+```bash
+stx workspace update --skip-sync      # sauter uv sync
+stx workspace update --skip-profiles  # sauter la mise a jour des profils Claude
+```
 
-**Verifier** (optionnel) :
+**Etape 3 — Verifier**
 
 ```bash
 stx claude check             # doit afficher "up to date" pour chaque projet

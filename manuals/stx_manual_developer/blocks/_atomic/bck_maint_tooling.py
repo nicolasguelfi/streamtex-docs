@@ -21,7 +21,7 @@ def build():
 
         show_code("""\
 # .python-version
-3.10""", language="text")
+3.11""", language="text")
         st_space("v", 1)
 
         show_explanation("""\

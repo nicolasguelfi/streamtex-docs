@@ -29,7 +29,7 @@ def build():
     st_write(
         s.large,
         "StreamTeX requires ",
-        (s.bold, "Python 3.10"),
+        (s.bold, "Python 3.11"),
         " or later, ",
         (s.bold, "git"),
         ", and ",
@@ -39,7 +39,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-# Check Python version (3.10+ required)
+# Check Python version (3.11+ required)
 python3 --version
 
 # Install uv (if not already installed)

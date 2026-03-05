@@ -2,7 +2,7 @@
 name = "streamtex-docs"
 version = "0.3.0"
 description = "StreamTeX interactive manuals and documentation"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
     "streamtex>=0.3.0",

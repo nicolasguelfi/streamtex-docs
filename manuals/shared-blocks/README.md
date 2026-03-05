@@ -30,7 +30,7 @@ st_book([
 ])
 ```
 
-### Option 2: Direct Import (Python 3.10+)
+### Option 2: Direct Import (Python 3.11+)
 
 ```python
 from pathlib import Path

@@ -22,7 +22,7 @@ def build():
         show_code("""\
 # pyproject.toml
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 120
 
 [tool.ruff.lint]
@@ -106,8 +106,8 @@ uv run ruff check streamtex/core/writer.py""", language="bash")
         st_space("v", 1)
 
         show_explanation("""\
-            target-version = "py310" tells Ruff to flag syntax or
-            patterns that are incompatible with Python 3.10. This
+            target-version = "py311" tells Ruff to flag syntax or
+            patterns that are incompatible with Python 3.11. This
             ensures the codebase remains compatible with the minimum
             supported Python version.
         """)

@@ -69,7 +69,7 @@ def build():
         "Not for the zero-code path. You can describe your project "
         "in natural language and let the AI generate everything. "
         "However, if you want to customize blocks or write code-first "
-        "content, Python 3.10+ is required.",
+        "content, Python 3.11+ is required.",
     )
     st_space("v", 1)
 

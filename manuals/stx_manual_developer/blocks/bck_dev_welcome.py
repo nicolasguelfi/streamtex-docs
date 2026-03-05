@@ -71,7 +71,7 @@ def build():
         st_write(s.project.titles.section_subtitle, "Prerequisites", toc_lvl="+1")
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "Python 3.10+ (see .python-version)")
+            with l.item(): st_write(s.large, "Python 3.11+ (see .python-version)")
             with l.item(): st_write(s.large, "git (version control)")
             with l.item(): st_write(s.large, "uv — fast Python package manager (replaces pip/venv)")
             with l.item(): st_write(s.large, "A code editor (VS Code, PyCharm, etc.)")

@@ -29,11 +29,11 @@ def build():
     st_space("v", 2)
 
     # --- Python ---
-    st_write(bs.sub, "Python 3.10+", toc_lvl="+1")
+    st_write(bs.sub, "Python 3.11+", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        StreamTeX requires Python 3.10 or later. Check your
+        StreamTeX requires Python 3.11 or later. Check your
         installed version before continuing.
     """)
     st_space("v", 1)

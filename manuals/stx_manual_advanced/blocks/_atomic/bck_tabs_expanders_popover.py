@@ -103,7 +103,7 @@ with st.popover("Show info card"):
         st_space("v", 1)
         st_write(s.large, "Version: 0.2.0")
         st_br()
-        st_write(s.large, "Python >= 3.10")
+        st_write(s.large, "Python >= 3.11")
         st_br()
         st_write(s.large, "Streamlit >= 1.54.0")""")
         st_space("v", 1)
@@ -117,7 +117,7 @@ with st.popover("Show info card"):
                     with l.item():
                         st_write(s.large, (s.bold, "Version"), ": 0.2.0")
                     with l.item():
-                        st_write(s.large, (s.bold, "Python"), " >= 3.10")
+                        st_write(s.large, (s.bold, "Python"), " >= 3.11")
                     with l.item():
                         st_write(s.large, (s.bold, "Streamlit"), " >= 1.54.0")
         st_space("v", 2)

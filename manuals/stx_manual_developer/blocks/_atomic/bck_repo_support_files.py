@@ -41,7 +41,7 @@ def build():
             [project]
             name = "streamtex"
             version = "X.Y.Z"
-            requires-python = ">=3.10"
+            requires-python = ">=3.11"
 
             [build-system]
             requires = ["hatchling"]

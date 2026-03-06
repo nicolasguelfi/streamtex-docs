@@ -67,4 +67,7 @@ st_write(s.huge, "Appendix", toc_lvl="1", marker=False)""")
             The nav widget shows your position and total marker count.
 
             Keyboard navigation skips focused inputs for form safety.
+
+            When search=True in TOCConfig, sidebar search also filters
+            marker entries — only markers from matching blocks are shown.
         """)

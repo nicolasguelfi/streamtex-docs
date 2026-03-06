@@ -144,4 +144,7 @@ st_write(s.huge, "Very Long Title...",
             Use absolute levels for major sections.
 
             Use relative levels (+1, -1) for subsections within a block.
+
+            When search=True, the sidebar search filters both TOC entries
+            and marker entries — only items from matching blocks are shown.
         """)

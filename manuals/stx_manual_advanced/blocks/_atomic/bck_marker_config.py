@@ -120,6 +120,10 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
 
         Pressing Escape while the popup is open closes it without
         triggering any navigation.
+
+        When search=True in TOCConfig, sidebar search filters marker
+        entries alongside TOC entries — only markers from blocks
+        matching the query are displayed.
     """)
     st_space("v", 3)
 

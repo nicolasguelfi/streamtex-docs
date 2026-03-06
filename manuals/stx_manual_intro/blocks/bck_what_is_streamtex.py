@@ -103,7 +103,7 @@ def build():
             "and get themed, exportable documents.",
             tag=t.div,
         )
-    slide_break() # Pour avoir un espace pour le mode continu mais qui n'apparaisse pas dans la table des matières du panel de gauche
+    slide_break()  # Spacer for continuous mode that won't appear in the sidebar TOC
     # ── Before / After ─────────────────────────────────────────────
     st_write(bs.sub, "The problem it solves", toc_lvl="+1")
     st_space("v", 1)

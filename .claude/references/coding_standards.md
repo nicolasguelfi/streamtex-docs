@@ -564,6 +564,40 @@ Two modes via `PdfMode`:
 CSS classes `.stx-slide-break-rule` and `.stx-slide-break-spacer` are targeted by
 `@media print` rules injected by `inject_print_css()`.
 
+#### PDF configuration in `st_book()`
+
+Pass a `PdfConfig` to `st_book()` to set default PDF options for the sidebar UI:
+
+```python
+from streamtex import st_book, PdfConfig, PdfMode
+
+st_book([...],
+    pdf_config=PdfConfig(
+        mode=PdfMode.PAGINATED,
+        format="A4",
+        landscape=True,
+        margin_top="10mm",
+        margin_bottom="10mm",
+        margin_left="15mm",
+        margin_right="15mm",
+        print_background=True,
+        scale=1.0,
+        page_numbers=False,
+    ),
+)
+```
+
+When `export=True` (default), the sidebar shows a "Download as..." panel where the user can
+adjust all PDF parameters before generating. The `pdf_config` values are used as defaults.
+
+#### WYSIWYG export — Width % and Zoom %
+
+The sidebar Width % and Zoom % controls are propagated to exports for WYSIWYG fidelity:
+- **HTML export**: Width % sets `max-width` on `.streamtex-page`; Zoom % sets CSS `zoom`.
+- **PDF export**: Width % is already in the HTML that Chromium renders. Zoom % is used as the
+  default value for the PDF Scale slider (overridable by the user in the export panel).
+- The export panel shows "Current view: Width X% · Zoom Y%" for transparency.
+
 ### Architecture
 
 Three files collaborate:

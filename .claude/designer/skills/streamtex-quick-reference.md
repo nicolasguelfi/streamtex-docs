@@ -133,10 +133,17 @@ st_slide_break()          # Presentation break: rule + 100vh spacer + hidden mar
 ## PDF Export
 
 ```python
-from streamtex import export_pdf, PdfConfig, PdfMode
-# Requires: uv add "streamtex[pdf]" && playwright install chromium
+from streamtex import PdfConfig, PdfMode
+
+# In book.py — set default PDF options for the sidebar UI:
+st_book([...], pdf_config=PdfConfig(format="A4", landscape=True, page_numbers=True))
+
+# Programmatic export (requires: uv add "streamtex[pdf]" && playwright install chromium):
+from streamtex import export_pdf
 pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.PAGINATED))
 pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.CONTINUOUS))
+
+# WYSIWYG: sidebar Width % → HTML max-width; Zoom % → HTML CSS zoom + PDF scale default
 ```
 
 ## Overlays — `st_overlay()`
@@ -187,14 +194,15 @@ show_code_inline("inline code")               # Code without wrapper box
 ## Book Orchestration (`book.py`)
 
 ```python
-from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig
+from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig, PdfConfig
 
 toc = TOCConfig(numerate_titles=False, toc_position=0)
 marker = MarkerConfig(auto_marker_on_toc=1, show_nav_ui=True)
 
 st_book([blocks.bck_01, blocks.bck_02, ...],
         toc_config=toc, marker_config=marker, paginate=True,
-        banner=BannerConfig.full())
+        banner=BannerConfig.full(),
+        pdf_config=PdfConfig(page_numbers=True))
 ```
 
 ### Banner Presets

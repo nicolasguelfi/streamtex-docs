@@ -10,6 +10,11 @@ from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
 
+class BlockStyles:
+    pass
+bs = BlockStyles
+
+
 def build():
     """Build the Tags enum documentation block."""
 

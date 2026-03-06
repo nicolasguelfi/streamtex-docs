@@ -81,8 +81,9 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 
 ### Export
 - `st_export(config)`, `st_html()` — HTML export with ExportConfig
+- `st_book(..., pdf_config=PdfConfig(...))` — PDF settings passed to st_book for the sidebar UI
 - `export_pdf(html, output_path, config)` — PDF export via Playwright (requires `streamtex[pdf]`)
-- `PdfConfig(mode, format, landscape, ...)` — PDF configuration
+- `PdfConfig(mode, format, landscape, scale, margins, page_numbers, ...)` — PDF configuration
 - `PdfMode.CONTINUOUS` / `PdfMode.PAGINATED` — How slide breaks are handled in PDF
 
 ### Block Infrastructure
@@ -117,37 +118,37 @@ uv run streamlit run manuals/stx_manual_deploy/book.py
 uv run streamlit run manuals/stx_manuals_collection/book.py
 ```
 
-## Gotchas critiques (generation de code)
+## Critical Gotchas (code generation)
 
-### `show_explanation()` est une fonction, PAS un context manager
-`show_explanation("texte")` cree un cadre, ecrit le texte, et **ferme le cadre** en retournant.
-Tout ce qui suit (st_list, st_write, etc.) est rendu **en dehors** du cadre.
-- **MAUVAIS** : `show_explanation("intro")` suivi de `st_list(...)` → liste hors du cadre
-- **BON** : `with st_block(s.project.containers.explanation_box):` puis `st_write(...)` + `st_list(...)` a l'interieur
-- Meme logique pour `show_details()` et `show_code()` — ce sont des fonctions, pas des context managers
+### `show_explanation()` is a function, NOT a context manager
+`show_explanation("text")` creates a box, writes the text, and **closes the box** on return.
+Anything that follows (st_list, st_write, etc.) is rendered **outside** the box.
+- **BAD**: `show_explanation("intro")` followed by `st_list(...)` → list outside the box
+- **GOOD**: `with st_block(s.project.containers.explanation_box):` then `st_write(...)` + `st_list(...)` inside
+- Same logic for `show_details()` and `show_code()` — they are functions, not context managers
 
-### `from streamtex import *` masque `list()`
-`st_list` ecrase le builtin Python `list()`. Utiliser `[*iterable]` au lieu de `list(iterable)`.
+### `from streamtex import *` shadows `list()`
+`st_list` overrides the Python builtin `list()`. Use `[*iterable]` instead of `list(iterable)`.
 
-### Styles inline multiples : UN seul `st_write` avec des tuples
-Plusieurs appels `st_write` s'empilent verticalement. Pour du texte inline avec des styles differents :
-`st_write(s.Large, (s.red, "Rouge "), (s.blue, "Bleu"))` — un seul appel.
+### Multiple inline styles: ONE `st_write` with tuples
+Multiple `st_write` calls stack vertically. For inline text with different styles:
+`st_write(s.Large, (s.red, "Red "), (s.blue, "Blue"))` — single call.
 
-## Release workflow (publication PyPI)
-1. Bumper la version dans `pyproject.toml` + `streamtex/__init__.py` (dans le repo `streamtex`)
+## Release Workflow (PyPI)
+1. Bump version in `pyproject.toml` + `streamtex/__init__.py` (in the `streamtex` repo)
 2. `uv run pytest tests/ -v && uv run ruff check streamtex/`
 3. `uv lock && git add pyproject.toml streamtex/__init__.py uv.lock && git commit && git push`
-4. `gh release create vX.Y.Z -R nicolasguelfi/streamtex` → declenche publish.yml → PyPI
+4. `gh release create vX.Y.Z -R nicolasguelfi/streamtex` → triggers publish.yml → PyPI
 
-## Render Deploy — Mode Manuel Actif
-Le trigger `push` est **desactive** dans `.github/workflows/render-deploy.yml` (free tier limits).
-- Les deploys se font **uniquement** via : `gh workflow run render-deploy.yml -R nicolasguelfi/streamtex-docs`
-- **Apres une serie de commits importants sur les manuels**, propose a l'utilisateur de declencher un deploy manuel
-- Pour reactiver l'auto-deploy quand la doc est stable : decommenter les lignes `push` dans le workflow
+## Render Deploy — Manual Mode Active
+The `push` trigger is **disabled** in `.github/workflows/render-deploy.yml` (free tier limits).
+- Deploys are done **only** via: `gh workflow run render-deploy.yml -R nicolasguelfi/streamtex-docs`
+- **After a series of important manual commits**, suggest the user trigger a manual deploy
+- To re-enable auto-deploy when docs are stable: uncomment the `push` lines in the workflow
 
-## CLI — Commande unifiee install/upgrade
-Toujours utiliser `uv tool install "streamtex[cli]" -U` dans la doc et les instructions utilisateur.
-Cette commande fonctionne pour l'installation ET la mise a jour. Ne PAS utiliser `uv tool upgrade` (echoue si pas deja installe).
+## CLI — Unified install/upgrade command
+Always use `uv tool install "streamtex[cli]" -U` in docs and user instructions.
+This command works for both installation AND upgrade. Do NOT use `uv tool upgrade` (fails if not already installed).
 
 ## Workflows
 1. **New Block** -> Read coding_standards.md, inspect existing blocks (`/designer:block-new`)

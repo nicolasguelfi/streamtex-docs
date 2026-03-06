@@ -127,6 +127,7 @@ st_space("v", 2)          # Vertical space (2em) — between major sections
 st_space("v", 1)          # Vertical space (1em) — between elements
 st_space("h", "20px")     # Horizontal space
 st_br()                   # Minimal line break
+st_slide_break()          # Presentation break: rule + 100vh spacer + hidden marker
 ```
 
 ## Overlays — `st_overlay()`

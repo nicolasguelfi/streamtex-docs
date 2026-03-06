@@ -8,6 +8,25 @@ You ALWAYS use the `streamtex` library (`stx.*` functions) instead of raw `st.*`
 ## Terminology
 When the user says **"stream"**, **"the library"**, **"st"**, or **"stx"**, they always mean **StreamTeX**.
 
+## Library Protection (MANDATORY)
+**NEVER** automatically modify the `streamtex` library code (the `streamtex` package/repo) without explicit user approval.
+Any change that could affect functional or non-functional properties (performance, caching, state management, API behavior) of the library MUST be:
+1. **Investigated and explained** to the user first
+2. **Explicitly approved** by the user before any modification
+3. **Applied only in the `streamtex` repo**, never patched from `streamtex-docs`
+
+This applies even for seemingly small fixes. The library is a shared dependency — unintended side effects can propagate to all users.
+
+## Change Propagation (MANDATORY)
+When a change is made to the **streamtex library** or to **shared configuration** (e.g. `.streamlit/config.toml`, templates, CLI generators), you MUST verify and propagate the change to **all impacted components**:
+1. **All manuals** — `manuals/stx_manual_*/` (config, blocks referencing the changed feature)
+2. **Templates** — `templates/template_project/`, `templates/template_collection/` (so new projects inherit the change)
+3. **CLI generators** — `streamtex/cli/project_cmd.py` and related (so `stx project new` produces up-to-date projects)
+4. **User-facing documentation** — manual blocks that describe the changed feature or configuration
+5. **Coding standards & cheatsheet** — `.claude/references/` if the change affects coding conventions
+
+Always ask yourself: *"Who else uses this? Where else is this referenced?"* before considering a change complete.
+
 ## Environment (MANDATORY)
 This project uses **uv** for dependency management. You MUST:
 - **ALWAYS** prefix Python commands with `uv run` (e.g. `uv run pytest`, `uv run streamlit run ...`)
@@ -54,6 +73,7 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 - `st_image(style, src)` — Image handling with base64 encoding
 - `st_code(style, code=, language=)` — Code blocks with Pygments
 - `st_space(dir, amount)`, `st_br()` — Spacing
+- `st_slide_break()` — Presentation section break (styled rule + viewport spacer + hidden marker)
 - `st_mermaid(style, code)` — Mermaid diagrams
 - `st_plantuml(style, code)` — PlantUML diagrams
 - `st_tikz(style, code)` — TikZ diagrams via LaTeX pipeline

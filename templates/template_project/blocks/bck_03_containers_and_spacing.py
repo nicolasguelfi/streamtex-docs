@@ -76,6 +76,19 @@ def build():
         st_write(s.large, "Line B")
     st_space("v", 2)
 
+    # --- Slide break ---
+    st_write(bs.sub, "Slide Break (Presentation Mode)", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_code("""\
+        from streamtex import st_slide_break
+
+        st_write(s.large, "Section 1 content")
+        st_slide_break()            # rule + full-viewport space + hidden marker
+        st_write(s.large, "Section 2 — off-screen until PageDown")
+    """)
+    st_space("v", 2)
+
     st_space("v", 1)
     with st_block(s.project.containers.callout):
         st_write(s.project.colors.accent + s.bold, "Tip")
@@ -83,4 +96,5 @@ def build():
             st_write(s.large, (s.bold, 'st_space("v", N)'), " — adds N em of vertical space")
             st_write(s.large, (s.bold, 'st_space("h", "Npx")'), " — adds horizontal space")
             st_write(s.large, (s.bold, "st_br()"), " — inserts a simple line break")
+            st_write(s.large, (s.bold, "st_slide_break()"), " — presentation section separator with hidden marker")
     st_space("v", 1)

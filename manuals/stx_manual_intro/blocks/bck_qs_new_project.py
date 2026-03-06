@@ -61,7 +61,7 @@ projects/stx-mon-projet/
 +-- static/
 |   +-- images/              # Static assets
 +-- .streamlit/
-    +-- config.toml          # Static serving enabled
+    +-- config.toml          # Static serving, auto-reload on save
 """, language="text", line_numbers=False)
     st_space("v", 2)
 
@@ -100,7 +100,8 @@ uv run streamlit run book.py
     show_details("""\
         The stx project new command generates pyproject.toml
         with the mandatory ruff config and .streamlit/config.toml
-        with static serving enabled. No manual setup required.
+        with static serving, auto-reload on save, and poll-based
+        file watching enabled. No manual setup required.
 
         Without --template, a minimal scaffold is created
         with a single bck_hello.py starter block.

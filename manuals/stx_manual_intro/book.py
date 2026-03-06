@@ -73,4 +73,6 @@ st_book([
     blocks.bck_cli_quickstart,
 ], toc_config=toc, marker_config=marker_config, paginate=True,
    banner=BannerConfig.full(),
-   inspector=stx.InspectorConfig(enabled=True))
+   inspector=stx.InspectorConfig(enabled=True),
+   page_width=80,
+   zoom=80)

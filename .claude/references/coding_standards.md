@@ -540,6 +540,17 @@ indexes). Use `marker=True` to force-include a heading even when auto is off.
 
 Call `st_marker("Label", visible=True)` for visible waypoints or
 `st_marker("Label")` for invisible ones (scroll-only targets).
+Use `st_marker("Label", hidden=True)` for navigation-only markers that
+do not appear in the sidebar marker list or widget popup.
+
+### Slide breaks (presentation mode)
+
+Use `st_slide_break()` to separate presentation sections. It inserts a
+styled horizontal rule + viewport-height spacer + hidden marker so that
+PageDown stops between sections without polluting the sidebar.
+
+Customize globally via `set_slide_break_config(SlideBreakConfig(...))` in
+the project's `helpers.py`, or per-call with the `config=` parameter.
 
 ### Architecture
 

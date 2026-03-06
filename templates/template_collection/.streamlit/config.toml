@@ -11,3 +11,8 @@ backgroundColor = "#111111"
 secondaryBackgroundColor = "#262730"
 textColor = "#fafafa"
 font = "sans serif"
+
+[server]
+enableStaticServing = true
+fileWatcherType = "poll"
+runOnSave = true

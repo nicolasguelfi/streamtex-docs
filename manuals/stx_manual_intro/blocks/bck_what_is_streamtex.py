@@ -10,7 +10,7 @@ import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_code_inline
+from blocks.helpers import show_code, show_code_inline, slide_break
 
 
 class BlockStyles:
@@ -81,7 +81,7 @@ def build():
     st_space("v", 1)
     st_write(bs.heading, "What is StreamTeX?",
              tag=t.div, toc_lvl="1")
-    st_space("v", 2)
+    st_space("v", "1em")
 
     # ── Elevator pitch ─────────────────────────────────────────────
     with st_block(bs.pitch):
@@ -102,8 +102,7 @@ def build():
             "and get themed, exportable documents.",
             tag=t.div,
         )
-    st_space("v", 2)
-
+    slide_break() # Pour avoir un espace pour le mode continu mais qui n'apparaisse pas dans la table des matières du panel de gauche
     # ── Before / After ─────────────────────────────────────────────
     st_write(bs.sub, "The problem it solves", toc_lvl="+1")
     st_space("v", 1)

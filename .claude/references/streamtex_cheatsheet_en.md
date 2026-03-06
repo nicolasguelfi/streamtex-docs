@@ -266,6 +266,7 @@ from streamtex import st_marker, MarkerConfig, st_book
 # Place markers manually
 st_marker("Section Start", visible=True)   # Visible marker (dashed border + label)
 st_marker("Hidden Waypoint")               # Invisible marker (default)
+st_marker("Nav Only", hidden=True)         # PageDown stops here, not shown in sidebar list
 
 # Auto-markers from TOC headings (in book.py)
 marker_config = MarkerConfig(
@@ -1521,6 +1522,26 @@ st_space("h", size=1)       # 1em horizontal space
 st_space("h", size="40px")  # 40px horizontal space
 st_br()                     # Line break
 st_br(count=3)              # 3 line breaks
+```
+
+### Slide Break (Presentation Mode)
+
+```python
+from streamtex import st_slide_break, SlideBreakConfig, set_slide_break_config
+
+st_slide_break()            # Styled rule + 100vh spacer + hidden marker
+
+# Customize globally (in helpers.py):
+set_slide_break_config(SlideBreakConfig(
+    space="80vh",           # Vertical space (CSS value)
+    thickness="2px",        # Rule thickness
+    color="79, 172, 254",   # RGB values
+    opacity=0.5,            # 0.0–1.0
+    marker=True,            # Hidden marker for PageDown (default True)
+))
+
+# Per-call override:
+st_slide_break(config=SlideBreakConfig(space="50vh", marker=False))
 ```
 
 ### Containers

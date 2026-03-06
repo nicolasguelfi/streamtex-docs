@@ -7,7 +7,7 @@ from custom.themes import dark
 
 import streamtex as stx
 import streamtex.styles as sts
-from streamtex import TOCConfig, NumberingMode, st_book
+from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig
 
 st.set_page_config(
     page_title="StreamTeX - Collection",
@@ -22,4 +22,9 @@ toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY, toc_position=None, search=
 st_book([
     blocks.bck_home,
 ], toc_config=toc, paginate=False,
-   inspector=stx.InspectorConfig(enabled=True))
+   inspector=stx.InspectorConfig(enabled=True),
+   pdf_config=PdfConfig(
+       margin_top="0", margin_bottom="0",
+       margin_left="0", margin_right="0",
+       page_numbers=True,
+   ))

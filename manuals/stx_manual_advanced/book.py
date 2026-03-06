@@ -2,7 +2,7 @@
 
 import streamlit as st
 import streamtex as stx
-from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig
+from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig
 from streamtex.bib import BibConfig, BibFormat, CitationStyle
 
 from custom.styles import Styles as s
@@ -40,7 +40,7 @@ sts.theme = dark
 # Table of Contents configuration
 toc = TOCConfig(
     numbering=NumberingMode.SIDEBAR_ONLY,
-    toc_position=0,
+    toc_position=None,
     title_style=s.project.titles.section_title + s.center_txt,
     content_style=s.large,
     search=True,
@@ -120,4 +120,9 @@ st_book([
 ], toc_config=toc, marker_config=marker_config, paginate=True,
    banner=BannerConfig.full(),
    bib_sources=bib_sources, bib_config=bib_config,
-   inspector=stx.InspectorConfig(enabled=True))
+   inspector=stx.InspectorConfig(enabled=True),
+   pdf_config=PdfConfig(
+       margin_top="0", margin_bottom="0",
+       margin_left="0", margin_right="0",
+       page_numbers=True,
+   ))

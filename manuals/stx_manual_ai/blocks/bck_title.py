@@ -48,13 +48,13 @@ def build():
     # ── Badges row ────────────────────────────────────────────────
     with st_grid(cols=4, cell_styles=bs.badge) as g:
         with g.cell():
-            st_write(bs.badge_number, "22", tag=t.div)
+            st_write(bs.badge_number, "25", tag=t.div)
             st_write(bs.badge_label, "Commands", tag=t.div)
         with g.cell():
-            st_write(bs.badge_number, "4", tag=t.div)
+            st_write(bs.badge_number, "3", tag=t.div)
             st_write(bs.badge_label, "Agents", tag=t.div)
         with g.cell():
-            st_write(bs.badge_number, "10", tag=t.div)
+            st_write(bs.badge_number, "7", tag=t.div)
             st_write(bs.badge_label, "Blueprints", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "4", tag=t.div)

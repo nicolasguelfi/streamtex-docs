@@ -77,7 +77,6 @@ st_book([
    pdf_config=PdfConfig(
        margin_top="0", margin_bottom="0",
        margin_left="0", margin_right="0",
-       page_numbers=True,
    ),
    page_width=80,
    zoom=80)

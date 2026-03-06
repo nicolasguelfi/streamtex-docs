@@ -10,7 +10,8 @@ import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_code_inline, slide_break
+from blocks.helpers import show_code, show_code_inline
+from streamtex import st_slide_break as slide_break
 
 
 class BlockStyles:

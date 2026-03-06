@@ -552,6 +552,18 @@ PageDown stops between sections without polluting the sidebar.
 Customize globally via `set_slide_break_config(SlideBreakConfig(...))` in
 the project's `helpers.py`, or per-call with the `config=` parameter.
 
+### PDF export
+
+Use `export_pdf()` to convert HTML export output to PDF via Playwright (Chromium headless).
+Requires the optional `pdf` extra: `uv add "streamtex[pdf]"` + `playwright install chromium`.
+
+Two modes via `PdfMode`:
+- `CONTINUOUS` — slide breaks removed, content flows continuously
+- `PAGINATED` — page break inserted at each slide break
+
+CSS classes `.stx-slide-break-rule` and `.stx-slide-break-spacer` are targeted by
+`@media print` rules injected by `inject_print_css()`.
+
 ### Architecture
 
 Three files collaborate:

@@ -79,6 +79,12 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 - `st_tikz(style, code)` — TikZ diagrams via LaTeX pipeline
 - `st_latex(style, code)` — LaTeX math rendering
 
+### Export
+- `st_export(config)`, `st_html()` — HTML export with ExportConfig
+- `export_pdf(html, output_path, config)` — PDF export via Playwright (requires `streamtex[pdf]`)
+- `PdfConfig(mode, format, landscape, ...)` — PDF configuration
+- `PdfMode.CONTINUOUS` / `PdfMode.PAGINATED` — How slide breaks are handled in PDF
+
 ### Block Infrastructure
 - `ProjectBlockRegistry` — Lazy-loading block registry
 - `LazyBlockRegistry` — Multi-source block resolution

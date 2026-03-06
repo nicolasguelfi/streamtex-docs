@@ -130,6 +130,15 @@ st_br()                   # Minimal line break
 st_slide_break()          # Presentation break: rule + 100vh spacer + hidden marker
 ```
 
+## PDF Export
+
+```python
+from streamtex import export_pdf, PdfConfig, PdfMode
+# Requires: uv add "streamtex[pdf]" && playwright install chromium
+pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.PAGINATED))
+pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.CONTINUOUS))
+```
+
 ## Overlays — `st_overlay()`
 
 ```python

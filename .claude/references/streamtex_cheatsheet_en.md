@@ -1544,6 +1544,35 @@ set_slide_break_config(SlideBreakConfig(
 st_slide_break(config=SlideBreakConfig(space="50vh", marker=False))
 ```
 
+### PDF Export
+
+```python
+from streamtex import export_pdf, PdfConfig, PdfMode
+
+# Requires: uv add "streamtex[pdf]" && playwright install chromium
+
+# Paginated (page break at each slide break):
+pdf_bytes = export_pdf(html, "output.pdf", PdfConfig(mode=PdfMode.PAGINATED))
+
+# Continuous (slide breaks removed):
+pdf_bytes = export_pdf(html, "output.pdf", PdfConfig(mode=PdfMode.CONTINUOUS))
+
+# Full config:
+config = PdfConfig(
+    mode=PdfMode.PAGINATED,
+    format="A4",              # A4, Letter, A3, Legal, Tabloid
+    landscape=True,           # Default True for presentations
+    margin_top="10mm",
+    margin_bottom="10mm",
+    margin_left="15mm",
+    margin_right="15mm",
+    print_background=True,    # Include background colors
+    scale=1.0,                # 0.1–2.0
+    header_template="",       # Chromium print header HTML
+    footer_template="",       # Chromium print footer HTML
+)
+```
+
 ### Containers
 
 ```python

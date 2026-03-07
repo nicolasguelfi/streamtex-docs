@@ -114,10 +114,14 @@ stx.st_html('<div>long content</div>', height=600, scrolling=True)
 # - grid_style: Style object for the entire grid (includes gap via CSS)
 # - cell_styles: Style(s) for individual cells
 
-# Gap between cells goes in grid_style, NOT as a parameter
+# Gap between cells — use the dedicated gap parameter or grid_style
+with st_grid(cols=2, gap="24px"):
+    # 2-column layout with 24px gap (using gap parameter)
+
+# Alternative: gap via grid_style CSS
 gap_style = Style("gap:24px;", "grid_gap")
 with st_grid(cols=2, grid_style=gap_style):
-    # 2-column layout with 24px gap
+    # 2-column layout with 24px gap (using grid_style)
 
 # Common column patterns:
 st_grid(cols=2)                                    # 2 equal columns
@@ -216,7 +220,8 @@ with st_grid(cols=2, grid_style=grid_gap):
 - Default font size is responsive via the CSS variable `--stx-code-size` (18pt desktop, 14pt tablet, 11pt mobile)
 - Override with `font_size="14pt"` for specific sizes
 - Use `wrap=True` for prose-like code (JSON, logs) where horizontal alignment doesn't matter
-- Use `wrap=False` (default) for code where columns must align (tables, diffs, ASCII art)
+- Use `wrap=False` for code where columns must align (tables, diffs, ASCII art)
+- Default `wrap=None` defers to the global toggle set by `add_wrap_all_option()` (called by `st_book()`), which defaults to `True`. Pass `wrap=False` explicitly when alignment matters.
 - `show_code()` and `show_code_inline()` forward the `wrap` parameter to `st_code()`
 
 ### External File Loading (`file=` parameter)
@@ -290,6 +295,34 @@ jobs:
 **Why:** `[tool.uv.sources]` points to a local path (e.g. `../../streamtex`) that
 does not exist in CI. `UV_NO_SOURCES=1` tells uv to ignore it and resolve from PyPI.
 `--frozen` fails because the lock file also encodes the local path.
+
+### Pre-commit hooks (MANDATORY)
+
+Every StreamTeX repo and project MUST have a `.pre-commit-config.yaml` with ruff:
+```yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.2
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+```
+
+This auto-fixes lint issues (including import ordering I001) before each commit.
+`--exit-non-zero-on-fix` aborts the commit when files are modified so you can review and re-stage.
+
+**Setup:**
+```bash
+uv sync                       # Installs pre-commit (dev dep)
+uv run pre-commit install     # Activates the git hook
+```
+
+**Workspace-wide install:**
+```bash
+stx workspace update           # Installs hooks in all repos + projects/
+```
+
+`stx project new` automatically generates `.pre-commit-config.yaml` and installs hooks.
 
 ## 13. Block Registry Patterns
 
@@ -507,6 +540,63 @@ indexes). Use `marker=True` to force-include a heading even when auto is off.
 
 Call `st_marker("Label", visible=True)` for visible waypoints or
 `st_marker("Label")` for invisible ones (scroll-only targets).
+Use `st_marker("Label", hidden=True)` for navigation-only markers that
+do not appear in the sidebar marker list or widget popup.
+
+### Slide breaks (presentation mode)
+
+Use `st_slide_break()` to separate presentation sections. It inserts a
+styled horizontal rule + viewport-height spacer + hidden marker so that
+PageDown stops between sections without polluting the sidebar.
+
+Customize globally via `set_slide_break_config(SlideBreakConfig(...))` in
+the project's `helpers.py`, or per-call with the `config=` parameter.
+
+### PDF export
+
+Use `export_pdf()` to convert HTML export output to PDF via Playwright (Chromium headless).
+Requires the optional `pdf` extra: `uv add "streamtex[pdf]"` + `playwright install chromium`.
+
+Two modes via `PdfMode`:
+- `CONTINUOUS` — slide breaks removed, content flows continuously
+- `PAGINATED` — page break inserted at each slide break
+
+CSS classes `.stx-slide-break-rule` and `.stx-slide-break-spacer` are targeted by
+`@media print` rules injected by `inject_print_css()`.
+
+#### PDF configuration in `st_book()`
+
+Pass a `PdfConfig` to `st_book()` to set default PDF options for the sidebar UI:
+
+```python
+from streamtex import st_book, PdfConfig, PdfMode
+
+st_book([...],
+    pdf_config=PdfConfig(
+        mode=PdfMode.PAGINATED,
+        format="A4",
+        landscape=True,
+        margin_top="10mm",
+        margin_bottom="10mm",
+        margin_left="15mm",
+        margin_right="15mm",
+        print_background=True,
+        scale=1.0,
+        page_numbers=False,
+    ),
+)
+```
+
+When `export=True` (default), the sidebar shows a "Download as..." panel where the user can
+adjust all PDF parameters before generating. The `pdf_config` values are used as defaults.
+
+#### WYSIWYG export — Width % and Zoom %
+
+The sidebar Width % and Zoom % controls are propagated to exports for WYSIWYG fidelity:
+- **HTML export**: Width % sets `max-width` on `.streamtex-page`; Zoom % sets CSS `zoom`.
+- **PDF export**: Width % is already in the HTML that Chromium renders. Zoom % is used as the
+  default value for the PDF Scale slider (overridable by the user in the export panel).
+- The export panel shows "Current view: Width X% · Zoom Y%" for transparency.
 
 ### Architecture
 

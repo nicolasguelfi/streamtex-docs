@@ -12,6 +12,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_ci_workflow)
     st_include(bck_publish_workflow)

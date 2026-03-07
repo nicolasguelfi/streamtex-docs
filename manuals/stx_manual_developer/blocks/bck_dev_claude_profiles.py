@@ -11,6 +11,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_claude_structure)
     st_include(bck_claude_profiles_mgmt)

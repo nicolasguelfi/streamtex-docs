@@ -12,6 +12,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_standards_general)
     st_include(bck_standards_module)

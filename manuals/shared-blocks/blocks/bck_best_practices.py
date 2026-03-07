@@ -9,6 +9,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Share best practices and patterns."""
     st_write(

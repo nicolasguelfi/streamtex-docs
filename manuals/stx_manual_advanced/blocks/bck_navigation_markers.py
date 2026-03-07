@@ -14,6 +14,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Include atomic blocks for the Marker Navigation section."""
     st_include(bck_markers)

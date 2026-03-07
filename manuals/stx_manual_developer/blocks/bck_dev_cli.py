@@ -11,6 +11,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_cli_architecture)
     st_include(bck_cli_adding_commands)

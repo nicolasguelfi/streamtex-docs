@@ -14,6 +14,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Include atomic blocks for this section."""
     st_include(bck_text_basics)

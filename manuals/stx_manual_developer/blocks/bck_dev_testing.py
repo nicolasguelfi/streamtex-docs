@@ -13,6 +13,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_testing_run)
     st_include(bck_testing_patterns)

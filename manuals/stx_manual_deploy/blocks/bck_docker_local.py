@@ -14,6 +14,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Include atomic blocks for Docker local deployment."""
     st_include(bck_dockerfile)

@@ -20,6 +20,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Build the block helpers patterns demonstration block."""
 

@@ -12,6 +12,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Include atomic blocks for CLI reference."""
     st_include(bck_cli_deploy_commands)

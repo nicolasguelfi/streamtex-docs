@@ -9,6 +9,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     """Teach fundamental styling concepts."""
     st_write(

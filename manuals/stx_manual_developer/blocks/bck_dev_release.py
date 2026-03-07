@@ -12,6 +12,9 @@ class BlockStyles:
     pass
 
 
+bs = BlockStyles
+
+
 def build():
     st_include(bck_release_checklist)
     st_include(bck_release_version_sync)

@@ -6,7 +6,7 @@ import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 
-_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
+_LOGO = "https://media.githubusercontent.com/media/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 
 class BlockStyles:

@@ -10,7 +10,7 @@ from streamtex import *
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 
-_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
+_LOGO = "https://media.githubusercontent.com/media/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 # URLs: environment variables override localhost defaults (set by Render envVars)
 _URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")

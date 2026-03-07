@@ -7,7 +7,7 @@ from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
 
-_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
+_LOGO = "https://media.githubusercontent.com/media/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 class BlockStyles:
     """Title page styles."""

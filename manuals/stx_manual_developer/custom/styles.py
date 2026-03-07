@@ -30,23 +30,23 @@ class BackgroundsCustom:
 class TextStylesCustom:
     """Developer manual title compositions."""
     course_title = Style.create(
-        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.huge_size,
+        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.LARGE_size,
         "course_title"
     )
     page_title = Style.create(
-        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.huge_size,
+        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.LARGE_size,
         "page_title"
     )
     section_title = Style.create(
-        ColorsCustom.dev_cyan + Text.weights.bold_weight + Text.sizes.LARGE_size,
+        ColorsCustom.dev_cyan + Text.weights.bold_weight + Text.sizes.Large_size,
         "section_title"
     )
     section_subtitle = Style.create(
-        ColorsCustom.dev_orange + Text.weights.bold_weight + Text.sizes.Large_size,
+        ColorsCustom.dev_orange + Text.weights.bold_weight + Text.sizes.large_size,
         "section_subtitle"
     )
     subsection_title = Style.create(
-        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.large_size,
+        ColorsCustom.dev_green + Text.weights.bold_weight + Text.sizes.big_size,
         "subsection_title"
     )
     tip_label = Style.create(

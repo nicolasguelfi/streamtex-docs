@@ -17,7 +17,7 @@ def build():
     st_space("v", 2)
     with st_block(Style("text-align: center;", "inline_style")):
         st_write(
-            stx.StxStyles.huge + stx.StxStyles.text.colors.reset,
+            stx.StxStyles.LARGE + stx.StxStyles.text.colors.reset,
             "Welcome!",
             tag=t.h1,
             toc_lvl="1"

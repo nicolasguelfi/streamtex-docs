@@ -33,23 +33,23 @@ class BackgroundsCustom:
 class TextStylesCustom:
     """Training course title compositions."""
     course_title = Style.create(
-        ColorsCustom.primary_blue + Text.weights.bold_weight + Text.sizes.huge_size,
+        ColorsCustom.primary_blue + Text.weights.bold_weight + Text.sizes.LARGE_size,
         "course_title"
     )
     page_title = Style.create(
-        ColorsCustom.primary_blue + Text.weights.bold_weight + Text.sizes.huge_size,
+        ColorsCustom.primary_blue + Text.weights.bold_weight + Text.sizes.LARGE_size,
         "page_title"
     )
     section_title = Style.create(
-        ColorsCustom.accent_teal + Text.weights.bold_weight + Text.sizes.LARGE_size,
+        ColorsCustom.accent_teal + Text.weights.bold_weight + Text.sizes.Large_size,
         "section_title"
     )
     section_subtitle = Style.create(
-        ColorsCustom.highlight_amber + Text.weights.bold_weight + Text.sizes.Large_size,
+        ColorsCustom.highlight_amber + Text.weights.bold_weight + Text.sizes.large_size,
         "section_subtitle"
     )
     subsection_title = Style.create(
-        ColorsCustom.success_green + Text.weights.bold_weight + Text.sizes.large_size,
+        ColorsCustom.success_green + Text.weights.bold_weight + Text.sizes.big_size,
         "subsection_title"
     )
     feature_title = Style.create(

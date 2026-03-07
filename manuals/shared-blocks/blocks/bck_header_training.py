@@ -17,7 +17,8 @@ class BlockStyles:
         "training_header"
     )
     header_text = Style("color: white;", "training_header_text")
-    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "training_logo")
+    logo = Style("width: 100%; height: auto;", "training_logo")
+    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "training_logo_cell")
 bs = BlockStyles
 
 
@@ -26,15 +27,18 @@ def build():
     st_space("v", 1)
 
     with st_block(bs.header):
-        st_image(bs.logo, uri=_LOGO)
-        st_write(
-            stx.StxStyles.huge + stx.StxStyles.bold + bs.header_text,
-            "StreamTeX Training Course",
-            tag=t.div
-        )
-        st_write(
-            stx.StxStyles.large + bs.header_text,
-            "A Streamlit-based content rendering framework",
-            tag=t.div
-        )
+        with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
+            with g.cell():
+                st_image(bs.logo, uri=_LOGO)
+            with g.cell():
+                st_write(
+                    stx.StxStyles.LARGE + stx.StxStyles.bold + bs.header_text,
+                    "StreamTeX Training Course",
+                    tag=t.div
+                )
+                st_write(
+                    stx.StxStyles.large + bs.header_text,
+                    "A Streamlit-based content rendering framework",
+                    tag=t.div
+                )
     st_space("v", 1)

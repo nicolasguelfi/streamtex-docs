@@ -32,7 +32,8 @@ class BlockStyles:
     )
     badge_number = s.project.colors.ai_violet + s.bold + s.LARGE
     badge_label = s.large + s.center_txt
-    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "ai_logo")
+    logo = Style("width: 100%; height: auto;", "ai_logo")
+    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "ai_logo_cell")
 
 bs = BlockStyles
 
@@ -42,9 +43,12 @@ def build():
 
     # ── Hero banner ───────────────────────────────────────────────
     with st_block(bs.banner):
-        st_image(bs.logo, uri=_LOGO)
-        st_write(bs.heading, "StreamTeX AI Manual",
-                 tag=t.div, toc_lvl="1")
+        with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
+            with g.cell():
+                st_image(bs.logo, uri=_LOGO)
+            with g.cell():
+                st_write(bs.heading, "StreamTeX AI Manual",
+                         tag=t.div, toc_lvl="1")
         st_space("v", 1)
         st_write(bs.tagline, "AI-Powered Documentation Workflows",
                  tag=t.div)

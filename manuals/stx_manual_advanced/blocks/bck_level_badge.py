@@ -34,7 +34,8 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "advanced_level_label"
     )
-    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "advanced_logo")
+    logo = Style("width: 100%; height: auto;", "advanced_logo")
+    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "advanced_logo_cell")
     description = s.large + s.project.colors.neutral_gray
 
 
@@ -46,18 +47,21 @@ def build():
     # --- Advanced gradient header ---
     st_space("v", 1)
     with st_block(bs.header):
-        st_image(bs.logo, uri=_LOGO)
-        st_write(
-            stx.StxStyles.huge + stx.StxStyles.bold + "color:white;",
-            "StreamTeX Training Course: Advanced",
-            tag=t.div,
-            toc_lvl="1",
-        )
-        st_write(
-            stx.StxStyles.large + "color:white;",
-            "A Streamlit-based content rendering framework",
-            tag=t.div
-        )
+        with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
+            with g.cell():
+                st_image(bs.logo, uri=_LOGO)
+            with g.cell():
+                st_write(
+                    stx.StxStyles.LARGE + stx.StxStyles.bold + "color:white;",
+                    "StreamTeX Training Course: Advanced",
+                    tag=t.div,
+                    toc_lvl="1",
+                )
+                st_write(
+                    stx.StxStyles.large + "color:white;",
+                    "A Streamlit-based content rendering framework",
+                    tag=t.div
+                )
     st_space("v", 1)
 
     # --- Advanced level badge ---

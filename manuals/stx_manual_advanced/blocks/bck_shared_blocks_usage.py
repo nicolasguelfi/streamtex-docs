@@ -412,7 +412,7 @@ def build():
     st_space("v", 1)
     with st_block(BlockStyles.header_bg):
         st_write(
-            stx.StxStyles.huge + stx.StxStyles.text.colors.white,
+            stx.StxStyles.LARGE + stx.StxStyles.text.colors.white,
             "StreamTeX Training Course",
             tag=t.div
         )
@@ -552,7 +552,7 @@ class SharedStyles(StxStyles):
         brand_accent = Style("color: #34A853;", "brand_accent")
 
     class titles:
-        page_title = StxStyles.huge + colors.brand_primary
+        page_title = StxStyles.LARGE + colors.brand_primary
 """)
     st_space("v", 1)
 
@@ -584,7 +584,7 @@ def build():
     \"\"\"Render the organization header.\"\"\"
     with st_block(bs.banner):
         st_write(
-            stx.StxStyles.huge + stx.StxStyles.text.colors.white,
+            stx.StxStyles.LARGE + stx.StxStyles.text.colors.white,
             "My Organization",
             tag=t.div
         )

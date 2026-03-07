@@ -1,7 +1,5 @@
 """Developer Guide welcome page — prerequisites and overview."""
 
-from pathlib import Path
-
 import streamlit as st
 from custom.styles import Styles as s
 import streamtex as stx
@@ -9,7 +7,7 @@ from streamtex import *
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 
-_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
+_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 
 class BlockStyles:

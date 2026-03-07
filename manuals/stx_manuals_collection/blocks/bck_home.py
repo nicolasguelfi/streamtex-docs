@@ -1,7 +1,6 @@
 """Collection home — gradient header + level badge + project cards."""
 
 import os
-from pathlib import Path
 
 import streamlit as st
 from custom.styles import Styles as s
@@ -11,7 +10,7 @@ from streamtex import *
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 
-_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
+_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 # URLs: environment variables override localhost defaults (set by Render envVars)
 _URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")

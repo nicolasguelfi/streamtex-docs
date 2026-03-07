@@ -1,14 +1,12 @@
 """Shared header block for training courses."""
 
-from pathlib import Path
-
 import streamlit as st
 from streamtex import *
 import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 
-_LOGO = str(Path(__file__).parent.parent / "logo-stx.png")
+_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 
 class BlockStyles:

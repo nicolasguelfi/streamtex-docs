@@ -1,7 +1,5 @@
 """Title page — StreamTeX AI Manual hero banner with badges."""
 
-from pathlib import Path
-
 import streamlit as st
 from streamtex import st_write, st_space, st_block, st_grid, st_image
 from streamtex.enums import Tags as t
@@ -9,7 +7,7 @@ from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
 
-_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
+_LOGO = "https://raw.githubusercontent.com/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
 class BlockStyles:
     """Title page styles."""

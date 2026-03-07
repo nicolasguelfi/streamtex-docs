@@ -6,6 +6,8 @@ are in a single module.
 """
 
 from pathlib import Path
+
+import streamlit as st
 from streamtex import *
 import streamtex as stx
 from streamtex.styles import Style
@@ -50,6 +52,7 @@ def build():
         with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
             with g.cell():
                 st_image(bs.logo, uri=_LOGO)
+                st.link_button("❤️ Support us!", "https://github.com/sponsors/nicolasguelfi", use_container_width=True)
             with g.cell():
                 st_write(
                     stx.StxStyles.LARGE + stx.StxStyles.bold + "color:white;",

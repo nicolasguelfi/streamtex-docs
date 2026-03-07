@@ -1,6 +1,8 @@
 """Title page — StreamTeX AI Manual hero banner with badges."""
 
 from pathlib import Path
+
+import streamlit as st
 from streamtex import st_write, st_space, st_block, st_grid, st_image
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
@@ -46,6 +48,7 @@ def build():
         with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
             with g.cell():
                 st_image(bs.logo, uri=_LOGO)
+                st.link_button("❤️ Support us!", "https://github.com/sponsors/nicolasguelfi", use_container_width=True)
             with g.cell():
                 st_write(bs.heading, "StreamTeX AI Manual",
                          tag=t.div, toc_lvl="1")

@@ -20,7 +20,7 @@ class BlockStyles:
     )
     header_text = Style("color: white;", "training_header_text")
     logo = Style("width: 100%; height: auto;", "training_logo")
-    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "training_logo_cell")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "training_logo_cell")
 bs = BlockStyles
 
 

@@ -37,7 +37,7 @@ class BlockStyles:
         "intro_level_label"
     )
     logo = Style("width: 100%; height: auto;", "intro_logo")
-    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "intro_logo_cell")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "intro_logo_cell")
     description = s.large + s.project.colors.neutral_gray
 
 

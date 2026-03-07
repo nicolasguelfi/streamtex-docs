@@ -35,7 +35,7 @@ class BlockStyles:
     badge_number = s.project.colors.ai_violet + s.bold + s.LARGE
     badge_label = s.large + s.center_txt
     logo = Style("width: 100%; height: auto;", "ai_logo")
-    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "ai_logo_cell")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "ai_logo_cell")
 
 bs = BlockStyles
 

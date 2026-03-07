@@ -43,7 +43,7 @@ class BlockStyles:
     )
     description = s.large + s.project.colors.neutral_gray
     logo = Style("width: 100%; height: auto;", "collection_logo")
-    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "collection_logo_cell")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "collection_logo_cell")
 
     # --- Cards ---
     card_container = Style.create(

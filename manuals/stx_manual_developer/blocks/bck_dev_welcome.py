@@ -30,7 +30,7 @@ class BlockStyles:
         "dev_level_label",
     )
     logo = Style("width: 100%; height: auto;", "dev_logo")
-    logo_cell = Style("display: flex; align-items: center; justify-content: center;", "dev_logo_cell")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "dev_logo_cell")
     prereq_box = Style(
         "background: rgba(39, 174, 96, 0.08); "
         "border-left: 4px solid #27AE60; "

@@ -5,11 +5,14 @@ Both appear on the same page in paginated mode because they
 are in a single module.
 """
 
+from pathlib import Path
 from streamtex import *
 import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+
+_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
 
 
 class BlockStyles:
@@ -31,6 +34,7 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "advanced_level_label"
     )
+    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "advanced_logo")
     description = s.large + s.project.colors.neutral_gray
 
 
@@ -42,6 +46,7 @@ def build():
     # --- Advanced gradient header ---
     st_space("v", 1)
     with st_block(bs.header):
+        st_image(bs.logo, uri=_LOGO)
         st_write(
             stx.StxStyles.huge + stx.StxStyles.bold + "color:white;",
             "StreamTeX Training Course: Advanced",

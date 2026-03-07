@@ -1,10 +1,13 @@
 """Title page — StreamTeX AI Manual hero banner with badges."""
 
-from streamtex import st_write, st_space, st_block, st_grid
+from pathlib import Path
+from streamtex import st_write, st_space, st_block, st_grid, st_image
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
 from blocks.helpers import show_explanation
+
+_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
 
 class BlockStyles:
     """Title page styles."""
@@ -29,6 +32,7 @@ class BlockStyles:
     )
     badge_number = s.project.colors.ai_violet + s.bold + s.LARGE
     badge_label = s.large + s.center_txt
+    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "ai_logo")
 
 bs = BlockStyles
 
@@ -38,6 +42,7 @@ def build():
 
     # ── Hero banner ───────────────────────────────────────────────
     with st_block(bs.banner):
+        st_image(bs.logo, uri=_LOGO)
         st_write(bs.heading, "StreamTeX AI Manual",
                  tag=t.div, toc_lvl="1")
         st_space("v", 1)

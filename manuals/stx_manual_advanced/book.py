@@ -30,8 +30,10 @@ stx.set_static_sources([
 # ============================================================================
 # Page configuration
 # ============================================================================
+_logo = str(Path(__file__).parent.parent / "shared-blocks" / "logo-stx.png")
 st.set_page_config(
     page_title="StreamTeX - Advanced",
+    page_icon=_logo,
     layout="wide",
     initial_sidebar_state="expanded"
 )

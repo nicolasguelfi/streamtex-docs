@@ -17,9 +17,7 @@ def build():
     st.divider()
     st_write(
         stx.StxStyles.small + stx.StxStyles.text.colors.reset + stx.StxStyles.center_txt,
-        "StreamTeX Training Course © 2026 | All rights reserved"
-    )
-    st_write(
-        stx.StxStyles.small,
-        "For more information, visit: https://github.com/streamtex"
+        "StreamTeX © 2026 Nicolas Guelfi | "
+        "[GitHub](https://github.com/nicolasguelfi/streamtex) · "
+        "[Sponsor](https://github.com/sponsors/nicolasguelfi)"
     )

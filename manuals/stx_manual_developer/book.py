@@ -3,6 +3,7 @@
 import streamlit as st
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig
+from pathlib import Path
 
 from custom.styles import Styles as s
 from custom.themes import dark
@@ -10,8 +11,10 @@ import streamtex.styles as sts
 import blocks
 
 # Page configuration
+_logo = str(Path(__file__).parent.parent / "shared-blocks" / "logo-stx.png")
 st.set_page_config(
     page_title="StreamTeX - Developer Guide",
+    page_icon=_logo,
     layout="wide",
     initial_sidebar_state="expanded"
 )

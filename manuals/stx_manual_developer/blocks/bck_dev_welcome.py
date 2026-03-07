@@ -1,10 +1,13 @@
 """Developer Guide welcome page — prerequisites and overview."""
 
+from pathlib import Path
 from custom.styles import Styles as s
 import streamtex as stx
 from streamtex import *
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
+
+_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
 
 
 class BlockStyles:
@@ -24,6 +27,7 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "dev_level_label",
     )
+    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "dev_logo")
     prereq_box = Style(
         "background: rgba(39, 174, 96, 0.08); "
         "border-left: 4px solid #27AE60; "
@@ -37,6 +41,7 @@ bs = BlockStyles
 def build():
     st_space("v", 1)
     with st_block(bs.header):
+        st_image(bs.logo, uri=_LOGO)
         st_write(
             stx.StxStyles.huge + stx.StxStyles.text.colors.white,
             "StreamTeX Developer Guide",

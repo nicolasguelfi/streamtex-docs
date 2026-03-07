@@ -1,6 +1,7 @@
 """Collection home — gradient header + level badge + project cards."""
 
 import os
+from pathlib import Path
 
 import streamlit as st
 from custom.styles import Styles as s
@@ -9,6 +10,8 @@ import streamtex as stx
 from streamtex import *
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
+
+_LOGO = str(Path(__file__).parent.parent.parent / "shared-blocks" / "logo-stx.png")
 
 # URLs: environment variables override localhost defaults (set by Render envVars)
 _URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")
@@ -39,6 +42,7 @@ class BlockStyles:
         "collection_level_label",
     )
     description = s.large + s.project.colors.neutral_gray
+    logo = Style("max-width: 120px; margin: 0 auto 16px auto; display: block;", "collection_logo")
 
     # --- Cards ---
     card_container = Style.create(
@@ -73,6 +77,7 @@ def build():
     # === Gradient header ===
     st_space("v", 1)
     with st_block(bs.header):
+        st_image(bs.logo, uri=_LOGO)
         st_write(
             stx.StxStyles.huge + stx.StxStyles.text.colors.white,
             "StreamTeX Training Course",

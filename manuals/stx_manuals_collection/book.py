@@ -2,6 +2,7 @@
 
 import blocks
 import setup  # noqa: F401  (side-effect: adds project dir to sys.path)
+from pathlib import Path
 import streamlit as st
 from custom.themes import dark
 
@@ -9,8 +10,10 @@ import streamtex as stx
 import streamtex.styles as sts
 from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig
 
+_logo = str(Path(__file__).parent.parent / "shared-blocks" / "logo-stx.png")
 st.set_page_config(
     page_title="StreamTeX - Collection",
+    page_icon=_logo,
     layout="wide",
     initial_sidebar_state="expanded"
 )

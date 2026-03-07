@@ -15,8 +15,10 @@ import blocks
 stx.set_static_sources([str(Path(__file__).parent / "static")])
 
 # Page configuration
+_logo = str(Path(__file__).parent.parent / "shared-blocks" / "logo-stx.png")
 st.set_page_config(
     page_title="StreamTeX - AI Manual",
+    page_icon=_logo,
     layout="wide",
     initial_sidebar_state="expanded"
 )

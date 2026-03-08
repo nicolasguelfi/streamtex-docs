@@ -41,7 +41,7 @@ class BlockStyles:
         "collection_level_label",
     )
     description = s.large + s.project.colors.neutral_gray
-    logo = Style("width: 100%; max-width: 200px; height: auto;", "collection_logo")
+    logo = Style("width: 100%; height: auto;", "collection_logo")
     logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "collection_logo_cell")
 
     # --- Cards ---

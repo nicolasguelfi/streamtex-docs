@@ -34,7 +34,7 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "advanced_level_label"
     )
-    logo = Style("width: 100%; max-width: 200px; height: auto;", "advanced_logo")
+    logo = Style("width: 100%; height: auto;", "advanced_logo")
     logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "advanced_logo_cell")
     description = s.large + s.project.colors.neutral_gray
 

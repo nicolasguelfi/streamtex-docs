@@ -47,7 +47,7 @@ def build():
     # --- Introduction gradient header ---
     st_space("v", 1)
     with st_block(bs.header):
-        with st_grid(cols="minmax(100px, 200px) 1fr", cell_styles=[bs.logo_cell, None]) as g:
+        with st_grid(cols="25% 1fr", breakpoint="600px", cell_styles=[bs.logo_cell, None]) as g:
             with g.cell():
                 st_image(bs.logo, uri=_LOGO)
                 st.link_button("❤️ Support us!", "https://github.com/sponsors/nicolasguelfi", use_container_width=True)

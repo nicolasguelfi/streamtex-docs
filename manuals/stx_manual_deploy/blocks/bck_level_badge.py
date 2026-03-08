@@ -34,7 +34,7 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "deploy_level_label"
     )
-    logo = Style("width: 100%; height: auto;", "deploy_logo")
+    logo = Style("width: 100%; max-width: 200px; height: auto;", "deploy_logo")
     logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "deploy_logo_cell")
     description = s.large + s.project.colors.neutral_gray
 
@@ -47,7 +47,7 @@ def build():
     # --- Deployment gradient header ---
     st_space("v", 1)
     with st_block(bs.header):
-        with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
+        with st_grid(cols=2, responsive=True, min_width="200px", cell_styles=[bs.logo_cell, None]) as g:
             with g.cell():
                 st_image(bs.logo, uri=_LOGO)
                 st.link_button("❤️ Support us!", "https://github.com/sponsors/nicolasguelfi", use_container_width=True)

@@ -32,7 +32,7 @@ class BlockStyles:
     )
     badge_number = s.project.colors.ai_violet + s.bold + s.LARGE
     badge_label = s.large + s.center_txt
-    logo = Style("width: 100%; height: auto;", "ai_logo")
+    logo = Style("width: 100%; max-width: 200px; height: auto;", "ai_logo")
     logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "ai_logo_cell")
 
 bs = BlockStyles
@@ -43,7 +43,7 @@ def build():
 
     # ── Hero banner ───────────────────────────────────────────────
     with st_block(bs.banner):
-        with st_grid(cols="25% 75%", cell_styles=[bs.logo_cell, None]) as g:
+        with st_grid(cols=2, responsive=True, min_width="200px", cell_styles=[bs.logo_cell, None]) as g:
             with g.cell():
                 st_image(bs.logo, uri=_LOGO)
                 st.link_button("❤️ Support us!", "https://github.com/sponsors/nicolasguelfi", use_container_width=True)

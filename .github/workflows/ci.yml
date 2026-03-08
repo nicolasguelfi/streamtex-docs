@@ -35,7 +35,59 @@ jobs:
       - name: Verify streamtex import
         run: uv run python -c "import streamtex; print(f'streamtex {streamtex.__version__}')"
 
-      # --- 2. Verify all blocks have valid syntax + build() function ---
+      # --- 2. Verify streamtex API compatibility ---
+      # Catches cases where block code uses parameters not yet published on PyPI
+      # (e.g. st_grid(breakpoint=...) before breakpoint was released)
+      - name: Verify streamtex API compatibility
+        run: |
+          uv run python -c "
+          import ast, glob, inspect, sys
+          import streamtex
+
+          errors = []
+          checked = 0
+          for f in sorted(glob.glob('manuals/**/blocks/**/*.py', recursive=True)):
+              if '__pycache__' in f or '__init__' in f:
+                  continue
+              tree = ast.parse(open(f).read(), filename=f)
+              for node in ast.walk(tree):
+                  if not isinstance(node, ast.Call):
+                      continue
+                  # Match st_xxx(...) calls
+                  func_name = None
+                  if isinstance(node.func, ast.Name):
+                      func_name = node.func.id
+                  elif isinstance(node.func, ast.Attribute):
+                      func_name = node.func.attr
+                  if not func_name or not func_name.startswith('st_'):
+                      continue
+                  func = getattr(streamtex, func_name, None)
+                  if func is None or not callable(func):
+                      continue
+                  try:
+                      sig = inspect.signature(func)
+                  except (ValueError, TypeError):
+                      continue
+                  # Skip if function accepts **kwargs
+                  if any(p.kind == p.VAR_KEYWORD for p in sig.parameters.values()):
+                      continue
+                  checked += 1
+                  for kw in node.keywords:
+                      if kw.arg and kw.arg not in sig.parameters:
+                          errors.append(
+                              f'{f}:{node.lineno}: {func_name}() has no parameter \"{kw.arg}\"'
+                              f' (installed: streamtex {streamtex.__version__})'
+                          )
+
+          if errors:
+              print(f'API MISMATCH — {len(errors)} error(s) in {checked} calls:')
+              for e in errors:
+                  print(f'  {e}')
+              sys.exit(1)
+          print(f'OK — {checked} st_* calls compatible with streamtex {streamtex.__version__}')
+          "
+
+      # --- 3. Verify all blocks have valid syntax + build() function ---
       - name: Verify block structure
         run: |
           uv run python -c "
@@ -66,7 +118,7 @@ jobs:
           print(f'OK — {count} blocks verified')
           "
 
-      # --- 3. Verify composite blocks reference existing atomics ---
+      # --- 4. Verify composite blocks reference existing atomics ---
       - name: Verify composite → atomic links
         run: |
           uv run python -c "
@@ -93,7 +145,7 @@ jobs:
           print(f'OK — {count} atomic links verified')
           "
 
-      # --- 4. Verify all book.py files parse correctly ---
+      # --- 5. Verify all book.py files parse correctly ---
       - name: Verify book.py files
         run: |
           uv run python -c "

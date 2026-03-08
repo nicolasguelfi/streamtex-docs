@@ -12,7 +12,7 @@ config set by set_block_helper_config() at import time.
 from streamtex import (
     BlockHelperConfig, set_block_helper_config,
     show_code, show_code_inline, show_explanation, show_details,  # noqa: F401
-    st_slide_break, SlideBreakConfig, set_slide_break_config,  # noqa: F401
+    st_slide_break, SlideBreakConfig, SlideBreakMode, set_slide_break_config,  # noqa: F401
     st_write, st_block, st_space,
 )
 from custom.styles import Styles as s
@@ -68,5 +68,13 @@ def show_feature_highlight(feature_name: str, icon: str, description: str):
 # ============================================================================
 # st_slide_break, SlideBreakConfig, set_slide_break_config are imported above.
 # To customize for this project, uncomment and adjust:
-# set_slide_break_config(SlideBreakConfig(thickness="2px", color="79, 172, 254"))
+set_slide_break_config(SlideBreakConfig(
+    mode=SlideBreakMode.FULL,
+    space="60vh",
+    rule_margin_top="3em",
+    thickness="3px",
+    color="79, 172, 254",
+    opacity=0.5,
+    marker=True,
+))
 

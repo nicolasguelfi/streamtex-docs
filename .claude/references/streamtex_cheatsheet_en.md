@@ -165,6 +165,33 @@ st_image(s.container.sizes.height_auto, uri="image.png")
 st_image(uri="diagram.png", light_bg=True)
 ```
 
+### AI Image Generation
+
+```python
+from streamtex import set_ai_image_config, AIImageConfig
+from streamtex import st_ai_image, st_ai_image_widget, generate_image
+
+# Configure in book.py (once)
+set_ai_image_config(AIImageConfig(
+    provider="openai",             # "openai" | "google" | "fal"
+    default_size="1024x1024",
+    output_dir="static/images/ai",
+    cache=True,
+))
+
+# Declarative — in block code
+st_ai_image("a minimalist neural network diagram, flat design, dark bg",
+            width="100%", provider="openai", size="1024x1024")
+
+# Interactive — widget with prompt input + generate button
+st_ai_image_widget(default_prompt="a serene landscape", key="my_gen",
+                   show_save=True)
+
+# Programmatic — generate without displaying (e.g. Claude workflow)
+path = generate_image("a futuristic city", provider="openai")
+st_image(uri=path, width="100%")
+```
+
 ### st_grid — Full Signature
 
 ```python

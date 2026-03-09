@@ -85,6 +85,8 @@ st_book([
     blocks.bck_tutorial_presentation,
 
     # ── Part 8: Advanced ──────────────────────────────────────
+    blocks.bck_ai_image_overview,
+    blocks.bck_ai_image_usage,
     blocks.bck_memory,
     blocks.bck_stx_guide,
     blocks.bck_custom_commands,

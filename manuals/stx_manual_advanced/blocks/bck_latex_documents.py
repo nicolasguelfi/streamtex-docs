@@ -160,7 +160,6 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
         with l.item(): st_write(s.medium, "Sectioning: \\\\section, \\\\subsection, \\\\subsubsection")
         with l.item(): st_write(s.medium, "Text formatting: \\\\textbf, \\\\emph, \\\\texttt, \\\\underline")
         with l.item(): st_write(s.medium, "Lists: \\\\begin{itemize}, \\\\begin{enumerate}")
-        with l.item(): st_write(s.medium, "Tables: \\\\begin{tabular} with basic column specs")
         with l.item(): st_write(s.medium, "Math: inline $...$ and display $$...$$ environments")
         with l.item(): st_write(s.medium, "Quotes: \\\\begin{quote}")
         with l.item(): st_write(s.medium, "Footnotes: \\\\footnote{...}")
@@ -174,14 +173,14 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
           \\\\item Second with inline math: $a^2 + b^2 = c^2$
         \\\\end{itemize}
 
-        \\\\begin{tabular}{|l|r|}
-          \\\\hline
-          Name & Score \\\\\\\\
-          \\\\hline
-          Alice & 95 \\\\\\\\
-          Bob & 87 \\\\\\\\
-          \\\\hline
-        \\\\end{tabular}
+        \\\\begin{quote}
+          A famous result: $E = mc^2$
+        \\\\end{quote}
+
+        \\\\begin{enumerate}
+          \\\\item Alice scored \\\\textbf{95}
+          \\\\item Bob scored \\\\textbf{87}
+        \\\\end{enumerate}
         \"\"\", height=350)""")
     st_space("v", 1)
 
@@ -193,14 +192,14 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
   \item Second with inline math: $a^2 + b^2 = c^2$
 \end{itemize}
 
-\begin{tabular}{|l|r|}
-  \hline
-  Name & Score \\
-  \hline
-  Alice & 95 \\
-  Bob & 87 \\
-  \hline
-\end{tabular}
+\begin{quote}
+  A famous result: $E = mc^2$
+\end{quote}
+
+\begin{enumerate}
+  \item Alice scored \textbf{95}
+  \item Bob scored \textbf{87}
+\end{enumerate}
 """, height=350, light_bg=True)
     st_space("v", 2)
 

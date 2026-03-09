@@ -107,6 +107,26 @@ st_image(uri="static/images/photo.png", width="400px", height="auto", alt="Descr
 st_image(uri="static/images/logo.png", link="https://...", hover=True)
 ```
 
+## AI Image Generation — `st_ai_image()` / `st_ai_image_widget()`
+
+```python
+# Requires: uv add "streamtex[ai]" + AIImageConfig in book.py
+
+# Declarative — generate + display
+st_ai_image("A minimalist illustration of cloud architecture")
+
+# With provider/size override
+st_ai_image("A futuristic dashboard", provider="google", size="1024x1024")
+
+# Interactive widget — user types prompt in browser
+st_ai_image_widget(default_prompt="A modern diagram")
+
+# Programmatic — save to file then display
+from streamtex import generate_image
+path = generate_image("Illustration of AI", provider="openai")
+st_image(uri=path, width="100%")
+```
+
 ## Code Blocks — `st_code()`
 
 ```python
@@ -127,23 +147,6 @@ st_space("v", 2)          # Vertical space (2em) — between major sections
 st_space("v", 1)          # Vertical space (1em) — between elements
 st_space("h", "20px")     # Horizontal space
 st_br()                   # Minimal line break
-st_slide_break()          # Presentation break: rule + 100vh spacer + hidden marker
-```
-
-## PDF Export
-
-```python
-from streamtex import PdfConfig, PdfMode
-
-# In book.py — set default PDF options for the sidebar UI:
-st_book([...], pdf_config=PdfConfig(format="A4", landscape=True, page_numbers=True))
-
-# Programmatic export (requires: uv add "streamtex[pdf]" && playwright install chromium):
-from streamtex import export_pdf
-pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.PAGINATED))
-pdf_bytes = export_pdf(html, "out.pdf", PdfConfig(mode=PdfMode.CONTINUOUS))
-
-# WYSIWYG: sidebar Width % → HTML max-width; Zoom % → HTML CSS zoom + PDF scale default
 ```
 
 ## Overlays — `st_overlay()`
@@ -194,15 +197,14 @@ show_code_inline("inline code")               # Code without wrapper box
 ## Book Orchestration (`book.py`)
 
 ```python
-from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig, PdfConfig
+from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig
 
 toc = TOCConfig(numerate_titles=False, toc_position=0)
 marker = MarkerConfig(auto_marker_on_toc=1, show_nav_ui=True)
 
 st_book([blocks.bck_01, blocks.bck_02, ...],
         toc_config=toc, marker_config=marker, paginate=True,
-        banner=BannerConfig.full(),
-        pdf_config=PdfConfig(page_numbers=True))
+        banner=BannerConfig.full())
 ```
 
 ### Banner Presets

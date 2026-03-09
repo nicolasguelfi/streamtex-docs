@@ -6,6 +6,7 @@ Re-exports library helpers with project-specific style configuration.
 from streamtex import (
     BlockHelperConfig, set_block_helper_config,
     show_code, show_code_inline, show_explanation, show_details,  # noqa: F401
+    st_slide_break, SlideBreakConfig, SlideBreakMode, set_slide_break_config,  # noqa: F401
 )
 from custom.styles import Styles as s
 
@@ -27,3 +28,11 @@ class ProjectBlockHelperConfig(BlockHelperConfig):
 
 
 set_block_helper_config(ProjectBlockHelperConfig())
+
+set_slide_break_config(SlideBreakConfig(
+    mode=SlideBreakMode.FULL,
+    space="60vh",
+    rule_margin_top="10em",
+    rule_margin_bottom="10em",
+    marker=True,
+))

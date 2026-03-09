@@ -81,7 +81,10 @@ st_book([
     blocks.bck_bp_workflow,
     blocks.bck_bp_collaboration,
 
-    # ── Part 7: Advanced ──────────────────────────────────────
+    # ── Part 7: Tutorial ─────────────────────────────────────
+    blocks.bck_tutorial_presentation,
+
+    # ── Part 8: Advanced ──────────────────────────────────────
     blocks.bck_memory,
     blocks.bck_stx_guide,
     blocks.bck_custom_commands,
@@ -90,7 +93,7 @@ st_book([
     blocks.bck_multi_machine,
     blocks.bck_cli_integration,
 
-    # ── Part 8: Reference ─────────────────────────────────────
+    # ── Part 9: Reference ─────────────────────────────────────
     blocks.bck_ref_commands,
     blocks.bck_ref_agents,
     blocks.bck_ref_skills,

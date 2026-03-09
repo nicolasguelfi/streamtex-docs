@@ -37,12 +37,20 @@ jobs:
 
       # --- 2. Verify streamtex API compatibility ---
       # Catches cases where block code uses parameters not yet published on PyPI
-      # (e.g. st_grid(breakpoint=...) before breakpoint was released)
+      # Checks both st_*() function calls AND exported class constructors
+      # (e.g. SlideBreakConfig(rule_margin_bottom=...) before that param was released)
       - name: Verify streamtex API compatibility
         run: |
           uv run python -c "
           import ast, glob, inspect, sys
           import streamtex
+
+          # Build lookup of all exported callables (functions + classes)
+          exported = {}
+          for name in dir(streamtex):
+              obj = getattr(streamtex, name)
+              if callable(obj) and not name.startswith('_'):
+                  exported[name] = obj
 
           errors = []
           checked = 0
@@ -53,17 +61,15 @@ jobs:
               for node in ast.walk(tree):
                   if not isinstance(node, ast.Call):
                       continue
-                  # Match st_xxx(...) calls
+                  # Resolve function/class name
                   func_name = None
                   if isinstance(node.func, ast.Name):
                       func_name = node.func.id
                   elif isinstance(node.func, ast.Attribute):
                       func_name = node.func.attr
-                  if not func_name or not func_name.startswith('st_'):
+                  if not func_name or func_name not in exported:
                       continue
-                  func = getattr(streamtex, func_name, None)
-                  if func is None or not callable(func):
-                      continue
+                  func = exported[func_name]
                   try:
                       sig = inspect.signature(func)
                   except (ValueError, TypeError):
@@ -84,7 +90,7 @@ jobs:
               for e in errors:
                   print(f'  {e}')
               sys.exit(1)
-          print(f'OK — {checked} st_* calls compatible with streamtex {streamtex.__version__}')
+          print(f'OK — {checked} calls compatible with streamtex {streamtex.__version__}')
           "
 
       # --- 3. Verify all blocks have valid syntax + build() function ---

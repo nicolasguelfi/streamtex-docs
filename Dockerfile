@@ -26,6 +26,13 @@ COPY manuals/ ./manuals/
 # FOLDER is set at runtime by Render envVars (not build-time ARG)
 ENV FOLDER="manuals/stx_manual_intro"
 
+# Pre-warm the page cache for every manual so the first visitor loads instantly.
+# Each manual gets its own .stx_cache/page_cache.json with the correct hash.
+RUN for dir in manuals/stx_manual_*/; do \
+        echo "Warming up cache for $dir ..." && \
+        (cd "$dir" && uv run stx cache warmup .) || true; \
+    done
+
 EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health

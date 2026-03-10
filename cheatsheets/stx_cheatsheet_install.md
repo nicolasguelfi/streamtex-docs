@@ -1,0 +1,749 @@
+# StreamTeX Installation & Configuration -- Cheatsheet
+
+> StreamTeX v0.4.x | Python >= 3.11 | Package manager: uv
+
+---
+
+## Quick Reference
+
+```bash
+# Install the StreamTeX CLI (also used for upgrades)
+uv tool install "streamtex[cli]" -U
+
+# Create a new project (auto-places in projects/ if inside a workspace)
+stx project new my-project
+
+# Sync dependencies
+cd projects/my-project && uv sync
+
+# Run locally
+uv run streamlit run book.py
+
+# Install all optional features
+uv add "streamtex[ai,pdf,inspector]"
+
+# Initialize a workspace (standard preset = docs + claude repos)
+stx workspace init . --preset standard
+stx workspace update
+
+# Initialize a developer workspace (all repos)
+stx workspace init . --preset developer
+stx workspace update
+
+# Install Claude AI profile into a project
+stx claude install project .
+
+# Update everything (repos + deps + profiles + hooks)
+stx workspace update
+
+# Check Claude profile sync status
+stx claude check
+
+# Validate project structure
+stx project validate .
+
+# Run documentation manuals locally
+cd streamtex-docs && ./run-manuals.sh --all
+```
+
+---
+
+## 1. Prerequisites
+
+### Python >= 3.11
+
+StreamTeX requires Python 3.11 or later (uses `tomllib` from the standard library).
+
+```bash
+python3 --version    # Must show 3.11+
+```
+
+### uv -- installation and update
+
+uv is the required package manager for StreamTeX.
+
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Update uv
+uv self update
+
+# Verify
+uv --version
+```
+
+### git
+
+Required for workspace management (`stx workspace update` clones repos).
+
+```bash
+git --version
+```
+
+### Optional system dependencies
+
+| Dependency | Required for | Install (macOS) | Install (Linux) |
+|-----------|-------------|----------------|----------------|
+| Playwright browsers | PDF export (`streamtex[pdf]`) | `uv run playwright install chromium` | `uv run playwright install --with-deps chromium` |
+| graphviz system package | Graphviz diagrams | `brew install graphviz` | `apt install graphviz` |
+
+---
+
+## 2. Installation Levels
+
+### Level 1: Quick Start (minimal)
+
+Get a working project with no workspace overhead.
+
+```bash
+uv tool install "streamtex[cli]" -U
+stx project new my-project --no-claude
+cd my-project
+uv sync
+uv run streamlit run book.py
+```
+
+This creates a standalone project with `book.py`, `blocks/`, `custom/`, `.streamlit/config.toml`, and `pyproject.toml`.
+
+### Level 2: Standard (recommended)
+
+Workspace with documentation manuals and Claude AI profiles.
+
+```bash
+uv tool install "streamtex[cli]" -U
+mkdir my-workspace && cd my-workspace
+stx workspace init . --preset standard
+stx workspace update
+stx project new my-project
+```
+
+Cloned repos: `streamtex-docs`, `streamtex-claude`.
+
+### Level 3: Full developer
+
+Everything including the library source for editable development.
+
+```bash
+uv tool install "streamtex[cli]" -U
+mkdir my-workspace && cd my-workspace
+stx workspace init . --preset developer
+stx workspace update
+```
+
+Cloned repos: `streamtex` (library), `streamtex-docs`, `streamtex-claude`.
+
+Install all optional extras in a project:
+
+```bash
+cd projects/my-project
+uv add "streamtex[ai,pdf,inspector]"
+```
+
+### Level 4: Zero-code with Claude AI
+
+Full workspace with Claude profiles -- build projects entirely through AI slash commands.
+
+```bash
+uv tool install "streamtex[cli]" -U
+mkdir my-workspace && cd my-workspace
+stx workspace init .
+stx workspace update
+stx project new my-project
+cd projects/my-project
+```
+
+Then open in Claude Code and use:
+
+```
+/project:project-init
+> "Docker introduction course, 10 slides, dark theme"
+```
+
+---
+
+## 3. Optional Dependencies
+
+StreamTeX uses extras to keep the base install lightweight.
+
+| Extra | What it adds | Dependencies |
+|-------|-------------|-------------|
+| `cli` | `stx` CLI tool | click >= 8.0, rich >= 13.0, jinja2 >= 3.0, playwright >= 1.40 |
+| `pdf` | PDF export via Playwright | playwright >= 1.40 |
+| `ai` | All AI image providers | openai >= 1.0, google-genai >= 1.0, fal-client >= 0.5 |
+| `ai-openai` | OpenAI provider only (gpt-image-1) | openai >= 1.0 |
+| `ai-google` | Google provider only (imagen-3.0) | google-genai >= 1.0 |
+| `ai-fal` | fal.ai provider only (SD v3.5) | fal-client >= 0.5 |
+| `inspector` | Live code editor widget | streamlit-ace >= 0.1.1 |
+
+### Installing extras
+
+```bash
+# Single extra
+uv add "streamtex[pdf]"
+
+# Multiple extras
+uv add "streamtex[ai,pdf,inspector]"
+
+# Individual AI provider
+uv add "streamtex[ai-openai]"
+
+# CLI as a global tool (recommended for stx commands)
+uv tool install "streamtex[cli]" -U
+```
+
+### Core dependencies (always installed)
+
+- streamlit >= 1.54.0
+- beautifulsoup4 >= 4.10.0
+- requests >= 2.28.0
+- watchdog
+- graphviz >= 0.21
+- matplotlib >= 3.10.8
+- streamlit-mermaid >= 0.3.0
+- mermaid-py >= 0.5.0
+- python-dotenv >= 1.2.1
+
+---
+
+## 4. Project Configuration
+
+### pyproject.toml
+
+Generated by `stx project new`. Standard fields:
+
+```toml
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "StreamTeX project: my-project"
+requires-python = ">=3.11"
+dependencies = [
+    "streamtex>=0.3.0",
+    "streamlit>=1.54.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=7.0", "ruff>=0.4.0", "pre-commit>=3.0"]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.ruff.lint]
+ignore = ["F403", "F405", "E701", "E741"]
+
+[tool.pyright]
+extraPaths = [".."]
+```
+
+### Mandatory ruff config
+
+Every StreamTeX project MUST include these ignores in `pyproject.toml`:
+
+```toml
+[tool.ruff.lint]
+ignore = ["F403", "F405", "E701", "E741"]
+```
+
+| Rule | Why ignored |
+|------|------------|
+| F403 | `from streamtex import *` is the standard import pattern |
+| F405 | Follows from F403 (undefined names from wildcard import) |
+| E701 | `with l.item(): st_write(...)` one-liner list items |
+| E741 | `as l` variable name in `with st_list(...) as l:` |
+
+### .streamlit/config.toml
+
+Generated by `stx project new`:
+
+```toml
+[server]
+enableStaticServing = true
+fileWatcherType = "poll"
+runOnSave = true
+
+[theme]
+base = "dark"
+```
+
+**`enableStaticServing = true` is required** for StreamTeX to serve images and static assets from `static/`.
+
+### .env -- API keys
+
+For AI image generation features, create a `.env` file in your project root:
+
+```bash
+# OpenAI (gpt-image-1)
+STX_OPENAI_API_KEY=sk-...
+
+# Google AI (imagen-3.0-generate-002)
+STX_GOOGLE_AI_KEY=AIza...
+
+# fal.ai (Stable Diffusion v3.5)
+STX_FAL_KEY=...
+```
+
+StreamTeX uses `python-dotenv` to load these automatically.
+
+---
+
+## 5. Workspace Configuration
+
+### Presets
+
+| Preset | Repos cloned | Use case |
+|--------|-------------|----------|
+| `basic` | (none) | Standalone projects, no shared repos |
+| `user` | streamtex-claude | Claude AI profiles only |
+| `standard` | streamtex-docs + streamtex-claude | Recommended: docs + AI profiles |
+| `developer` | streamtex + streamtex-docs + streamtex-claude | Full development (includes library source) |
+
+### stx.toml format
+
+Generated by `stx workspace init`. Example (standard preset):
+
+```toml
+[workspace]
+name = "my-workspace"
+created = "2026-03-10T12:00:00Z"
+preset = "standard"
+
+[repos]
+
+[repos.streamtex-docs]
+url = "https://github.com/nicolasguelfi/streamtex-docs.git"
+path = "streamtex-docs"
+type = "docs"
+
+[repos.streamtex-claude]
+url = "https://github.com/nicolasguelfi/streamtex-claude.git"
+path = "streamtex-claude"
+type = "claude"
+
+[deploy]
+# render_owner = "nicolasguelfi"
+# render_region = "oregon"
+
+[claude]
+source = "streamtex-claude"
+```
+
+### Workspace commands
+
+```bash
+# Initialize a new workspace
+stx workspace init . --preset standard
+stx workspace init . --preset developer
+stx workspace init my-workspace --name "My Workspace"
+
+# Update everything: pull repos, clone missing, sync deps, install hooks, update profiles
+stx workspace update
+
+# Update options
+stx workspace update --skip-sync       # Skip uv sync step
+stx workspace update --skip-profiles   # Skip Claude profile update
+stx workspace update --dry-run         # Show steps without executing
+stx workspace update --repair          # Run repair checks (broken venv, missing __init__.py)
+
+# Check workspace status
+stx workspace status
+
+# Upgrade to a higher preset (cannot downgrade)
+stx workspace upgrade developer
+```
+
+### Workspace directory structure
+
+```
+my-workspace/
+├── stx.toml                  # Workspace configuration
+├── streamtex/                # (developer preset only) Library source
+├── streamtex-docs/           # (standard+ presets) Documentation manuals
+├── streamtex-claude/         # (user+ presets) Claude AI profiles
+├── projects/                 # Your projects live here
+│   ├── my-project/
+│   └── another-project/
+└── pyrightconfig.json        # (optional) IDE config for workspace root
+```
+
+---
+
+## 6. IDE Setup (basedpyright)
+
+### The problem
+
+StreamTeX's editable install (`uv sync` with `[tool.uv.sources]`) uses a setuptools "finder" mechanism that basedpyright cannot resolve statically. This causes false "import not found" errors.
+
+### Fix: pyrightconfig.json at workspace root
+
+Create `pyrightconfig.json` at the workspace root:
+
+```json
+{
+    "extraPaths": ["streamtex"]
+}
+```
+
+This tells pyright where to find the `streamtex` package directory.
+
+### Fix: [tool.pyright] extraPaths in pyproject.toml
+
+The correct `extraPaths` depends on where the file is relative to the library repo:
+
+| Context | pyproject.toml location | extraPaths value |
+|---------|------------------------|-----------------|
+| Workspace root | `pyrightconfig.json` | `["streamtex"]` |
+| Docs repo | `streamtex-docs/pyproject.toml` | `["../streamtex"]` |
+| Projects | `projects/my-project/pyproject.toml` | `["../.."]` or `["../../streamtex"]` |
+
+Example in `pyproject.toml`:
+
+```toml
+[tool.pyright]
+extraPaths = ["../.."]
+```
+
+### Reload after changes
+
+After modifying pyright configuration:
+
+- **VS Code / Cursor**: `Cmd+Shift+P` -> `basedpyright: Restart Server`
+
+---
+
+## 7. Running Locally
+
+### Single project
+
+```bash
+cd my-project
+uv run streamlit run book.py
+```
+
+Default port: 8501. Override with:
+
+```bash
+uv run streamlit run book.py --server.port 8510
+```
+
+### Documentation manuals
+
+From the `streamtex-docs/` directory:
+
+```bash
+# Launch all 6 manuals
+./run-manuals.sh --all
+
+# Launch a single manual
+./run-manuals.sh --intro
+./run-manuals.sh --advanced
+./run-manuals.sh --developer
+./run-manuals.sh --ai
+./run-manuals.sh --deployment
+
+# Stop all manuals
+./run-manuals.sh --kill
+
+# Launch with log watching (auto-restart on crash)
+./run-manuals.sh --watch
+```
+
+### Port assignments
+
+| Manual | Port | URL |
+|--------|------|-----|
+| Collection hub | 8501 | http://localhost:8501 |
+| Introduction | 8502 | http://localhost:8502 |
+| Advanced | 8503 | http://localhost:8503 |
+| Deployment | 8504 | http://localhost:8504 |
+| Developer | 8505 | http://localhost:8505 |
+| AI | 8506 | http://localhost:8506 |
+
+Custom ports: `./run-manuals.sh --ports 9001,9002,9003,9004,9005,9006`
+
+---
+
+## 8. Claude Profile Installation
+
+### Install a profile
+
+```bash
+stx claude install <profile> <target>
+```
+
+Examples:
+
+```bash
+stx claude install project .               # Install into current directory
+stx claude install project ./my-project    # Install into specific project
+stx claude install presentation .          # Presentation profile (extends project)
+stx claude install library ./streamtex     # Library development profile
+stx claude install documentation ./streamtex-docs
+```
+
+### Available profiles
+
+| Profile | Audience | Commands | Agents |
+|---------|----------|:--------:|:------:|
+| `project` | Content creators, teachers | 19 | 3 |
+| `presentation` | Live presenters (extends project) | +3 | +1 |
+| `library` | Library contributors | 3 | -- |
+| `documentation` | Manual authors | 10 | 2 |
+
+```bash
+# List all available profiles
+stx claude list
+```
+
+### What gets installed
+
+```
+your-project/
+├── CLAUDE.md                  # AI assistant instructions (project root)
+└── .claude/
+    ├── settings.json          # Claude Code permissions
+    ├── .stx-profile           # Installed profile marker
+    ├── commands/              # Slash commands (/designer:*, /project:*, etc.)
+    │   └── stx-guide.md      # Shared: ecosystem navigation guide
+    ├── references/            # Shared: coding standards + cheatsheet (read-only)
+    ├── designer/              # Design skills and agents
+    └── developer/             # Developer skills
+```
+
+Shared files (`references/` and `commands/`) are set read-only (0o444) to signal they are managed automatically.
+
+### Profile management commands
+
+```bash
+# Check sync status of all profiles in workspace
+stx claude check
+
+# Compare installed profile against source
+stx claude diff .
+
+# Update a single project's profile (preserves local CLAUDE.md)
+stx claude update .
+
+# Update and overwrite everything including CLAUDE.md
+stx claude update . --force
+
+# Update all projects in the workspace
+stx claude update --all
+```
+
+---
+
+## 9. Updating
+
+### Update the library in a project
+
+```bash
+cd my-project
+uv add streamtex -U
+```
+
+### Update the CLI tool
+
+```bash
+uv tool install "streamtex[cli]" -U
+```
+
+This single command handles both fresh installs and upgrades. Do NOT use `uv tool upgrade` (fails if not already installed).
+
+### Update workspace repos + deps + profiles
+
+```bash
+cd my-workspace
+stx workspace update
+```
+
+This runs 6 steps:
+1. Pull latest changes from all repos
+2. Clone any missing repos
+3. Run `uv sync` in all repos and projects (+ upgrade streamtex in lock files)
+4. Install global commands to `~/.claude/commands/`
+5. Update Claude profiles in all projects
+6. Install pre-commit hooks
+
+### Update Claude profiles only
+
+```bash
+stx claude update --all
+```
+
+### Update uv itself
+
+```bash
+uv self update
+```
+
+---
+
+## 10. UV_NO_SOURCES Issue
+
+### What it is
+
+`streamtex-docs/pyproject.toml` (and projects in the developer preset) contain:
+
+```toml
+[tool.uv.sources]
+streamtex = { path = "../streamtex", editable = true }
+```
+
+This points to the local library checkout for development. The path does NOT exist in CI, Docker, or non-developer setups.
+
+### CI fix
+
+Set `UV_NO_SOURCES=1` as a job-level environment variable:
+
+```yaml
+env:
+  UV_NO_SOURCES: 1
+```
+
+This tells uv to ignore `[tool.uv.sources]` and install from PyPI instead.
+
+### Docker fix
+
+```dockerfile
+RUN uv sync --no-sources
+```
+
+Or strip the sources section:
+
+```dockerfile
+RUN sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml
+```
+
+### When to use --frozen
+
+| Context | Use --frozen? | Why |
+|---------|:------------:|-----|
+| `streamtex` (library) CI | Yes | No local sources; lock file is portable |
+| `streamtex-docs` CI | No | Lock file encodes local paths; must regenerate |
+| Projects with `[tool.uv.sources]` | No | Same reason as docs |
+| Projects without sources | Yes | Lock file is portable |
+
+### How `stx workspace update` handles it
+
+The update command automatically detects missing local sources and falls back to `uv sync --no-sources`. It also restores `uv.lock` if it was the only file modified (to keep the repo clean).
+
+---
+
+## 11. Troubleshooting
+
+### Import resolution errors in IDE
+
+**Symptom**: basedpyright shows "Import 'streamtex' could not be resolved" despite working at runtime.
+
+**Fix**: Add `extraPaths` to `pyproject.toml` or create `pyrightconfig.json` (see Section 6). Then restart the language server: `Cmd+Shift+P` -> `basedpyright: Restart Server`.
+
+### uv sync fails with "Distribution not found"
+
+**Symptom**: `uv sync` fails because `[tool.uv.sources]` points to a non-existent local path.
+
+**Fix**: Use `uv sync --no-sources` or set `UV_NO_SOURCES=1`:
+
+```bash
+UV_NO_SOURCES=1 uv sync
+```
+
+Or upgrade to a workspace preset that includes the library:
+
+```bash
+stx workspace upgrade developer
+stx workspace update
+```
+
+### Streamlit not finding static files
+
+**Symptom**: Images in `static/` are not displayed; 404 errors in browser console.
+
+**Fix**: Ensure `.streamlit/config.toml` contains:
+
+```toml
+[server]
+enableStaticServing = true
+```
+
+Validate with:
+
+```bash
+stx project validate .
+```
+
+### Port conflicts
+
+**Symptom**: "Address already in use" when launching Streamlit.
+
+**Fix**:
+
+```bash
+# Find what's using the port
+lsof -i :8501
+
+# Kill all Streamlit processes (for manuals)
+./run-manuals.sh --kill
+
+# Or use a different port
+uv run streamlit run book.py --server.port 8510
+```
+
+### stx command not found
+
+**Symptom**: `stx: command not found` after installing.
+
+**Fix**: The CLI requires the `[cli]` extra:
+
+```bash
+uv tool install "streamtex[cli]" -U
+```
+
+If still not found, ensure uv's tool bin directory is in your PATH:
+
+```bash
+# Show uv tool bin path
+uv tool dir
+
+# Add to PATH (add to your shell profile)
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+### Python version too old
+
+**Symptom**: `ModuleNotFoundError: No module named 'tomllib'`
+
+**Fix**: StreamTeX requires Python 3.11+. Force a specific Python version:
+
+```bash
+uv tool install "streamtex[cli]" -U --python 3.12
+```
+
+### Broken .venv after Python upgrade
+
+**Symptom**: `uv sync` or `uv run` fails with cryptic errors after upgrading Python.
+
+**Fix**: Delete the virtual environment and re-sync:
+
+```bash
+rm -rf .venv
+uv sync
+```
+
+Or use the workspace repair command:
+
+```bash
+stx workspace update --repair
+```
+
+### Claude profile not installing
+
+**Symptom**: `stx claude install` says "Not inside a StreamTeX workspace".
+
+**Fix**: You must be inside a workspace (directory containing `stx.toml`) with a preset that includes the Claude repo:
+
+```bash
+stx workspace init . --preset user    # Minimum preset for Claude profiles
+stx workspace update                  # Clone the streamtex-claude repo
+stx claude install project .
+```

@@ -56,7 +56,7 @@ st_list(["step 1", "step 2", "step 3"], list_type="ol")
 
 # Custom symbols
 st_list(["point a", "point b"], list_type="ul",
-        style=custom_list_style)
+        l_style=custom_list_style)
     """, language="python")
 
     st_space("v", 2)
@@ -85,7 +85,7 @@ my_list_style = ListStyle(
 
 # Use it
 items = ["First", "Second", "Third"]
-st_list(items, list_type="ul", style=my_list_style)
+st_list(items, list_type="ul", l_style=my_list_style)
     """, language="python")
 
     st_space("v", 2)
@@ -111,7 +111,7 @@ nested_items = [
     ])
 ]
 
-st_list(nested_items, style=custom_style)
+st_list(nested_items, l_style=custom_style)
     """, language="python")
 
     st_space("v", 2)
@@ -200,7 +200,7 @@ compact_style = ListStyle(
 )
 
 items = ["Compact item 1", "Compact item 2"]
-st_list(items, style=compact_style)
+st_list(items, l_style=compact_style)
     """, language="python")
 
     st_space("v", 2)
@@ -227,7 +227,7 @@ ordered_style = ListStyle(
 )
 
 steps = ["First step", "Second step", "Third step"]
-st_list(steps, list_type="ol", style=ordered_style)
+st_list(steps, list_type="ol", l_style=ordered_style)
 # Renders as: 1. First step, 2. Second step, 3. Third step
     """, language="python")
 
@@ -257,7 +257,7 @@ tasks = [
     "Deploy"
 ]
 
-st_list(tasks, style=checklist)
+st_list(tasks, l_style=checklist)
     """, language="python")
 
     st_space("v", 1)
@@ -283,7 +283,7 @@ structure = [
     ])
 ]
 
-st_list(structure, style=toc_style)
+st_list(structure, l_style=toc_style)
     """, language="python")
 
     st_space("v", 2)

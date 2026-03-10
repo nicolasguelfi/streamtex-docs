@@ -114,9 +114,6 @@ st_book([
     blocks.bck_static_assets_loading,
     blocks.bck_deployment_strategies,
 
-    # --- Appendix: Migration ---
-    blocks.bck_upgrade_guide,
-
     # Shared block footer
     shared_blocks.bck_footer_training,
 ], toc_config=toc, marker_config=marker_config, paginate=True,

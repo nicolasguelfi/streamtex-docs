@@ -62,7 +62,6 @@ st_book([
     blocks.bck_cmd_project_customize,
     blocks.bck_cmd_designer_slides,
     blocks.bck_cmd_designer_styles,
-    blocks.bck_cmd_migration,
     blocks.bck_cmd_project_other,
 
     # ── Part 4: Agents ────────────────────────────────────────

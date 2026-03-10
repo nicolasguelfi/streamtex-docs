@@ -70,7 +70,7 @@ def show_feature_highlight(feature_name: str, icon: str, description: str):
 # To customize for this project, uncomment and adjust:
 set_slide_break_config(SlideBreakConfig(
     mode=SlideBreakMode.FULL,
-    space="60vh",
+    space="5vh",
     rule_margin_top="5em",
     rule_margin_bottom="5em",
     thickness="3px",

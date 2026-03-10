@@ -4,6 +4,7 @@ from streamtex import *
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from blocks.helpers import show_code
 
 
 class BlockStyles:
@@ -74,14 +75,12 @@ def build():
         )
     st_space("v", 1)
 
-    with st_block(s.project.containers.code_box):
-        st_code(code="""\
+    show_code("""\
 # Zoom is automatically injected by st_book()
 # No need to manually add it to your blocks
 
 # Users control it via sidebar slider
-# Default range: 80% - 120%
-""", language="python")
+# Default range: 80% - 120%""", language="python")
     st_space("v", 2)
 
     # Section 3: Responsive Design Pattern
@@ -104,7 +103,22 @@ def build():
     st_space("v", 1)
 
     st_write(s.medium, "This 3-column grid adapts to page width. Try zooming:")
-    st_space("v", 2)
+    st_space("v", 1)
+
+    show_code("""\
+responsive_gap = Style("gap:16px;", "responsive_gap")
+with st_grid(
+    cols="repeat(auto-fit, minmax(150px, 1fr))",
+    grid_style=responsive_gap,
+):
+    for i in range(1, 7):
+        card_style = Style(
+            "background:rgba(100,150,200,0.15);padding:12px;"
+            "border-radius:6px;text-align:center;", f"card_{i}")
+        with st_block(card_style):
+            st_write(s.Large + s.bold, str(i))
+            st_write(s.medium, f"Card {i}")""", language="python")
+    st_space("v", 1)
 
     # Create responsive grid (auto-fill)
     responsive_gap = Style("gap:16px;", "responsive_gap")

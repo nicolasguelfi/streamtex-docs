@@ -683,6 +683,18 @@ s.project.*      -- project-specific custom styles (colors, titles, containers)
 s.visibility.*   -- hidden, visible, invisible
 ```
 
+### Image Editing (new in 0.5)
+
+Use `st_image(editable=True)` for all editable images. `st_ai_image()` is deprecated — use `st_image(prompt=..., editable=True)` instead.
+
+```python
+# Old (deprecated)
+st_ai_image("A sunset", provider="openai")
+
+# New (recommended)
+st_image(s.none, uri="path.png", editable=True, name="hero", prompt="A sunset", provider="openai")
+```
+
 ### Common Gotchas
 
 1. **`from streamtex import *` shadows `list()`**: Use `[*iterable]` instead of `list(iterable)`.

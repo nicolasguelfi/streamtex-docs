@@ -1,7 +1,8 @@
+# Theme-safe: use rgba() for backgrounds that work in light & dark mode
 header_style = (s.bold + s.large
-                + s.container.bg_colors.steel_blue_bg
+                + Style("background-color: rgba(74, 144, 217, 0.6);", "hdr_bg")
                 + s.text.colors.white)
-highlight = s.container.bg_colors.light_yellow_bg
+highlight = Style("background-color: rgba(243, 156, 18, 0.25);", "highlight_bg")
 
 with st_grid(
     cols=3,

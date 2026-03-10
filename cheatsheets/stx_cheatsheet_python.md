@@ -436,6 +436,50 @@ st_image(uri="logo.svg", width=200, link="https://example.com")
 st_image(uri="diagram.svg", light_bg=True)  # white bg in iframe
 ```
 
+### st_image — Editable Mode
+
+When `editable=True`, an expandable "Edit Image" panel appears below the image with three tabs:
+
+**Parameters (new):**
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `editable` | `bool` | `False` | Enable the editor panel |
+| `name` | `str` | `""` | Semantic name for version tracking |
+| `prompt` | `str` | `None` | AI prompt (enables AI tab) |
+| `provider` | `str` | `None` | AI provider override |
+| `model` | `str` | `None` | AI model override |
+| `ai_size` | `str` | `None` | AI generation size |
+| `quality` | `str` | `"standard"` | AI quality ("standard" or "hd") |
+
+**Example — Editable local image:**
+```python
+st_image(s.none, uri="static/images/hero.png",
+         editable=True, name="hero_intro")
+```
+
+**Example — Editable AI image:**
+```python
+st_image(s.none, uri="static/images/managed/hero.png",
+         editable=True, name="hero_intro",
+         prompt="A futuristic classroom with holographic displays",
+         provider="openai", model="gpt-image-1")
+```
+
+**Example — AI generation without existing image (replaces st_ai_image):**
+```python
+st_image(s.none, editable=True, name="hero_intro",
+         prompt="A futuristic classroom",
+         provider="openai")
+```
+
+**Editor Panel Tabs:**
+- **Source**: Rename image, replace from local path or URL
+- **AI Generate**: Edit prompt, select provider/model/size/quality, generate, img2img option
+- **History**: View all versions, rollback to any previous version
+
+**Image-to-image editing:**
+Check "Use current image as base" in the AI tab to send the existing image as input for editing/variation.
+
 Image URI resolution order:
 1. URL (`https://...`) -- used directly
 2. Absolute/relative path -- base64 encoded
@@ -1433,6 +1477,9 @@ except GSheetError as e:
 
 ### st_ai_image
 
+> **Note:** `st_ai_image()` is now a thin wrapper around `st_image(editable=True, prompt=...)`.
+> New code should use `st_image()` directly.
+
 ```python
 def st_ai_image(
     prompt: str,
@@ -1532,6 +1579,57 @@ def list_providers() -> list[str]
 Optional deps: `streamtex[ai]`, `streamtex[ai-openai]`, `streamtex[ai-google]`, `streamtex[ai-fal]`.
 
 Cache: deterministic hash(prompt + provider + size + quality + seed) maps to a file on disk.
+
+### Image Management (History & Metadata)
+
+```python
+from streamtex import (
+    save_image_version, get_current_image, list_image_versions,
+    rollback_image, rename_image, ImageMetadata,
+)
+
+# Save an image as a managed version
+save_image_version("hero", "path/to/image.png",
+    source_type="ai_generated", prompt="A sunset", provider="openai")
+
+# Get current version
+path = get_current_image("hero")
+
+# List all versions
+versions = list_image_versions("hero")
+for ver_num, meta in versions:
+    print(f"v{ver_num}: {meta.prompt} ({meta.provider})")
+
+# Rollback to a previous version
+rollback_image("hero", version=1)
+
+# Rename a managed image
+rename_image("old_name", "new_name")
+```
+
+### Provider Models
+
+```python
+from streamtex import get_available_models
+
+get_available_models("openai")   # ["gpt-image-1", "dall-e-3"]
+get_available_models("google")   # ["imagen-4.0-generate-001", "imagen-3.0-generate-002"]
+get_available_models("fal")      # ["fal-ai/stable-diffusion-v35-large", "fal-ai/flux/dev/image-to-image"]
+```
+
+### Image-to-Image (img2img)
+
+```python
+# Pass base_image bytes to generate_image for editing
+with open("existing.png", "rb") as f:
+    base_bytes = f.read()
+
+path = generate_image(
+    "Make the sky more dramatic",
+    provider="openai",
+    base_image=base_bytes,
+)
+```
 
 ---
 
@@ -1937,7 +2035,7 @@ All symbols exported by `from streamtex import *`:
 | **Widgets** | `st_dataframe`, `st_table`, `st_metric`, `st_json`, `st_line_chart`, `st_bar_chart`, `st_area_chart`, `st_scatter_chart`, `st_audio`, `st_video` |
 | **Bib** | `BibEntry`, `BibConfig`, `BibFormat`, `CitationStyle`, `BibRegistry`, `load_bib`, `load_bibtex`, `load_bib_json`, `load_bib_ris`, `load_bib_csl_json`, `cite`, `st_cite`, `st_bibliography`, `export_bibtex`, `st_refs`, `BibRefs`, `generate_bib_stubs`, `set_bib_config`, `get_bib_config`, `register_bib_parser`, `parse_bibtex_string`, `parse_ris_string`, `format_entry` |
 | **GSheet** | `GSheetConfig`, `GSheetSource`, `GSheetError`, `AuthMode`, `set_gsheet_config`, `get_gsheet_config`, `load_gsheet`, `load_gsheet_df` |
-| **AI** | `AIImageConfig`, `AIImageError`, `AIImageResult`, `set_ai_image_config`, `get_ai_image_config`, `generate_image`, `is_cached`, `list_providers`, `st_ai_image`, `st_ai_image_widget` |
+| **AI** | `AIImageConfig`, `AIImageError`, `AIImageResult`, `set_ai_image_config`, `get_ai_image_config`, `generate_image`, `is_cached`, `list_providers`, `st_ai_image`, `st_ai_image_widget`, `get_available_models`, `save_image_version`, `get_current_image`, `list_image_versions`, `rollback_image`, `rename_image`, `ImageMetadata` |
 | **Blocks** | `LazyBlockRegistry`, `ProjectBlockRegistry`, `BlockNotFoundError`, `BlockImportError`, `load_atomic_block`, `set_static_sources`, `get_static_sources`, `resolve_static` |
 | **Helpers** | `BlockHelperConfig`, `BlockHelper`, `show_code`, `show_code_inline`, `show_explanation`, `show_details`, `set_block_helper_config`, `get_block_helper_config` |
 | **Collection** | `st_collection`, `CollectionConfig`, `ProjectMeta` |

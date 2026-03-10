@@ -189,4 +189,117 @@ def build():
         )
     st_space("v", 1)
 
+    # ── Unified Editable Mode (NEW) ─────────────────────────────
+    st_write(bs.sub, "Unified Editable Mode — st_image(editable=True)", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    with st_block(s.project.containers.good_callout):
+        st_write(bs.feature_title, "Recommended Approach", tag=t.div)
+        st_space("v", 1)
+        st_write(
+            bs.body,
+            "The unified ",
+            (s.bold, "st_image(editable=True)"),
+            " replaces separate st_ai_image() calls. It works with ",
+            (s.bold, "any image"),
+            " — local, URL, or AI-generated — and adds an editor "
+            "panel with AI generation, img2img, and version history.",
+        )
+    st_space("v", 1)
+
+    show_code("""\
+        # blocks/bck_hero.py — unified editable image
+        from streamtex import st_image, st_write, st_space
+        from custom.styles import Styles as s
+
+        def build():
+            st_write(s.huge + s.bold, "Hero Section", tag=t.div)
+            st_space("v", 2)
+
+            # Editable AI image — editor panel with generate + history
+            st_image(
+                uri="hero_banner.png",
+                editable=True,
+                name="hero_banner",
+                prompt="A futuristic city skyline at sunset, digital art",
+                provider="openai",
+                width="100%",
+            )""", language="python")
+    st_space("v", 2)
+
+    # ── Image-to-Image ────────────────────────────────────────
+    st_write(bs.sub, "Image-to-Image (img2img)", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    show_explanation("""\
+        The editor panel includes an "Use current as base" checkbox.
+        When enabled, the current image is sent to the AI provider
+        as a reference for the new generation. All three providers
+        support img2img: OpenAI (images.edit), Google (edit_image),
+        and fal.ai (image-to-image model).
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # Programmatic img2img via generate_image()
+        from streamtex.ai import generate_image
+        from pathlib import Path
+
+        base = Path("static/images/managed/hero_banner.png").read_bytes()
+        path = generate_image(
+            "Same scene but with neon lights and rain",
+            provider="openai",
+            base_image=base,
+        )""", language="python")
+    st_space("v", 2)
+
+    # ── Version History ───────────────────────────────────────
+    st_write(bs.sub, "Version History API", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Every generation or replacement creates a versioned archive.
+        The History tab in the editor panel lets users browse and
+        restore previous versions. The API is also available
+        programmatically.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        from streamtex import (
+            save_image_version, get_current_image,
+            list_image_versions, rollback_image, rename_image,
+        )
+
+        # Save a new version (returns version number)
+        ver = save_image_version("hero_banner", image_bytes,
+                                 source_type="ai", prompt="...",
+                                 provider="openai")
+
+        # List all versions
+        versions = list_image_versions("hero_banner")
+
+        # Rollback to a previous version
+        rollback_image("hero_banner", version=2)
+
+        # Rename (renames all versions + metadata)
+        rename_image("hero_banner", "main_hero")""", language="python")
+    st_space("v", 2)
+
+    # ── Deprecation Note ──────────────────────────────────────
+    with st_block(s.project.containers.note_callout):
+        st_write(s.project.titles.warning_label, "Migration Note", tag=t.div)
+        st_space("v", 1)
+        st_write(
+            bs.body,
+            (s.bold, "st_ai_image()"),
+            " and ",
+            (s.bold, "st_ai_image_widget()"),
+            " still work but are deprecated in favor of ",
+            (s.bold, "st_image(editable=True, prompt=...)"),
+            ". Existing code continues to function — st_ai_image() "
+            "now internally passes editable=True to st_image().",
+        )
+    st_space("v", 1)
+
     st_slide_break()

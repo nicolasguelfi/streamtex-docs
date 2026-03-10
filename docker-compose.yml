@@ -1,0 +1,46 @@
+# docker-compose.yml — Local multi-manual development
+# Usage: docker compose up --build
+# Each manual runs on its own port, matching run-manuals.sh ports.
+
+services:
+  collection:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - FOLDER=manuals/stx_manuals_collection
+
+  intro:
+    build: .
+    ports:
+      - "8502:8501"
+    environment:
+      - FOLDER=manuals/stx_manual_intro
+
+  advanced:
+    build: .
+    ports:
+      - "8503:8501"
+    environment:
+      - FOLDER=manuals/stx_manual_advanced
+
+  deploy:
+    build: .
+    ports:
+      - "8504:8501"
+    environment:
+      - FOLDER=manuals/stx_manual_deploy
+
+  developer:
+    build: .
+    ports:
+      - "8505:8501"
+    environment:
+      - FOLDER=manuals/stx_manual_developer
+
+  ai:
+    build: .
+    ports:
+      - "8506:8501"
+    environment:
+      - FOLDER=manuals/stx_manual_ai

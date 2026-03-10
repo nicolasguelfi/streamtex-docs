@@ -30,9 +30,12 @@ def build():
 
     show_explanation("""\
         StreamTeX integrates with external AI providers to generate
-        images directly from text prompts. You can use AI-generated
-        images in two ways: declaratively in block code, or
-        interactively via a widget in the browser.
+        images directly from text prompts. The recommended approach
+        is the unified st_image() with editable=True, which covers
+        local, URL, and AI-generated images with a built-in editor
+        panel, version history, and img2img support. The legacy
+        st_ai_image() and st_ai_image_widget() functions remain
+        available for backward compatibility.
     """)
     st_space("v", 2)
 

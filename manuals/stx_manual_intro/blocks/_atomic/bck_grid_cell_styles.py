@@ -1,8 +1,12 @@
 from streamtex import *
-from streamtex.styles import StyleGrid as sg
+from streamtex.styles import Style, StyleGrid as sg
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
+
+# Theme-safe backgrounds using semi-transparent RGBA (work in both light/dark)
+_cell_bg = Style("background-color: rgba(74, 144, 217, 0.15);", "demo_cell_bg")
+_highlight_bg = Style("background-color: rgba(243, 156, 18, 0.25);", "demo_highlight")
 
 class BlockStyles:
     """Grid cell styles demo."""
@@ -31,16 +35,16 @@ def build():
         st_space("v", 1)
 
         show_code("""\
+# Theme-safe: use rgba() backgrounds instead of named colors
+_cell_bg = Style("background-color: rgba(74, 144, 217, 0.15);", "demo_cell_bg")
 with st_grid(cols=2,
-             cell_styles=bs.base_cell
-                         + s.container.bg_colors.alice_blue_bg) as g:
+             cell_styles=bs.base_cell + _cell_bg) as g:
     with g.cell(): st_write(s.large, "Same style")
     with g.cell(): st_write(s.large, "Same style")""")
         st_space("v", 1)
 
         with st_grid(cols=2,
-                     cell_styles=bs.base_cell
-                                 + s.container.bg_colors.alice_blue_bg) as g:
+                     cell_styles=bs.base_cell + _cell_bg) as g:
             with g.cell(): st_write(s.large, "Same style")
             with g.cell(): st_write(s.large, "Same style")
             with g.cell(): st_write(s.large, "Same style")
@@ -63,9 +67,9 @@ with st_grid(cols=2,
         st_space("v", 1)
 
         header_style = (s.bold + s.large
-                        + s.container.bg_colors.steel_blue_bg
+                        + Style("background-color: rgba(74, 144, 217, 0.6);", "hdr_bg")
                         + s.text.colors.white)
-        highlight = s.container.bg_colors.light_yellow_bg
+        highlight = _highlight_bg
 
         with st_grid(
             cols=3,

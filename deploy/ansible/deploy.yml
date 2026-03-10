@@ -1,0 +1,55 @@
+---
+# deploy.yml — Ansible playbook for StreamTeX deployment
+# Deploys streamtex-docs to a remote server using Docker Compose.
+#
+# Usage:
+#   ansible-playbook -i deploy/ansible/inventory.ini deploy/ansible/deploy.yml
+#
+# Prerequisites:
+#   - Docker and Docker Compose installed on target servers
+#   - SSH access configured for the deploy user
+#   - Git installed on target servers
+
+- name: Deploy StreamTeX Documentation
+  hosts: streamtex_servers
+  become: true
+
+  vars:
+    app_dir: /opt/streamtex
+    repo_url: https://github.com/nicolasguelfi/streamtex-docs.git
+    branch: main
+
+  tasks:
+    - name: Ensure app directory exists
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: "0755"
+
+    - name: Clone or update repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: "{{ branch }}"
+        force: true
+
+    - name: Build and start containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_dir }}"
+        build: always
+        state: present
+
+    - name: Verify services are healthy
+      ansible.builtin.uri:
+        url: "http://localhost:{{ item.port }}/_stcore/health"
+        status_code: 200
+      loop:
+        - { name: collection, port: 8501 }
+        - { name: intro, port: 8502 }
+        - { name: advanced, port: 8503 }
+        - { name: deploy, port: 8504 }
+        - { name: developer, port: 8505 }
+        - { name: ai, port: 8506 }
+      retries: 5
+      delay: 10

@@ -120,3 +120,35 @@ st_image(uri=theImageURL2, width="300px",
             The alt text is used by screen readers
             and displayed when images fail to load.
         """)
+        st_space("v", 2)
+
+        # Editable image
+        st_write(bs.sub, "Editable Image", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Add editable=True to any st_image() call to enable an
+            interactive editor panel. Users can rename the image,
+            replace it from a URL or local file, generate a new version
+            with AI, and browse the version history.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# Editable image — editor panel appears below the image
+st_image(uri=theImageURL, editable=True, name="demo_edit",
+         width="300px", alt="Editable demo image")""")
+        st_space("v", 1)
+
+        st_image(uri=theImageURL, editable=True, name="demo_edit",
+                 width="300px", alt="Editable demo image")
+        st_space("v", 1)
+
+        show_details("""\
+            editable=True requires a name parameter (used for file
+            management and version history). The editor panel is
+            automatically hidden during HTML/PDF export.
+
+            AI generation requires streamtex[ai] and provider
+            configuration — see the AI manual for details.
+        """)

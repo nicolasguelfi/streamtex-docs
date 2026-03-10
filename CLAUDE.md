@@ -72,6 +72,8 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 ### Media & Visual
 - `st_image(style, src)` — Image handling with base64 encoding
 - `st_ai_image(prompt, ...)` — AI image generation + display (requires `streamtex[ai]`)
+- `st_image(style, uri=, editable=True, name=, prompt=)` — Unified image with editing panel (replaces st_ai_image for new code)
+- `get_available_models(provider)` — List available AI models per provider
 - `st_ai_image_widget(...)` — Interactive AI image generation widget
 - `st_code(style, code=, language=)` — Code blocks with Pygments
 - `st_space(dir, amount)`, `st_br()` — Spacing

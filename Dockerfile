@@ -15,9 +15,10 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Install dependencies (cached layer)
 # --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path
+# --upgrade-package streamtex forces latest PyPI version regardless of uv.lock
 # Then strip the sources section so "uv run" won't try to re-resolve the local path
 COPY pyproject.toml uv.lock ./
-RUN uv sync --no-sources --no-dev && \
+RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
     sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)

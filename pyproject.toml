@@ -5,7 +5,7 @@ description = "StreamTeX interactive manuals and documentation"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "streamtex>=0.3.0",
+    "streamtex[ai,inspector,pdf]>=0.3.0",
 ]
 
 [dependency-groups]

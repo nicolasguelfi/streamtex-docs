@@ -38,59 +38,32 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /project:project-init
-        /designer:slide-new
-        /migration:html-migrate
-        /developer:test-run
-        /presentation:presentation-audit""", language="bash",
+        /stx-designer:init
+        /stx-designer:update
+        /stx-designer:audit
+        /stx-designer:fix
+        /stx-designer:tool
+        /developer:test-run""", language="bash",
         line_numbers=False)
     st_space("v", 2)
 
     # ── Five categories grid ───────────────────────────────────────
-    st_write(bs.sub, "Five Command Categories", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "Command Categories", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
-    # Row 1: Project + Designer
+    # Row 1: stx-designer + Developer
     with st_grid(cols=2) as g:
         with g.cell():
             with st_block(s.project.containers.ai_callout):
-                st_write(bs.cat_title, "Project", tag=t.div)
-                st_write(bs.cat_count, "5 commands", tag=t.div)
+                st_write(bs.cat_title, "stx-designer", tag=t.div)
+                st_write(bs.cat_count, "5 sub-commands", tag=t.div)
                 st_space("v", 1)
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "project-init")
-                    with l.item(): st_write(s.large, "project-customize")
-                    with l.item(): st_write(s.large, "course-generate")
-                    with l.item(): st_write(s.large, "collection-new")
-                    with l.item(): st_write(s.large, "project-upgrade")
-        with g.cell():
-            with st_block(s.project.containers.ai_callout):
-                st_write(bs.cat_title, "Designer", tag=t.div)
-                st_write(bs.cat_count, "7 commands", tag=t.div)
-                st_space("v", 1)
-                with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "block-new")
-                    with l.item(): st_write(s.large, "slide-new")
-                    with l.item(): st_write(s.large, "slide-audit")
-                    with l.item(): st_write(s.large, "slide-fix")
-                    with l.item(): st_write(s.large, "style-audit")
-                    with l.item(): st_write(s.large, "style-refactor")
-                    with l.item(): st_write(s.large, "block-preview")
-    st_space("v", 1)
-
-    # Row 2: Migration + Developer
-    with st_grid(cols=2) as g:
-        with g.cell():
-            with st_block(s.project.containers.ai_callout):
-                st_write(bs.cat_title, "Migration", tag=t.div)
-                st_write(bs.cat_count, "5 commands", tag=t.div)
-                st_space("v", 1)
-                with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "html-migrate")
-                    with l.item(): st_write(s.large, "html-convert-batch")
-                    with l.item(): st_write(s.large, "html-convert-block")
-                    with l.item(): st_write(s.large, "html-export")
-                    with l.item(): st_write(s.large, "conversion-audit")
+                    with l.item(): st_write(s.large, "init — create projects")
+                    with l.item(): st_write(s.large, "update — add/customize/migrate content")
+                    with l.item(): st_write(s.large, "audit — validate quality")
+                    with l.item(): st_write(s.large, "fix — auto-fix issues")
+                    with l.item(): st_write(s.large, "tool — utilities (survey-convert)")
         with g.cell():
             with st_block(s.project.containers.ai_callout):
                 st_write(bs.cat_title, "Developer", tag=t.div)
@@ -100,17 +73,6 @@ def build():
                     with l.item(): st_write(s.large, "test-run")
                     with l.item(): st_write(s.large, "lint")
                     with l.item(): st_write(s.large, "deploy")
-    st_space("v", 1)
-
-    # Row 3: Presentation (centered)
-    with st_block(s.project.containers.ai_callout):
-        st_write(bs.cat_title, "Presentation", tag=t.div)
-        st_write(bs.cat_count, "3 commands", tag=t.div)
-        st_space("v", 1)
-        with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.large, "presentation-audit")
-            with l.item(): st_write(s.large, "presentation-fix")
-            with l.item(): st_write(s.large, "survey-convert")
     st_space("v", 2)
 
     # ── Anatomy of a command file ──────────────────────────────────
@@ -138,7 +100,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        # /project:project-init
+        # /stx-designer:init
 
         ## Description
         Create a complete StreamTeX project from a natural

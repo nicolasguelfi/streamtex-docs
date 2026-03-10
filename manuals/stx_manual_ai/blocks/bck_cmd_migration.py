@@ -1,4 +1,4 @@
-"""Migration Commands — Convert HTML content to StreamTeX blocks."""
+"""Migration Commands — Convert HTML content to StreamTeX blocks via stx-designer."""
 
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
@@ -32,8 +32,8 @@ def build():
     """)
     st_space("v", 2)
 
-    # ── Command 1: html-migrate ────────────────────────────────────
-    st_write(bs.sub, "/migration:html-migrate", tag=t.div, toc_lvl="2")
+    # ── Command 1: update --migrate ─────────────────────────────────
+    st_write(bs.sub, "/stx-designer:update --migrate", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -51,7 +51,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /migration:html-migrate
+        /stx-designer:update --migrate
 
         > Convert slides/intro.html to a StreamTeX block""",
         language="bash", line_numbers=False)
@@ -114,8 +114,8 @@ def build():
                     """, language="python")
     st_space("v", 2)
 
-    # ── Command 2: html-convert-batch ──────────────────────────────
-    st_write(bs.sub, "/migration:html-convert-batch",
+    # ── Command 2: update --migrate (batch) ─────────────────────────
+    st_write(bs.sub, "/stx-designer:update --migrate (batch)",
              tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
@@ -131,7 +131,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /migration:html-convert-batch
+        /stx-designer:update --migrate
 
         > Convert all files in legacy_slides/ to StreamTeX blocks
 
@@ -180,8 +180,8 @@ def build():
 
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        Tip: always run /migration:conversion-audit after a batch
-        conversion. It checks that every generated block is valid
+        Tip: always run /stx-designer:audit after a batch
+        migration. It checks that every generated block is valid
         StreamTeX and flags any HTML constructs that could not be
         automatically converted (complex tables, embedded scripts,
         SVG elements).

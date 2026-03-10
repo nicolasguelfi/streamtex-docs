@@ -1,4 +1,4 @@
-"""Designer: Slide Commands — slide-new, slide-audit, slide-fix pipeline."""
+"""Designer: Slide Commands — update, audit, fix pipeline via stx-designer."""
 
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
@@ -25,14 +25,14 @@ def build():
     st_space("v", 2)
 
     show_explanation("""\
-        The three slide commands form a creation-validation-fix pipeline.
-        First create a slide with slide-new, then validate it with
-        slide-audit, and finally auto-fix any violations with slide-fix.
+        The stx-designer slide workflow forms a creation-validation-fix
+        pipeline. First create a slide with update, then validate it with
+        audit, and finally auto-fix any violations with fix.
     """)
     st_space("v", 2)
 
-    # ── Command 1: slide-new ───────────────────────────────────────
-    st_write(bs.sub, "/designer:slide-new", tag=t.div, toc_lvl="2")
+    # ── Command 1: update (add slide) ──────────────────────────────
+    st_write(bs.sub, "/stx-designer:update (add slide)", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -48,9 +48,9 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /designer:slide-new
+        /stx-designer:update
 
-        > Create a slide comparing Python vs Java performance.
+        > Add a slide comparing Python vs Java performance.
           Use a two-column layout with bullet points.
           Include a code snippet in each column.""",
         language="bash", line_numbers=False)
@@ -86,8 +86,8 @@ def build():
                     # Java column ...""", language="python")
     st_space("v", 2)
 
-    # ── Command 2: slide-audit ─────────────────────────────────────
-    st_write(bs.sub, "/designer:slide-audit", tag=t.div, toc_lvl="2")
+    # ── Command 2: audit --target <block> ──────────────────────────
+    st_write(bs.sub, "/stx-designer:audit --target <block>", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -128,7 +128,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /designer:slide-audit
+        /stx-designer:audit --target bck_03_what_is_ml
 
         === Slide Audit Report ===
         bck_03_what_is_ml.py ........... PASS
@@ -140,8 +140,8 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # ── Command 3: slide-fix ───────────────────────────────────────
-    st_write(bs.sub, "/designer:slide-fix", tag=t.div, toc_lvl="2")
+    # ── Command 3: fix --target <block> ────────────────────────────
+    st_write(bs.sub, "/stx-designer:fix --target <block>", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -157,7 +157,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /designer:slide-fix
+        /stx-designer:fix --target bck_05_unsupervised
 
         Fixing bck_05_unsupervised.py ...
           - Extracted inline CSS to BlockStyles.highlight
@@ -177,24 +177,24 @@ def build():
             with st_block(s.project.containers.good_callout):
                 st_write(bs.step_label, "1. Create", tag=t.div)
                 st_space("v", 1)
-                st_write(s.large, "slide-new generates the block")
+                st_write(s.large, "update adds the slide block")
         with g.cell():
             with st_block(s.project.containers.note_callout):
                 st_write(bs.step_label, "2. Audit", tag=t.div)
                 st_space("v", 1)
-                st_write(s.large, "slide-audit checks compliance")
+                st_write(s.large, "audit checks compliance")
         with g.cell():
             with st_block(s.project.containers.tip_callout):
                 st_write(bs.step_label, "3. Fix", tag=t.div)
                 st_space("v", 1)
-                st_write(s.large, "slide-fix resolves violations")
+                st_write(s.large, "fix resolves violations")
     st_space("v", 2)
 
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        Tip: always run slide-audit before committing your blocks.
-        Catching issues early prevents style drift across your project.
-        The audit-fix cycle is designed to be run repeatedly during
-        development until all blocks pass.
+        Tip: always run /stx-designer:audit before committing your
+        blocks. Catching issues early prevents style drift across your
+        project. The audit-fix cycle is designed to be run repeatedly
+        during development until all blocks pass.
     """)
     st_space("v", 1)

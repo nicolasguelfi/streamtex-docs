@@ -95,7 +95,7 @@ def build():
                 )
                 st_space("v", 0.5)
                 st_write(s.large, """\
-                    Use slide-audit for fast, rule-based
+                    Use /stx-designer:audit for fast, rule-based
                     checking of structure, spacing, style
                     usage, and text density.
                 """)
@@ -129,8 +129,8 @@ def build():
 
     show_code("""\
         # Review pipeline
-        /designer:slide-audit          # Step 1: automated checks
-        /designer:slide-fix            # Step 2: auto-fix violations
+        /stx-designer:audit            # Step 1: automated checks
+        /stx-designer:fix              # Step 2: auto-fix violations
         # Step 3: agent-based comprehensive review
         # (invoke the Slide Reviewer agent)
         # Step 4: human review in browser
@@ -169,7 +169,7 @@ def build():
                     s.large,
                     (s.bold, "Multiple designers implement "),
                     "— each team member generates and refines their assigned "
-                    "blocks using slide-new and slide-fix",
+                    "blocks using /stx-designer:update and /stx-designer:fix",
                 )
             with l.item():
                 st_write(

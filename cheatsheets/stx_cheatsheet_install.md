@@ -156,8 +156,7 @@ cd projects/my-project
 Then open in Claude Code and use:
 
 ```
-/project:project-init
-> "Docker introduction course, 10 slides, dark theme"
+/stx-designer:init Docker introduction course, 10 slides, dark theme
 ```
 
 ---
@@ -503,7 +502,7 @@ your-project/
 └── .claude/
     ├── settings.json          # Claude Code permissions
     ├── .stx-profile           # Installed profile marker
-    ├── commands/              # Slash commands (/designer:*, /project:*, etc.)
+    ├── commands/              # Slash commands (/stx-designer:*, /developer:*)
     │   └── stx-guide.md      # Shared: ecosystem navigation guide
     ├── references/            # Shared: coding standards + cheatsheet (read-only)
     ├── designer/              # Design skills and agents

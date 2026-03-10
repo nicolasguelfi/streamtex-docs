@@ -45,17 +45,17 @@ def build():
             with l.item():
                 st_write(
                     bs.step_number, "Generate ",
-                    (bs.step_text, "— Use project-init or slide-new"),
+                    (bs.step_text, "— Use init or update"),
                 )
             with l.item():
                 st_write(
                     bs.step_number, "Audit ",
-                    (bs.step_text, "— Run slide-audit and style-audit"),
+                    (bs.step_text, "— Run audit"),
                 )
             with l.item():
                 st_write(
                     bs.step_number, "Fix ",
-                    (bs.step_text, "— Apply fixes with slide-fix"),
+                    (bs.step_text, "— Apply fixes with fix"),
                 )
             with l.item():
                 st_write(
@@ -71,13 +71,13 @@ def build():
 
     show_code("""\
         # Typical session
-        /project:project-init          # 1. Plan + Generate
-        /designer:slide-audit          # 3. Audit all blocks
-        /designer:slide-fix            # 4. Auto-fix violations
+        /stx-designer:init             # 1. Plan + Generate
+        /stx-designer:audit            # 3. Audit all blocks
+        /stx-designer:fix              # 4. Auto-fix violations
         # 5. Review in browser
         uv run streamlit run book.py
         # 6. Iterate on individual blocks
-        /designer:slide-new            # Refine or add blocks""",
+        /stx-designer:update           # Refine or add blocks""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

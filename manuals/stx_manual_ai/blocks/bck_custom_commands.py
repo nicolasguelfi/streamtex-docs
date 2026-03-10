@@ -45,14 +45,12 @@ def build():
     show_code("""\
         .claude/
         └── commands/
-            ├── project/
-            │   ├── project-init.md
-            │   ├── project-customize.md
-            │   └── course-generate.md
-            ├── designer/
-            │   ├── block-new.md
-            │   ├── slide-new.md
-            │   └── styles-update.md
+            ├── stx-designer/
+            │   ├── init.md
+            │   ├── update.md
+            │   ├── audit.md
+            │   ├── fix.md
+            │   └── tool.md
             └── developer/
                 ├── test-run.md
                 └── lint.md""",
@@ -61,8 +59,8 @@ def build():
 
     show_explanation("""\
         The directory name becomes the command prefix.
-        For example, designer/block-new.md is invoked as
-        /designer:block-new in Claude Code.
+        For example, stx-designer/update.md is invoked as
+        /stx-designer:update in Claude Code.
     """)
     st_space("v", 2)
 
@@ -140,12 +138,12 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        # Command: block-new
+        # Command: update
 
         ## Description
-        Create a new StreamTeX block file from a topic description.
-        The block follows project coding standards and integrates
-        with the existing book structure.
+        Update a StreamTeX project: add blocks, slides, customize
+        theme, or modify content. The command follows project coding
+        standards and integrates with the existing book structure.
 
         ## Context Loading
         Before executing, read the following files:
@@ -156,7 +154,7 @@ def build():
         5. An existing block in the same manual (for style reference)
 
         ## Workflow
-        1. Ask the user for the block topic and target manual
+        1. Ask the user what they want to add or change
         2. Read context files listed above
         3. Determine the next block number from book.py
         4. Generate the block file following BlockStyles + build() pattern

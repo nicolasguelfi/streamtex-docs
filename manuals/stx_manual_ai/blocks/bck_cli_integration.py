@@ -77,7 +77,7 @@ def build():
         #
         # Commands:
         #   + designer/chart-new.md          (new)
-        #   ~ project/project-init.md        (modified)
+        #   ~ stx-designer/init.md            (modified)
         #
         # Agents:
         #   ~ architect-agent.md             (modified)
@@ -109,7 +109,7 @@ def build():
 
         # Example output:
         # Updating profile 'project' from v1.2.0 to v1.3.0...
-        #   Updated 1 command (project/project-init.md)
+        #   Updated 1 command (stx-designer/init.md)
         #   Added 1 command (designer/chart-new.md)
         #   Updated 1 agent (architect-agent.md)
         #   Added 1 skill (data_visualization.md)

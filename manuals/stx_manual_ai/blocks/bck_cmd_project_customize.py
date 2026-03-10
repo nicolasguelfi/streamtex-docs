@@ -1,4 +1,4 @@
-"""Command: project-customize — Modify theme, colors, and navigation."""
+"""Command: stx-designer update (customize) — Modify theme, colors, and navigation."""
 
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
@@ -7,7 +7,7 @@ from blocks.helpers import show_code, show_explanation, show_details
 
 
 class BlockStyles:
-    """project-customize block styles."""
+    """stx-designer update (customize) block styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     step_label = s.project.colors.ai_violet + s.bold + s.large
@@ -17,15 +17,15 @@ bs = BlockStyles
 
 
 def build():
-    """Render the project-customize command documentation."""
+    """Render the stx-designer update (customize) command documentation."""
     st_space("v", 1)
-    st_write(bs.heading, "Command: project-customize",
+    st_write(bs.heading, "Command: stx-designer update (customize)",
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     # ── Purpose ────────────────────────────────────────────────────
     show_explanation("""\
-        /project:project-customize modifies the visual identity of an
+        /stx-designer:update modifies the visual identity of an
         existing StreamTeX project. It can change color palettes, fonts,
         navigation style, and layout — all from a single natural
         language prompt. It reads the current styles, applies your
@@ -101,7 +101,7 @@ def build():
         st_write(bs.step_label, "Step 1 — Launch the command", tag=t.div)
         st_space("v", 1)
         show_code(
-            "/project:project-customize",
+            "/stx-designer:update",
             language="bash", line_numbers=False,
         )
 

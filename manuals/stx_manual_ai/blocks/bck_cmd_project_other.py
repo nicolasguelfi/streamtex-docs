@@ -1,4 +1,4 @@
-"""More Project Commands — course-generate, collection-new, project-upgrade."""
+"""More stx-designer Commands — update (course), init --collection, update --upgrade."""
 
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
@@ -19,18 +19,18 @@ bs = BlockStyles
 def build():
     """Render the Other Project Commands section."""
     st_space("v", 1)
-    st_write(bs.heading, "More Project Commands", tag=t.div, toc_lvl="1")
+    st_write(bs.heading, "More stx-designer Commands", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     show_explanation("""\
-        Beyond project-init and project-customize, the Project category
-        offers three more commands for generating courses, creating
+        Beyond init and update, the stx-designer command offers
+        additional options for generating courses, creating
         multi-project collections, and upgrading project boilerplate.
     """)
     st_space("v", 2)
 
-    # ── Command 1: course-generate ─────────────────────────────────
-    st_write(bs.sub, "/project:course-generate", tag=t.div, toc_lvl="2")
+    # ── Command 1: update (generate course) ────────────────────────
+    st_write(bs.sub, "/stx-designer:update (generate course)", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -94,8 +94,8 @@ def build():
         st_book(blocks, paginate=True)""", language="python")
     st_space("v", 2)
 
-    # ── Command 2: collection-new ──────────────────────────────────
-    st_write(bs.sub, "/project:collection-new", tag=t.div, toc_lvl="2")
+    # ── Command 2: init --collection ───────────────────────────────
+    st_write(bs.sub, "/stx-designer:init --collection", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -111,7 +111,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /project:collection-new
+        /stx-designer:init --collection
 
         > Create a collection hub linking:
           - Introduction Manual (streamtex-intro.onrender.com)
@@ -152,8 +152,8 @@ def build():
         st_collection(config)""", language="python")
     st_space("v", 2)
 
-    # ── Command 3: project-upgrade ─────────────────────────────────
-    st_write(bs.sub, "/project:project-upgrade", tag=t.div, toc_lvl="2")
+    # ── Command 3: update --upgrade ────────────────────────────────
+    st_write(bs.sub, "/stx-designer:update --upgrade", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -168,7 +168,7 @@ def build():
         )
     st_space("v", 1)
 
-    st_write(s.large, "Files updated by project-upgrade:")
+    st_write(s.large, "Files updated by update --upgrade:")
     st_space("v", 1)
 
     with st_list(list_type="ul") as l:
@@ -199,7 +199,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /project:project-upgrade
+        /stx-designer:update --upgrade
 
         Checking project version ...
           Current: streamtex X.Y.Z patterns
@@ -219,7 +219,7 @@ def build():
 
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        Tip: run project-upgrade after updating the streamtex library
+        Tip: run /stx-designer:update --upgrade after updating the streamtex library
         to a new version. It ensures your boilerplate matches the
         latest conventions without touching your content blocks or
         custom styles. Always review the changes before committing.

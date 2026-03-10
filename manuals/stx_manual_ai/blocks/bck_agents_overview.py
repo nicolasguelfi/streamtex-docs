@@ -66,8 +66,8 @@ def build():
                         st_write(
                             s.large,
                             "Example: ",
-                            (s.bold, "/block-new"),
-                            " creates one block file",
+                            (s.bold, "/stx-designer:update"),
+                            " adds one block file",
                         )
 
         with g.cell():

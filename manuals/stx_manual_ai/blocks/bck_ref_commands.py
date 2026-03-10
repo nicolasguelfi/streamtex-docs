@@ -1,4 +1,4 @@
-"""Part 8 — Reference: All Commands — complete table of 23 commands by category."""
+"""Part 8 — Reference: All Commands — stx-designer and developer commands."""
 
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
@@ -47,146 +47,51 @@ def build():
     """)
     st_space("v", 2)
 
-    # ── Project Commands (5) ──────────────────────────────────────
-    st_write(bs.sub, "Project Commands", toc_lvl="+1")
-    st_write(bs.cat_count, "5 commands", tag=t.div)
+    # ── stx-designer Commands ───────────────────────────────────────
+    st_write(bs.sub, "stx-designer Commands", toc_lvl="+1")
+    st_write(bs.cat_count, "5 sub-commands", tag=t.div)
     st_space("v", 1)
 
     with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
         with g.cell():
             _render_command(
-                "project-init",
+                "/stx-designer:init",
                 "Create a complete StreamTeX project from a natural "
-                "language description. Generates styles, blocks, and book.py.",
+                "language description. Generates styles, blocks, and book.py. "
+                "Use --collection for collection hubs.",
                 "all profiles",
             )
             st_space("v", 1)
             _render_command(
-                "project-customize",
-                "Modify theme colors, fonts, and visual identity of "
-                "an existing project without changing content.",
+                "/stx-designer:update",
+                "Add blocks, slides, customize theme, generate courses, "
+                "upgrade boilerplate (--upgrade), migrate HTML (--migrate), "
+                "or export (--export).",
                 "all profiles",
             )
             st_space("v", 1)
             _render_command(
-                "course-generate",
-                "Generate a complete book.py from a CSV file listing "
-                "block names and titles.",
+                "/stx-designer:audit",
+                "Validate quality: use --target <block> for a specific block, "
+                "--target styles for style consistency, or --all for full "
+                "project audit (includes presentation and migration checks).",
                 "all profiles",
             )
         with g.cell():
             _render_command(
-                "collection-new",
-                "Create a collection hub that aggregates multiple "
-                "StreamTeX projects into a unified portal.",
+                "/stx-designer:fix",
+                "Auto-fix issues found by audit: use --target <block> for a "
+                "specific block, --target styles for style refactoring, or "
+                "--all for full project fix (includes presentation fixes).",
                 "all profiles",
             )
             st_space("v", 1)
             _render_command(
-                "project-upgrade",
-                "Update project boilerplate (helpers, styles base, "
-                "book.py patterns) to the latest StreamTeX version.",
+                "/stx-designer:tool",
+                "Run utility tools. Currently available: survey-convert "
+                "(convert survey screenshots into interactive StreamTeX "
+                "blocks with charts and data visualization).",
                 "all profiles",
-            )
-    st_space("v", 2)
-
-    # ── Designer Commands (7) ─────────────────────────────────────
-    st_write(bs.sub, "Designer Commands", toc_lvl="+1")
-    st_write(bs.cat_count, "7 commands", tag=t.div)
-    st_space("v", 1)
-
-    with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
-        with g.cell():
-            _render_command(
-                "block-new",
-                "Create a new block file with the standard structure: "
-                "docstring, imports, BlockStyles, build().",
-                "all profiles",
-            )
-            st_space("v", 1)
-            _render_command(
-                "slide-new",
-                "Create a visually polished slide using a blueprint "
-                "template. Enforces formatting and design rules.",
-                "all profiles",
-            )
-            st_space("v", 1)
-            _render_command(
-                "slide-audit",
-                "Validate an existing slide against design rules. "
-                "Returns pass/fail for each compliance criterion.",
-                "all profiles",
-            )
-            st_space("v", 1)
-            _render_command(
-                "slide-fix",
-                "Auto-fix design rule violations detected by "
-                "slide-audit. Applies corrections in place.",
-                "all profiles",
-            )
-        with g.cell():
-            _render_command(
-                "style-audit",
-                "Check style consistency across all blocks. Detects "
-                "duplicated styles, unused definitions, naming issues.",
-                "all profiles",
-            )
-            st_space("v", 1)
-            _render_command(
-                "style-refactor",
-                "Extract repeated style patterns into reusable "
-                "definitions in the project Styles class.",
-                "all profiles",
-            )
-            st_space("v", 1)
-            _render_command(
-                "block-preview",
-                "Validate block structure without rendering. Checks "
-                "imports, build() signature, and BlockStyles.",
-                "all profiles",
-            )
-    st_space("v", 2)
-
-    # ── Migration Commands (5) ────────────────────────────────────
-    st_write(bs.sub, "Migration Commands", toc_lvl="+1")
-    st_write(bs.cat_count, "5 commands", tag=t.div)
-    st_space("v", 1)
-
-    with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
-        with g.cell():
-            _render_command(
-                "html-migrate",
-                "Convert a single HTML file into a native StreamTeX "
-                "block with proper Style objects and stx functions.",
-                "project, documentation",
-            )
-            st_space("v", 1)
-            _render_command(
-                "html-convert-batch",
-                "Batch convert an entire directory of HTML files. "
-                "Each file becomes one block in blocks/.",
-                "project, documentation",
-            )
-            st_space("v", 1)
-            _render_command(
-                "html-convert-block",
-                "Convert a previously saved HTML block (from a "
-                "StreamTeX export) back into native Python code.",
-                "project, documentation",
-            )
-        with g.cell():
-            _render_command(
-                "html-export",
-                "Configure HTML export settings for a project. "
-                "Sets output format, paths, and rendering options.",
-                "project, documentation",
-            )
-            st_space("v", 1)
-            _render_command(
-                "conversion-audit",
-                "Verify quality of converted blocks. Checks for "
-                "leftover HTML, missing styles, and structural issues.",
-                "project, documentation",
             )
     st_space("v", 2)
 
@@ -214,32 +119,5 @@ def build():
         "Deploy the project to a hosting platform. Configures "
         "Dockerfile, render.yaml, and environment variables.",
         "library only",
-    )
-    st_space("v", 2)
-
-    # ── Presentation Commands (3) ─────────────────────────────────
-    st_write(bs.sub, "Presentation Commands", toc_lvl="+1")
-    st_write(bs.cat_count, "3 commands", tag=t.div)
-    st_space("v", 1)
-
-    _render_command(
-        "presentation-audit",
-        "Check slides for projection compliance: font sizes, "
-        "contrast ratios, item counts, readability at distance.",
-        "presentation only",
-    )
-    st_space("v", 1)
-    _render_command(
-        "presentation-fix",
-        "Auto-fix projection violations. Enlarges fonts, reduces "
-        "content density, improves contrast automatically.",
-        "presentation only",
-    )
-    st_space("v", 1)
-    _render_command(
-        "survey-convert",
-        "Convert survey screenshots into interactive StreamTeX "
-        "blocks with charts and data visualization.",
-        "presentation only",
     )
     st_space("v", 1)

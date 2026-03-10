@@ -125,7 +125,7 @@ def build():
     show_code("""\
         my-presentation/
         +-- .claude/
-        |   +-- commands/       # Slash commands (/project:init, etc.)
+        |   +-- commands/       # Slash commands (/stx-designer:init, etc.)
         |   +-- agents/         # Autonomous agents (architect, designer)
         |   +-- skills/         # Reusable skill definitions
         |   +-- references/     # Coding standards, cheatsheets

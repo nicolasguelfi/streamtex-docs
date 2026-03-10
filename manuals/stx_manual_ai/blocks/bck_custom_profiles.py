@@ -71,14 +71,12 @@ def build():
         extends = "project"   # Inherit from the base project profile
 
         [commands]
-        project = [
-            "project-init",
-            "project-customize",
-            "course-generate",
-        ]
-        designer = [
-            "block-new",
-            "slide-new",
+        stx-designer = [
+            "init",
+            "update",
+            "audit",
+            "fix",
+            "tool",
         ]
         analysis = [
             "data-import",     # Custom command for this profile
@@ -153,7 +151,7 @@ def build():
         # No 'extends' — fully self-contained
 
         [commands]
-        project = ["project-init"]
+        stx-designer = ["init"]
 
         [agents]
         agents = []

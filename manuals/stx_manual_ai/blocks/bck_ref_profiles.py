@@ -109,7 +109,7 @@ def build():
                 audience="Course authors, documentation writers",
                 focus="Full project lifecycle from init to deploy",
                 extends="base profile",
-                unique="project-init, project-customize, course-generate",
+                unique="init, update, audit, fix, tool",
                 recommended=True,
             )
         with g.cell():
@@ -120,7 +120,7 @@ def build():
                 audience="Speakers, trainers, lecturers",
                 focus="Live projection with large fonts and high contrast",
                 extends="project profile",
-                unique="presentation-audit, presentation-fix, survey-convert",
+                unique="audit (presentation), fix (presentation), tool survey-convert",
             )
     st_space("v", 2)
 
@@ -134,7 +134,7 @@ def build():
                 audience="Technical writers, doc teams",
                 focus="HTML migration and documentation workflows",
                 extends="project profile",
-                unique="html-migrate, html-convert-batch, html-export",
+                unique="update --migrate, update --export",
             )
         with g.cell():
             _render_profile_column(

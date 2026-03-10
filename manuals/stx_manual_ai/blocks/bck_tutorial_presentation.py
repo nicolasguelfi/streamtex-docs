@@ -40,7 +40,7 @@ def build():
     st_space("v", 2)
 
     # ══════════════════════════════════════════════════════════════
-    # PHASE 1 — project-init
+    # PHASE 1 — stx-designer init
     # ══════════════════════════════════════════════════════════════
     st_write(bs.sub, "Phase 1 — Generate the Project", toc_lvl="+1")
     st_space("v", 1)
@@ -49,7 +49,7 @@ def build():
     with st_block(s.project.containers.tip_callout):
         st_write(
             bs.step_label,
-            "Step 1 — Launch project-init",
+            "Step 1 — Launch stx-designer init",
             tag=t.div,
         )
         st_space("v", 1)
@@ -60,7 +60,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/project:project-init",
+        "/stx-designer:init",
         language="bash", line_numbers=False,
     )
     st_space("v", 2)
@@ -272,7 +272,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/designer:slide-audit",
+        "/stx-designer:audit",
         language="bash", line_numbers=False,
     )
     st_space("v", 1)
@@ -305,7 +305,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/designer:slide-fix",
+        "/stx-designer:fix",
         language="bash", line_numbers=False,
     )
     st_space("v", 2)
@@ -321,13 +321,13 @@ def build():
         st_write(
             s.large,
             "Need to adjust a specific slide? Use ",
-            (bs.highlight, "/designer:slide-new"),
+            (bs.highlight, "/stx-designer:update"),
             " to regenerate it with more details:",
         )
     st_space("v", 1)
 
     show_code("""\
-        /designer:slide-new "bck_live_demo — Show a responsive
+        /stx-designer:update "bck_live_demo — Show a responsive
         2-column grid: left column has a screenshot of a StreamTeX
         dark presentation, right column lists 4 key features as
         bold keywords. Add a wow-factor headline in L1." """,
@@ -374,13 +374,13 @@ def build():
             s.large,
             "Want a different color scheme or larger fonts for "
             "a conference room? Use ",
-            (bs.highlight, "/project:project-customize"),
+            (bs.highlight, "/stx-designer:update"),
             ":",
         )
     st_space("v", 1)
 
     show_code("""\
-        /project:project-customize "Switch to a teal/orange palette,
+        /stx-designer:update "Switch to a teal/orange palette,
         increase body text to 48pt for a large auditorium." """,
         language="bash", line_numbers=False)
     st_space("v", 2)
@@ -401,8 +401,8 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /designer:style-audit
-        /designer:style-refactor""",
+        /stx-designer:audit --target styles
+        /stx-designer:fix --target styles""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -428,7 +428,7 @@ def build():
         with st_list(list_type="ol") as l:
             with l.item():
                 st_write(
-                    bs.phase_label, "project-init ",
+                    bs.phase_label, "init ",
                     (s.large, "— generate the full project from a description"),
                 )
             with l.item():
@@ -438,17 +438,17 @@ def build():
                 )
             with l.item():
                 st_write(
-                    bs.phase_label, "slide-audit ",
+                    bs.phase_label, "audit ",
                     (s.large, "— validate all blocks against design rules"),
                 )
             with l.item():
                 st_write(
-                    bs.phase_label, "slide-fix ",
+                    bs.phase_label, "fix ",
                     (s.large, "— auto-fix detected violations"),
                 )
             with l.item():
                 st_write(
-                    bs.phase_label, "slide-new ",
+                    bs.phase_label, "update ",
                     (s.large, "— refine or add individual slides"),
                 )
             with l.item():
@@ -458,12 +458,12 @@ def build():
                 )
             with l.item():
                 st_write(
-                    bs.phase_label, "project-customize ",
-                    (s.large, "— adjust theme, fonts, colors"),
+                    bs.phase_label, "update ",
+                    (s.large, "— customize theme, fonts, colors"),
                 )
             with l.item():
                 st_write(
-                    bs.phase_label, "style-audit ",
+                    bs.phase_label, "audit --target styles ",
                     (s.large, "— ensure consistency after changes"),
                 )
             with l.item():
@@ -479,21 +479,21 @@ def build():
 
     show_code("""\
         # Create a full project from scratch
-        /project:project-init "description..."
+        /stx-designer:init "description..."
 
         # Create or refine a single slide
-        /designer:slide-new "bck_name — description..."
+        /stx-designer:update "bck_name — description..."
 
         # Audit and fix design compliance
-        /designer:slide-audit
-        /designer:slide-fix
+        /stx-designer:audit
+        /stx-designer:fix
 
         # Customize visual theme
-        /project:project-customize "description..."
+        /stx-designer:update "description..."
 
         # Ensure style consistency
-        /designer:style-audit
-        /designer:style-refactor
+        /stx-designer:audit --target styles
+        /stx-designer:fix --target styles
 
         # Run the presentation
         uv run streamlit run book.py""",
@@ -505,10 +505,10 @@ def build():
         Tips for best results:
         • Be specific in your descriptions — include audience,
           slide count, theme, and key messages per slide.
-        • Always run slide-audit after generation — the AI catches
+        • Always run /stx-designer:audit after generation — the AI catches
           issues like line length, missing spacing, or style violations.
-        • Use slide-new for individual refinements — it's faster than
-          regenerating the entire project.
+        • Use /stx-designer:update for individual refinements — it's faster
+          than regenerating the entire project.
         • The Slide Designer follows the L1/L2/L3 grid system:
           L1 = headline, L2 = image + text grid, L3 = transition question.
         • Image prompts are generated automatically when no image is

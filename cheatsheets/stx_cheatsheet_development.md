@@ -41,37 +41,23 @@ uv run streamlit run book.py              # Launch the app
 ### Slash Commands (in Claude Code)
 
 ```
-# Project creation & customization
-/project:project-init           Create project from natural language description
-/project:project-customize      Modify theme, colors, typography, navigation
-/project:project-upgrade        Sync project with latest template
-/project:collection-new         Create a multi-project collection hub
-/project:course-generate        Generate book.py from a CSV block list
+# stx-designer — Project lifecycle (5 commands)
+/stx-designer:init [--template] <desc>                Create project from description
+                                                      Templates: project, presentation,
+                                                      collection, course
+/stx-designer:update [--upgrade|--migrate|--export] <desc>  Add/modify content, migrate,
+                                                            export, upgrade structure
+/stx-designer:audit [--all|--target <name>] <desc>    Check quality (structure, styles,
+                                                      design, presentation compliance)
+/stx-designer:fix [--all|--target <name>] <desc>      Auto-fix issues found by audit
+/stx-designer:tool <tool-name> <desc>                 Specialized tools (survey-convert)
 
-# Designer
-/designer:slide-new             Create a new slide (block file)
-/designer:block-new             Create a block with blueprint matching
-/designer:slide-audit           Validate design rules compliance
-/designer:slide-fix             Auto-fix design violations
-/designer:style-audit           Check style consistency across blocks
-/designer:style-refactor        Extract and optimize styles
-/designer:block-preview         Validate structure, assets, and styles
-
-# Migration (HTML to StreamTeX)
-/migration:html-migrate         Convert HTML content to StreamTeX
-/migration:html-convert-batch   Batch convert HTML files
-/migration:html-convert-block   Convert a single HTML block
-/migration:html-export          Configure and validate HTML export
-/migration:conversion-audit     Audit conversion quality
+# Lifecycle: init → update → audit → fix → update → ...
+# All commands accept --help for the full cheatsheet.
 
 # Developer
 /developer:test-run             Run test suite
 /developer:lint                 Run linter with auto-fix
-
-# Presentation (overlay profile only)
-/designer:presentation-audit    Check live projection compliance
-/designer:presentation-fix      Fix projection design issues
-/designer:survey-convert        Convert survey screenshots to blocks
 
 # Global (available everywhere)
 /stx-guide                      Ecosystem navigation guide (16 topics)
@@ -92,7 +78,7 @@ StreamTeX provides 4 AI profiles, each tailored to a specific audience. Profiles
 | **library** | Library contributors | 3 | -- | 2 | Test, lint, deploy the StreamTeX library |
 | **documentation** | Manual authors | 10 | 2 | 3 | Multi-manual coordination, course generation |
 
-The **presentation** profile extends **project** -- it includes everything from project plus 3 additional commands (`presentation-audit`, `presentation-fix`, `survey-convert`), 1 additional agent (Presentation Designer), and 2 additional skills (presentation design rules, survey chart conversion).
+The **presentation** profile extends **project** -- it includes everything from project plus presentation-specific audit/fix rules (auto-detected by `/stx-designer:audit` and `/stx-designer:fix`), 1 additional agent (Presentation Designer), and 2 additional skills (presentation design rules, survey chart conversion).
 
 ### Installation
 
@@ -128,9 +114,7 @@ your-project/
     ├── .stx-profile           # Profile type marker
     ├── commands/
     │   ├── stx-guide.md       # Global ecosystem guide
-    │   ├── project/           # /project:* commands
-    │   ├── designer/          # /designer:* commands
-    │   ├── migration/         # /migration:* commands
+    │   ├── stx-designer/      # /stx-designer:* commands (init, update, audit, fix, tool)
     │   └── developer/         # /developer:* commands
     ├── references/
     │   ├── coding_standards.md
@@ -157,17 +141,21 @@ Shared files (`references/` and `commands/`) are set read-only (0o444) to indica
 
 ---
 
-## 2. Project Creation Commands
+## 2. /stx-designer:init -- Create a New Project
 
-### /project:project-init -- Initialize a complete project
+```
+/stx-designer:init "Docker course for beginners, 8 slides, dark presentation style"
+/stx-designer:init "technical REST API documentation, 12 sections, with code examples"
+/stx-designer:init --collection "my_course_library"
+```
 
 **Trigger**: Natural language description of the desired project.
 
-```
-/project:project-init "Docker course for beginners, 8 slides, dark presentation style"
-/project:project-init "technical REST API documentation, 12 sections, with code examples"
-/project:project-init "research project portfolio, 5 projects, collection mode"
-```
+**Templates** (auto-detected from description, or specify explicitly):
+- **project** (default) -- standard StreamTeX project
+- **presentation** -- project with live projection rules
+- **collection** -- multi-project hub with `st_collection`, `collection.toml`, home page with project cards
+- **course** -- course project with `blocks.csv` and book generator
 
 **What it reads before generating**:
 1. `coding_standards.md` -- coding rules
@@ -189,22 +177,41 @@ Shared files (`references/` and `commands/`) are set read-only (0o444) to indica
 
 **Constraints**: max 15 blocks per project (suggest collection otherwise), always include title (Blueprint 1) and conclusion (Blueprint 10), no Lorem Ipsum (use `[TODO: ...]` placeholders).
 
-### /project:collection-new -- Create a multi-project hub
+**Collection mode** (`--collection`): Creates a collection directory with: `book.py` (uses `st_collection`), `collection.toml`, `blocks/bck_home.py` (home page with project cards), `custom/styles.py`, `custom/themes.py`, `.streamlit/config.toml`, and `static/images/covers/`. After scaffolding, asks about projects (names, descriptions, ports) and updates `collection.toml`.
+
+---
+
+## 3. /stx-designer:update -- Add, Modify, Migrate, Export
+
+The `update` command covers all content modification operations: adding blocks/slides, customizing themes, upgrading structure, migrating HTML, exporting, and generating course books.
+
+### Adding content
 
 ```
-/project:collection-new "my_course_library"
+/stx-designer:update add block bck_intro_welcome - Welcome screen with title and subtitle
+/stx-designer:update add block comparison VM vs Containers, 2-column grid
+/stx-designer:update add slide bck_19_zoom - Zoom controls demo
 ```
 
-Creates a collection directory with: `book.py` (uses `st_collection`), `collection.toml`, `blocks/bck_home.py` (home page with project cards), `custom/styles.py`, `custom/themes.py`, `.streamlit/config.toml`, and `static/images/covers/`.
+**Block creation with blueprint matching**: Consults `block-blueprints.md` and matches the description to one of 12 blueprints. Common matches:
+- "title slide" -> Blueprint 1 (Title)
+- "comparison X vs Y" -> Blueprint 4 (Two-Column Comparison)
+- "code demo" -> Blueprint 6 (Code + Result)
+- "steps / process" -> Blueprint 7 (Timeline)
+- "summary / conclusion" -> Blueprint 10 (Conclusion)
+- "AI-generated image" -> Blueprint 11 (AI Image + Text)
+- "interactive image lab" -> Blueprint 12 (Interactive Image Lab)
 
-After scaffolding, asks about projects (names, descriptions, ports) and updates `collection.toml`.
+**Slide creation**: Reads `visual-design-rules.md` and `style-conventions.md`, creates block file with standard imports, `BlockStyles` (heading + sub), `bs` alias, `build()` function. Wraps content in `with st_block(s.center_txt):`, follows canonical section structure (subtitle -> explanation -> code -> rendering -> details), validates line length, `show_code()` placement, and body text size.
 
-### /project:project-customize -- Modify an existing project
+**Block naming**: `bck_NN_description.py` (NN = 2-digit sequence number)
+
+### Customizing an existing project
 
 ```
-/project:project-customize "switch to light theme with green palette"
-/project:project-customize "add TOC sidebar with numbering, enable pagination"
-/project:project-customize "adapt for auditorium projection (large text)"
+/stx-designer:update change to light theme with green palette
+/stx-designer:update add TOC sidebar with numbering, enable pagination
+/stx-designer:update adapt for auditorium projection (large text)
 ```
 
 **Customization domains**:
@@ -215,64 +222,67 @@ After scaffolding, asks about projects (names, descriptions, ports) and updates 
 
 Always reads current configuration, proposes a diff, and asks for confirmation before applying.
 
-### /project:project-upgrade -- Sync with latest template
+### Upgrading structure (`--upgrade`)
 
 ```
-/project:project-upgrade
+/stx-designer:update --upgrade
 ```
 
 Compares project boilerplate files (`blocks/__init__.py`, `blocks/helpers.py`, `setup.py`, `.streamlit/config.toml`) against the template and applies safe updates. Does NOT modify `custom/styles.py`, `custom/themes.py`, or block content files.
 
-### /project:course-generate -- Generate book.py from CSV
+### Generating course book.py (`course`)
 
 ```
-/project:course-generate gai4as
-/project:course-generate --all
+/stx-designer:update course gai4as
+/stx-designer:update course --all
 ```
 
 Reads `blocks.csv` in the course directory, runs the book generator tool, and produces a wired `book.py`.
 
+### Migrating HTML to StreamTeX (`--migrate`)
+
+```
+/stx-designer:update --migrate bck_overview
+/stx-designer:update --migrate --all
+```
+
+The most comprehensive migration operation. Accepts raw HTML (from Google Docs export) inline or as a file path.
+
+**Phase 1: Analysis** -- filter CSS class noise, identify defaults (black/white = theme-controlled), mandatory color audit (every color value enumerated and mapped), detect formatting (bold, italic), identify containers (tables -> `st_grid()`, lists -> `st_list()`).
+
+**Phase 2: Implementation** -- create block file with `BlockStyles` (color-mapping summary + dropped-colors log), implement `build()` using StreamTeX components only: one `st_write()` with tuples for inline mixed-style text, `st_grid()` with `cell_styles` for tables, `st_list()` for lists, `st_br()` for line breaks.
+
+**Phase 3: Second-pass verification** (mandatory) -- re-read source HTML top-to-bottom, re-read migration rules, fix mismatches, run checklist (no raw HTML, semantic style names, images renamed, inline content uses ONE `st_write`, font sizes on link styles, no hardcoded black/white, all colors mapped).
+
+**Batch migration** (`--migrate --all`): Runs the batch converter pipeline on `exports/html/`, validates generated blocks, reports conversion stats (simple/medium/complex/errors).
+
+**Single block migration** (`--migrate <block_name>`): Reads source HTML from `exports/html/<name>/index.html`, determines block family (`bckcp_*` = doc styles, `bck_*` = presentation styles), generates the StreamTeX block, runs second-pass verification, writes to `shared/blocks/`.
+
+### Configuring HTML export (`--export`)
+
+```
+/stx-designer:update --export
+/stx-designer:update --export projects/my-project
+```
+
+Verifies export readiness (`export=True` in `st_book()`), audits all blocks for export-aware widget usage (bare `st.*` calls that should be `stx.*`), checks image assets, and guides the user through the export process. Key reminders:
+- `st.dataframe()` -> `stx.st_dataframe()`
+- `st.line_chart()` -> `stx.st_line_chart()`
+- `st.graphviz_chart()` -> `stx.st_graphviz()`
+- For unsupported widgets: `with stx.st_export('<p>fallback</p>'): st.plotly_chart(fig)`
+
 ---
 
-## 3. Designer Commands
-
-### /designer:slide-new -- Create a new slide
+## 4. /stx-designer:audit -- Check Quality
 
 ```
-/designer:slide-new "bck_19_zoom - Zoom controls demo"
+/stx-designer:audit --target bck_04_text_styles
+/stx-designer:audit --target styles
+/stx-designer:audit --all
+/stx-designer:audit presentation
 ```
 
-**What it does**:
-1. Reads `visual-design-rules.md` and `style-conventions.md`
-2. Creates block file in `blocks/` with standard imports, `BlockStyles` (heading + sub), `bs` alias, `build()` function
-3. Wraps content in `with st_block(s.center_txt):`
-4. Follows canonical section structure: subtitle -> explanation -> code -> rendering -> details
-5. Validates: no line > ~45 chars, `show_code()` before every rendering, `s.large` for body text
-
-**Block naming**: `bck_NN_description.py` (NN = 2-digit sequence number)
-
-### /designer:block-new -- Create a block with blueprint matching
-
-```
-/designer:block-new "bck_intro_welcome - Welcome screen with title and subtitle"
-/designer:block-new "comparison VM vs Containers, 2-column grid"
-```
-
-Consults `block-blueprints.md` and matches the description to one of 12 blueprints. Common matches:
-- "title slide" -> Blueprint 1 (Title)
-- "comparison X vs Y" -> Blueprint 4 (Two-Column Comparison)
-- "code demo" -> Blueprint 6 (Code + Result)
-- "steps / process" -> Blueprint 7 (Timeline)
-- "summary / conclusion" -> Blueprint 10 (Conclusion)
-- "AI-generated image" -> Blueprint 11 (AI Image + Text)
-- "interactive image lab" -> Blueprint 12 (Interactive Image Lab)
-
-### /designer:slide-audit -- Validate design compliance
-
-```
-/designer:slide-audit bck_04_text_styles
-/designer:slide-audit path/to/block.py
-```
+### Block/slide audit (`--target <block>`)
 
 **Checklist** (reports violations with line numbers):
 - Block structure: `BlockStyles` class, `bs` alias, `build()` function
@@ -287,26 +297,19 @@ Consults `block-blueprints.md` and matches the description to one of 12 blueprin
 
 Output: PASS/ERROR/WARNING per rule with suggested fixes.
 
-### /designer:slide-fix -- Auto-fix design violations
+**Structure and assets validation** (also performed by `--target <block>`):
+1. **Structural** -- mandatory imports, `BlockStyles` class, `build()`, no raw HTML/CSS
+2. **Asset** -- all `uri=` values in `st_image()` checked against `static/images/`
+3. **Style** -- all referenced styles resolved (BlockStyles, custom/styles.py, streamtex.styles)
+4. **TOC** -- heading hierarchy analysis, level jump detection
+5. **Layout** -- grid/block/span/list/overlay counts, nesting depth check (warn if > 4)
+6. **Report** -- structured summary with status, counts, and issues
+
+### Style audit (`--target styles`)
 
 ```
-/designer:slide-fix bck_04_text_styles
-```
-
-Runs audit internally, then applies fixes:
-- Long lines -> break into `st_write()` + `st_br()` pattern
-- Missing `show_code()` -> add before live rendering
-- String concatenation -> split into separate calls
-- Wrong font size -> replace `s.big` with `s.large`
-- Old varargs pattern -> convert to `"""\..."""`
-
-Only modifies what violates the rules; preserves existing content and structure.
-
-### /designer:style-audit -- Check style consistency
-
-```
-/designer:style-audit blocks/bck_example.py
-/designer:style-audit all
+/stx-designer:audit --target styles
+/stx-designer:audit --target styles blocks/bck_example.py
 ```
 
 **Critical issues**: raw HTML/CSS strings, hardcoded black/white, multiple `st_write` for inline text, missing font size on links.
@@ -315,97 +318,17 @@ Only modifies what violates the rules; preserves existing content and structure.
 
 **Recommendations**: dark mode compatibility, style reuse opportunities, missing TOC entries.
 
-### /designer:style-refactor -- Extract and optimize styles
+### Migration audit
 
 ```
-/designer:style-refactor blocks/bck_example.py
-```
-
-Identifies repeated style patterns, extracts them to `BlockStyles` or `custom/styles.py`, checks style naming conventions (English-only, generic, descriptive), applies refactoring, and runs tests to verify.
-
-### /designer:block-preview -- Validate structure and assets
-
-```
-/designer:block-preview blocks/bck_level_badge.py
-```
-
-Performs 6 validations:
-1. **Structural** -- mandatory imports, `BlockStyles` class, `build()`, no raw HTML/CSS
-2. **Asset** -- all `uri=` values in `st_image()` checked against `static/images/`
-3. **Style** -- all referenced styles resolved (BlockStyles, custom/styles.py, streamtex.styles)
-4. **TOC** -- heading hierarchy analysis, level jump detection
-5. **Layout** -- grid/block/span/list/overlay counts, nesting depth check (warn if > 4)
-6. **Report** -- structured summary with status, counts, and issues
-
----
-
-## 4. Migration Commands
-
-### /migration:html-migrate -- Convert HTML to StreamTeX
-
-```
-/migration:html-migrate
-/migration:html-migrate bck_overview
-```
-
-The most comprehensive migration command. Accepts raw HTML (from Google Docs export) inline or as a file path.
-
-**Phase 1: Analysis** -- filter CSS class noise, identify defaults (black/white = theme-controlled), mandatory color audit (every color value enumerated and mapped), detect formatting (bold, italic), identify containers (tables -> `st_grid()`, lists -> `st_list()`).
-
-**Phase 2: Implementation** -- create block file with `BlockStyles` (color-mapping summary + dropped-colors log), implement `build()` using StreamTeX components only: one `st_write()` with tuples for inline mixed-style text, `st_grid()` with `cell_styles` for tables, `st_list()` for lists, `st_br()` for line breaks.
-
-**Phase 3: Second-pass verification** (mandatory) -- re-read source HTML top-to-bottom, re-read migration rules, fix mismatches, run checklist (no raw HTML, semantic style names, images renamed, inline content uses ONE `st_write`, font sizes on link styles, no hardcoded black/white, all colors mapped).
-
-### /migration:html-convert-batch -- Batch conversion
-
-```
-/migration:html-convert-batch --all
-/migration:html-convert-batch --filter "pattern" --limit 10
-/migration:html-convert-batch --dry-run
-```
-
-Runs the batch converter pipeline on `exports/html/`, validates generated blocks, reports conversion stats (simple/medium/complex/errors).
-
-### /migration:html-convert-block -- Single block conversion
-
-```
-/migration:html-convert-block bck_ethics_overview
-```
-
-Reads source HTML from `exports/html/<name>/index.html`, determines block family (`bckcp_*` = doc styles, `bck_*` = presentation styles), generates the StreamTeX block, runs second-pass verification, writes to `shared/blocks/`.
-
-### /migration:html-export -- Configure HTML export
-
-```
-/migration:html-export
-/migration:html-export projects/my-project
-```
-
-Verifies export readiness (`export=True` in `st_book()`), audits all blocks for export-aware widget usage (bare `st.*` calls that should be `stx.*`), checks image assets, and guides the user through the export process. Key reminders:
-- `st.dataframe()` -> `stx.st_dataframe()`
-- `st.line_chart()` -> `stx.st_line_chart()`
-- `st.graphviz_chart()` -> `stx.st_graphviz()`
-- For unsupported widgets: `with stx.st_export('<p>fallback</p>'): st.plotly_chart(fig)`
-
-### /migration:conversion-audit -- Quality audit
-
-```
-/migration:conversion-audit bck_ethics_overview
+/stx-designer:audit migration bck_ethics_overview
 ```
 
 Reads original HTML and converted block side-by-side, runs validation tool, checks: color fidelity, no raw HTML/CSS, images referenced via registry, inline mixed-style uses ONE `st_write()`, links include font-size, tables use `st_grid()`, lists use `st_list()`, correct family (pres/doc), `BlockStyles` has color-mapping summary and dropped-colors log.
 
----
+### Presentation audit (auto-detected with presentation profile)
 
-## 5. Presentation Commands (overlay profile)
-
-These 3 commands are only available with the **presentation** profile. They add live projection compliance rules on top of the standard project commands.
-
-### /designer:presentation-audit
-
-```
-/designer:presentation-audit blocks/bck_topic.py
-```
+When the **presentation** profile is active, audit automatically includes live projection compliance checks:
 
 **CRITICAL checks** (must fix before presenting):
 1. Body text uses `s.Large` (48pt) or above -- `s.large`, `s.big`, `s.medium` on body = CRITICAL
@@ -418,13 +341,39 @@ These 3 commands are only available with the **presentation** profile. They add 
 
 **WARNING checks**: spacing consistency, style reuse, attribution size.
 
-### /designer:presentation-fix
+---
+
+## 5. /stx-designer:fix -- Auto-Fix Issues
 
 ```
-/designer:presentation-fix blocks/bck_topic.py
+/stx-designer:fix --target bck_04_text_styles
+/stx-designer:fix --target styles
+/stx-designer:fix --all
 ```
 
-Applies fixes in severity order:
+### Block/slide fix (`--target <block>`)
+
+Runs audit internally, then applies fixes:
+- Long lines -> break into `st_write()` + `st_br()` pattern
+- Missing `show_code()` -> add before live rendering
+- String concatenation -> split into separate calls
+- Wrong font size -> replace `s.big` with `s.large`
+- Old varargs pattern -> convert to `"""\..."""`
+
+Only modifies what violates the rules; preserves existing content and structure.
+
+### Style fix (`--target styles`)
+
+```
+/stx-designer:fix --target styles blocks/bck_example.py
+```
+
+Identifies repeated style patterns, extracts them to `BlockStyles` or `custom/styles.py`, checks style naming conventions (English-only, generic, descriptive), applies refactoring, and runs tests to verify.
+
+### Presentation fix (auto-detected with presentation profile)
+
+When the **presentation** profile is active, fix automatically includes live projection corrections:
+
 1. Small body fonts (`s.medium`, `s.big`, `s.large`) -> `s.Large` (48pt)
 2. Small title fonts -> `s.Huge` (96pt)+
 3. Long text -> keyword phrases (5-7 words, max 3 bullets)
@@ -434,14 +383,18 @@ Applies fixes in severity order:
 7. Small images -> 400px+ width
 8. Chart CSS -> 24px+ font sizes
 
-### /designer:survey-convert
+---
+
+## 6. /stx-designer:tool -- Specialized Tools
+
+### survey-convert
 
 ```
-/designer:survey-convert                                    # Interactive (list temp/ images)
-/designer:survey-convert --all                              # Batch convert all in temp/
-/designer:survey-convert --list                             # List images without converting
-/designer:survey-convert path/to/screenshot.png             # Convert specific image
-/designer:survey-convert --all /path/to/folder              # Batch from custom folder
+/stx-designer:tool survey-convert                           # Interactive (list temp/ images)
+/stx-designer:tool survey-convert --all                     # Batch convert all in temp/
+/stx-designer:tool survey-convert --list                    # List images without converting
+/stx-designer:tool survey-convert path/to/screenshot.png    # Convert specific image
+/stx-designer:tool survey-convert --all /path/to/folder     # Batch from custom folder
 ```
 
 Converts Stack Overflow Developer Survey screenshots into code-generated StreamTeX blocks. The screenshot is the source reference only -- the output is pure Python code that reproduces the chart (zero static image dependency).
@@ -450,7 +403,7 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 ---
 
-## 6. Developer Commands
+## 7. Developer Commands
 
 ### /developer:test-run
 
@@ -476,11 +429,11 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 ---
 
-## 7. AI Agents
+## 8. AI Agents
 
 ### Project Architect
 
-**Profile**: project | **Invoked by**: `/project:project-init` (implicit) or direct invocation
+**Profile**: project | **Invoked by**: `/stx-designer:init` (implicit) or direct invocation
 
 **Role**: Designs the structure of StreamTeX projects -- determines block count, content, order, and features (pagination, TOC, banner, export).
 
@@ -556,7 +509,7 @@ Output: score X/Y, errors (must fix), warnings (should fix), suggestions.
 
 ---
 
-## 8. Block Blueprints (12 types)
+## 9. Block Blueprints (12 types)
 
 Blueprints define the **structure** (which `stx.*` calls, in which order), not the exact content. Content is always adapted to the user's request.
 
@@ -594,7 +547,7 @@ Blueprints define the **structure** (which `stx.*` calls, in which order), not t
 
 ---
 
-## 9. Coding Conventions
+## 10. Coding Conventions
 
 ### Project Structure Standard
 
@@ -756,7 +709,7 @@ s.visibility.*   -- hidden, visible, invisible
 
 ---
 
-## 10. Testing & Linting
+## 11. Testing & Linting
 
 ### Running Tests
 
@@ -839,7 +792,7 @@ jobs:
 
 ---
 
-## 11. Workspace Management
+## 12. Workspace Management
 
 ### Core Commands
 
@@ -896,7 +849,7 @@ After changes, restart the language server: `Cmd+Shift+P` -> `basedpyright: Rest
 
 ---
 
-## 12. Typical Workflows
+## 13. Typical Workflows
 
 ### Create a project from scratch
 
@@ -914,14 +867,14 @@ cd projects/stx-my-course
 claude
 
 # 4. Use Claude to generate the full project
-> /project:project-init "Introduction to Python, 10 slides, dark theme, for students"
+> /stx-designer:init "Introduction to Python, 10 slides, dark theme, for students"
 # Claude proposes structure with blueprints, you approve, files are generated
 
 # 5. Preview
 > uv run streamlit run book.py
 
 # 6. Refine individual slides
-> /designer:slide-fix blocks/bck_03_variables.py
+> /stx-designer:fix --target bck_03_variables
 ```
 
 ### Add blocks to an existing project
@@ -930,11 +883,11 @@ claude
 # In Claude Code, from the project directory:
 
 # Create a new block using blueprint matching
-> /designer:block-new "comparison Python vs Java, 2-column grid with pros/cons"
+> /stx-designer:update add block comparison Python vs Java, 2-column grid with pros/cons
 # Claude matches Blueprint 4, creates the file, shows wiring instructions
 
 # Or create a slide with full design rules
-> /designer:slide-new "bck_08_demo - Live code demo with input/output"
+> /stx-designer:update add slide bck_08_demo - Live code demo with input/output
 
 # Wire it into book.py manually:
 # import blocks
@@ -947,23 +900,23 @@ claude
 # In Claude Code:
 
 # 1. Check style consistency across all blocks
-> /designer:style-audit all
+> /stx-designer:audit --target styles
 
 # 2. Validate design rules on a specific block
-> /designer:slide-audit blocks/bck_05_architecture.py
+> /stx-designer:audit --target bck_05_architecture
 
 # 3. Auto-fix violations
-> /designer:slide-fix blocks/bck_05_architecture.py
+> /stx-designer:fix --target bck_05_architecture
 
 # 4. Refactor repeated styles
-> /designer:style-refactor blocks/bck_05_architecture.py
+> /stx-designer:fix --target styles blocks/bck_05_architecture.py
 
 # 5. Validate structure and assets
-> /designer:block-preview blocks/bck_05_architecture.py
+> /stx-designer:audit --target bck_05_architecture
 
-# For presentation projects (presentation profile):
-> /designer:presentation-audit blocks/bck_05_architecture.py
-> /designer:presentation-fix blocks/bck_05_architecture.py
+# For presentation projects (presentation profile -- auto-detected):
+> /stx-designer:audit --target bck_05_architecture
+> /stx-designer:fix --target bck_05_architecture
 ```
 
 ### Maintain and update profiles
@@ -994,23 +947,23 @@ stx claude update . --force       # Override everything
 # In Claude Code, from the project directory:
 
 # 1. Single block migration (provide HTML inline or as file path)
-> /migration:html-migrate bck_overview
+> /stx-designer:update --migrate bck_overview
 # Claude reads HTML, extracts colors/formatting, generates StreamTeX block
 
 # 2. Batch conversion (for large-scale migrations)
-> /migration:html-convert-batch --all
+> /stx-designer:update --migrate --all
 # Converts all HTML files in exports/html/, validates results
 
 # 3. Audit conversion quality
-> /migration:conversion-audit bck_overview
+> /stx-designer:audit migration bck_overview
 # Compares original HTML with converted block, checks fidelity
 
 # 4. Configure HTML export for the project
-> /migration:html-export
+> /stx-designer:update --export
 # Checks export readiness, audits widgets, guides through export
 
 # 5. Generate book.py from CSV block list (after batch conversion)
-> /project:course-generate --all
+> /stx-designer:update course --all
 ```
 
 ### Deploy a project

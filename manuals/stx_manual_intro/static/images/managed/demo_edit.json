@@ -1,0 +1,14 @@
+{
+  "name": "demo_edit",
+  "version": 1,
+  "timestamp": "2026-03-10T16:01:51.877514+00:00",
+  "source_type": "ai_generated",
+  "original_path": "/Volumes/Mac_Data/Win_data/data/backups/Dropbox-nicolas.guelfi@laposte.net/messir Dropbox/Nicolas Guelfi/users/NG/dev-dropbox/dvlpt/eclipse/git/github/streamtex-dev/streamtex-docs/manuals/stx_manual_intro/static/images/ai/59b8af60eeb6ca80.jpeg",
+  "prompt": "Une vache mauve avec une couronne verte. La vache est visible en entier dans un cadre de Montagne Suisse.",
+  "provider": "fal",
+  "model": "fal-ai/stable-diffusion-v35-large",
+  "size": "1536x1024",
+  "quality": "hd",
+  "base_image": null,
+  "revised_prompt": null
+}

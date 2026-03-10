@@ -73,6 +73,9 @@ st_book([
 
     # CLI Quick Start
     blocks.bck_cli_quickstart,
+
+    # Feedback & Support
+    blocks.bck_feedback,
 ], toc_config=toc, marker_config=marker_config, paginate=True,
    banner=BannerConfig.full(),
    inspector=stx.InspectorConfig(enabled=True),

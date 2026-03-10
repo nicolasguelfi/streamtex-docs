@@ -4,7 +4,7 @@ Part 8: Advanced — Shows how to use st_ai_image() in blocks and
 st_ai_image_widget() for interactive generation.
 """
 
-from streamtex import st_write, st_space, st_block, st_grid, st_list
+from streamtex import st_write, st_space, st_block, st_grid, st_image, st_list
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, st_slide_break
@@ -300,6 +300,116 @@ def build():
             ". Existing code continues to function — st_ai_image() "
             "now internally passes editable=True to st_image().",
         )
+    st_space("v", 2)
+
+    # ── Complete Example ──────────────────────────────────────
+    st_write(bs.sub, "Complete Example — From Generation to Traceability", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    show_explanation("""\
+        This example shows the full workflow: generate an AI image,
+        display it with the editable panel, and inspect the JSON
+        metadata file created automatically for traceability.
+    """)
+    st_space("v", 1)
+
+    # Step 1: Code example
+    st_write(s.bold + s.large, "1. Block code", tag=t.div)
+    st_space("v", 1)
+
+    show_code("""\
+        # blocks/bck_hero.py — complete editable AI image example
+        from streamtex import st_image, st_write, st_space
+        from streamtex.enums import Tags as t
+        from custom.styles import Styles as s
+
+        def build():
+            st_write(s.huge + s.bold + s.center_txt,
+                     "Welcome", tag=t.div, toc_lvl="1")
+            st_space("v", 2)
+
+            # Display an image with the AI editor panel.
+            # - If a managed version exists (from a previous generation),
+            #   it is displayed automatically instead of the original URI.
+            # - The editor panel lets the user generate a new AI image,
+            #   replace from URL/file, and browse version history.
+            st_image(
+                uri="images/hero_banner.png",
+                editable=True,
+                name="hero_banner",
+                prompt="A futuristic city at sunset, digital art style",
+                provider="openai",
+                width="100%",
+                alt="Hero banner image",
+            )""", language="python")
+    st_space("v", 2)
+
+    # Step 2: Live demo
+    st_write(s.bold + s.large, "2. Live result (editable)", tag=t.div)
+    st_space("v", 1)
+
+    st_write(
+        bs.body,
+        "The image below uses ",
+        (s.bold, "editable=True"),
+        ". Click ",
+        (s.bold, "Edit Image"),
+        " to open the editor panel, then the ",
+        (s.bold, "AI Generate"),
+        " tab to create a new version.",
+    )
+    st_space("v", 1)
+
+    st_image(
+        uri="ai/ai_openai_demo.png",
+        editable=True,
+        name="ai_usage_demo",
+        prompt="A futuristic city at sunset, digital art style",
+        provider="openai",
+        width="400px",
+        alt="AI generation demo image",
+    )
+    st_space("v", 2)
+
+    # Step 3: JSON traceability
+    st_write(s.bold + s.large, "3. Traceability — JSON metadata", tag=t.div)
+    st_space("v", 1)
+
+    st_write(
+        bs.body,
+        "Each generated or replaced image gets a ",
+        (s.bold, ".json sidecar"),
+        " file in ",
+        (s.bold, "static/images/managed/"),
+        " that records full provenance:",
+    )
+    st_space("v", 1)
+
+    show_code("""\
+        // static/images/managed/hero_banner.json
+        {
+          "name": "hero_banner",
+          "version": 1,
+          "timestamp": "2026-03-10T15:45:09.272394+00:00",
+          "source_type": "ai_generated",
+          "original_path": "static/images/ai/c0a84cc973412ca8.png",
+          "prompt": "A futuristic city at sunset, digital art style",
+          "provider": "openai",
+          "model": "gpt-image-1",
+          "size": "1024x1024",
+          "quality": "standard",
+          "base_image": null,
+          "revised_prompt": null
+        }""", language="json")
+    st_space("v", 1)
+
+    show_explanation("""\
+        When you regenerate or replace the image, the current version
+        is archived as hero_banner_v1.png + .json, and the new image
+        becomes the current version (v2, v3, ...). Use the History
+        tab in the editor panel — or the rollback_image() API — to
+        restore any previous version.
+    """)
     st_space("v", 1)
 
     st_slide_break()

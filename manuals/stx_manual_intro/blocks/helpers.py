@@ -71,8 +71,8 @@ def show_feature_highlight(feature_name: str, icon: str, description: str):
 set_slide_break_config(SlideBreakConfig(
     mode=SlideBreakMode.FULL,
     space="60vh",
-    rule_margin_top="10em",
-    rule_margin_bottom="10em",
+    rule_margin_top="5em",
+    rule_margin_bottom="5em",
     thickness="3px",
     color="79, 172, 254",
     opacity=0.5,

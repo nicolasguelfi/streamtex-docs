@@ -43,8 +43,8 @@ set_block_helper_config(ProjectBlockHelperConfig())
 set_slide_break_config(SlideBreakConfig(
     mode=SlideBreakMode.FULL,
     space="60vh",
-    rule_margin_top="10em",
-    rule_margin_bottom="10em",
+    rule_margin_top="5em",
+    rule_margin_bottom="5em",
     marker=True,
 ))
 

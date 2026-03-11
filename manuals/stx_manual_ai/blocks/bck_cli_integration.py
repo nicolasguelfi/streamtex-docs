@@ -1,4 +1,4 @@
-"""Part 7 — CLI integration commands: install, diff, update, and workspace."""
+"""Part 7 — CLI integration commands: install, diff, update, and workspace management."""
 
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
@@ -16,7 +16,7 @@ bs = BlockStyles
 
 
 def build():
-    """CLI Integration Commands — stx claude and stx workspace."""
+    """CLI Integration Commands — stx claude and workspace management."""
     st_space("v", 1)
     st_write(bs.heading, "CLI Integration Commands",
              tag=t.div, toc_lvl="1")
@@ -118,21 +118,23 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # ── stx workspace init ────────────────────────────────────────
-    st_write(bs.sub, "stx workspace init", toc_lvl="+1")
+    # ── stx install ────────────────────────────────────────────────
+    st_write(bs.sub, "stx install", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Initialize a new StreamTeX workspace with stx.toml.
+        Initialize a new StreamTeX workspace with stx.toml, or
+        upgrade an existing workspace to a higher preset.
         The --preset option controls which repos are declared.
         Default preset is standard (docs + claude).
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace init .
-        stx workspace init . --preset user       # Claude profiles only
-        stx workspace init . --preset developer   # all 3 repos
+        stx install
+        stx install --preset user       # Claude profiles only
+        stx install --preset developer   # all 3 repos
+        stx install --preset power       # developer + extras
 
         # Example output:
         # Workspace initialized: /path/to/workspace
@@ -141,8 +143,8 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # ── stx workspace update ──────────────────────────────────────
-    st_write(bs.sub, "stx workspace update", toc_lvl="+1")
+    # ── stx update ────────────────────────────────────────────────
+    st_write(bs.sub, "stx update", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -153,13 +155,13 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        stx workspace update
+        stx update
 
         # Fine-grained control
-        stx workspace update --skip-sync      # skip uv sync
-        stx workspace update --skip-profiles  # skip Claude profile update
-        stx workspace update --dry-run        # show steps without executing
-        stx workspace update --repair         # fix broken venv, missing __init__.py
+        stx update --skip-sync      # skip uv sync
+        stx update --skip-profiles  # skip Claude profile update
+        stx update --dry-run        # show steps without executing
+        stx update --repair         # fix broken venv, missing __init__.py
 
         # Example output:
         #   Step 1/6: git pull (2 repos)
@@ -172,25 +174,25 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # ── stx workspace upgrade ─────────────────────────────────────
-    st_write(bs.sub, "stx workspace upgrade", toc_lvl="+1")
+    # ── stx install --preset (upgrade) ────────────────────────────
+    st_write(bs.sub, "Upgrading a workspace preset", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
         Upgrade a workspace to a higher preset. Adds missing repo
         sections to stx.toml without touching existing configuration.
-        Run stx workspace update after to fetch new repos.
+        Run stx update after to fetch new repos.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace upgrade developer
-        stx workspace update
+        stx install --preset developer
+        stx update
 
         # Example output:
         # Upgraded from 'standard' to 'developer'.
         #   + streamtex
-        # Run stx workspace update to clone the new repos.""",
+        # Run stx update to clone the new repos.""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

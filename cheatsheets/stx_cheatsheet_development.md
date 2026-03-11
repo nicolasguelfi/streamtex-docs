@@ -10,10 +10,10 @@ Complete reference for developers using Claude Code, profiles, slash commands, a
 
 ```bash
 # Workspace
-stx workspace init .                      # Initialize workspace (standard preset)
-stx workspace update                      # Pull repos + sync deps + update profiles + global commands
-stx workspace status                      # Git status of all repos
-stx workspace upgrade developer           # Upgrade to developer preset
+stx install                               # Initialize workspace (standard preset)
+stx update                                # Pull repos + sync deps + update profiles + global commands
+stx status                                # Git status of all repos
+stx install --preset developer            # Install/upgrade to developer preset
 
 # Claude Profiles
 stx claude install project ./my-project   # Install project profile
@@ -783,7 +783,7 @@ uv sync                       # Installs pre-commit (dev dep)
 uv run pre-commit install     # Activates the git hook
 ```
 
-`stx project new` generates `.pre-commit-config.yaml` and installs hooks automatically. `stx workspace update` installs hooks in all repos and projects.
+`stx project new` generates `.pre-commit-config.yaml` and installs hooks automatically. `stx update` installs hooks in all repos and projects.
 
 ### CI Configuration
 
@@ -809,10 +809,10 @@ jobs:
 ### Core Commands
 
 ```bash
-stx workspace init [PATH]            # Initialize workspace (creates stx.toml + projects/)
-stx workspace update                 # Pull + clone + sync + hooks + profiles + global commands
-stx workspace status                 # Git status of all repos (branch, clean/dirty, ahead/behind)
-stx workspace upgrade PRESET         # Upgrade to higher preset (cannot downgrade)
+stx install                          # Initialize workspace (creates stx.toml + projects/)
+stx install --preset PRESET          # Initialize/upgrade to a specific preset
+stx update                           # Pull + clone + sync + hooks + profiles + global commands
+stx status                           # Git status of all repos (branch, clean/dirty, ahead/behind)
 ```
 
 ### Presets
@@ -822,27 +822,28 @@ stx workspace upgrade PRESET         # Upgrade to higher preset (cannot downgrad
 | **basic** | none | Standalone projects |
 | **user** | streamtex-claude | Users wanting Claude profiles only |
 | **standard** | streamtex-docs + streamtex-claude | Default -- docs + profiles |
+| **power** | streamtex-docs + streamtex-claude | Standard + advanced tooling |
 | **developer** | all 3 repos (library + docs + claude) | Library contributors |
 
 ```bash
-stx workspace init . --preset user       # Lighter setup (Claude profiles only)
-stx workspace init . --preset developer  # Full development setup
-stx workspace upgrade developer          # Upgrade existing workspace
+stx install --preset user       # Lighter setup (Claude profiles only)
+stx install --preset power      # Standard + advanced tooling
+stx install --preset developer  # Full development setup
 ```
 
-### stx workspace update Options
+### stx update Options
 
 ```bash
-stx workspace update                    # Full update (pull + sync + hooks + profiles + commands)
-stx workspace update --skip-sync        # Skip uv sync
-stx workspace update --skip-profiles    # Skip Claude profile update
-stx workspace update --dry-run          # Show steps without executing
-stx workspace update --repair           # Enable repair checks (venv, __init__.py, paths)
+stx update                    # Full update (pull + sync + hooks + profiles + commands)
+stx update --skip-sync        # Skip uv sync
+stx update --skip-profiles    # Skip Claude profile update
+stx update --dry-run          # Show steps without executing
+stx update --repair           # Enable repair checks (venv, __init__.py, paths)
 ```
 
 ### stx.toml Configuration
 
-The `stx.toml` file at workspace root declares repos, their URLs, and types. It is created by `stx workspace init` and updated by `stx workspace upgrade`.
+The `stx.toml` file at workspace root declares repos, their URLs, and types. It is created by `stx install` and updated by `stx install --preset`.
 
 ### pyrightconfig.json for IDE
 
@@ -868,8 +869,8 @@ After changes, restart the language server: `Cmd+Shift+P` -> `basedpyright: Rest
 ```bash
 # 1. Set up workspace (one-time)
 mkdir streamtex-dev && cd streamtex-dev
-stx workspace init .
-stx workspace update
+stx install
+stx update
 
 # 2. Scaffold project
 stx project new my-course
@@ -941,7 +942,7 @@ uv tool install "streamtex[cli]" -U
 
 # 2. Update everything in workspace
 cd streamtex-dev/
-stx workspace update
+stx update
 
 # 3. Verify all profiles are in sync
 stx claude check

@@ -169,6 +169,50 @@ def build():
                     with l.item(): st_write(bs.body, (s.bold, "config"), " — AIImageConfig override")
     st_space("v", 2)
 
+    # ── ImageMetadata ─────────────────────────────────────────
+    st_write(bs.sub, "ImageMetadata", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Every generated or managed image has a JSON sidecar file
+        containing an ImageMetadata dataclass. It records the full
+        provenance: prompt, provider, model, size, quality, version
+        number, and timestamp.
+    """)
+    st_space("v", 1)
+
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.bold + s.large, "ImageMetadata Fields", tag=t.div)
+        st_space("v", 1)
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(bs.body, (s.bold, "name"), " — semantic name (e.g. 'hero_intro')")
+            with l.item(): st_write(bs.body, (s.bold, "version"), " — current version number (int)")
+            with l.item(): st_write(bs.body, (s.bold, "timestamp"), " — ISO 8601 creation time")
+            with l.item(): st_write(bs.body, (s.bold, "source_type"), " — 'local', 'url', or 'ai_generated'")
+            with l.item(): st_write(bs.body, (s.bold, "original_path"), " — original source path or URL")
+            with l.item(): st_write(bs.body, (s.bold, "prompt"), " — AI prompt (None for non-AI images)")
+            with l.item(): st_write(bs.body, (s.bold, "provider"), " — AI provider name")
+            with l.item(): st_write(bs.body, (s.bold, "model"), " — AI model identifier")
+            with l.item(): st_write(bs.body, (s.bold, "size"), " — AI generation size")
+            with l.item(): st_write(bs.body, (s.bold, "quality"), " — AI generation quality")
+            with l.item(): st_write(bs.body, (s.bold, "base_image"), " — path to base image for img2img")
+            with l.item(): st_write(bs.body, (s.bold, "revised_prompt"), " — provider-revised prompt")
+    st_space("v", 1)
+
+    show_code("""\
+        from streamtex.ai.metadata import ImageMetadata, load_metadata, metadata_path_for
+
+        # Load metadata for a managed image
+        json_path = metadata_path_for("static/images/managed/hero_banner.png")
+        meta = load_metadata(json_path)
+
+        if meta:
+            print(f"Name: {meta.name}, Version: {meta.version}")
+            print(f"Provider: {meta.provider}, Model: {meta.model}")
+            print(f"Prompt: {meta.prompt}")
+            print(f"Generated at: {meta.timestamp}")""", language="python")
+    st_space("v", 2)
+
     # ── Caching ────────────────────────────────────────────────
     st_write(bs.sub, "Cache and Cost Control", tag=t.div, toc_lvl="2")
     st_space("v", 1)

@@ -155,4 +155,55 @@ def build():
         You can safely install multiple profiles into the same
         project if needed.
     """)
+    st_space("v", 2)
+
+    # --- Workspace presets with AI extras ---
+    st_write(bs.sub, "Workspace Presets and AI Extras", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        StreamTeX workspace presets bundle optional extras alongside
+        the core installation. Two presets include AI capabilities
+        out of the box.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # standard preset — includes pdf + ai extras
+        stx install --preset standard
+
+        # power preset — includes pdf + ai + inspector extras
+        stx install --preset power
+    """, language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    show_explanation("""\
+        With these presets, AI image generation (st_ai_image,
+        st_ai_image_widget) and related providers are available
+        without manually adding optional dependencies.
+    """)
+    st_space("v", 2)
+
+    # --- Upgrading existing projects ---
+    st_write(bs.sub, "Upgrading Existing Projects", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        If you created a project before AI features were available,
+        use stx project upgrade to bring your project up to date
+        with the latest scaffolding and configuration — including
+        AI-related dependencies and settings.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # Check what would change
+        stx project upgrade --check
+
+        # Preview without applying
+        stx project upgrade --dry-run
+
+        # Apply the upgrade
+        stx project upgrade
+    """, language="bash", line_numbers=False)
     st_space("v", 1)

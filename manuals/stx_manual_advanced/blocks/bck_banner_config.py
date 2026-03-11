@@ -158,4 +158,39 @@ def build():
         If no banner= argument is provided, st_book() defaults
         to BannerConfig.full().
     """)
+    st_space("v", 3)
+
+    # --- st_chrome_banner() ---
+    st_write(bs.sub, "st_chrome_banner()", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        st_chrome_banner() displays a dismissible banner at the top
+        of the page recommending Google Chrome when the user is
+        visiting with a different browser.
+
+        It is called automatically by st_book() (chrome_banner=True
+        by default). You can also call it manually in book.py for
+        standalone pages that do not use st_book().
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        from streamtex import st_chrome_banner
+
+        # Called automatically by st_book() — no action needed.
+        # For standalone pages without st_book():
+        st_chrome_banner()""")
+    st_space("v", 1)
+
+    show_details("""\
+        The banner is injected as a fixed-position element in the
+        parent Streamlit frame. It does not interfere with block
+        numbering or the Table of Contents.
+
+        Users can dismiss the banner by clicking the X button.
+
+        To disable the automatic banner in st_book(), pass
+        chrome_banner=False.
+    """)
     st_space("v", 1)

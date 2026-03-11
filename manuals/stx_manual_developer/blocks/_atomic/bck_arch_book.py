@@ -38,7 +38,7 @@ st_book(
     [bck_chapter_1, bck_chapter_2, bck_chapter_3],
     toc_config=toc,
     marker_config=markers,
-    banner_config=banner,
+    banner=banner,
 )""")
         st_space("v", 2)
 
@@ -146,14 +146,13 @@ st_book(
         st_space("v", 2)
 
         # --- 7. Inspector integration ---
-        st_write(bs.sub, "Inspector and link preview", toc_lvl="+1")
+        st_write(bs.sub, "Inspector integration", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
             The inspector is an optional live code editor panel
             that lets developers inspect and modify block code
-            at runtime. Link preview injects JS/CSS for hover
-            cards on cross-references and external links.
+            at runtime.
         """)
         st_space("v", 1)
 
@@ -161,7 +160,6 @@ st_book(
 st_book(
     blocks,
     inspector=True,        # enable live code inspector
-    link_preview=True,     # enable hover cards on links
 )""")
         st_space("v", 2)
 
@@ -181,10 +179,9 @@ st_book(
     [bck_intro, bck_setup, bck_architecture],
     toc_config=toc,
     marker_config=markers,
-    banner_config=banner,
+    banner=banner,
     paginate=True,
     inspector=False,
-    link_preview=True,
     bib_sources=["references.bib"],
 )""")
         st_space("v", 2)

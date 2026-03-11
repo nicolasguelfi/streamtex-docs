@@ -76,14 +76,14 @@ uv tool install streamtex[cli]
 
     show_code("""\
 mkdir streamtex-dev && cd streamtex-dev
-stx workspace init . --preset standard  # basic | user | standard | developer
-stx workspace update
+stx install --preset standard  # basic | user | standard | power | developer
+stx update
 # Clones repos, syncs deps, installs hooks, updates profiles and global commands
 """, language="bash", line_numbers=False)
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
-        st_write(s.large, "The four presets offer increasing levels of functionality:")
+        st_write(s.large, "The five presets offer increasing levels of functionality:")
         with st_list(li_style=s.large, list_type="ul") as l:
             with l.item():
                 st_write(s.large, (s.bold, "basic"), " — empty workspace, no repos. Create standalone projects and upgrade later when needed.")
@@ -91,6 +91,8 @@ stx workspace update
                 st_write(s.large, (s.bold, "user"), " — adds streamtex-claude (Claude AI profiles). Enables stx claude install for slash commands and agents.")
             with l.item():
                 st_write(s.large, (s.bold, "standard"), " (default) — adds streamtex-docs + streamtex-claude. Enables rich templates (--template project) and local documentation alongside Claude profiles.")
+            with l.item():
+                st_write(s.large, (s.bold, "power"), " — streamtex-docs + streamtex-claude, all extras (pdf, ai, inspector).")
             with l.item():
                 st_write(s.large, (s.bold, "developer"), " — adds all 3 repos (library + docs + claude). Enables editable installs so library source changes are reflected immediately.")
     st_space("v", 2)
@@ -116,7 +118,11 @@ uv run streamlit run book.py
     show_details("""\
         Shortcut without a workspace — create a standalone project
         directly with stx project new mon-projet then cd into it.
-        You can always add a workspace later with stx workspace init.
+        You can always add a workspace later with stx install.
+
+        To upgrade an existing project to the latest StreamTeX
+        scaffolding and configuration, use stx project upgrade.
+        Use --check to preview changes without applying them.
 
         Manual installation without the stx CLI:
         pip install streamtex

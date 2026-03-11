@@ -66,6 +66,38 @@ def __getattr__(name: str):
 # version wins.""")
         st_space("v", 2)
 
+        # --- Block error classes ---
+        st_write(bs.sub, "BlockImportError and BlockNotFoundError", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            The block system defines two custom exception classes
+            that inherit from ImportError. BlockNotFoundError is
+            raised when a requested block file does not exist.
+            BlockImportError is raised when the file exists but
+            fails during import (syntax error, missing dependency,
+            etc.). Both are used by ProjectBlockRegistry and
+            load_atomic_block().
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import (
+    BlockImportError, BlockNotFoundError,
+    ProjectBlockRegistry,
+)
+from pathlib import Path
+
+registry = ProjectBlockRegistry(Path("blocks"))
+
+try:
+    mod = registry.get("bck_broken")
+except BlockNotFoundError as e:
+    print(f"Missing block: {e}")
+except BlockImportError as e:
+    print(f"Import failed: {e}")""")
+        st_space("v", 2)
+
         # --- 3. load_atomic_block ---
         st_write(bs.sub, "load_atomic_block()", toc_lvl="+1")
         st_space("v", 1)

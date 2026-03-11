@@ -74,6 +74,9 @@ stx project new myproject
 
 # Rich template with 9 tutorial blocks
 stx project new myproject --template project
+
+# Available templates: project (default), presentation, collection, course
+stx project new myslides --template presentation
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -128,24 +131,27 @@ stx lint
     st_space("v", 1)
 
     show_explanation("""\
-        Workspaces support 4 presets that control which repos
-        are cloned. Use --preset with stx workspace init,
+        Workspaces support 5 presets that control which repos
+        are cloned. Use --preset with stx install,
         or upgrade an existing workspace.
     """)
     st_space("v", 1)
 
     show_code("""\
 # basic — workspace only, no repos
-stx workspace init . --preset basic
+stx install --preset basic
 
 # user — Claude AI profiles only
-stx workspace init . --preset user
+stx install --preset user
 
 # standard (default) — docs + Claude profiles
-stx workspace init .
+stx install
+
+# power — docs + Claude profiles + all extras (pdf, ai, inspector)
+stx install --preset power
 
 # developer — all 3 repos (library + docs + Claude)
-stx workspace init . --preset developer
+stx install --preset developer
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -157,8 +163,46 @@ stx workspace init . --preset developer
     st_space("v", 1)
 
     show_code("""\
-stx workspace upgrade developer
-stx workspace update   # clones + syncs newly declared repos
+stx install --preset developer
+stx update   # clones + syncs newly declared repos
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- stx status ---
+    st_write(bs.sub, "Check workspace status", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Display a summary of the current workspace: preset,
+        installed repos, sync state, and project list.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+stx status
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- stx project upgrade ---
+    st_write(bs.sub, "Upgrade an existing project", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Upgrade an existing project to the latest StreamTeX
+        scaffolding and configuration. Use --check to preview
+        changes, or --dry-run to simulate without writing files.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# Preview what would change
+stx project upgrade --check
+
+# Simulate the upgrade without writing files
+stx project upgrade --dry-run
+
+# Apply the upgrade
+stx project upgrade
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -201,7 +245,7 @@ env:
     show_details("""\
         These are the essential day-to-day commands.
         Advanced CLI commands for deployment and publishing
-        (stx deploy, stx publish, stx workspace) are covered
+        (stx deploy, stx publish, stx install/update/status) are covered
         in the Deploy manual.
     """)
     st_space("v", 1)

@@ -100,12 +100,16 @@ st_html(
 )""")
         st_space("v", 1)
 
-        pdf_url = "app/static/pdf/sample_document.pdf"
-        st_html(
-            f'<iframe src="{pdf_url}" '
-            f'width="100%" height="400" '
-            f'style="border:none;"></iframe>'
-        )
+        pdf_path = os.path.join(_static_dir, "pdf", "sample_document.pdf")
+        if os.path.exists(pdf_path):
+            pdf_url = "app/static/pdf/sample_document.pdf"
+            st_html(
+                f'<iframe src="{pdf_url}" '
+                f'width="100%" height="400" '
+                f'style="border:none;"></iframe>'
+            )
+        else:
+            st_write(s.center_txt, "📄 PDF preview not available (sample_document.pdf not found)")
         st_space("v", 2)
 
         # --- 5. Audio Files ---

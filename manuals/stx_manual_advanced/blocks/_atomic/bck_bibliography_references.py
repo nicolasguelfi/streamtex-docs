@@ -329,3 +329,80 @@ register_bib_parser("custom", parse_custom_format)
 
             Built-in parsers: bib (BibTeX), json (JSON), ris (RIS), csl-json (CSL-JSON).
         """)
+        st_space("v", 3)
+
+        # --- Section 12: set_bib_config() ---
+        st_write(bs.sub, "12. set_bib_config() — Global Configuration", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            set_bib_config() sets the global bibliography configuration using
+            the dependency injection (DI) pattern. Call it once in book.py
+            before any citation or bibliography rendering.
+
+            BibConfig controls the output format, citation style, hover
+            behavior, sorting, and locale.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.bib import BibConfig, BibFormat, CitationStyle, set_bib_config
+
+# Configure bibliography globally
+set_bib_config(BibConfig(
+    format=BibFormat.IEEE,
+    citation_style=CitationStyle.NUMERIC,
+    hover_enabled=True,
+    hover_show_abstract=True,
+    sort_by="year",       # "author" | "year" | "key" | "citation_order"
+    locale="en",          # "en" or "fr"
+))""")
+        st_space("v", 2)
+
+        show_details("""\
+            st_book() accepts a bib_config= parameter that calls set_bib_config()
+            internally. You only need to call set_bib_config() directly when not
+            using st_book(), or when you want to change the config mid-render.
+
+            Use get_bib_config() to read the current configuration.
+        """)
+        st_space("v", 3)
+
+        # --- Section 13: format_entry() ---
+        st_write(bs.sub, "13. format_entry() — Custom Entry Formatting", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            format_entry() formats a single BibEntry in a given BibFormat style.
+            It returns an HTML string suitable for rendering.
+
+            Use it when you need to display individual references outside of
+            st_bibliography(), for example in tooltips or custom layouts.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.bib import format_entry, BibFormat, get_bib_registry
+
+reg = get_bib_registry()
+entry = reg.get("vaswani2017attention")
+
+# Format as APA
+apa_html = format_entry(entry, BibFormat.APA)
+
+# Format as IEEE with a citation number
+ieee_html = format_entry(entry, BibFormat.IEEE, number=1)
+
+# Use in st_write via raw HTML
+st_write(s.medium, apa_html)""")
+        st_space("v", 2)
+
+        show_details("""\
+            format_entry(entry, fmt, number) accepts:
+            - entry: a BibEntry object
+            - fmt: a BibFormat enum value (APA, MLA, IEEE, CHICAGO, HARVARD)
+            - number: an integer used only by IEEE format for the [N] prefix
+
+            The function returns an HTML string with italic tags for journals
+            and hyperlinks for DOIs/URLs.
+        """)

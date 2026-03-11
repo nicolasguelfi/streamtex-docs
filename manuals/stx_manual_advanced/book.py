@@ -111,6 +111,7 @@ st_book([
     # --- Section 6: Export ---
     blocks.bck_export_aware_widgets,
     blocks.bck_export_advanced,
+    blocks.bck_pdf_export,
     blocks.bck_static_assets_loading,
     blocks.bck_deployment_strategies,
 

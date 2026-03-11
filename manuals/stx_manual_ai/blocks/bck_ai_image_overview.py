@@ -82,6 +82,36 @@ def build():
                 st_image(uri="ai/ai_fal_demo.png", width="100%")
     st_space("v", 2)
 
+    # ── Available Models ──────────────────────────────────────
+    st_write(bs.sub, "Available Models", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    st_write(
+        bs.body,
+        "Use ",
+        (s.bold, "get_available_models(provider_name)"),
+        " to list the model identifiers supported by each provider. ",
+        "This is useful for choosing a specific model via the ",
+        (s.bold, "model"),
+        " parameter.",
+    )
+    st_space("v", 1)
+
+    show_code("""\
+        from streamtex import get_available_models
+
+        # List models for each provider
+        get_available_models("openai")
+        # ['gpt-image-1', 'dall-e-3']
+
+        get_available_models("google")
+        # ['imagen-4.0-generate-001', 'imagen-3.0-generate-002']
+
+        get_available_models("fal")
+        # ['fal-ai/stable-diffusion-v35-large', 'fal-ai/flux/dev/image-to-image']""",
+        language="python")
+    st_space("v", 2)
+
     # ── Configuration ──────────────────────────────────────────
     st_write(bs.sub, "Configuration", tag=t.div, toc_lvl="2")
     st_space("v", 1)

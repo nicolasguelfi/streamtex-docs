@@ -135,7 +135,7 @@ def build():
             ├── main.py         # Entry point, click group registration
             ├── commands.py     # Top-level command definitions
             ├── project_cmd.py  # stx project init/info/validate
-            ├── workspace_cmd.py# stx workspace management
+            ├── workspace_cmd.py# stx install/update/status
             ├── deploy_cmd.py   # stx deploy (Docker, cloud)
             ├── publish_cmd.py  # stx publish (PyPI release)
             ├── claude_cmd.py   # stx claude (profile management)

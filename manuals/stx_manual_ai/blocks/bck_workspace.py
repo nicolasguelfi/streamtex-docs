@@ -28,7 +28,7 @@ def build():
     """)
     st_space("v", 2)
 
-    # --- stx workspace init ---
+    # --- stx install ---
     st_write(bs.sub, "Initialize a Workspace", toc_lvl="+1")
     st_space("v", 1)
 
@@ -41,13 +41,14 @@ def build():
 
     show_code("""\
         mkdir streamtex-dev && cd streamtex-dev
-        stx workspace init .                     # standard (default)
-        stx workspace init . --preset user       # Claude profiles only
-        stx workspace init . --preset developer  # all 3 repos
+        stx install                     # standard (default)
+        stx install --preset user       # Claude profiles only
+        stx install --preset developer  # all 3 repos
+        stx install --preset power      # developer + extras
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
-    # --- stx workspace update ---
+    # --- stx update ---
     st_write(bs.sub, "Update a Workspace", toc_lvl="+1")
     st_space("v", 1)
 
@@ -55,17 +56,17 @@ def build():
         The single command for all workspace operations: clone repos,
         pull latest changes, sync dependencies, install pre-commit
         hooks, update Claude profiles, and install global commands.
-        Use it after init and whenever you need to update.
+        Use it after install and whenever you need to update.
     """)
     st_space("v", 1)
 
     show_code("""\
-        stx workspace update
+        stx update
         # Fine-grained control
-        stx workspace update --skip-sync      # skip uv sync
-        stx workspace update --skip-profiles  # skip Claude profile update
-        stx workspace update --dry-run        # show steps without executing
-        stx workspace update --repair         # fix broken venv, missing __init__.py
+        stx update --skip-sync      # skip uv sync
+        stx update --skip-profiles  # skip Claude profile update
+        stx update --dry-run        # show steps without executing
+        stx update --repair         # fix broken venv, missing __init__.py
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -140,7 +141,7 @@ def build():
         You can always create a workspace later and move the project
         into its projects/ directory.
 
-        Use stx workspace upgrade to move to a higher preset
+        Use stx install --preset <name> to move to a higher preset
         (e.g. from user to standard) without recreating the workspace.
     """)
     st_space("v", 1)

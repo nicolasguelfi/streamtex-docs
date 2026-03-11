@@ -185,7 +185,7 @@ def build():
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "test_cli_workspace.py")
-            with g.cell(): st_write(s.large, "stx workspace management")
+            with g.cell(): st_write(s.large, "stx install/update/status")
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
                          "test_cli_deploy.py")

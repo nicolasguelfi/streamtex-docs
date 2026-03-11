@@ -28,13 +28,18 @@ def build():
 
     show_explanation("""\
         Use the stx CLI to scaffold a new project.
-        The --template project flag includes 9 tutorial blocks
-        that demonstrate all major StreamTeX features.
+        The --template option selects a starter template:
+        project (default, 9 tutorial blocks), presentation,
+        collection, or course.
     """)
     st_space("v", 1)
 
     show_code("""\
+# Default project template with 9 tutorial blocks
 stx project new mon-projet --template project
+
+# Other templates: presentation, collection, course
+stx project new my-slides --template presentation
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -106,8 +111,12 @@ uv run streamlit run book.py
         Without --template, a minimal scaffold is created
         with a single bck_hello.py starter block.
 
+        To upgrade an existing project to the latest scaffolding:
+        stx project upgrade          # apply upgrade
+        stx project upgrade --check  # preview changes only
+
         To upgrade an existing workspace to a higher preset:
-        stx workspace upgrade developer
-        stx workspace update
+        stx install --preset developer
+        stx update
     """)
     st_space("v", 1)

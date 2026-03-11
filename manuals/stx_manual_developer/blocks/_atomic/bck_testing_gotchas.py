@@ -57,6 +57,37 @@ def build():
         """, language="python")
         st_space("v", 2)
 
+        # --- toc_entries() ---
+        st_write(bs.sub, "Inspecting the TOC with toc_entries()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            toc_entries() returns the list of TOC entries registered
+            so far. Each entry is a dict with keys: level, title,
+            section_number, and key_anchor. This is useful in tests
+            to verify that blocks register the expected headings.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            from streamtex import (
+                reset_toc_registry, toc_entries, st_write,
+            )
+            from streamtex.styles import Style
+            from streamtex.enums import Tags as t
+
+            reset_toc_registry()
+            style = Style("", "s")
+            st_write(style, "Introduction", toc_lvl="1")
+            st_write(style, "Details", toc_lvl="2")
+
+            entries = toc_entries()
+            assert len(entries) == 2
+            assert entries[0]["title"].endswith("Introduction")
+            assert entries[1]["level"] == 2\
+        """, language="python")
+        st_space("v", 2)
+
         # --- Python builtins shadowing ---
         st_write(bs.sub, "Python builtins shadowing", toc_lvl="+1")
         st_space("v", 1)

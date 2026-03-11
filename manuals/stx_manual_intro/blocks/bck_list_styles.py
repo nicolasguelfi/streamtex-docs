@@ -46,17 +46,24 @@ Access them from the custom.styles.Styles class.
 
     st_write(s.project.titles.feature_title, "Built-in styles:")
     show_code("""
-from streamtex import st_list
+from streamtex import st_list, st_write
 
 # Unordered list (bullets)
-st_list(["item 1", "item 2", "item 3"], list_type="ul")
+with st_list(list_type="ul") as l:
+    with l.item(): st_write("item 1")
+    with l.item(): st_write("item 2")
+    with l.item(): st_write("item 3")
 
 # Ordered list (numbers)
-st_list(["step 1", "step 2", "step 3"], list_type="ol")
+with st_list(list_type="ol") as l:
+    with l.item(): st_write("step 1")
+    with l.item(): st_write("step 2")
+    with l.item(): st_write("step 3")
 
 # Custom symbols
-st_list(["point a", "point b"], list_type="ul",
-        l_style=custom_list_style)
+with st_list(list_type="ul", l_style=custom_list_style) as l:
+    with l.item(): st_write("point a")
+    with l.item(): st_write("point b")
     """, language="python")
 
     st_space("v", 2)
@@ -75,7 +82,7 @@ Symbols cycle through levels, repeating if needed.
 
     st_write(s.project.titles.feature_title, "Basic custom ListStyle:")
     show_code("""
-from streamtex import ListStyle, st_list
+from streamtex import ListStyle, st_list, st_write
 
 # Define custom bullet symbols
 my_list_style = ListStyle(
@@ -84,15 +91,17 @@ my_list_style = ListStyle(
 )
 
 # Use it
-items = ["First", "Second", "Third"]
-st_list(items, list_type="ul", l_style=my_list_style)
+with st_list(list_type="ul", l_style=my_list_style) as l:
+    with l.item(): st_write("First")
+    with l.item(): st_write("Second")
+    with l.item(): st_write("Third")
     """, language="python")
 
     st_space("v", 2)
 
     st_write(s.project.titles.feature_title, "Nested list example:")
     show_code("""
-from streamtex import ListStyle, st_list
+from streamtex import ListStyle, st_list, st_write
 
 custom_style = ListStyle(
     symbols=["🔹", "◦", "▪"],  # Different symbols per level
@@ -100,18 +109,17 @@ custom_style = ListStyle(
 )
 
 # Three-level nested structure
-nested_items = [
-    "Level 1 - item 1",
-    ("Level 1 - item 2", [
-        "Level 2 - item 1",
-        ("Level 2 - item 2", [
-            "Level 3 - item 1",
-            "Level 3 - item 2"
-        ])
-    ])
-]
-
-st_list(nested_items, l_style=custom_style)
+with st_list(l_style=custom_style) as l:
+    with l.item(): st_write("Level 1 - item 1")
+    with l.item():
+        st_write("Level 1 - item 2")
+        with st_list(l_style=custom_style) as l2:
+            with l2.item(): st_write("Level 2 - item 1")
+            with l2.item():
+                st_write("Level 2 - item 2")
+                with st_list(l_style=custom_style) as l3:
+                    with l3.item(): st_write("Level 3 - item 1")
+                    with l3.item(): st_write("Level 3 - item 2")
     """, language="python")
 
     st_space("v", 2)
@@ -188,7 +196,7 @@ Control spacing, color, margins, etc.
 
     st_write(s.project.titles.feature_title, "Styled lists:")
     show_code("""
-from streamtex import ListStyle, Style, st_list
+from streamtex import ListStyle, Style, st_list, st_write
 
 # List style with custom CSS
 compact_style = ListStyle(
@@ -199,8 +207,9 @@ compact_style = ListStyle(
     )
 )
 
-items = ["Compact item 1", "Compact item 2"]
-st_list(items, l_style=compact_style)
+with st_list(l_style=compact_style) as l:
+    with l.item(): st_write("Compact item 1")
+    with l.item(): st_write("Compact item 2")
     """, language="python")
 
     st_space("v", 2)
@@ -219,15 +228,17 @@ ListStyle symbols don't affect numbering, but CSS styling does.
 
     st_write(s.project.titles.feature_title, "Styled ordered list:")
     show_code("""
-from streamtex import ListStyle, st_list
+from streamtex import ListStyle, st_list, st_write
 
 # Style the ordered list (not the symbols)
 ordered_style = ListStyle(
     style=Style("padding-left:24px;margin-top:8px;", "ordered")
 )
 
-steps = ["First step", "Second step", "Third step"]
-st_list(steps, list_type="ol", l_style=ordered_style)
+with st_list(list_type="ol", l_style=ordered_style) as l:
+    with l.item(): st_write("First step")
+    with l.item(): st_write("Second step")
+    with l.item(): st_write("Third step")
 # Renders as: 1. First step, 2. Second step, 3. Third step
     """, language="python")
 
@@ -241,49 +252,45 @@ st_list(steps, list_type="ol", l_style=ordered_style)
 
     st_write(s.project.titles.feature_title, "Example 1: Task Checklist")
     show_code("""
-from streamtex import ListStyle, st_list
+from streamtex import ListStyle, st_list, st_write
 
 checklist = ListStyle(
     symbols=["☐", "✓"],  # Unchecked, checked
     style=None
 )
 
-tasks = [
-    "Complete setup",
-    ("Configure settings", [
-        "Add credentials",
-        "Set options"
-    ]),
-    "Deploy"
-]
-
-st_list(tasks, l_style=checklist)
+with st_list(l_style=checklist) as l:
+    with l.item(): st_write("Complete setup")
+    with l.item():
+        st_write("Configure settings")
+        with st_list(l_style=checklist) as l2:
+            with l2.item(): st_write("Add credentials")
+            with l2.item(): st_write("Set options")
+    with l.item(): st_write("Deploy")
     """, language="python")
 
     st_space("v", 1)
 
     st_write(s.project.titles.feature_title, "Example 2: Hierarchical TOC")
     show_code("""
-from streamtex import ListStyle, st_list
+from streamtex import ListStyle, st_list, st_write
 
 toc_style = ListStyle(
     symbols=["📖", "📄", "📌"],
     style=None
 )
 
-structure = [
-    "Part 1: Basics",
-    ("Part 2: Advanced", [
-        "Chapter 2.1",
-        "Chapter 2.2",
-        ("Section 2.2.1", [
-            "Subsection A",
-            "Subsection B"
-        ])
-    ])
-]
-
-st_list(structure, l_style=toc_style)
+with st_list(l_style=toc_style) as l:
+    with l.item(): st_write("Part 1: Basics")
+    with l.item():
+        st_write("Part 2: Advanced")
+        with st_list(l_style=toc_style) as l2:
+            with l2.item(): st_write("Chapter 2.1")
+            with l2.item():
+                st_write("Chapter 2.2")
+                with st_list(l_style=toc_style) as l3:
+                    with l3.item(): st_write("Subsection A")
+                    with l3.item(): st_write("Subsection B")
     """, language="python")
 
     st_space("v", 2)

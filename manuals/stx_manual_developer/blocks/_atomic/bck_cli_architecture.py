@@ -57,13 +57,16 @@ stx = "streamtex.cli.main:app\"""", language="toml")
 stx                          # Root CLI group
  |-- test                    # shortcuts.py — run pytest
  |-- lint                    # shortcuts.py — run ruff
- |
- |-- workspace               # workspace_cmd.py
- |    |-- init               #   Initialize a new workspace
- |    |-- clone              #   Clone a project into workspace
- |    |-- link               #   Link an existing project
- |    |-- status             #   Show workspace status
- |    +-- sync               #   Sync all workspace projects
+ |-- install                 # workspace_cmd.py — create/upgrade workspace
+ |    |-- --preset PRESET    #   basic|user|standard|power|developer
+ |    |-- --project NAME     #   create a project during install
+ |    +-- --template TMPL    #   project|presentation|collection|course
+ |-- update                  # workspace_cmd.py — clone + pull + sync + hooks
+ |    |-- --skip-sync        #   skip uv sync
+ |    |-- --skip-profiles    #   skip Claude profile update
+ |    |-- --dry-run          #   show steps without executing
+ |    +-- --repair           #   fix broken venv, missing __init__.py
+ |-- status                  # workspace_cmd.py — show workspace state
  |
  |-- claude                  # claude_cmd.py
  |    |-- install            #   Install Claude profiles
@@ -76,7 +79,12 @@ stx                          # Root CLI group
  |
  |-- project                 # project_cmd.py
  |    |-- new                #   Create a new project from template
- |    +-- validate           #   Validate project structure
+ |    |-- validate           #   Validate project structure
+ |    +-- upgrade            #   Upgrade project (migrations + AST compat)
+ |         |-- --check       #     preview changes (no modifications)
+ |         |-- --dry-run     #     show steps without executing
+ |         |-- --skip-sync   #     skip uv sync during upgrade
+ |         +-- --skip-claude #     skip Claude profile update
  |
  |-- deploy                  # deploy_cmd.py
  |    |-- preflight          #   Pre-deployment checks
@@ -115,7 +123,7 @@ streamtex/cli/
  |-- commands.py           # Registers all command groups
  |-- console.py            # Rich-based formatting helpers
  |-- shortcuts.py          # Top-level shortcuts (test, lint)
- |-- workspace_cmd.py      # stx workspace *
+ |-- workspace_cmd.py      # stx install/update/status
  |-- claude_cmd.py         # stx claude *
  |-- bib_cmd.py            # stx bib *
  |-- project_cmd.py        # stx project *

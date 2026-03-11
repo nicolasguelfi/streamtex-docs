@@ -49,8 +49,10 @@ def build():
  |
  |-- developer/
  |    +-- skills/
- |         |-- architecture.md  # Architecture knowledge
- |         +-- testing-patterns.md  # Testing patterns
+ |         |-- architecture.md      # Architecture knowledge
+ |         |-- testing-patterns.md  # Testing patterns
+ |         |-- docs-lookup.md       # Documentation manual lookup
+ |         +-- stx-migrate.md       # Project upgrade/migration
 
 CLAUDE.md                       # Root rules file (project root)""", language="text")
         st_space("v", 2)
@@ -114,6 +116,12 @@ library""", language="text")
               dependency graph, and design patterns used.
             - **testing-patterns.md**: documents testing conventions,
               fixtures, and common test patterns.
+            - **docs-lookup.md**: indexes the 6 StreamTeX manuals
+              (170+ example blocks) so Claude can find and reference
+              real code examples when answering questions or generating
+              blocks. Falls back gracefully if manuals are not installed.
+            - **stx-migrate.md**: guides project upgrades between
+              StreamTeX versions using the migration system.
 
             Claude loads these automatically when relevant tasks
             are detected.

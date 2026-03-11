@@ -117,6 +117,33 @@ def build():
             )
     st_space("v", 2)
 
+    # ── Developer Skills ───────────────────────────────────────────
+    st_write(bs.sub, "Developer Skills", toc_lvl="+1")
+    st_space("v", 1)
+
+    with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
+        with g.cell():
+            _render_skill(
+                "docs-lookup.md",
+                "Indexes all 6 StreamTeX manuals (170+ example blocks) "
+                "so Claude can search and reference real code examples "
+                "when answering questions or generating blocks. Includes "
+                "manual index, search strategy, and common lookup patterns. "
+                "Falls back gracefully when manuals are not installed.",
+                "stx-designer (init, update, audit, fix), Q&A",
+                "project, presentation, documentation",
+            )
+        with g.cell():
+            _render_skill(
+                "stx-migrate.md",
+                "Guides project upgrades between StreamTeX versions "
+                "using the versioned migration system. Documents "
+                "available migrations and the stx project upgrade CLI.",
+                "Developer agent, migration tasks",
+                "project, presentation, documentation",
+            )
+    st_space("v", 2)
+
     # ── Library-Only Skills ───────────────────────────────────────
     st_write(bs.sub, "Library-Only Skills", toc_lvl="+1")
     st_space("v", 1)

@@ -58,7 +58,7 @@ def build():
                 "/stx-designer:init",
                 "Create a complete StreamTeX project from a natural "
                 "language description. Generates styles, blocks, and book.py. "
-                "Use --collection for collection hubs.",
+                "Consults manual examples when available (docs-lookup).",
                 "all profiles",
             )
             st_space("v", 1)
@@ -66,7 +66,7 @@ def build():
                 "/stx-designer:update",
                 "Add blocks, slides, customize theme, generate courses, "
                 "upgrade boilerplate (--upgrade), migrate HTML (--migrate), "
-                "or export (--export).",
+                "or export (--export). Uses manual blocks as reference.",
                 "all profiles",
             )
             st_space("v", 1)
@@ -74,7 +74,7 @@ def build():
                 "/stx-designer:audit",
                 "Validate quality: use --target <block> for a specific block, "
                 "--target styles for style consistency, or --all for full "
-                "project audit (includes presentation and migration checks).",
+                "project audit. Compares against manual block patterns.",
                 "all profiles",
             )
         with g.cell():
@@ -82,7 +82,7 @@ def build():
                 "/stx-designer:fix",
                 "Auto-fix issues found by audit: use --target <block> for a "
                 "specific block, --target styles for style refactoring, or "
-                "--all for full project fix (includes presentation fixes).",
+                "--all for full project fix. Follows manual block patterns.",
                 "all profiles",
             )
             st_space("v", 1)

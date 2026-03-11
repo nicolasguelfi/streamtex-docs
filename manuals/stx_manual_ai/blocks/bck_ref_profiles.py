@@ -109,7 +109,7 @@ def build():
                 audience="Course authors, documentation writers",
                 focus="Full project lifecycle from init to deploy",
                 extends="base profile",
-                unique="init, update, audit, fix, tool",
+                unique="init, update, audit, fix, tool, docs-lookup",
                 recommended=True,
             )
         with g.cell():

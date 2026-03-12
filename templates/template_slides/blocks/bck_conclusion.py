@@ -19,7 +19,7 @@ def build():
         st_space("v", 3)
         st_write(bs.body, "Add your own slides:")
         st_space("v", 2)
-        with st_list(style=bs.body + s.center_txt) as l:
+        with st_list(l_style=bs.body + s.center_txt, li_style=bs.body) as l:
             with l.item(): st_write(bs.body, "Create blocks/bck_topic.py")
             with l.item(): st_write(bs.body, "Add to the list in book.py")
             with l.item(): st_write(bs.body_accent, "Use /stx-designer:update to add content with AI")

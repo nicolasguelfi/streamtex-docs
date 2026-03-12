@@ -21,7 +21,7 @@ def build():
             with st_block():
                 st_write(bs.sub, "How to extend")
                 st_space(size=2)
-                with st_list(style=bs.body) as l:
+                with st_list(l_style=bs.body, li_style=bs.body) as l:
                     with l.item(): st_write(bs.body, "Add bck_topic.py in blocks/")
                     with l.item(): st_write(bs.body, "Register in book.py list")
                     with l.item(): st_write(bs.body_accent, "Run and iterate")
@@ -29,7 +29,7 @@ def build():
             with st_block():
                 st_write(bs.sub, "Style system")
                 st_space(size=2)
-                with st_list(style=bs.body) as l:
+                with st_list(l_style=bs.body, li_style=bs.body) as l:
                     with l.item(): st_write(bs.body, "Edit custom/styles.py")
                     with l.item(): st_write(bs.body, "Compose with + operator")
                     with l.item(): st_write(bs.body_accent, "Theme via custom/themes.py")

@@ -23,7 +23,7 @@ def build():
             with st_block():
                 st_write(bs.sub, "Content")
                 st_space(size=2)
-                with st_list(style=bs.body) as l:
+                with st_list(l_style=bs.body, li_style=bs.body) as l:
                     with l.item(): st_write(bs.body, "Styled text rendering")
                     with l.item(): st_write(bs.body, "Responsive CSS grids")
                     with l.item(): st_write(bs.body_accent, "Dark theme by default")
@@ -32,7 +32,7 @@ def build():
             with st_block():
                 st_write(bs.sub, "Presentation")
                 st_space(size=2)
-                with st_list(style=bs.body) as l:
+                with st_list(l_style=bs.body, li_style=bs.body) as l:
                     with l.item(): st_write(bs.body, "Fullscreen 16/9 mode")
                     with l.item(): st_write(bs.body, "Slide counter footer")
                     with l.item(): st_write(bs.body_accent, "Keyboard navigation")

@@ -6,6 +6,8 @@ marker_config = MarkerConfig(
     next_keys=["PageDown", "ArrowRight"],
     prev_keys=["PageUp", "ArrowLeft"],
     nav_label_chars=40,                # Show up to 40 chars of label
+    draggable=True,                    # Drag the widget anywhere on screen
+    collapsible=True,                  # ⋮ button to collapse/expand
 )
 
 st_book(

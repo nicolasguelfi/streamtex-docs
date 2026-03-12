@@ -72,6 +72,14 @@ def build():
                "Keyboard keys to navigate to the previous marker. "
                "Supports modifier syntax (see below).")
 
+    _field_row("draggable", "bool", "False",
+               "Allow the user to drag the floating navigation widget "
+               "anywhere on screen. Position is persisted in localStorage.")
+
+    _field_row("collapsible", "bool", "False",
+               "Show a ⋮ button to collapse/expand the navigation widget. "
+               "Collapsed state is persisted in localStorage.")
+
     st_space("v", 2)
 
     # ------------------------------------------------------------------

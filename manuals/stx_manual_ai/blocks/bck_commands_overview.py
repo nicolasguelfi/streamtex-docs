@@ -43,7 +43,7 @@ def build():
         /stx-designer:audit
         /stx-designer:fix
         /stx-designer:tool
-        /developer:test-run""", language="bash",
+        /stx-developer:test-run""", language="bash",
         line_numbers=False)
     st_space("v", 2)
 
@@ -117,7 +117,7 @@ def build():
         2. Generate custom/styles.py from project theme
         3. Create blocks/ directory with starter blocks
         4. Generate book.py to orchestrate all blocks
-        5. Validate structure with /developer:lint""", language="markdown")
+        5. Validate structure with /stx-developer:lint""", language="markdown")
     st_space("v", 2)
 
     # ── Summary ────────────────────────────────────────────────────

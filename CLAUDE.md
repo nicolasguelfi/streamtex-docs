@@ -165,5 +165,5 @@ This command works for both installation AND upgrade. Do NOT use `uv tool upgrad
 4. **Audit quality** -> `/stx-designer:audit --all` or `/stx-designer:audit --target bck_intro`
 5. **Fix issues** -> `/stx-designer:fix --all`
 6. **Tools** -> `/stx-designer:tool survey-convert`
-7. **Testing** -> `uv run pytest tests/ -v` (`/developer:test-run`)
-8. **Linting** -> `uv run ruff check` (`/developer:lint`)
+7. **Testing** -> `uv run pytest tests/ -v` (`/stx-developer:test-run`)
+8. **Linting** -> `uv run ruff check` (`/stx-developer:lint`)

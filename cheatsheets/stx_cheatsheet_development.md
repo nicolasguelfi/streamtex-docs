@@ -56,8 +56,8 @@ stx run                                   # Launch the app
 # All commands accept --help for the full cheatsheet.
 
 # Developer
-/developer:test-run             Run test suite
-/developer:lint                 Run linter with auto-fix
+/stx-developer:test-run             Run test suite
+/stx-developer:lint                 Run linter with auto-fix
 
 # Global (available everywhere)
 /stx-guide                      Ecosystem navigation guide (16 topics)
@@ -115,7 +115,7 @@ your-project/
     ├── commands/
     │   ├── stx-guide.md       # Global ecosystem guide
     │   ├── stx-designer/      # /stx-designer:* commands (init, update, audit, fix, tool)
-    │   └── developer/         # /developer:* commands
+    │   └── stx-developer/     # /stx-developer:* commands
     ├── references/
     │   ├── coding_standards.md
     │   └── streamtex_cheatsheet_en.md (or presentation_cheatsheet_en.md)
@@ -405,20 +405,20 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 ## 7. Developer Commands
 
-### /developer:test-run
+### /stx-developer:test-run
 
 ```
-/developer:test-run
+/stx-developer:test-run
 ```
 
 1. Runs `uv run pytest tests/ -v` from the project root
 2. Analyzes failures and suggests fixes
 3. Reports total passed/failed count
 
-### /developer:lint
+### /stx-developer:lint
 
 ```
-/developer:lint
+/stx-developer:lint
 ```
 
 1. Runs `uv run ruff check` from the project root (targets `streamtex/` for library, `.` for projects)

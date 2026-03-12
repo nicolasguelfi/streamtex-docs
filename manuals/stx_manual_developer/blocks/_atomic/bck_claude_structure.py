@@ -129,7 +129,7 @@ library""", language="text")
         st_space("v", 2)
 
         # --- commands/ ---
-        st_write(bs.sub, "commands/developer/", toc_lvl="+1")
+        st_write(bs.sub, "commands/stx-developer/", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\

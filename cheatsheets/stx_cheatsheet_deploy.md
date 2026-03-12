@@ -540,9 +540,9 @@ envVars:
 
 ## 9. Claude-Assisted Deployment
 
-### /developer:deploy slash command
+### /stx-developer:deploy slash command
 
-The deploy slash command (defined in `streamtex-claude/profiles/library/commands/developer/deploy.md`) guides Claude through the deployment process.
+The deploy slash command (defined in `streamtex-claude/profiles/library/commands/stx-developer/deploy.md`) guides Claude through the deployment process.
 
 **Arguments**: target (`docker`, `huggingface`, or `gcp`)
 
@@ -571,7 +571,7 @@ docker run -p 8501:8501 streamtex-app
 
 Typical Claude interaction:
 ```
-User: /developer:deploy docker
+User: /stx-developer:deploy docker
 Claude:
   1. Reads project configuration files
   2. Runs uv run pytest tests/ -v

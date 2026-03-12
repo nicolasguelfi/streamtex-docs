@@ -503,7 +503,7 @@ your-project/
 └── .claude/
     ├── settings.json          # Claude Code permissions
     ├── .stx-profile           # Installed profile marker
-    ├── commands/              # Slash commands (/stx-designer:*, /developer:*)
+    ├── commands/              # Slash commands (/stx-designer:*, /stx-developer:*)
     │   └── stx-guide.md      # Shared: ecosystem navigation guide
     ├── references/            # Shared: coding standards + cheatsheet (read-only)
     ├── designer/              # Design skills and agents

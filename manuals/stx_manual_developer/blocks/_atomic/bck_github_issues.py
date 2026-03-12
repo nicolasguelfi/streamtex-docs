@@ -1,4 +1,4 @@
-"""GitHub Issues — /stx-issue command and issue tracking workflow."""
+"""GitHub Issues — /stx-issue:* commands and issue tracking workflow."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -15,7 +15,7 @@ bs = BlockStyles
 
 def build():
     with st_block(s.center_txt):
-        st_write(bs.heading, "GitHub Issues — /stx-issue",
+        st_write(bs.heading, "GitHub Issues — /stx-issue:*",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -24,12 +24,12 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            The /stx-issue command creates GitHub issues with
-            automatically collected environment metadata. It detects
-            the appropriate target repository, collects your StreamTeX
-            version, Python version, OS, and project context, then
-            composes a well-structured issue for you to review before
-            submission.
+            The /stx-issue namespace provides 6 commands for GitHub
+            issue management: 4 creation commands (bug, feature,
+            question, docs) and 2 management commands (comment, list).
+            Creation commands auto-collect environment metadata,
+            detect the target repository, and compose a well-structured
+            issue for you to review before submission.
         """)
         st_space("v", 2)
 
@@ -65,19 +65,23 @@ def build():
 
         show_code("""\
 # Report a bug
-/stx-issue bug st_grid does not render when cols="1fr 2fr" on mobile
+/stx-issue:bug st_grid does not render when cols="1fr 2fr" on mobile
 
 # Request a feature
-/stx-issue feature Add dark mode toggle to st_book sidebar
+/stx-issue:feature Add dark mode toggle to st_book sidebar
 
 # Ask a question
-/stx-issue question How to use st_collection with custom routes?
+/stx-issue:question How to use st_collection with custom routes?
 
 # Documentation improvement
-/stx-issue docs Add example for st_overlay positioning
+/stx-issue:docs Add example for st_overlay positioning
 
-# Show help
-/stx-issue --help""", language="bash")
+# Comment on an existing issue
+/stx-issue:comment 42 Fixed in v0.3.1, please verify
+
+# List open issues
+/stx-issue:list
+/stx-issue:list --repo nicolasguelfi/streamtex --state all""", language="bash")
         st_space("v", 2)
 
         # --- Workflow ---
@@ -85,7 +89,8 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            The command follows a 10-step workflow:
+            The creation commands (bug, feature, question, docs) follow
+            a 10-step workflow:
 
             1. Check gh CLI is installed and authenticated
             2. Collect environment metadata (versions, OS, project)
@@ -97,6 +102,10 @@ def build():
             8. Preview the full issue for your review
             9. Create the issue after your explicit confirmation
             10. Report the issue URL
+
+            The comment command verifies the issue exists, previews
+            the comment, and creates it after confirmation.
+            The list command is read-only (no confirmation needed).
         """)
         st_space("v", 2)
 

@@ -191,7 +191,7 @@ set_block_helper_config(ProjectBlockHelperConfig())""")
         show_explanation("""\
             set_static_sources() configures multi-directory file
             lookup for static assets (images, code examples, etc.).
-            When show_code(file=...) or st_image(src=...) is called,
+            When show_code(file=...) or st_image(uri=...) is called,
             the system searches configured directories in order.
         """)
         st_space("v", 1)

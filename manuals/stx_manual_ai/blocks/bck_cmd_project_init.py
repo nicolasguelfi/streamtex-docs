@@ -117,7 +117,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "uv run streamlit run my_ml_course/book.py",
+        "cd my_ml_course && stx run",
         language="bash", line_numbers=False,
     )
     st_space("v", 2)

@@ -67,7 +67,7 @@ streamtex = { path = "../streamtex", editable = true }""", language="toml")
 #    e.g. streamtex/streamtex/core.py
 
 # 2. Run a manual to test the change
-uv run streamlit run manuals/stx_manual_intro/book.py
+cd manuals/stx_manual_intro && stx run
 
 # 3. The change is reflected immediately
 #    because the editable install points at the source""", language="bash")
@@ -90,7 +90,7 @@ uv run python -c "import streamtex; print(streamtex.__file__)"
 # Should print a path inside your local streamtex/ directory
 
 # Run a manual to confirm everything works end-to-end
-uv run streamlit run manuals/stx_manual_intro/book.py""", language="bash")
+cd manuals/stx_manual_intro && stx run""", language="bash")
         st_space("v", 2)
 
         # --- 5. Workflow diagram ---
@@ -101,7 +101,7 @@ uv run streamlit run manuals/stx_manual_intro/book.py""", language="bash")
 Edit streamtex/streamtex/*.py
     |
     v
-uv run streamlit run manuals/<manual>/book.py
+cd manuals/<manual> && stx run
     |
     v
 See changes live (no reinstall needed)

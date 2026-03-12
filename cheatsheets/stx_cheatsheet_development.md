@@ -35,7 +35,7 @@ stx lint                                  # Run ruff check
 stx lint -- --fix                         # Auto-fix lint issues
 
 # Run
-uv run streamlit run book.py              # Launch the app
+stx run                                   # Launch the app
 ```
 
 ### Slash Commands (in Claude Code)
@@ -884,7 +884,7 @@ claude
 # Claude proposes structure with blueprints, you approve, files are generated
 
 # 5. Preview
-> uv run streamlit run book.py
+> stx run
 
 # 6. Refine individual slides
 > /stx-designer:fix --target bck_03_variables

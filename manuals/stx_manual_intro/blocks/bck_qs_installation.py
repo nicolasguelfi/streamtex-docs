@@ -109,9 +109,9 @@ stx update
 
     show_code("""\
 stx project new mon-projet
-cd projects/stx-mon-projet
+cd projects/mon-projet
 uv sync
-uv run streamlit run book.py
+stx run
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -129,6 +129,6 @@ uv run streamlit run book.py
         git clone https://github.com/nicolasguelfi/streamtex-claude.git
         mkdir my-project && cd my-project
         python ../streamtex-claude/install.py project .
-        uv run streamlit run book.py
+        stx run
     """)
     st_space("v", 1)

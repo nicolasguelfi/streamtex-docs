@@ -358,7 +358,7 @@ def build():
 
     show_code("""\
         cd projects/stx-discover-streamtex/
-        uv run streamlit run book.py""",
+        stx run""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -496,7 +496,7 @@ def build():
         /stx-designer:fix --target styles
 
         # Run the presentation
-        uv run streamlit run book.py""",
+        stx run""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

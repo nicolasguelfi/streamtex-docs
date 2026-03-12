@@ -17,7 +17,7 @@ stx project new my-project
 cd projects/my-project && uv sync
 
 # Run locally
-uv run streamlit run book.py
+stx run
 
 # Install all optional features
 uv add "streamtex[ai,pdf,inspector]"
@@ -101,7 +101,7 @@ uv tool install "streamtex[cli]" -U
 stx project new my-project --no-claude
 cd my-project
 uv sync
-uv run streamlit run book.py
+stx run
 ```
 
 This creates a standalone project with `book.py`, `blocks/`, `custom/`, `.streamlit/config.toml`, and `pyproject.toml`.
@@ -417,13 +417,13 @@ After modifying pyright configuration:
 
 ```bash
 cd my-project
-uv run streamlit run book.py
+stx run
 ```
 
 Default port: 8501. Override with:
 
 ```bash
-uv run streamlit run book.py --server.port 8510
+stx run --port 8510
 ```
 
 ### Documentation manuals
@@ -686,7 +686,7 @@ lsof -i :8501
 ./run-manuals.sh --kill
 
 # Or use a different port
-uv run streamlit run book.py --server.port 8510
+stx run --port 8510
 ```
 
 ### stx command not found

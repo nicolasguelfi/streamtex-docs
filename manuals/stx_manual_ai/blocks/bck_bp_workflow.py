@@ -75,7 +75,7 @@ def build():
         /stx-designer:audit            # 3. Audit all blocks
         /stx-designer:fix              # 4. Auto-fix violations
         # 5. Review in browser
-        uv run streamlit run book.py
+        stx run
         # 6. Iterate on individual blocks
         /stx-designer:update           # Refine or add blocks""",
         language="bash", line_numbers=False)

@@ -134,7 +134,7 @@ def build():
         # Step 3: agent-based comprehensive review
         # (invoke the Slide Reviewer agent)
         # Step 4: human review in browser
-        uv run streamlit run book.py""",
+        stx run""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

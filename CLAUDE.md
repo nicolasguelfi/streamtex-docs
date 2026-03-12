@@ -29,8 +29,9 @@ Always ask yourself: *"Who else uses this? Where else is this referenced?"* befo
 
 ## Environment (MANDATORY)
 This project uses **uv** for dependency management. You MUST:
-- **ALWAYS** prefix Python commands with `uv run` (e.g. `uv run pytest`, `uv run streamlit run ...`)
+- **ALWAYS** prefix Python commands with `uv run` (e.g. `uv run pytest`)
 - **NEVER** call `python`, `pip`, `pytest`, `streamlit`, or `ruff` directly — always go through `uv run`
+- Use `stx run` to launch projects (shortcut for `uv run streamlit run book.py`)
 - Use `uv add <package>` to add dependencies, `uv add --group dev <package>` for dev deps
 - Run `uv sync` if `uv.lock` or `pyproject.toml` changed
 
@@ -117,10 +118,12 @@ streamtex-docs/
 
 ## Running Manuals
 ```bash
-uv run streamlit run manuals/stx_manual_intro/book.py
-uv run streamlit run manuals/stx_manual_advanced/book.py
-uv run streamlit run manuals/stx_manual_deploy/book.py
-uv run streamlit run manuals/stx_manuals_collection/book.py
+cd manuals/stx_manual_intro && stx run
+cd manuals/stx_manual_advanced && stx run
+cd manuals/stx_manual_deploy && stx run
+cd manuals/stx_manuals_collection && stx run
+# With options:
+stx run --port 8510 --browser chrome
 ```
 
 ## Critical Gotchas (code generation)

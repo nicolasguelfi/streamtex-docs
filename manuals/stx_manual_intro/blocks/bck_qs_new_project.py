@@ -98,7 +98,7 @@ stx claude install project .
     st_space("v", 1)
 
     show_code("""\
-uv run streamlit run book.py
+stx run
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 

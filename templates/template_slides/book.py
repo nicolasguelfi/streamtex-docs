@@ -49,6 +49,8 @@ marker_config = MarkerConfig(
     auto_marker_on_toc=1,
     next_keys=["PageDown", "ArrowRight"],
     prev_keys=["PageUp", "ArrowLeft"],
+    draggable=True,
+    collapsible=True,
 )
 
 # ── Orchestrate slides ───────────────────────────────────────────────────

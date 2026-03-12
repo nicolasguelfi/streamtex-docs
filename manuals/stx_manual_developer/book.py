@@ -71,6 +71,9 @@ st_book([
     # Maintenance
     blocks.bck_dev_maintenance,
 
+    # GitHub Issues
+    blocks.bck_dev_github_issues,
+
     # Claude profiles
     blocks.bck_dev_claude_profiles,
 ], toc_config=toc, marker_config=marker_config, paginate=True,

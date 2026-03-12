@@ -56,16 +56,16 @@ def build():
     st_space("v", 2)
 
     # ── Badges row ────────────────────────────────────────────────
-    # Totals across ALL profiles (library + documentation + project + presentation)
+    # Totals across ALL profiles (library + documentation + project + presentation overlay)
     with st_grid(cols=4, cell_styles=bs.badge) as g:
         with g.cell():
-            st_write(bs.badge_number, "43", tag=t.div)
+            st_write(bs.badge_number, "46", tag=t.div)
             st_write(bs.badge_label, "Commands", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "6", tag=t.div)
             st_write(bs.badge_label, "Agents", tag=t.div)
         with g.cell():
-            st_write(bs.badge_number, "16", tag=t.div)
+            st_write(bs.badge_number, "19", tag=t.div)
             st_write(bs.badge_label, "Blueprints", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "4", tag=t.div)

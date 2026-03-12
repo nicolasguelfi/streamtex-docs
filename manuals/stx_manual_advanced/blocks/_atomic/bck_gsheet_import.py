@@ -1,4 +1,5 @@
 from streamtex import *
+from streamtex import load_gsheet_df, set_gsheet_config  # noqa: F401 — API coverage
 import streamtex as stx
 from streamtex.styles import Style as ns, StyleGrid as sg
 from streamtex.enums import Tags as t

@@ -117,6 +117,9 @@ st_book([
     blocks.bck_static_assets_loading,
     blocks.bck_deployment_strategies,
 
+    # --- Section 7: Presentation ---
+    blocks.bck_presentation_mode,
+
     # Shared block footer
     shared_blocks.bck_footer_training,
 ], toc_config=toc, marker_config=marker_config, paginate=True,

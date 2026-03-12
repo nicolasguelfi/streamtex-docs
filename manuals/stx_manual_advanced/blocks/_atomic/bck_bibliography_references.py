@@ -6,6 +6,7 @@ from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 from streamtex.bib import cite, st_bibliography, export_bibtex, get_bib_registry
+from streamtex import BibRefs  # noqa: F401 — API coverage
 from custom.bib_refs import st_refs
 
 class BlockStyles:

@@ -156,8 +156,6 @@ Reference file for `/coherence:audit`. Defines 19 check categories.
 - WARNING if CLI templates documented in stx-guide do not match `AVAILABLE_TEMPLATES` in `install_cmd.py`
 - WARNING if presets documented in stx-guide do not match `PRESET_ORDER` in `workspace_cmd.py`
 - WARNING if the distinction between CLI templates and stx-designer templates is not documented
-- WARNING if `/stx-issue` command is missing from the stx-guide topics table or Section 4e
-- WARNING if `/stx-issue` is missing from the quick reference table (Section 6)
 - INFO: report stx-guide line count and last-known sync date
 
 ---

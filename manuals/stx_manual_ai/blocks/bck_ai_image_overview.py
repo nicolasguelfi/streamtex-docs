@@ -55,7 +55,7 @@ def build():
                     (s.bold, "revised_prompt"), " feedback.",
                 )
                 st_space("v", 1)
-                st_image(uri="ai/ai_openai_demo.png", width="100%")
+                st_image(uri="images/ai/ai_openai_demo.png", width="100%")
         with g.cell():
             with st_block(s.project.containers.tip_callout):
                 st_write(bs.provider_title, "Google Imagen", tag=t.div)
@@ -67,7 +67,7 @@ def build():
                     (s.bold, "text-in-image"), " rendering.",
                 )
                 st_space("v", 1)
-                st_image(uri="ai/ai_google_demo.png", width="100%")
+                st_image(uri="images/ai/ai_google_demo.png", width="100%")
         with g.cell():
             with st_block(s.project.containers.note_callout):
                 st_write(bs.provider_title, "fal.ai", tag=t.div)
@@ -79,7 +79,7 @@ def build():
                     (s.bold, "customizable"), " parameters.",
                 )
                 st_space("v", 1)
-                st_image(uri="ai/ai_fal_demo.png", width="100%")
+                st_image(uri="images/ai/ai_fal_demo.png", width="100%")
     st_space("v", 2)
 
     # ── Available Models ──────────────────────────────────────

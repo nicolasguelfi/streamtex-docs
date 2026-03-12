@@ -3,7 +3,6 @@ import streamtex as stx
 from streamtex import (
     st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig,
     PresentationConfig, set_presentation_config,
-    SlideBreakConfig, SlideBreakMode, set_slide_break_config,
 )
 from pathlib import Path
 
@@ -32,13 +31,7 @@ set_presentation_config(PresentationConfig(
     footer=True,
     center_content=False,
     hide_streamlit_header=False,
-))
-
-# ── Slide breaks: each slide = one full viewport ─────────────────────────
-set_slide_break_config(SlideBreakConfig(
-    mode=SlideBreakMode.HIDDEN,
-    fullscreen=True,
-    marker=True,
+    enforce_ratio=False,
 ))
 
 # ── Table of Contents (sidebar only, level 1) ────────────────────────────
@@ -70,5 +63,5 @@ st_book(
     toc_config=toc,
     marker_config=marker_config,
     paginate=True,
-    banner=BannerConfig.full(),
+    banner=BannerConfig.hidden(),
 )

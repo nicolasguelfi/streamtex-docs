@@ -20,5 +20,3 @@ def build():
         st_space("v", 3)
         st_write(bs.info, "Use PageDown / PageUp to navigate")
         st_space("v", 4)
-
-    st_slide_break(marker_label="Title")

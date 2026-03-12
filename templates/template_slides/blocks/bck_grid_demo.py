@@ -35,5 +35,3 @@ def build():
 
         st_space(size=3)
         st_write(bs.caption, "st_grid(cols='1fr 1fr 1fr', gap='24px')")
-
-    st_slide_break(marker_label="Responsive Grids")

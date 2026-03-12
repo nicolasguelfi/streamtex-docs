@@ -33,5 +33,3 @@ def build():
                     with l.item(): st_write(bs.body, "Edit custom/styles.py")
                     with l.item(): st_write(bs.body, "Compose with + operator")
                     with l.item(): st_write(bs.body_accent, "Theme via custom/themes.py")
-
-    st_slide_break(marker_label="Styled Lists")

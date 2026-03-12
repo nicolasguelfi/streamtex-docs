@@ -39,5 +39,3 @@ def build():
 
         st_space(size=3)
         st_write(bs.caption, "Extend this template by adding new blocks")
-
-    st_slide_break(marker_label="Key Features")

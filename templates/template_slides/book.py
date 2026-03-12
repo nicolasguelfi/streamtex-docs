@@ -1,7 +1,7 @@
 import streamlit as st
 import streamtex as stx
 from streamtex import (
-    st_book, TOCConfig, NumberingMode, MarkerConfig,
+    st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig,
     PresentationConfig, set_presentation_config,
     SlideBreakConfig, SlideBreakMode, set_slide_break_config,
 )
@@ -19,7 +19,7 @@ stx.set_static_sources([str(Path(__file__).parent / "static")])
 st.set_page_config(
     page_title="My Presentation",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 # Inject dark theme
@@ -31,7 +31,7 @@ set_presentation_config(PresentationConfig(
     aspect_ratio="16/9",
     footer=True,
     center_content=True,
-    hide_streamlit_header=True,
+    hide_streamlit_header=False,
 ))
 
 # ── Slide breaks: each slide = one full viewport ─────────────────────────
@@ -48,7 +48,7 @@ toc = TOCConfig(
     title_style=s.project.titles.slide_title + s.center_txt,
     content_style=s.large + s.text.colors.reset,
     sidebar_max_level=1,
-    search=False,
+    search=True,
 )
 
 # ── Navigation (PageDown/PageUp + arrow keys) ────────────────────────────
@@ -69,5 +69,6 @@ st_book(
     ],
     toc_config=toc,
     marker_config=marker_config,
-    paginate=False,
+    paginate=True,
+    banner=BannerConfig.full(),
 )

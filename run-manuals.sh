@@ -405,11 +405,11 @@ else
     echo "Tous les manuels sont lancés!"
     echo ""
     echo "Ouverture dans Chrome:"
-    [ "$LAUNCH_COLLECTION" = true ] && echo "  Collection:  http://localhost:$COLLECTION_PORT" && open -a "Google Chrome" "http://localhost:$COLLECTION_PORT"
-    [ "$LAUNCH_INTRO" = true ] && echo "  Intro:       http://localhost:$INTRO_PORT" && open -a "Google Chrome" "http://localhost:$INTRO_PORT"
-    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT"
-    [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT"
-    [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT"
+    [ "$LAUNCH_COLLECTION" = true ] && echo "  Collection:  http://localhost:$COLLECTION_PORT" && open -a "Google Chrome" "http://localhost:$COLLECTION_PORT" && sleep 0.5
+    [ "$LAUNCH_INTRO" = true ] && echo "  Intro:       http://localhost:$INTRO_PORT" && open -a "Google Chrome" "http://localhost:$INTRO_PORT" && sleep 0.5
+    [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT" && sleep 0.5
+    [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT" && sleep 0.5
+    [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT" && sleep 0.5
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT"
     echo ""
     echo "Utilisez './run-manuals.sh --kill' pour arrêter tous les manuels"

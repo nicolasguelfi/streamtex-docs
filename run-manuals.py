@@ -367,19 +367,20 @@ URLs:
         print("Tous les manuels sont lancés!")
         print()
         print("Ouverture dans le navigateur:")
+        labels = {
+            "collection": "Collection:",
+            "intro": "Intro:     ",
+            "ai": "AI:        ",
+            "advanced": "Advanced:  ",
+            "deployment": "Deployment:",
+            "developer": "Developer: ",
+        }
         for name in DISPLAY_ORDER:
             if name in active:
                 url = f"http://localhost:{active[name]['port']}"
-                labels = {
-                    "collection": "Collection:",
-                    "intro": "Intro:     ",
-                    "ai": "AI:        ",
-                    "advanced": "Advanced:  ",
-                    "deployment": "Deployment:",
-                    "developer": "Developer: ",
-                }
                 print(f"  {labels[name]}  {url}")
                 open_in_browser(url)
+                time.sleep(0.5)
         print()
         print("Utilisez 'python run-manuals.py --kill' pour arrêter tous les manuels")
         print()

@@ -111,7 +111,8 @@ streamtex-docs/
 │   └── streamtex_cheatsheet_en.md  # Syntax reference
 └── templates/
     ├── template_project/       # Project starter template
-    └── template_collection/    # Collection starter template
+    ├── template_collection/    # Collection starter template
+    └── template_slides/        # Presentation slides template (fullscreen 16/9)
 ```
 
 ## Running Manuals

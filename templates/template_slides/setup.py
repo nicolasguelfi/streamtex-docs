@@ -1,0 +1,1 @@
+"""StreamTeX slides project."""

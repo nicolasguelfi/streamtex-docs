@@ -1,0 +1,21 @@
+[theme]
+base = "dark"
+primaryColor = "#7AB8F5"
+backgroundColor = "#111111"
+secondaryBackgroundColor = "#262730"
+textColor = "#fafafa"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+port = 8501
+address = "0.0.0.0"
+enableStaticServing = true
+fileWatcherType = "poll"
+headless = false
+runOnSave = true
+
+[client]
+showSidebarNavigation = true

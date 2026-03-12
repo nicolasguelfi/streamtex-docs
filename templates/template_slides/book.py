@@ -30,7 +30,7 @@ set_presentation_config(PresentationConfig(
     title="My Presentation",
     aspect_ratio="16/9",
     footer=True,
-    center_content=True,
+    center_content=False,
     hide_streamlit_header=False,
 ))
 

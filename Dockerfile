@@ -19,7 +19,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 # Then strip the sources section so "uv run" won't try to re-resolve the local path
 COPY pyproject.toml uv.lock ./
 RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
-    sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml
+    sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
+    uv run playwright install --with-deps chromium
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 COPY manuals/ ./manuals/

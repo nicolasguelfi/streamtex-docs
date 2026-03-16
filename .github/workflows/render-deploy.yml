@@ -16,7 +16,12 @@ name: Deploy to Render
 on:
   # push:              # DISABLED — manual deploy only (free tier limits)
   #   branches: [main] # Uncomment to re-enable auto-deploy when docs are stable
-  workflow_dispatch:   # manual trigger always deploys all services
+  workflow_dispatch:
+    inputs:
+      skip_version_check:
+        description: "Deploy even if PyPI version doesn't match uv.lock"
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -33,7 +38,12 @@ jobs:
           PYPI=$(curl -s https://pypi.org/pypi/streamtex/json | python3 -c "import sys,json; print(json.load(sys.stdin)['info']['version'])")
           echo "Locked: $LOCKED  |  PyPI: $PYPI"
           if [ "$LOCKED" != "$PYPI" ]; then
-            echo "::warning::uv.lock has streamtex==$LOCKED but PyPI has $PYPI — Dockerfile will auto-upgrade via --upgrade-package"
+            echo "::error::uv.lock has streamtex==$LOCKED but PyPI has $PYPI — publish to PyPI first!"
+            echo "To force deploy anyway: gh workflow run render-deploy.yml -f skip_version_check=true"
+            if [ "${{ inputs.skip_version_check }}" != "true" ]; then
+              exit 1
+            fi
+            echo "::warning::Continuing anyway (skip_version_check=true)"
           fi
 
       - name: Build service mapping from render.yaml

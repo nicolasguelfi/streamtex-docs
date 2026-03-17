@@ -36,6 +36,14 @@ def build():
         (s.bold, "uv"),
         " as its package manager. Make sure all three are installed before continuing.",
     )
+    st_space("v", 0.5)
+    show_details("""\
+        **Using the AI path?** The installation steps are the same,
+        but the AI can guide you through each one interactively.
+        Choose the **standard** or **user** preset to include Claude
+        AI profiles in your workspace. See the **AI Manual** for
+        a fully assisted setup walkthrough.
+    """)
     st_space("v", 1)
 
     show_code("""\

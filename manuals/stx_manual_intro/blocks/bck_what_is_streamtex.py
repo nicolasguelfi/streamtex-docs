@@ -10,7 +10,7 @@ import streamtex as stx
 from streamtex.styles import Style
 from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_code_inline
+from blocks.helpers import show_code, show_code_inline, show_explanation
 from streamtex import st_slide_break as slide_break
 
 
@@ -103,6 +103,14 @@ def build():
             "and get themed, exportable documents.",
             tag=t.div,
         )
+    st_space("v", 1)
+
+    show_explanation("""\
+        **Note:** The code examples below show what StreamTeX does
+        under the hood. If you use the **zero-code path with AI**,
+        the AI writes this code for you — but understanding the
+        concepts will help you guide the AI more effectively.
+    """)
     slide_break()  # Spacer for continuous mode that won't appear in the sidebar TOC
     # ── Before / After ─────────────────────────────────────────────
     st_write(bs.sub, "The problem it solves", toc_lvl="+1")

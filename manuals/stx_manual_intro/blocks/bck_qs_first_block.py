@@ -97,6 +97,29 @@ def build():
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 
+    # --- AI alternative ---
+    st_write(bs.sub, "Alternative: create with AI", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""\
+        **Zero-code path** — Instead of writing the block file manually,
+        you can describe what you want in natural language:
+
+        `/stx-designer:init Create a training course about
+        marine biology with 5 chapters and a blue/teal theme`
+
+        The AI generates the entire project — book.py, blocks, styles,
+        and configuration — ready to run with `stx run`.
+
+        You can then refine the result:
+
+        `/stx-designer:update Add a diagram of the food chain
+        in chapter 3 using Mermaid`
+
+        See the **AI Manual** for the full command reference.
+    """)
+    st_space("v", 2)
+
     # --- Next steps ---
     st_write(bs.sub, "Step 4: Next steps", toc_lvl="+1")
     st_space("v", 1)

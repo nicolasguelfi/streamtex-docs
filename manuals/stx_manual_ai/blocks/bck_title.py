@@ -59,7 +59,7 @@ def build():
     # Totals across ALL profiles (library + documentation + project + presentation overlay)
     with st_grid(cols=4, cell_styles=bs.badge) as g:
         with g.cell():
-            st_write(bs.badge_number, "46", tag=t.div)
+            st_write(bs.badge_number, "49", tag=t.div)
             st_write(bs.badge_label, "Commands", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "6", tag=t.div)

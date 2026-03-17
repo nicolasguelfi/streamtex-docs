@@ -57,9 +57,9 @@ st_book(
 from streamtex import TOCConfig
 
 toc = TOCConfig(
-    numbering="decimal",   # "decimal", "roman", "none"
-    sidebar_depth=3,       # max depth shown in sidebar
-    search=True,           # enable TOC search
+    numbering="decimal",      # "decimal", "roman", "none"
+    sidebar_max_level=3,      # max depth shown in sidebar
+    search=True,              # enable TOC search
 )""")
         st_space("v", 2)
 
@@ -78,8 +78,9 @@ toc = TOCConfig(
 from streamtex import MarkerConfig
 
 markers = MarkerConfig(
-    auto_markers=True,     # generate markers from TOC entries
-    keyboard_nav=True,     # enable arrow-key navigation
+    auto_marker_on_toc=True,     # generate markers from TOC entries
+    next_keys=["PageDown"],      # keyboard navigation forward
+    prev_keys=["PageUp"],        # keyboard navigation backward
 )""")
         st_space("v", 2)
 
@@ -171,8 +172,8 @@ st_book(
 from streamtex import st_book, TOCConfig, MarkerConfig, BannerConfig
 from blocks import bck_intro, bck_setup, bck_architecture
 
-toc = TOCConfig(numbering="decimal", sidebar_depth=3, search=True)
-markers = MarkerConfig(auto_markers=True, keyboard_nav=True)
+toc = TOCConfig(numbering="decimal", sidebar_max_level=3, search=True)
+markers = MarkerConfig(auto_marker_on_toc=True, next_keys=["PageDown"], prev_keys=["PageUp"])
 banner = BannerConfig(mode="FULL")
 
 st_book(

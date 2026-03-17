@@ -1650,8 +1650,7 @@ import streamtex as stx
 stx.add_slide_break_options()                           # Defaults: enabled, FULL, 60vh
 stx.add_slide_break_options(default_enabled=True, default_mode=SlideBreakMode.FULL, default_space=60)
 
-# Low-level CSS variable injection (rarely needed):
-stx.inject_slide_break_css(enabled=True, mode=SlideBreakMode.FULL, space_vh=60)
+# CSS variables are injected automatically by add_slide_break_options() and st_slide_break()
 ```
 
 ### Slide Break CSS Variables

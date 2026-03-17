@@ -153,8 +153,8 @@ from streamtex import NumberingMode, TOCConfig
 # SIDEBAR_ONLY — numbers appear only in the sidebar TOC (default)
 toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY)
 
-# INLINE — numbers appear both in sidebar and inline in the content
-toc = TOCConfig(numbering=NumberingMode.INLINE)
+# BOTH — numbers appear both in sidebar and inline in the content
+toc = TOCConfig(numbering=NumberingMode.BOTH)
 
 # NONE — no numbering anywhere
 toc = TOCConfig(numbering=NumberingMode.NONE)""")
@@ -163,7 +163,7 @@ toc = TOCConfig(numbering=NumberingMode.NONE)""")
     show_details("""\
         SIDEBAR_ONLY is the default and recommended mode for most manuals.
 
-        INLINE is useful for formal documents where section numbers
+        BOTH is useful for formal documents where section numbers
         should be visible in the rendered content.
 
         NONE disables numbering entirely (useful for single-page docs).

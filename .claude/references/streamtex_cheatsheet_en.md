@@ -199,11 +199,14 @@ st_ai_image("a minimalist neural network diagram, flat design, dark bg",
 
 # Interactive — widget with prompt input + generate button
 st_ai_image_widget(default_prompt="a serene landscape", key="my_gen",
-                   show_save=True,
-                   api_key=None)  # Per-call API key override (bypasses config/env)
+                   show_save=True, api_key=None,
+                   style=s.ai_image, width="100%", height="auto",
+                   size="1024x1024", quality="standard", model=None,
+                   alt="", light_bg=False, config=None)
 
 # Programmatic — generate without displaying (e.g. Claude workflow)
-path = generate_image("a futuristic city", provider="openai")
+path = generate_image("a futuristic city", provider="openai",
+                      save=True, base_image=None)  # save=True caches to disk; base_image for img2img
 st_image(uri=path, width="100%")
 ```
 
@@ -857,7 +860,9 @@ class ProjectBlockHelperConfig(BlockHelperConfig):
 set_block_helper_config(ProjectBlockHelperConfig())
 
 # Convenience wrappers
-def show_code(code_string: str, language: str = "python", line_numbers: bool = True, wrap: bool = False):
+def show_code(code_string: str = "", language: str = "python", line_numbers: bool = True,
+              style=None, wrap=None, file=None, encoding="utf-8",
+              line_start=None, start_line=None, end_line=None):
     return _show_code(code_string, language, line_numbers, wrap=wrap)
 
 def show_explanation(text: str):
@@ -875,6 +880,7 @@ from streamtex import show_code, show_explanation, show_details
 show_code("print('hello')")                          # Uses injected config style
 show_code("print('hello')", style=s.custom.style)    # Override with explicit style
 show_code('{"key": "value"}', language="json", wrap=True)  # Wrapping for JSON
+show_code(file="examples/demo.py", start_line=5, end_line=15)  # From file with line range
 
 # show_explanation / show_details render Markdown (bold, italic, lists, links…)
 show_explanation("""\
@@ -1159,6 +1165,7 @@ import streamtex as stx
 stx.add_zoom_options()                                  # Defaults: width=100%, zoom=100%
 stx.add_zoom_options(default_page_width=80)             # Start at 80% width
 stx.add_zoom_options(default_page_width=80, default_zoom=125)  # 80% width, 125% zoom
+stx.add_zoom_options(container=st.sidebar)              # Render controls in specific container
 
 # Low-level injection (rarely needed):
 stx.inject_zoom_logic(100, 100)      # Width 100%, Zoom 100%
@@ -1813,8 +1820,7 @@ import streamtex as stx
 stx.add_slide_break_options()                           # Defaults: enabled, FULL, 60vh
 stx.add_slide_break_options(default_enabled=True, default_mode=SlideBreakMode.FULL, default_space=60)
 
-# Low-level CSS variable injection (rarely needed):
-stx.inject_slide_break_css(enabled=True, mode=SlideBreakMode.FULL, space_vh=60)
+# CSS variables are injected automatically by add_slide_break_options() and st_slide_break()
 ```
 
 ### Slide Break CSS Variables

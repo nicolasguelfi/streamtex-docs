@@ -76,32 +76,32 @@ st_book([
 
     # Claude profiles
     blocks.bck_dev_claude_profiles,
-], toc_config=toc, marker_config=marker_config, paginate=True,
-   banner=BannerConfig.full(),
-   inspector=stx.InspectorConfig(enabled=True),
-   pdf_config=PdfConfig(
-       margin_top="0", margin_bottom="0",
-       margin_left="0", margin_right="0",
-   ),
-   # Auto-export to disk (disabled by default — change NEVER to ALWAYS to enable)
-   exports=[
-       ExportConfig(
-           format="html",
-           mode=ExportMode.NEVER,
-           output_dir="./exports",
-           filename="streamtex-developer",
-           timestamp=True,
-       ),
-       ExportConfig(
-           format="pdf",
-           mode=ExportMode.NEVER,
-           output_dir="./exports",
-           filename="streamtex-developer",
-           timestamp=True,
-           pdf=PdfConfig(
-               format="A4", landscape=True,
-               margin_top="0", margin_bottom="0",
-               margin_left="0", margin_right="0",
-           ),
-       ),
-   ])
+    ], toc_config=toc, marker_config=marker_config, paginate=True,
+    banner=BannerConfig.full(),
+    inspector=stx.InspectorConfig(enabled=True),
+    pdf_config=PdfConfig(
+        margin_top="0", margin_bottom="0",
+        margin_left="0", margin_right="0",
+    ),
+    # Auto-export to disk (disabled by default — change NEVER to ALWAYS to enable)
+    exports=[
+        ExportConfig(
+            format="html",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="streamtex-developer",
+            timestamp=True,
+        ),
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="streamtex-developer",
+            timestamp=True,
+            pdf=PdfConfig(
+                format="A4", landscape=True,
+                margin_top="0", margin_bottom="0",
+                margin_left="0", margin_right="0",
+            ),
+        ),
+    ])

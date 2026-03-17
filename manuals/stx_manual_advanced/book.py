@@ -2,7 +2,7 @@
 
 import streamlit as st
 import streamtex as stx
-from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig
+from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode
 from streamtex.bib import BibConfig, BibFormat, CitationStyle
 
 from custom.styles import Styles as s
@@ -129,4 +129,26 @@ st_book([
    pdf_config=PdfConfig(
        margin_top="0", margin_bottom="0",
        margin_left="0", margin_right="0",
-   ))
+   ),
+   # Auto-export to disk (disabled by default — change NEVER to ALWAYS to enable)
+   exports=[
+       ExportConfig(
+           format="html",
+           mode=ExportMode.NEVER,
+           output_dir="./exports",
+           filename="streamtex-advanced",
+           timestamp=True,
+       ),
+       ExportConfig(
+           format="pdf",
+           mode=ExportMode.NEVER,
+           output_dir="./exports",
+           filename="streamtex-advanced",
+           timestamp=True,
+           pdf=PdfConfig(
+               format="A4", landscape=True,
+               margin_top="0", margin_bottom="0",
+               margin_left="0", margin_right="0",
+           ),
+       ),
+   ])

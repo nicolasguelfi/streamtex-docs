@@ -1,6 +1,6 @@
 import streamlit as st
 import streamtex as stx
-from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig
+from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode
 from pathlib import Path
 
 from custom.styles import Styles as s
@@ -57,4 +57,22 @@ st_book(
     banner=BannerConfig.full(),
     inspector=stx.InspectorConfig(enabled=True),
     pdf_config=PdfConfig(format="A4", landscape=True),
+    # Auto-export to disk (disabled by default — change NEVER to ALWAYS to enable)
+    exports=[
+        ExportConfig(
+            format="html",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="my-project",
+            timestamp=True,
+        ),
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="my-project",
+            timestamp=True,
+            pdf=PdfConfig(format="A4", landscape=True),
+        ),
+    ],
 )

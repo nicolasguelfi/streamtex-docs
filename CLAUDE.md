@@ -87,6 +87,9 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 ### Export
 - `st_export(config)`, `st_html()` — HTML export with ExportConfig
 - `st_book(..., pdf_config=PdfConfig(...))` — PDF settings passed to st_book for the sidebar UI
+- `st_book(..., exports=[ExportConfig(...)])` — Auto-export to disk (list of configs, one per output file)
+- `ExportConfig(format, mode, output_dir, filename, timestamp, pdf)` — Auto-export configuration
+- `ExportMode.ALWAYS` / `ExportMode.MANUAL` / `ExportMode.NEVER` — When to export
 - `export_pdf(html, output_path, config)` — PDF export via Playwright (requires `streamtex[pdf]`)
 - `PdfConfig(mode, format, landscape, scale, margins, page_numbers, ...)` — PDF configuration
 - `PdfMode.CONTINUOUS` / `PdfMode.PAGINATED` — How slide breaks are handled in PDF

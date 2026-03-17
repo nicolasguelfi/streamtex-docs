@@ -177,30 +177,47 @@ st_book([
             with l.item(): st_write("Test export size regularly")
         st_space("v", 2)
 
-        # --- 10. Advanced: multi-format export ---
-        st_write(bs.sub, "Exporting to multiple formats (future)", toc_lvl="+1")
+        # --- 10. Auto-export to disk ---
+        st_write(bs.sub, "Auto-Export to Disk", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            Currently, StreamTeX exports to HTML only.
-            Future versions may support PDF, Markdown, or other formats.
+            StreamTeX can automatically export your book to HTML and PDF
+            files on disk after every render. Configure a list of
+            ExportConfig in your book.py — each config describes one
+            output file with its format, filename, and settings.
         """)
         st_space("v", 1)
 
         show_code("""\
-# Current (HTML only)
-st_book([...], export_title="My Document")
+from streamtex import st_book, ExportConfig, ExportMode, PdfConfig
 
-# Future possibility (not yet implemented)
-# st_book([...],
-#     export_title="My Document",
-#     export_formats=["html", "pdf", "markdown"])""")
+st_book([...],
+    exports=[
+        ExportConfig(
+            format="html",
+            mode=ExportMode.ALWAYS,
+            output_dir="./exports",
+            filename="my-doc",
+            timestamp=True,    # -> my-doc-260318-155306.html
+        ),
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.ALWAYS,
+            output_dir="./exports",
+            filename="my-slides",
+            pdf=PdfConfig(format="A4", landscape=True),
+        ),
+    ],
+)""")
         st_space("v", 2)
 
         show_details("""\
-            Export is useful for sharing static documents.
+            Three modes: ALWAYS (auto-export), MANUAL (sidebar panel),
+            NEVER (disabled). You can mix modes in the same list.
 
-            For interactive content, keep using Streamlit streaming.
+            PDF export requires: uv add "streamtex[pdf]" and
+            playwright install chromium.
 
-            Export works best with text-heavy or diagram-heavy content.
+            See the Advanced manual for full PdfConfig options.
         """)

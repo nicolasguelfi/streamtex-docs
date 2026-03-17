@@ -1,6 +1,5 @@
 """Video introduction — embedded YouTube demo + playlist link."""
 
-import streamlit as st
 from streamtex import st_write, st_space, st_html
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -51,11 +50,15 @@ def build():
     )
     st_space("v", 2)
 
-    # Playlist button
-    st.link_button(
-        "▶️  Watch all tutorials — YouTube Playlist",
-        _PLAYLIST_URL,
-        use_container_width=True,
+    # Playlist button (YouTube red, white bold text)
+    st_html(
+        f'<a href="{_PLAYLIST_URL}" target="_blank" '
+        'style="display:block;width:100%;max-width:800px;margin:0 auto;'
+        'padding:14px 24px;background:#FF0000;color:#fff;font-weight:bold;'
+        'font-size:18px;text-align:center;text-decoration:none;'
+        'border-radius:8px;">'
+        '\u25b6\ufe0f  Watch all tutorials \u2014 YouTube Playlist'
+        '</a>',
     )
 
     st_space("v", 2)

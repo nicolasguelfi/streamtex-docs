@@ -171,4 +171,74 @@ export_pdf(html, output_path="output.pdf", config=PdfConfig(
         background and text color of page numbers. st_book() sets these
         automatically from the current Streamlit theme.
     """)
+    st_space("v", 3)
+
+    # --- Section 5: Auto-export with exports=[] ---
+    st_write(bs.sub, "5. Auto-Export to Disk", toc_lvl="+1")
+    st_space("v", 2)
+
+    show_explanation("""\
+        Instead of using the sidebar panel, you can configure automatic
+        export directly in book.py. Pass a list of ExportConfig to
+        st_book(exports=[...]). Each config describes one output file.
+
+        Three modes are available:
+        - **ALWAYS** \u2014 auto-export after every render (files written to disk)
+        - **MANUAL** \u2014 show in sidebar panel (user clicks Generate)
+        - **NEVER** \u2014 disable export entirely
+
+        You can mix modes: some configs auto-export, others show in sidebar.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+from streamtex import st_book, ExportConfig, ExportMode, PdfConfig
+
+st_book([...],
+    exports=[
+        # HTML with timestamp: my-course-260318-155306.html
+        ExportConfig(
+            format="html",
+            mode=ExportMode.ALWAYS,
+            output_dir="./exports",
+            filename="my-course",
+            timestamp=True,
+        ),
+        # PDF for printing (A4 portrait)
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.ALWAYS,
+            output_dir="./exports",
+            filename="my-course-print",
+            timestamp=True,
+            pdf=PdfConfig(format="A4", landscape=False),
+        ),
+        # PDF for projection (A4 landscape, no margins)
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.ALWAYS,
+            output_dir="./exports",
+            filename="my-course-slides",
+            timestamp=False,
+            pdf=PdfConfig(
+                format="A4", landscape=True,
+                margin_top="0", margin_bottom="0",
+                margin_left="0", margin_right="0",
+            ),
+        ),
+    ],
+)""")
+    st_space("v", 1)
+
+    show_details("""\
+        When exports is provided, st_book() decides automatically
+        whether to show the sidebar panel: it only appears if at least
+        one config has mode=MANUAL.
+
+        Files are written to output_dir/ after each render. The sidebar
+        shows a caption listing the exported files.
+
+        Backward compatibility: if exports is not provided, the existing
+        export=True / pdf_config= behaviour is unchanged.
+    """)
     st_space("v", 1)

@@ -3,6 +3,7 @@ import streamtex as stx
 from streamtex import (
     st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig,
     PresentationConfig, set_presentation_config,
+    PdfConfig, ExportConfig, ExportMode,
 )
 from pathlib import Path
 
@@ -68,4 +69,26 @@ st_book(
     banner=BannerConfig.hidden(),
     page_width=100,
     zoom=80,
+    # Auto-export to disk (disabled by default — change NEVER to ALWAYS to enable)
+    exports=[
+        ExportConfig(
+            format="html",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="my-presentation",
+            timestamp=True,
+        ),
+        ExportConfig(
+            format="pdf",
+            mode=ExportMode.NEVER,
+            output_dir="./exports",
+            filename="my-presentation",
+            timestamp=True,
+            pdf=PdfConfig(
+                format="A4", landscape=True,
+                margin_top="0", margin_bottom="0",
+                margin_left="0", margin_right="0",
+            ),
+        ),
+    ],
 )

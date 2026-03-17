@@ -569,6 +569,7 @@ st_book(
     page_width=90,                  # Page width as % of browser width (default 90)
     zoom=100,                       # Default zoom level as % (default 100)
     pdf_config=None,                # PdfConfig for PDF export defaults
+    exports=None,                   # List[ExportConfig] — auto-export to disk (new)
     chrome_banner=True,             # Show browser recommendation banner (Chrome/Edge)
     banner_color="rgba(211,47,47,0.8)",  # Legacy — use banner=BannerConfig(...) instead
     monties_color=None,             # Legacy — use banner=BannerConfig(...) instead
@@ -1405,9 +1406,9 @@ Credentials resolution: explicit path > `GSHEET_CREDENTIALS` env > `GOOGLE_APPLI
 ### ExportConfig
 
 ```python
-from streamtex import ExportConfig
+from streamtex import ExportConfig, ExportMode
 
-# ExportConfig — settings for HTML export
+# --- Legacy usage (internal buffer config) ---
 config = ExportConfig(
     enabled=True,                    # Enable export buffer (default False)
     page_title="My StreamTeX Export",  # Title of exported HTML document
@@ -1416,7 +1417,41 @@ config = ExportConfig(
     zoom=0.8,                        # CSS zoom applied to exported page (default 1.0)
 )
 # Passed internally by st_book(export=True); rarely constructed manually
-# Width % and Zoom % from the sidebar are automatically propagated to the export
+
+# --- Auto-export usage (new — via st_book(exports=[...])) ---
+from streamtex import PdfConfig
+
+# HTML auto-export with timestamp
+html_export = ExportConfig(
+    format="html",                   # "html" or "pdf"
+    mode=ExportMode.ALWAYS,          # ALWAYS (auto) | MANUAL (sidebar) | NEVER
+    output_dir="./exports",          # Directory for exported files
+    filename="my-course",            # Base filename (default: book name)
+    timestamp=True,                  # Append -YYMMDD-HHMMSS to filename
+)
+
+# PDF auto-export with custom config
+pdf_export = ExportConfig(
+    format="pdf",
+    mode=ExportMode.ALWAYS,
+    output_dir="./exports",
+    filename="my-slides",
+    timestamp=False,
+    pdf=PdfConfig(format="A4", landscape=True, margin_top="0", margin_bottom="0"),
+)
+
+# Pass list to st_book — each config = one output file
+st_book([...], exports=[html_export, pdf_export])
+```
+
+### ExportMode
+
+```python
+from streamtex import ExportMode
+
+ExportMode.ALWAYS   # Auto-export to disk after every render
+ExportMode.MANUAL   # Show sidebar panel — user clicks Generate (default sidebar)
+ExportMode.NEVER    # Disable export entirely
 ```
 
 ### FileCategoryRegistry

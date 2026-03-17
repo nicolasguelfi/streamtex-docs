@@ -30,7 +30,7 @@ def build():
 
     st_write(
         bs.body + s.center_txt,
-        "Watch a quick demo to see what StreamTeX can do — "
+        "Go to our YouTube channel to watch a quick demo and see what StreamTeX can do — "
         "from project creation to final document.",
         tag=t.div,
     )

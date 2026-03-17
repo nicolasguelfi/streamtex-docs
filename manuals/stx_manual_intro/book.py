@@ -47,6 +47,9 @@ st_book([
     # Welcome page (gradient header + level badge)
     blocks.bck_level_badge,
 
+    # Video introduction
+    blocks.bck_video_intro,
+
     # Why StreamTeX, audience, and AI introduction
     blocks.bck_why_streamtex,
     blocks.bck_who_should_read,

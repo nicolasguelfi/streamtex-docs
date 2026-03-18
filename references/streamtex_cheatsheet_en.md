@@ -1763,6 +1763,7 @@ set_presentation_config(PresentationConfig(
     title="My Presentation",
     aspect_ratio="16/9",       # 16:9 viewport fitting
     footer=True,               # Auto footer via st_presentation_footer()
+    counter_mode="bloc",       # "bloc" = "Bloc 3/12" (sections), "slide" = "Slide 37/282" (markers)
     center_content=True,       # Center slide content vertically
     hide_streamlit_header=True, # Hide Streamlit hamburger menu
 ))
@@ -1880,6 +1881,7 @@ set_presentation_config(PresentationConfig(
     title="My Presentation",
     aspect_ratio="16/9",
     footer=True,
+    counter_mode="bloc",       # "bloc" (default) or "slide" (synced with marker bar)
     center_content=True,
     hide_streamlit_header=True,
 ))

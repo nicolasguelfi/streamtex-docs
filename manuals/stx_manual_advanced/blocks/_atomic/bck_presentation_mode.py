@@ -71,6 +71,7 @@ config = PresentationConfig(
 
     # Footer
     footer=True,               # Show fixed slide counter bar
+    counter_mode="bloc",       # "bloc" = section count, "slide" = marker count
     footer_height="48px",      # CSS height of the footer bar
     footer_bg=None,            # Background colour (None = inherit theme)
     footer_text_color=None,    # Text colour (None = inherit theme)
@@ -173,11 +174,21 @@ st_presentation_footer(
 
         show_details("""\
             The footer displays the presentation title on the left and
-            a "Slide N / M" counter on the right. It uses a fixed
-            position at the bottom of the viewport with a subtle
-            top border. The footer respects theme colours by default,
-            but you can override footer_bg and footer_text_color in
-            PresentationConfig.
+            a counter on the right. Two counter modes are available:
+
+            - counter_mode="bloc" (default): shows "Bloc N / M" where
+              N is the current section and M the total number of
+              sections. The values are static (server-side).
+
+            - counter_mode="slide": shows "Slide N / M" where N and M
+              match the floating marker navigation bar. The counter is
+              updated dynamically via JavaScript as you navigate
+              between markers.
+
+            The footer uses a fixed position at the bottom of the
+            viewport with a subtle top border. It respects theme
+            colours by default, but you can override footer_bg and
+            footer_text_color in PresentationConfig.
         """)
         st_space("v", 3)
 

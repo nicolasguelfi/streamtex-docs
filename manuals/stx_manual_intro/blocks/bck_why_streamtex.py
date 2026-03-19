@@ -77,7 +77,7 @@ def build():
         )
 
     st_space("v", 2)
-    st_slide_break(marker_label="10 Reasons to Choose StreamTeX")
+    st_slide_break()
 
     # ── 10 reasons ──────────────────────────────────────────────────
     st_write(bs.sub, "10 reasons to choose StreamTeX", toc_lvl="+1")
@@ -165,7 +165,7 @@ def build():
     )
 
     st_space("v", 2)
-    st_slide_break(marker_label="Who is StreamTeX for?")
+    st_slide_break()
 
     # ── Who is StreamTeX for? ───────────────────────────────────────
     st_write(bs.sub, "Who is StreamTeX for?", toc_lvl="+1")
@@ -245,7 +245,7 @@ def build():
                 with l.item(): st_write("Instant sharing, works everywhere")
 
     st_space("v", 2)
-    st_slide_break(marker_label="StreamTeX Ecosystem")
+    st_slide_break()
 
 
 # ── Helpers ────────────────────────────────────────────────────────

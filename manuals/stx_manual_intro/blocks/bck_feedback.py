@@ -208,7 +208,7 @@ breakpoint. Actual: crash with KeyError on "grid_cols".
             with l.item(): st_write(bs.body, (s.bold, "Documentation"), " — streamtex.onrender.com")
     st_space("v", 1)
 
-    st_slide_break(marker_label="Feedback & Support")
+    st_slide_break()
 
 
 # ── Helpers ────────────────────────────────────────────────────────

@@ -2,7 +2,7 @@
 
 import streamlit as st
 import streamtex as stx
-from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode, PresentationProfile
+from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode
 from streamtex.bib import BibConfig, BibFormat, CitationStyle
 
 from custom.styles import Styles as s
@@ -151,5 +151,4 @@ st_book([
                 margin_left="0", margin_right="0",
             ),
         ),
-    ],
-    presentation_profiles=PresentationProfile.desktop_mobile_preset())
+    ])

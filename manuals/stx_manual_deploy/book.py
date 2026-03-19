@@ -75,14 +75,14 @@ st_book([
     exports=[
         ExportConfig(
             format="html",
-            mode=ExportMode.NEVER,
+            mode=ExportMode.MANUAL,
             output_dir="./exports",
             filename="streamtex-deploy",
             timestamp=True,
         ),
         ExportConfig(
             format="pdf",
-            mode=ExportMode.NEVER,
+            mode=ExportMode.MANUAL,
             output_dir="./exports",
             filename="streamtex-deploy",
             timestamp=True,

@@ -195,4 +195,4 @@ def build():
             with l.item(): st_write(bs.body, (s.bold, "No runtime dependency"), " — generated images are committed to static/; no API key needed at deploy time")
     st_space("v", 1)
 
-    st_slide_break()
+    st_slide_break(marker_label="AI Image: Workflow Summary")

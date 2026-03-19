@@ -126,7 +126,7 @@ def build():
                 with l.item(): st_write("Basic Python knowledge recommended")
 
     st_space("v", 2)
-    st_slide_break()
+    st_slide_break(marker_label="What AI Can Do")
 
     # ── What AI can do ──────────────────────────────────────────────
     st_write(bs.sub, "What AI can do with StreamTeX", toc_lvl="+1")
@@ -237,7 +237,7 @@ def build():
         )
 
     st_space("v", 2)
-    st_slide_break()
+    st_slide_break(marker_label="The AI Manual")
 
 
 # ── Helpers ────────────────────────────────────────────────────────

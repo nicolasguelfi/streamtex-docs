@@ -131,7 +131,7 @@ def build():
     )
 
     st_space("v", 1)
-    st_slide_break()
+    st_slide_break(marker_label="Manual Overview")
 
 
 # ── Helpers ────────────────────────────────────────────────────────

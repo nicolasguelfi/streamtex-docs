@@ -8,7 +8,7 @@ from custom.themes import dark
 
 import streamtex as stx
 import streamtex.styles as sts
-from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig
+from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig, PresentationProfile
 
 _logo = str(Path(__file__).parent.parent / "shared-blocks" / "logo-stx.png")
 st.set_page_config(
@@ -29,4 +29,5 @@ st_book([
    pdf_config=PdfConfig(
        margin_top="0", margin_bottom="0",
        margin_left="0", margin_right="0",
-   ))
+   ),
+   presentation_profiles=PresentationProfile.desktop_mobile_preset())

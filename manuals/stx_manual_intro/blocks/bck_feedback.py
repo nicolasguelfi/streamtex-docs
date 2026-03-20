@@ -205,7 +205,7 @@ breakpoint. Actual: crash with KeyError on "grid_cols".
             with l.item(): st_write(bs.body, (s.bold, "Bug report"), " — github.com/nicolasguelfi/streamtex/issues (select Bug Report template)")
             with l.item(): st_write(bs.body, (s.bold, "Feature request"), " — github.com/nicolasguelfi/streamtex/issues (select Feature Request template)")
             with l.item(): st_write(bs.body, (s.bold, "Questions & discussions"), " — github.com/nicolasguelfi/streamtex/discussions")
-            with l.item(): st_write(bs.body, (s.bold, "Documentation"), " — docs.streamtex.ros.lu")
+            with l.item(): st_write(bs.body, (s.bold, "Documentation"), " — docs.streamtex.org")
     st_space("v", 1)
 
     st_slide_break()

@@ -11,15 +11,15 @@ services:
       - key: FOLDER
         value: manuals/stx_manuals_collection
       - key: STX_URL_TEST_INTRO
-        value: https://docs-intro.streamtex.ros.lu
+        value: https://docs-intro.streamtex.org
       - key: STX_URL_TEST_ADVANCED
-        value: https://docs-advanced.streamtex.ros.lu
+        value: https://docs-advanced.streamtex.org
       - key: STX_URL_TEST_DEPLOY
-        value: https://docs-deploy.streamtex.ros.lu
+        value: https://docs-deploy.streamtex.org
       - key: STX_URL_TEST_DEVELOPER
-        value: https://docs-developer.streamtex.ros.lu
+        value: https://docs-developer.streamtex.org
       - key: STX_URL_TEST_AI
-        value: https://docs-ai.streamtex.ros.lu
+        value: https://docs-ai.streamtex.org
       - key: STX_PASSWORD
         value: ""
     healthCheckPath: /_stcore/health

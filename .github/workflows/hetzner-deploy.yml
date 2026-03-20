@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  COOLIFY_URL: https://streamtex.ros.lu
+  COOLIFY_URL: https://coolify.streamtex.org
 
 jobs:
   deploy:

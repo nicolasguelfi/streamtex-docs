@@ -14,9 +14,10 @@ Read these files **in order** (mandatory):
 1. `.claude/designer/skills/slide-design-rules.md` — **primary reference** (grid system, dark theme, placeholders)
 2. `.claude/designer/skills/visual-design-rules.md` — base visual rules (applies where not overridden)
 3. `.claude/designer/skills/style-conventions.md` — style composition patterns
-4. `.claude/references/presentation_cheatsheet_en.md` — quick reference for commands, templates, patterns
-5. Target project's `custom/styles.py` — available palette and compositions
-6. Target project's `CLAUDE.md` — project-specific overrides and context
+4. `.claude/designer/skills/block-blueprints.md` — template catalog for common patterns
+5. `.claude/references/presentation_cheatsheet_en.md` — quick reference for commands, templates, patterns
+6. Target project's `custom/styles.py` — available palette and compositions
+7. Target project's `CLAUDE.md` — project-specific overrides and context
 
 ## Core Principles
 

@@ -1,8 +1,7 @@
 # {{ project_name }} — Claude Code Rules
 
 ## Identity
-You are a **StreamTeX Expert** specialized in documentation and manual authoring.
-You NEVER write standard Streamlit code for content rendering.
+You are a **StreamTeX Expert**. You NEVER write standard Streamlit code for content rendering.
 You ALWAYS use the `streamtex` library (`stx.*` functions) instead of raw `st.*` calls.
 
 ## Terminology
@@ -20,7 +19,7 @@ This project uses **uv** for dependency management. You MUST:
 Before writing any block code, you MUST read:
 1. `.claude/references/coding_standards.md` — full coding standards (single source of truth)
 2. `.claude/references/streamtex_cheatsheet_en.md` — syntax reference
-3. The target manual's `book.py` — to understand how blocks are wired
+3. `book.py` — to understand how blocks are wired
 
 ## Coding Standards
 See `.claude/references/coding_standards.md` for the full reference. Key rules:
@@ -33,6 +32,14 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 - **Style reuse** — one generic style, reused everywhere
 - **After every code change**, run `uv run ruff check` before committing
 
+{% if profile == "presentation" %}
+## Presentation Design (Live Projection)
+- Body font: **48pt minimum** (projection distance 10-20m)
+- Section titles: **80-96pt**
+- Content: **5-7 words/bullet**, 3 max per section
+- Helper boxes: **Forbidden** (direct st_write only)
+- See `.claude/designer/presentation/skills/presentation-design-rules.md`
+{% endif %}
 ## Key Components
 
 ### Core Rendering
@@ -62,37 +69,70 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 
 ### Block Infrastructure
 - `ProjectBlockRegistry` — Lazy-loading block registry
-- `LazyBlockRegistry` — Multi-source block resolution
 - `BlockHelper`, `show_code`, `show_explanation`, `show_details` — Block helpers with DI
 
-## Documentation Structure
+## Running the App
+```bash
+stx run
+```
+
+## Project Structure
 ```
 {{ project_name }}/
-├── manuals/
-│   ├── stx_manual_intro/       # Introduction course
-│   ├── stx_manual_advanced/    # Advanced features
-│   ├── stx_manual_deploy/      # Deployment guide
-│   ├── stx_manuals_collection/ # Collection hub
-│   └── shared-blocks/          # Shared block library
-├── references/
-│   ├── coding_standards.md     # Coding standards
-│   └── streamtex_cheatsheet_en.md  # Syntax reference
-└── templates/
-    ├── template_project/       # Project starter template
-    └── template_collection/    # Collection starter template
+├── book.py                 # Entry point
+├── blocks/                 # Block files (bck_*.py)
+│   ├── __init__.py         # ProjectBlockRegistry
+│   └── helpers.py          # Block helper config
+├── custom/
+│   ├── styles.py           # Project styles
+│   └── themes.py           # Theme overrides
+├── static/images/          # Static assets
+└── .streamlit/config.toml  # Streamlit config
 ```
 
-## Running Manuals
-```bash
-cd manuals/stx_manual_intro && stx run
-cd manuals/stx_manual_advanced && stx run
-cd manuals/stx_manual_deploy && stx run
-cd manuals/stx_manuals_collection && stx run
-```
+## Documentation Lookup (when answering user questions)
 
-## Workflows
-1. **New Block** -> Read coding_standards.md, inspect existing blocks (`/stx-designer:update` add block)
-2. **New Slide** -> Read designer skills (`/stx-designer:update` add slide)
-3. **Generate Course** -> Generate book.py from blocks.csv (`/stx-designer:update` generate course)
-4. **Testing** -> `uv run pytest tests/ -v` (`/stx-developer:test-run`)
-5. **Linting** -> `uv run ruff check` (`/stx-developer:lint`)
+When the user asks a question about StreamTeX usage, patterns, or features:
+
+1. **Check if manuals exist**: look for `../../streamtex-docs/manuals/` (relative to this project).
+   Also try `../streamtex-docs/manuals/` (if project is directly in the workspace root).
+2. **If found** — search the relevant manual blocks for examples and patterns:
+   - `stx_manual_intro/blocks/` — fundamentals (text, grids, lists, images, containers, styles)
+   - `stx_manual_advanced/blocks/` — advanced features (export, PDF, bibliography, diagrams, overlays, banners)
+   - `stx_manual_ai/blocks/` — AI image generation, Claude profiles, prompt patterns
+   - `stx_manual_deploy/blocks/` — deployment (Docker, Render, CI/CD)
+   - `stx_manual_developer/blocks/` — library internals (architecture, testing, block system, CLI)
+   - Block files are `bck_*.py` — the `def build()` function contains live examples with `show_code()`, `show_explanation()`, and `show_details()`.
+3. **If NOT found** — the user's workspace doesn't include the documentation repo. Tell them:
+   > The StreamTeX documentation manuals are not available in your workspace.
+   > To access them (rich examples, tutorials, and patterns), upgrade your workspace:
+   > ```
+   > stx install --preset standard
+   > stx update
+   > ```
+   > This will clone the `streamtex-docs` repo with 6 manuals and 114+ example blocks.
+
+Always prefer showing real examples from manual blocks over generating code from scratch.
+
+## Customization
+- `.claude/` contains **read-only** files installed by `stx claude update` — do not modify them
+- `.claude/custom/` contains **your personalizations** — never overwritten by updates
+- To add a rule: create a file in `.claude/custom/references/`
+- To add a skill: create a file in `.claude/custom/skills/`
+- To add a slash command: create `.claude/commands/my-cmd/run.md` (commands go in `commands/`, not `custom/commands/`)
+- See `.claude/custom/README.md` for full details
+
+## Workflows — stx-designer Commands
+
+The `stx-designer` commands cover the full project lifecycle:
+
+1. **Create project** -> `/stx-designer:init <description>` (templates: project, presentation, collection, course)
+2. **Add content** -> `/stx-designer:update add a new block about X` or `/stx-designer:update add 3 slides on Y`
+3. **Customize** -> `/stx-designer:update change palette to blue/violet` or `/stx-designer:update switch to auditorium mode`
+4. **Migrate HTML** -> `/stx-designer:update --migrate convert intro.html`
+5. **Audit quality** -> `/stx-designer:audit --all` or `/stx-designer:audit --target bck_intro`
+6. **Fix issues** -> `/stx-designer:fix --all` or `/stx-designer:fix --target bck_intro`
+7. **Specialized tools** -> `/stx-designer:tool survey-convert`
+8. **Help** -> `/stx-designer:init --help` (cheatsheet for all commands)
+9. **Testing** -> `uv run pytest tests/ -v` (`/stx-developer:test-run`)
+10. **Linting** -> `uv run ruff check` (`/stx-developer:lint`)

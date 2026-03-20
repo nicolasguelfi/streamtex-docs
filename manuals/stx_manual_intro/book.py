@@ -1,5 +1,8 @@
 """StreamTeX Introduction Course - Test Project (Intro Level)."""
 
+import importlib.util
+import tomllib
+
 import streamlit as st
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode, PresentationProfile
@@ -9,6 +12,12 @@ from custom.styles import Styles as s
 from custom.themes import dark
 import streamtex.styles as sts
 import blocks
+
+_doc_version = tomllib.loads((Path(__file__).parent.parent.parent / "pyproject.toml").read_text()).get("project", {}).get("version", "?")
+_spec = importlib.util.spec_from_file_location("bck_changelog",
+    str(Path(__file__).parent.parent / "shared-blocks" / "blocks" / "bck_changelog.py"))
+_bck_changelog = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_bck_changelog)
 
 # Configure static sources
 stx.set_static_sources([str(Path(__file__).parent / "static")])
@@ -86,6 +95,9 @@ st_book([
 
     # Feedback & Support
     blocks.bck_feedback,
+
+    # Changelog (shared block)
+    _bck_changelog,
     ], toc_config=toc, marker_config=marker_config, paginate=True,
     banner=BannerConfig.full(),
     inspector=stx.InspectorConfig(enabled=True),
@@ -117,4 +129,5 @@ st_book([
     ],
     page_width=80,
     zoom=80,
+    doc_version=_doc_version,
     presentation_profiles=PresentationProfile.desktop_mobile_preset())

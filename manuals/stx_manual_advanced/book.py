@@ -1,5 +1,9 @@
 """StreamTeX Advanced Course - Test Project (Advanced Level + Phase 1/2 Features)."""
 
+import importlib.util
+import tomllib
+from pathlib import Path
+
 import streamlit as st
 import streamtex as stx
 from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode, PresentationProfile
@@ -15,11 +19,15 @@ import blocks
 # ============================================================================
 
 # Configure shared blocks (Phase 1: LazyBlockRegistry)
-from pathlib import Path
 _shared_blocks_path = str(Path(__file__).parent.parent / "shared-blocks" / "blocks")
 _static_shared_path = str(Path(__file__).parent.parent / "shared-blocks" / "static")
 
 shared_blocks = stx.LazyBlockRegistry([_shared_blocks_path])
+_doc_version = tomllib.loads((Path(__file__).parent.parent.parent / "pyproject.toml").read_text()).get("project", {}).get("version", "?")
+_spec = importlib.util.spec_from_file_location("bck_changelog",
+    str(Path(__file__).parent.parent / "shared-blocks" / "blocks" / "bck_changelog.py"))
+_bck_changelog = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_bck_changelog)
 
 # Configure static sources for multi-directory resolution
 stx.set_static_sources([
@@ -122,6 +130,9 @@ st_book([
 
     # Shared block footer
     shared_blocks.bck_footer_training,
+
+    # Changelog (shared block)
+    _bck_changelog,
     ], toc_config=toc, marker_config=marker_config, paginate=True,
     banner=BannerConfig.full(),
     bib_sources=bib_sources, bib_config=bib_config,
@@ -152,4 +163,5 @@ st_book([
             ),
         ),
     ],
+    doc_version=_doc_version,
     presentation_profiles=PresentationProfile.desktop_mobile_preset())

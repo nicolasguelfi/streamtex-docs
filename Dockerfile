@@ -25,6 +25,9 @@ RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 COPY manuals/ ./manuals/
 
+# Changelog (read by bck_changelog block in each manual)
+COPY CHANGELOG.md ./
+
 # FOLDER is set at runtime by Render envVars (not build-time ARG)
 ENV FOLDER="manuals/stx_manual_intro"
 

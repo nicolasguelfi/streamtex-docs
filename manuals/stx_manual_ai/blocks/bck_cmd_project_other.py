@@ -114,9 +114,9 @@ def build():
         /stx-designer:init --collection
 
         > Create a collection hub linking:
-          - Introduction Manual (streamtex-intro.onrender.com)
-          - Advanced Manual (streamtex-advanced.onrender.com)
-          - Deploy Manual (streamtex-deploy.onrender.com)""",
+          - Introduction Manual (docs-intro.streamtex.ros.lu)
+          - Advanced Manual (docs-advanced.streamtex.ros.lu)
+          - Deploy Manual (docs-deploy.streamtex.ros.lu)""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
@@ -133,17 +133,17 @@ def build():
             "manuals": [
                 {
                     "name": "Introduction",
-                    "url": "https://streamtex-intro.onrender.com",
+                    "url": "https://docs-intro.streamtex.ros.lu",
                     "description": "Getting started with StreamTeX",
                 },
                 {
                     "name": "Advanced",
-                    "url": "https://streamtex-advanced.onrender.com",
+                    "url": "https://docs-advanced.streamtex.ros.lu",
                     "description": "Advanced features and patterns",
                 },
                 {
                     "name": "Deploy",
-                    "url": "https://streamtex-deploy.onrender.com",
+                    "url": "https://docs-deploy.streamtex.ros.lu",
                     "description": "Deployment and CI/CD guide",
                 },
             ],

@@ -507,12 +507,12 @@ Required secret: `RENDER_API_KEY` (set in GitHub repo settings).
 
 | Name | ID | URL | FOLDER |
 |------|----|-----|--------|
-| streamtex | srv-d6f23uhaae7s73c14di0 | https://streamtex.onrender.com | manuals/stx_manuals_collection |
-| streamtex-intro | srv-d6f2bmhaae7s73c18qng | https://streamtex-intro.onrender.com | manuals/stx_manual_intro |
-| streamtex-advanced | srv-d6f2bmhaae7s73c18qn0 | https://streamtex-advanced.onrender.com | manuals/stx_manual_advanced |
-| streamtex-deploy | srv-d6f2bmhaae7s73c18qo0 | https://streamtex-deploy.onrender.com | manuals/stx_manual_deploy |
-| streamtex-developer | srv-d6j8gkhdrdic73dum3u0 | https://streamtex-developer.onrender.com | manuals/stx_manual_developer |
-| streamtex-ai | srv-d6mndltm5p6s73fuijt0 | https://streamtex-ai.onrender.com | manuals/stx_manual_ai |
+| streamtex | srv-d6f23uhaae7s73c14di0 | https://docs.streamtex.ros.lu | manuals/stx_manuals_collection |
+| streamtex-intro | srv-d6f2bmhaae7s73c18qng | https://docs-intro.streamtex.ros.lu | manuals/stx_manual_intro |
+| streamtex-advanced | srv-d6f2bmhaae7s73c18qn0 | https://docs-advanced.streamtex.ros.lu | manuals/stx_manual_advanced |
+| streamtex-deploy | srv-d6f2bmhaae7s73c18qo0 | https://docs-deploy.streamtex.ros.lu | manuals/stx_manual_deploy |
+| streamtex-developer | srv-d6j8gkhdrdic73dum3u0 | https://docs-developer.streamtex.ros.lu | manuals/stx_manual_developer |
+| streamtex-ai | srv-d6mndltm5p6s73fuijt0 | https://docs-ai.streamtex.ros.lu | manuals/stx_manual_ai |
 
 ### Collection hub env vars
 
@@ -523,15 +523,15 @@ envVars:
   - key: FOLDER
     value: manuals/stx_manuals_collection
   - key: STX_URL_TEST_INTRO
-    value: https://streamtex-intro.onrender.com
+    value: https://docs-intro.streamtex.ros.lu
   - key: STX_URL_TEST_ADVANCED
-    value: https://streamtex-advanced.onrender.com
+    value: https://docs-advanced.streamtex.ros.lu
   - key: STX_URL_TEST_DEPLOY
-    value: https://streamtex-deploy.onrender.com
+    value: https://docs-deploy.streamtex.ros.lu
   - key: STX_URL_TEST_DEVELOPER
-    value: https://streamtex-developer.onrender.com
+    value: https://docs-developer.streamtex.ros.lu
   - key: STX_URL_TEST_AI
-    value: https://streamtex-ai.onrender.com
+    value: https://docs-ai.streamtex.ros.lu
   - key: STX_PASSWORD
     value: ""
 ```

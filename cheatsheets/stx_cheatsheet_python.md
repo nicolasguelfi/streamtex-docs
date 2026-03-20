@@ -1955,7 +1955,7 @@ cards_per_row = 3
 title = "Introduction"
 description = "Getting started guide"
 cover = "static/images/covers/intro.png"
-project_url = "https://streamtex-intro.onrender.com"
+project_url = "https://docs-intro.streamtex.ros.lu"
 order = 1
 ```
 

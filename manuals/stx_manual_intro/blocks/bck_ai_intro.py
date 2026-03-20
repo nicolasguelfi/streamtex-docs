@@ -233,7 +233,7 @@ def build():
         st_write(
             bs.body + s.project.colors.neutral_gray,
             "Available in the StreamTeX documentation collection "
-            "at streamtex.onrender.com.",
+            "at docs.streamtex.ros.lu.",
         )
 
     st_space("v", 2)

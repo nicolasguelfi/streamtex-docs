@@ -261,8 +261,8 @@ def build():
 # For [projects.test-intro], the env var is STX_URL_TEST_INTRO
 
 # Example: set in Render.com, Docker, or .env
-STX_URL_TEST_INTRO=https://intro.onrender.com
-STX_URL_TEST_ADVANCED=https://advanced.onrender.com
+STX_URL_TEST_INTRO=https://docs-intro.streamtex.ros.lu
+STX_URL_TEST_ADVANCED=https://docs-advanced.streamtex.ros.lu
     """, language="bash")
 
     st_space("v", 2)

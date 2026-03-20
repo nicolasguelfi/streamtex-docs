@@ -36,23 +36,29 @@ def build():
  |-- .stx-profile              # Profile type identifier
  |-- settings.json              # Claude Code permission config
  |
- |-- references/                # Shared (read-only, from shared/references/)
+ |-- references/                # Read-only (from shared/references/)
  |    |-- coding_standards.md   # Full coding standards
  |    +-- streamtex_cheatsheet_en.md  # Syntax reference
  |
- |-- commands/
- |    |-- stx-guide.md          # Shared (read-only, from shared/commands/)
+ |-- commands/                  # Read-only + user custom commands
+ |    |-- stx-guide.md          # Shared (read-only)
  |    +-- developer/
  |         |-- test-run.md      # /test-run command
  |         |-- lint.md          # /lint command
  |         +-- deploy.md        # /deploy command
  |
- |-- developer/
+ |-- developer/                 # Read-only (skills, agents)
  |    +-- skills/
  |         |-- architecture.md      # Architecture knowledge
  |         |-- testing-patterns.md  # Testing patterns
  |         |-- docs-lookup.md       # Documentation manual lookup
  |         +-- stx-migrate.md       # Project upgrade/migration
+ |
+ +-- custom/                    # User personalizations (never overwritten)
+      |-- README.md             # Usage instructions
+      |-- references/           # Extra rules (loaded after official ones)
+      |-- skills/               # Additional skills
+      +-- templates/            # Custom project templates
 
 CLAUDE.md                       # Root rules file (project root)""", language="text")
         st_space("v", 2)
@@ -159,6 +165,26 @@ library""", language="text")
             - **Context loading requirements**.
             - **Key component references**.
             - **Workflow instructions**.
+        """)
+        st_space("v", 2)
+
+        # --- custom/ ---
+        st_write(bs.sub, "custom/ — User Personalizations", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            The custom/ directory is for user-specific extensions that
+            are **never overwritten** by stx claude update:
+
+            - **custom/references/**: extra coding rules loaded after
+              the official ones (e.g. project_conventions.md).
+            - **custom/skills/**: additional domain knowledge.
+            - **custom/templates/**: custom project templates.
+
+            Custom slash commands go directly in .claude/commands/
+            (not in custom/commands/) because Claude Code only scans
+            the commands/ path. Files you add there are safe — updates
+            only overwrite files declared in the profile manifest.
         """)
         st_space("v", 2)
 

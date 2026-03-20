@@ -39,6 +39,11 @@ def build():
         Commands live in .claude/commands/ organized by category.
         Each .md file becomes a slash command that users can invoke
         in Claude Code.
+
+        **Your custom commands are safe**: stx claude update only
+        overwrites files declared in the profile manifest. Any
+        command directory you create yourself (e.g. my-category/)
+        is preserved across updates.
     """)
     st_space("v", 1)
 

@@ -173,3 +173,16 @@ def build():
             "skills across profiles to avoid knowledge duplication."
         ))
     st_space("v", 1)
+
+    with st_block(s.project.containers.tip_callout):
+        st_write(s.project.titles.tip_label,
+                 "Tip: .claude/custom/ for Lightweight Personalization")
+        st_space("v", 1)
+        st_write(s.large, (
+            "For project-specific rules that don't need a full profile, "
+            "use .claude/custom/ instead. Add references, skills, or "
+            "templates there — they are loaded by Claude Code and never "
+            "overwritten by stx claude update. Full profiles are better "
+            "for reusable, shareable configurations."
+        ))
+    st_space("v", 1)

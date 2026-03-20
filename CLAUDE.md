@@ -161,6 +161,14 @@ The `push` trigger is **disabled** in `.github/workflows/render-deploy.yml` (fre
 Always use `uv tool install "streamtex[cli]" -U` in docs and user instructions.
 This command works for both installation AND upgrade. Do NOT use `uv tool upgrade` (fails if not already installed).
 
+## Customization
+- `.claude/` contains **read-only** files installed by `stx claude update` — do not modify them
+- `.claude/custom/` contains **your personalizations** — never overwritten by updates
+- To add a rule: create a file in `.claude/custom/references/`
+- To add a skill: create a file in `.claude/custom/skills/`
+- To add a slash command: create `.claude/commands/my-cmd/run.md` (commands go in `commands/`, not `custom/commands/`)
+- See `.claude/custom/README.md` for full details
+
 ## Workflows — stx-designer Commands
 1. **Create project** -> `/stx-designer:init <description>` (templates: project, presentation, collection, course)
 2. **Add content** -> `/stx-designer:update add a new block about X`

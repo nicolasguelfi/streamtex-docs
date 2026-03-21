@@ -23,7 +23,7 @@ ENV_FILE="$SCRIPT_DIR/../streamtex/.env"
 # --- Load API token ---
 if [ -z "${COOLIFY_API_TOKEN:-}" ]; then
     if [ -f "$ENV_FILE" ]; then
-        COOLIFY_API_TOKEN=$(grep '^COOLIFY_API_TOKEN' "$ENV_FILE" | sed 's/.*=\s*//')
+        COOLIFY_API_TOKEN=$(grep '^COOLIFY_API_TOKEN' "$ENV_FILE" | sed 's/^[^=]*=\s*//' | tr -d ' ')
     fi
 fi
 if [ -z "${COOLIFY_API_TOKEN:-}" ]; then

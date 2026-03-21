@@ -4,13 +4,18 @@
 # Usage:
 #   ./deploy-staging.sh --manual intro --lib-branch fix/marker-bar --docs-branch feat/new-block
 #   ./deploy-staging.sh --manual advanced                          # uses main for both
-#   ./deploy-staging.sh --status                                   # show current staging status
+#   ./deploy-staging.sh --status                                   # show current staging status + session info
+#   ./deploy-staging.sh --cleanup                                  # reset staging to main/main, clean branches
+#   ./deploy-staging.sh --conclude                                 # merge branches → main, cleanup, redeploy prod
 #
 # Options:
 #   --manual NAME        Manual to deploy: intro, advanced, deploy, developer, ai, collection (default: intro)
 #   --lib-branch BRANCH  streamtex library branch to install (default: main = latest release)
 #   --docs-branch BRANCH streamtex-docs branch to deploy (default: main)
-#   --status             Show current staging deployment status
+#   --purpose TEXT        Description of what this staging session is testing
+#   --status             Show current staging deployment status and session info
+#   --cleanup            Reset staging to main/main and delete merged branches
+#   --conclude           Merge branches → main, cleanup, and redeploy
 #   --help               Show this help
 
 set -euo pipefail
@@ -19,6 +24,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COOLIFY_URL="https://coolify.streamtex.org"
 STATE_FILE="$SCRIPT_DIR/.stx-staging.json"
 ENV_FILE="$SCRIPT_DIR/../streamtex/.env"
+LIB_DIR="$SCRIPT_DIR/../streamtex"
+STALE_DAYS=3
 
 # --- Load API token ---
 if [ -z "${COOLIFY_API_TOKEN:-}" ]; then
@@ -35,16 +42,20 @@ fi
 MANUAL="intro"
 LIB_BRANCH="main"
 DOCS_BRANCH="main"
-SHOW_STATUS=false
+PURPOSE=""
+ACTION="deploy"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --manual)      MANUAL="$2"; shift 2 ;;
         --lib-branch)  LIB_BRANCH="$2"; shift 2 ;;
         --docs-branch) DOCS_BRANCH="$2"; shift 2 ;;
-        --status)      SHOW_STATUS=true; shift ;;
+        --purpose)     PURPOSE="$2"; shift 2 ;;
+        --status)      ACTION="status"; shift ;;
+        --cleanup)     ACTION="cleanup"; shift ;;
+        --conclude)    ACTION="conclude"; shift ;;
         --help)
-            head -15 "$0" | tail -14
+            head -18 "$0" | tail -17
             exit 0 ;;
         *)
             echo "Unknown option: $1. Use --help for usage."
@@ -65,7 +76,7 @@ case "$MANUAL" in
         exit 1 ;;
 esac
 
-# --- Read staging service UUID ---
+# --- Read staging config ---
 STAGING_UUID=""
 if [ -f "$STATE_FILE" ]; then
     STAGING_UUID=$(python3 -c "import json; print(json.load(open('$STATE_FILE')).get('uuid',''))" 2>/dev/null || echo "")
@@ -82,7 +93,6 @@ update_env() {
     local key="$1"
     local value="$2"
 
-    # Find existing env var UUID for this key
     local env_uuid
     env_uuid=$(curl -s "$COOLIFY_URL/api/v1/applications/$STAGING_UUID/envs" \
         -H "Authorization: Bearer $COOLIFY_API_TOKEN" | \
@@ -94,20 +104,128 @@ for ev in json.load(sys.stdin):
 " 2>/dev/null || echo "")
 
     if [ -n "$env_uuid" ]; then
-        # Delete existing, then recreate (Coolify API doesn't support PATCH on envs)
         curl -s -X DELETE "$COOLIFY_URL/api/v1/applications/$STAGING_UUID/envs/$env_uuid" \
             -H "Authorization: Bearer $COOLIFY_API_TOKEN" > /dev/null 2>&1 || true
     fi
 
-    # Create new env var
     curl -s -X POST "$COOLIFY_URL/api/v1/applications/$STAGING_UUID/envs" \
         -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
         -H "Content-Type: application/json" \
         -d "{\"key\": \"$key\", \"value\": \"$value\", \"is_preview\": false}" > /dev/null
 }
 
-# --- Status ---
-if [ "$SHOW_STATUS" = true ]; then
+# --- Helper: save session to state file ---
+save_session() {
+    local lib_branch="$1"
+    local docs_branch="$2"
+    local manual="$3"
+    local purpose="$4"
+    local status="$5"
+
+    python3 -c "
+import json
+state = json.load(open('$STATE_FILE'))
+state['session'] = {
+    'lib_branch': '$lib_branch',
+    'docs_branch': '$docs_branch',
+    'manual': '$manual',
+    'purpose': '''$purpose''',
+    'status': '$status',
+    'deployed_at': __import__('datetime').datetime.now().isoformat(timespec='seconds')
+}
+json.dump(state, open('$STATE_FILE', 'w'), indent=2)
+print('Session saved.')
+"
+}
+
+# --- Helper: clear session from state file ---
+clear_session() {
+    python3 -c "
+import json
+state = json.load(open('$STATE_FILE'))
+state.pop('session', None)
+json.dump(state, open('$STATE_FILE', 'w'), indent=2)
+"
+}
+
+# --- Helper: show session info with staleness warning ---
+show_session() {
+    python3 -c "
+import json, sys
+from datetime import datetime
+
+state = json.load(open('$STATE_FILE'))
+session = state.get('session')
+if not session:
+    print('No active staging session.')
+    print('Staging is on main/main (idle).')
+    sys.exit(0)
+
+print('Active session:')
+print(f\"  Lib branch:  {session.get('lib_branch', '?')}\")
+print(f\"  Docs branch: {session.get('docs_branch', '?')}\")
+print(f\"  Manual:      {session.get('manual', '?')}\")
+print(f\"  Purpose:     {session.get('purpose', '-')}\")
+print(f\"  Status:      {session.get('status', '?')}\")
+print(f\"  Deployed at: {session.get('deployed_at', '?')}\")
+
+deployed = session.get('deployed_at', '')
+if deployed:
+    try:
+        dt = datetime.fromisoformat(deployed)
+        age = datetime.now() - dt
+        days = age.days
+        hours = age.seconds // 3600
+        if days >= $STALE_DAYS:
+            print(f\"\")
+            print(f\"  ⚠️  STALE SESSION — {days}d {hours}h old (threshold: ${STALE_DAYS}d)\")
+            print(f\"  Action needed: --conclude (merge & deploy) or --cleanup (discard)\")
+        elif days >= 1:
+            print(f\"  Age: {days}d {hours}h\")
+        else:
+            print(f\"  Age: {hours}h\")
+    except Exception:
+        pass
+"
+}
+
+# --- Helper: trigger deploy ---
+trigger_deploy() {
+    echo "Triggering deploy..."
+    result=$(curl -s "$COOLIFY_URL/api/v1/deploy?uuid=$STAGING_UUID&force=true" \
+        -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
+        -H "Accept: application/json")
+
+    if echo "$result" | grep -q "deployment queued"; then
+        echo "Deploy triggered successfully!"
+        echo "Watch progress: $COOLIFY_URL"
+        echo "URL: https://docs-staging.streamtex.org"
+    else
+        echo "Deploy failed: $result"
+        exit 1
+    fi
+}
+
+# --- Helper: reset staging to main/main ---
+reset_to_main() {
+    echo "[1/3] Setting docs branch to 'main'..."
+    curl -s -X PATCH "$COOLIFY_URL/api/v1/applications/$STAGING_UUID" \
+        -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d '{"git_branch": "main"}' > /dev/null
+
+    echo "[2/3] Setting STX_BRANCH=main..."
+    update_env "STX_BRANCH" "main"
+
+    echo "[3/3] Triggering deploy on main/main..."
+    trigger_deploy
+    clear_session
+}
+
+# ============================================================
+# ACTION: status
+# ============================================================
+if [ "$ACTION" = "status" ]; then
     echo "=== StreamTeX Staging Status ==="
     result=$(curl -s "$COOLIFY_URL/api/v1/applications/$STAGING_UUID" \
         -H "Authorization: Bearer $COOLIFY_API_TOKEN")
@@ -115,31 +233,149 @@ if [ "$SHOW_STATUS" = true ]; then
 import json,sys
 app = json.load(sys.stdin)
 print(f\"Service:     {app.get('name','?')}\")
-print(f\"UUID:        {app.get('uuid','?')}\")
 print(f\"Status:      {app.get('status','?')}\")
-print(f\"Docs branch: {app.get('git_branch','?')}\")
-print(f\"Dockerfile:  {app.get('dockerfile_location','?')}\")
 print(f\"FQDN:        {app.get('fqdn','?')}\")
 "
     echo ""
-    echo "Environment variables:"
-    curl -s "$COOLIFY_URL/api/v1/applications/$STAGING_UUID/envs" \
-        -H "Authorization: Bearer $COOLIFY_API_TOKEN" | python3 -c "
-import json,sys
-for ev in json.load(sys.stdin):
-    if not ev.get('is_preview', False):
-        print(f\"  {ev.get('key','?'):15s} = {ev.get('value','?')}\")
-"
+    show_session
     exit 0
 fi
 
-# --- Deploy ---
+# ============================================================
+# ACTION: cleanup — reset to main, optionally delete branches
+# ============================================================
+if [ "$ACTION" = "cleanup" ]; then
+    echo "=== StreamTeX Staging Cleanup ==="
+    show_session
+    echo ""
+
+    # Read current session branches before clearing
+    SESSION_LIB=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('lib_branch','main'))" 2>/dev/null)
+    SESSION_DOCS=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('docs_branch','main'))" 2>/dev/null)
+
+    read -p "Reset staging to main/main? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborted."
+        exit 0
+    fi
+
+    reset_to_main
+
+    # Offer to delete branches
+    if [ "$SESSION_LIB" != "main" ]; then
+        echo ""
+        read -p "Delete lib branch '$SESSION_LIB' from remote? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            (cd "$LIB_DIR" && git push origin --delete "$SESSION_LIB" 2>/dev/null && echo "  Deleted origin/$SESSION_LIB (lib)") || echo "  Could not delete origin/$SESSION_LIB (may already be deleted)"
+        fi
+    fi
+
+    if [ "$SESSION_DOCS" != "main" ]; then
+        read -p "Delete docs branch '$SESSION_DOCS' from remote? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            (cd "$SCRIPT_DIR" && git push origin --delete "$SESSION_DOCS" 2>/dev/null && echo "  Deleted origin/$SESSION_DOCS (docs)") || echo "  Could not delete origin/$SESSION_DOCS (may already be deleted)"
+        fi
+    fi
+
+    echo ""
+    echo "Cleanup complete. Staging is back on main/main."
+    exit 0
+fi
+
+# ============================================================
+# ACTION: conclude — merge branches to main, cleanup, redeploy
+# ============================================================
+if [ "$ACTION" = "conclude" ]; then
+    echo "=== StreamTeX Staging Conclude ==="
+    show_session
+    echo ""
+
+    SESSION_LIB=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('lib_branch','main'))" 2>/dev/null)
+    SESSION_DOCS=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('docs_branch','main'))" 2>/dev/null)
+
+    if [ "$SESSION_LIB" = "main" ] && [ "$SESSION_DOCS" = "main" ]; then
+        echo "No branches to merge — staging is already on main/main."
+        exit 0
+    fi
+
+    # Merge lib branch
+    if [ "$SESSION_LIB" != "main" ]; then
+        echo ""
+        read -p "Merge lib branch '$SESSION_LIB' into main? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            echo "  Merging $SESSION_LIB → main (lib)..."
+            (cd "$LIB_DIR" && git checkout main && git pull && git merge "$SESSION_LIB" && git push) || {
+                echo "  ERROR: Merge failed. Resolve manually, then re-run --conclude."
+                exit 1
+            }
+            echo "  Deleting branch $SESSION_LIB..."
+            (cd "$LIB_DIR" && git branch -d "$SESSION_LIB" 2>/dev/null; git push origin --delete "$SESSION_LIB" 2>/dev/null) || true
+        fi
+    fi
+
+    # Merge docs branch
+    if [ "$SESSION_DOCS" != "main" ]; then
+        echo ""
+        read -p "Merge docs branch '$SESSION_DOCS' into main? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            echo "  Merging $SESSION_DOCS → main (docs)..."
+            (cd "$SCRIPT_DIR" && git checkout main && git pull && git merge "$SESSION_DOCS" && git push) || {
+                echo "  ERROR: Merge failed. Resolve manually, then re-run --conclude."
+                exit 1
+            }
+            echo "  Deleting branch $SESSION_DOCS..."
+            (cd "$SCRIPT_DIR" && git branch -d "$SESSION_DOCS" 2>/dev/null; git push origin --delete "$SESSION_DOCS" 2>/dev/null) || true
+        fi
+    fi
+
+    # Reset staging to main
+    echo ""
+    echo "Resetting staging to main/main..."
+    reset_to_main
+
+    echo ""
+    echo "Conclude complete. Branches merged, staging reset to main."
+    echo "Note: if lib changes were merged, remember to publish to PyPI before prod deploy."
+    exit 0
+fi
+
+# ============================================================
+# ACTION: deploy
+# ============================================================
 echo "=== StreamTeX Staging Deploy ==="
 echo "Manual:      $MANUAL ($FOLDER)"
 echo "Docs branch: $DOCS_BRANCH"
 echo "Lib branch:  $LIB_BRANCH"
 echo "Service:     $STAGING_UUID"
 echo ""
+
+# Warn if overwriting an existing session with different branches
+EXISTING_LIB=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('lib_branch',''))" 2>/dev/null)
+EXISTING_DOCS=$(python3 -c "import json; s=json.load(open('$STATE_FILE')).get('session',{}); print(s.get('docs_branch',''))" 2>/dev/null)
+
+if [ -n "$EXISTING_LIB" ] && [ "$EXISTING_LIB" != "main" ] && [ "$EXISTING_LIB" != "$LIB_BRANCH" ]; then
+    echo "⚠️  Warning: overwriting existing session (lib: $EXISTING_LIB → $LIB_BRANCH)"
+    read -p "Continue? (y/n) " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] || exit 0
+fi
+
+if [ -n "$EXISTING_DOCS" ] && [ "$EXISTING_DOCS" != "main" ] && [ "$EXISTING_DOCS" != "$DOCS_BRANCH" ]; then
+    echo "⚠️  Warning: overwriting existing session (docs: $EXISTING_DOCS → $DOCS_BRANCH)"
+    read -p "Continue? (y/n) " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] || exit 0
+fi
+
+# Prompt for purpose if deploying non-main branches without one
+if [ -z "$PURPOSE" ] && { [ "$LIB_BRANCH" != "main" ] || [ "$DOCS_BRANCH" != "main" ]; }; then
+    read -p "Purpose of this staging session (optional): " PURPOSE
+fi
 
 # Step 1: Update the docs branch
 echo "[1/4] Setting docs branch to '$DOCS_BRANCH'..."
@@ -158,16 +394,7 @@ update_env "STX_BRANCH" "$LIB_BRANCH"
 
 # Step 4: Trigger deploy
 echo "[4/4] Triggering deploy..."
-result=$(curl -s "$COOLIFY_URL/api/v1/deploy?uuid=$STAGING_UUID&force=true" \
-    -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
-    -H "Accept: application/json")
+trigger_deploy
 
-if echo "$result" | grep -q "deployment queued"; then
-    echo ""
-    echo "Deploy triggered successfully!"
-    echo "Watch progress: $COOLIFY_URL"
-    echo "URL: https://docs-staging.streamtex.org"
-else
-    echo "Deploy failed: $result"
-    exit 1
-fi
+# Save session
+save_session "$LIB_BRANCH" "$DOCS_BRANCH" "$MANUAL" "$PURPOSE" "testing"

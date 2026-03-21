@@ -35,12 +35,11 @@ EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-# At startup: install the specified streamtex branch, inject staging banner, then launch the manual.
-# This ensures STX_BRANCH (a runtime env var) is respected without needing build args.
-# The install takes ~10-15s — acceptable for staging, keeps the workflow simple.
+# At startup: install the specified streamtex branch, verify it, then launch.
+# Uses venv binaries directly (no uv run) to avoid any sync/cache interference.
 ENTRYPOINT ["/bin/sh", "-c", \
             "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
              uv pip install --no-cache --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
-             uv run --no-sync python -c \"import streamtex; print('streamtex version:', streamtex.__version__)\" && \
+             /app/.venv/bin/python -c \"import streamtex; print('streamtex version:', streamtex.__version__)\" && \
              sh /app/staging-banner.sh && \
-             cd /app/${FOLDER} && exec uv run --no-sync streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]
+             cd /app/${FOLDER} && exec /app/.venv/bin/streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

@@ -40,6 +40,6 @@ HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 # The install takes ~10-15s — acceptable for staging, keeps the workflow simple.
 ENTRYPOINT ["/bin/sh", "-c", \
             "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
-             uv pip install --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
+             uv pip install --no-cache --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
              sh /app/staging-banner.sh && \
              cd /app/${FOLDER} && exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

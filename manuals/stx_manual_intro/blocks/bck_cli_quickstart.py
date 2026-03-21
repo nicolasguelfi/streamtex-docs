@@ -38,22 +38,44 @@ def build():
     )
     st_space("v", 2)
 
+    # --- Prerequisites ---
+    st_write(bs.sub, "Prerequisites", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        The stx CLI requires Python 3.11+, git, and uv (recommended).
+        If uv is not installed, run one of these commands first.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# macOS with Homebrew
+brew install uv
+
+# Any platform (with pip)
+pip install uv
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
     # --- Installation ---
     st_write(bs.sub, "Installation", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Install the CLI as a global tool with uv.
-        This makes the stx command available everywhere.
+        Install the CLI as a global tool with uv (recommended)
+        or pip. This makes the stx command available everywhere.
     """)
     st_space("v", 1)
 
     show_code("""\
-# Recommended: install as a global tool
+# With uv (recommended)
 uv tool install streamtex[cli]
 
-# Or as a project dependency
-uv add streamtex[cli]
+# With pip (alternative)
+pip install streamtex[cli]
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 

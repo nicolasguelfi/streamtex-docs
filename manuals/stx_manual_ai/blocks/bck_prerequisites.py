@@ -51,7 +51,9 @@ def build():
     show_explanation("""\
         uv is a fast Python package manager that replaces pip and venv.
         StreamTeX projects use uv for dependency management, virtual
-        environment creation, and command execution.
+        environment creation, and command execution. If uv is not
+        available, most stx commands still work, and you can use pip
+        as an alternative for package installation.
     """)
     st_space("v", 1)
 
@@ -59,8 +61,14 @@ def build():
         # Install uv (macOS / Linux)
         curl -LsSf https://astral.sh/uv/install.sh | sh
 
-        # Or with Homebrew
+        # Or with Homebrew (macOS)
         brew install uv
+
+        # Windows (PowerShell)
+        powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+        # Any platform (with pip)
+        pip install uv
 
         # Verify installation
         uv --version

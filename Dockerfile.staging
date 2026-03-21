@@ -35,11 +35,17 @@ EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-# At startup: install the specified streamtex branch, verify it, then launch.
+# At startup: install the specified streamtex branch, collect metadata, inject banner, launch.
 # Uses venv binaries directly (no uv run) to avoid any sync/cache interference.
+# Exports STX_VERSION, STX_DOCS_BRANCH, STX_DOCS_COMMIT, STX_DEPLOY_TIME for the banner.
 ENTRYPOINT ["/bin/sh", "-c", \
             "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
              uv pip install --no-cache --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
-             /app/.venv/bin/python -c \"import streamtex; print('streamtex version:', streamtex.__version__)\" && \
+             export STX_VERSION=$(/app/.venv/bin/python -c 'import streamtex; print(streamtex.__version__)') && \
+             export STX_LIB_COMMIT=$(/app/.venv/bin/python -c 'from importlib.metadata import distribution; import json; d=distribution(\"streamtex\"); du=d.read_text(\"direct_url.json\"); print(json.loads(du)[\"vcs_info\"][\"commit_id\"][:7])' 2>/dev/null || echo '?') && \
+             export STX_DOCS_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?') && \
+             export STX_DOCS_COMMIT=$(git rev-parse --short HEAD 2>/dev/null || echo '?') && \
+             export STX_DEPLOY_TIME=$(date '+%Y-%m-%d %H:%M') && \
+             echo \"streamtex $STX_VERSION | lib: $STX_BRANCH | docs: $STX_DOCS_BRANCH @ $STX_DOCS_COMMIT\" && \
              sh /app/staging-banner.sh && \
              cd /app/${FOLDER} && exec /app/.venv/bin/streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

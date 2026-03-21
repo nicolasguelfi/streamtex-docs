@@ -190,15 +190,17 @@ def build():
                     gap="24px",
                 ) as g:
                     with g.cell():
-                        st_image(
-                            uri="static/images/bck_the_solution.png",
-                            width="100%",
-                        )
+                        # TODO: generate AI image and uncomment
+                        # st_image(
+                        #     uri="static/images/bck_the_solution.png",
+                        #     width="100%",
+                        # )
                         # IMAGE PROMPT: "Minimalist flat illustration of
                         #   Python code transforming into a beautiful
                         #   presentation screen, dark bg (#1a1a2e),
                         #   accent cyan (#00d4ff), no text, 16:9"
                         # FILENAME: static/images/bck_the_solution.png
+                        st_space("v", 4)
                     with g.cell():
                         with st_list(
                             l_style=bs.body, li_style=bs.body,

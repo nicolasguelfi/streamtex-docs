@@ -22,6 +22,9 @@ RUN uv sync --no-sources --no-dev && \
 COPY manuals/ ./manuals/
 COPY CHANGELOG.md ./
 
+# Staging banner injection script (patches Streamlit's index.html at startup)
+COPY staging-banner.sh ./
+
 # Runtime env vars (set via Coolify API or UI)
 # FOLDER: which manual to serve (default: intro)
 # STX_BRANCH: which streamtex library branch to install (default: main)
@@ -32,10 +35,11 @@ EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-# At startup: install the specified streamtex branch, then launch the manual.
+# At startup: install the specified streamtex branch, inject staging banner, then launch the manual.
 # This ensures STX_BRANCH (a runtime env var) is respected without needing build args.
 # The install takes ~10-15s — acceptable for staging, keeps the workflow simple.
 ENTRYPOINT ["/bin/sh", "-c", \
             "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
              uv pip install --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
+             sh /app/staging-banner.sh && \
              cd /app/${FOLDER} && exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

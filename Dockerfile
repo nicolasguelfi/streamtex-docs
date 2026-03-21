@@ -14,13 +14,24 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Install dependencies (cached layer)
+# .stx-version is copied first: changing the required version invalidates the cache.
 # --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path
 # --upgrade-package streamtex forces latest PyPI version regardless of uv.lock
 # Then strip the sources section so "uv run" won't try to re-resolve the local path
-COPY pyproject.toml uv.lock ./
+COPY .stx-version pyproject.toml uv.lock ./
 RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
     sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
     uv run playwright install --with-deps chromium
+
+# Fail the build if the installed streamtex version is older than required
+RUN REQUIRED=$(cat .stx-version | tr -d '[:space:]') && \
+    INSTALLED=$(uv run python -c "import streamtex; print(streamtex.__version__)") && \
+    echo "streamtex: required >= ${REQUIRED}, installed ${INSTALLED}" && \
+    uv run python -c "import sys, streamtex; \
+r = tuple(int(x) for x in '${REQUIRED}'.split('.')); \
+i = tuple(int(x) for x in streamtex.__version__.split('.')); \
+sys.exit(1) if i < r else sys.exit(0)" || \
+    { echo "ERROR: streamtex ${INSTALLED} < ${REQUIRED} — aborting build"; exit 1; }
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 COPY manuals/ ./manuals/

@@ -8,6 +8,7 @@ from streamtex import (
     st_write, st_block, st_space,
     PresentationConfig, set_presentation_config,  # noqa: F401 — API coverage
     st_presentation_footer, add_presentation_options,  # noqa: F401 — API coverage
+    ViewMode,  # noqa: F401 — API coverage
 )
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -140,7 +141,60 @@ st_book([
     blocks.bck_agenda,
     blocks.bck_content,
     blocks.bck_conclusion,
-], paginate=True)""")
+], paginate=True, view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS])""")
+        st_space("v", 3)
+
+        # --------------------------------------------------------------
+        # View Modes
+        # --------------------------------------------------------------
+        st_write(bs.sub, "View Modes", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            The view_modes parameter on st_book() controls which viewing
+            modes are available to the reader. By default both Paginated
+            and Continuous modes are offered via a radio button in the
+            sidebar. You can restrict the available modes by passing a
+            subset — if only one mode is listed, the radio button is
+            hidden entirely.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import st_book, ViewMode
+
+# Both modes available (default — radio button visible)
+st_book(blocks, view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS])
+
+# Paginated only — radio button hidden
+st_book(blocks, view_modes=[ViewMode.PAGINATED])
+
+# Continuous only — radio button hidden
+st_book(blocks, view_modes=[ViewMode.CONTINUOUS])
+
+# None = both modes (same as omitting the parameter)
+st_book(blocks, view_modes=None)""")
+        st_space("v", 1)
+
+        show_details("""\
+            Typical use case: restrict a deployed web version to
+            paginated-only while keeping both modes during local
+            development.
+
+            import os
+            from streamtex import st_book, ViewMode
+
+            if os.getenv("STX_DEPLOYED"):
+                modes = [ViewMode.PAGINATED]
+            else:
+                modes = [ViewMode.PAGINATED, ViewMode.CONTINUOUS]
+
+            st_book(blocks, paginate=True, view_modes=modes)
+
+            When a PresentationProfile switch targets a mode that is
+            not in the allowed list, the value is automatically clamped
+            to the first allowed mode.
+        """)
         st_space("v", 3)
 
         # --------------------------------------------------------------

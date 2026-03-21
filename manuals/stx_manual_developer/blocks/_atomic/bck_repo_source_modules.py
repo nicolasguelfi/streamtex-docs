@@ -61,6 +61,7 @@ def build():
 
         show_code("""\
             book.py         # st_book() — page orchestration (paginated/continuous)
+            loading.py      # Loading overlay with progress percentage
             banner.py       # st_banner() — top banner rendering
             toc.py          # st_toc() — table of contents generation
             marker.py       # st_marker() — navigation markers

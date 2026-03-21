@@ -27,7 +27,25 @@ project_name/
     themes.py              # Theme overrides (dict)
   static/images/           # Image assets
   .streamlit/config.toml   # MUST have enableStaticServing = true
+  .claude/                 # Claude Code configuration
+    references/            # Read-only — coding standards, cheatsheet
+    commands/              # Read-only — slash commands (+ user custom commands)
+    developer/             # Read-only — skills, agents
+    designer/              # Read-only — skills, agents, templates, tools
+    custom/                # User personalizations (never overwritten)
+      references/          # Extra rules loaded after official ones
+      skills/              # Additional skills
+      templates/           # Custom project templates
+      README.md            # Usage instructions
 ```
+
+### `.claude/custom/` — User Customizations
+Files in `.claude/` (except `custom/`) are **read-only** — installed and updated by `stx claude update`.
+The `.claude/custom/` directory is for user-specific extensions that are **never overwritten** by updates.
+- Add rules in `custom/references/` (loaded by Claude alongside official references)
+- Add skills in `custom/skills/`
+- Add templates in `custom/templates/`
+- Custom slash commands go in `.claude/commands/` directly (Claude Code only scans that path)
 
 ## 4. Mandatory Imports
 
@@ -168,8 +186,8 @@ gap_style = Style("gap:24px;", "grid_gap")
 with st_grid(cols=2, grid_style=gap_style):
     # 2-column layout with 24px gap (using grid_style)
 
-# Common column patterns:
-st_grid(cols=2)                                    # 2 equal columns
+# Common column patterns (fixed — use responsive variant for narrow screens):
+st_grid(cols=2)                                    # 2 equal columns (fixed)
 st_grid(cols="1fr 1fr 1fr")                       # 3 equal columns (CSS syntax)
 st_grid(cols="auto 1fr")                          # First col: fit content, second: rest
 st_grid(cols="repeat(auto-fill, minmax(200px, 1fr))")  # Responsive cards
@@ -587,8 +605,8 @@ st_book([...], toc_config=toc, marker_config=marker_config)
 | `popup_open` | `bool` | `False` | Initial state of the marker popup list |
 | `next_keys` | `list[str]` | `["PageDown"]` | Keys to navigate forward (supports modifier syntax) |
 | `prev_keys` | `list[str]` | `["PageUp"]` | Keys to navigate backward |
-| `draggable` | `bool` | `False` | Allow dragging the widget anywhere (position in localStorage) |
-| `collapsible` | `bool` | `False` | Show ⋮ button to collapse/expand (state in localStorage) |
+| `draggable` | `bool` | `True` | Allow dragging the widget anywhere (position in localStorage) |
+| `collapsible` | `bool` | `True` | Show ⋮ button to collapse/expand (state in localStorage) |
 
 ### Per-heading overrides
 
@@ -744,3 +762,54 @@ Explicit values always override auto defaults.
 - `banner.py` — BannerMode enum, BannerConfig dataclass, _render_banner()
 - `book.py` — Resolves banner config (banner > monties_color > banner_color),
   passes BannerConfig to _paginated_book(), calls _render_banner() for top/bottom banners.
+
+## 18. Presentation Profiles
+
+### Overview
+
+Presentation profiles let users switch between named display configurations
+(Desktop, Mobile, Presenter, etc.) at runtime via the sidebar or the floating
+navigation bar. Each profile bundles mode, layout, wrap, and slide break settings.
+
+### Recommended setup
+
+```python
+from streamtex import PresentationProfile, st_book
+
+st_book([...], presentation_profiles=PresentationProfile.desktop_mobile_preset())
+```
+
+### View Mode Restriction
+
+Restrict which view modes (Paginated / Continuous) are available in the sidebar:
+
+```python
+from streamtex import st_book, ViewMode
+
+# Allow both modes (default)
+st_book([...], view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS])
+
+# Lock to paginated only (hides the View radio in sidebar)
+st_book([...], paginate=True, view_modes=[ViewMode.PAGINATED])
+```
+
+When `view_modes` contains a single mode, the View radio is hidden. When `None` (default), both modes are available. Profile switches that target a restricted mode are automatically clamped to the first allowed mode.
+
+### Factory presets
+
+```python
+PresentationProfile.desktop_mobile_preset()  # Desktop (90%, 100%) + Mobile (100%, 60%)
+PresentationProfile.responsive_preset()      # Desktop + Tablet + Mobile
+PresentationProfile.presentation_preset()    # Presenter + Audience + Handout
+```
+
+All presets default to `PAGINATED` mode. The `PresentationProfile` dataclass
+follows the same pattern as `BannerConfig` and `SlideBreakConfig`.
+
+### Architecture
+
+- `presentation_profile.py` — PresentationProfile, PageLayout, ViewMode,
+  SlideBreakDisplayConfig, ProfileConfig, apply_profile(), is_profile_modified()
+- `book.py` — Profile selectbox in sidebar Settings, profile switch detection,
+  hidden stx_prof_ buttons for floating bar JS interaction
+- `marker.py` — Phone icon popup in floating bar, profile_names/active_profile params

@@ -24,12 +24,15 @@ def build():
     st_space("v", 2)
 
     show_explanation("""\
-        The banner is the header bar displayed at the top of every
-        page in a StreamTeX book. It shows the project title,
-        navigation progress, and page count.
+        The banner is the navigation header bar displayed at the top
+        of every page in a StreamTeX book. It shows the project title,
+        navigation arrows, and dividers between sections.
 
         BannerConfig controls its appearance and behavior. Pass it
         to st_book() via the banner= parameter.
+
+        Note: the loading progress bar is a separate feature controlled
+        by st_book(loading=True), not by BannerConfig.
     """)
     st_space("v", 2)
 
@@ -41,12 +44,12 @@ def build():
         BannerMode is an enum with three values that control
         how the banner is rendered:
 
-        - **FULL** \u2014 Full-height banner with title, progress bar,
-        and page count. Best for formal documents and manuals.
+        - **FULL** \u2014 Full-height banner with title, navigation
+        arrows, and dividers. Best for formal documents and manuals.
 
         - **COMPACT** \u2014 Slim banner with a condensed layout. Shows
-        the title and a thin progress indicator. Suitable for
-        presentations and lightweight projects.
+        the title in a thinner strip. Suitable for presentations
+        and lightweight projects.
 
         - **HIDDEN** \u2014 No banner at all. The content starts
         immediately at the top of the page. Use when you need
@@ -94,8 +97,8 @@ def build():
         banner = BannerConfig(
             mode=BannerMode.FULL,
             color="rgba(211, 47, 47, 0.8)",
-            show_progress=True,
-            show_page_count=True,
+            show_title=True,
+            show_arrows=True,
         )
     """, language="python")
     st_space("v", 2)
@@ -106,14 +109,13 @@ def build():
 
     show_explanation("""\
         - **FULL mode** \u2014 A tall header bar spanning the full width.
-        Displays the project title centered, a horizontal progress
-        bar below the title, and a page counter (e.g. "3 / 12")
-        on the right side. Background uses the configured color.
+        Displays the project title centered, navigation arrows on
+        the sides, and dividers between sections. Background uses
+        the configured color.
 
         - **COMPACT mode** \u2014 A thin strip at the top of the page.
-        The title appears left-aligned in a smaller font. A narrow
-        progress line runs along the bottom edge of the strip.
-        Page count is hidden by default.
+        The title appears left-aligned in a smaller font. Navigation
+        arrows are still available but in a compact layout.
 
         - **HIDDEN mode** \u2014 Nothing is rendered. The page content
         begins at the very top with no header spacing.
@@ -144,8 +146,8 @@ def build():
             banner=BannerConfig(
                 mode=BannerMode.COMPACT,
                 color="rgba(25, 118, 210, 0.9)",
-                show_progress=True,
-                show_page_count=False,
+                show_title=True,
+                show_dividers=False,
             ),
         )
     """, language="python")

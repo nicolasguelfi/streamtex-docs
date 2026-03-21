@@ -491,6 +491,7 @@ st_book(
     page_width=90,                  # Page width as % of browser width (default 90)
     zoom=100,                       # Default zoom level as % (default 100)
     pdf_config=None,                # PdfConfig for PDF export defaults
+    loading=True,                   # Show loading overlay with progress (default True)
     banner_color="rgba(211,47,47,0.8)",  # Legacy — use banner=BannerConfig(...) instead
     monties_color=None,             # Legacy — use banner=BannerConfig(...) instead
 )

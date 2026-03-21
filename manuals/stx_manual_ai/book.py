@@ -6,7 +6,7 @@ import tomllib
 import streamlit as st
 import setup  # noqa: F401
 import streamtex as stx
-from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode, PresentationProfile
+from streamtex import st_book, TOCConfig, NumberingMode, MarkerConfig, BannerConfig, PdfConfig, ExportConfig, ExportMode, PresentationProfile, ViewMode
 from pathlib import Path
 
 from custom.styles import Styles as s
@@ -144,5 +144,6 @@ st_book([
             ),
         ),
     ],
+    view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS],
     doc_version=_doc_version,
     presentation_profiles=PresentationProfile.desktop_mobile_preset())

@@ -62,7 +62,7 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 - `st_markdown(style, file=)` — Markdown rendering (Streamlit native engine)
 
 ### Organization & Navigation
-- `st_book(blocks, paginate=True|False)` — Book orchestration with paginated/continuous modes
+- `st_book(blocks, paginate=True|False, loading=True)` — Book orchestration with paginated/continuous modes + loading overlay
 - `st_collection(config)` — Multi-project collection system
 
 ### Styling

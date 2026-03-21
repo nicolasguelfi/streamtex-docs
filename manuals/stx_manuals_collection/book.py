@@ -11,7 +11,7 @@ from custom.themes import dark
 
 import streamtex as stx
 import streamtex.styles as sts
-from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig, PresentationProfile
+from streamtex import TOCConfig, NumberingMode, st_book, PdfConfig, PresentationProfile, ViewMode
 
 _doc_version = tomllib.loads((Path(__file__).parent.parent.parent / "pyproject.toml").read_text()).get("project", {}).get("version", "?")
 _spec = importlib.util.spec_from_file_location("bck_changelog",
@@ -42,5 +42,6 @@ st_book([
        margin_top="0", margin_bottom="0",
        margin_left="0", margin_right="0",
    ),
+   view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS],
    doc_version=_doc_version,
    presentation_profiles=PresentationProfile.desktop_mobile_preset())

@@ -565,6 +565,7 @@ st_book(
     export=True,                    # Enable HTML export
     export_title="StreamTeX Export",
     paginate=False,                 # One block per page
+    view_modes=None,                # List[ViewMode] — restrict allowed view modes (None=both)
     banner=None,                    # BannerConfig for paginated navigation banners
     bib_sources=None,               # List of .bib/.json/.ris paths
     bib_config=None,                # BibConfig for bibliography
@@ -573,10 +574,95 @@ st_book(
     zoom=100,                       # Default zoom level as % (default 100)
     pdf_config=None,                # PdfConfig for PDF export defaults
     exports=None,                   # List[ExportConfig] — auto-export to disk (new)
+    presentation_profiles=None,     # List[PresentationProfile] — display profiles
     chrome_banner=True,             # Show browser recommendation banner (Chrome/Edge)
+    doc_version=None,               # str | None — version string shown in sidebar
+    loading=True,                   # Show loading overlay with progress (default True)
     banner_color="rgba(211,47,47,0.8)",  # Legacy — use banner=BannerConfig(...) instead
     monties_color=None,             # Legacy — use banner=BannerConfig(...) instead
 )
+```
+
+### Presentation Profiles — Display Configurations
+
+Named display configurations switchable at runtime via the sidebar or the floating navigation bar.
+
+#### View Mode Restriction (`view_modes`)
+
+Control which view modes are available in the sidebar Settings radio:
+
+```python
+from streamtex import st_book, ViewMode
+
+# Both modes available (default — same as view_modes=None)
+st_book(blocks, view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS])
+
+# Lock to paginated only (hides the View radio)
+st_book(blocks, paginate=True, view_modes=[ViewMode.PAGINATED])
+
+# Lock to continuous only
+st_book(blocks, view_modes=[ViewMode.CONTINUOUS])
+```
+
+When a single mode is given, the View radio is hidden and the document is locked to that mode.
+Useful for deployed documents where switching modes should be disabled.
+
+```python
+from streamtex import (
+    PresentationProfile, PageLayout, ViewMode,
+    SlideBreakDisplayConfig, ProfileConfig,
+)
+
+# Define custom profiles
+profiles = [
+    PresentationProfile(
+        name="Desktop",
+        layout=PageLayout(width=90, zoom=100),
+    ),
+    PresentationProfile(
+        name="Mobile",
+        layout=PageLayout(width=100, zoom=60),
+        breaks=SlideBreakDisplayConfig(enabled=False),
+    ),
+]
+
+st_book([...], presentation_profiles=profiles)
+```
+
+**Factory presets** (all default to `PAGINATED` mode):
+
+```python
+# Desktop + Mobile pair
+st_book([...], presentation_profiles=PresentationProfile.desktop_mobile_preset())
+
+# Desktop + Tablet + Mobile
+st_book([...], presentation_profiles=PresentationProfile.responsive_preset())
+
+# Presenter + Audience + Handout (for slide decks)
+st_book([...], presentation_profiles=PresentationProfile.presentation_preset())
+```
+
+**Data types**:
+
+| Type | Fields | Description |
+|------|--------|-------------|
+| `PresentationProfile` | name, mode, layout, wrap, breaks | Top-level profile |
+| `PageLayout` | width, zoom | Page dimensions (no range limits) |
+| `ViewMode` | PAGINATED, CONTINUOUS | View mode enum |
+| `SlideBreakDisplayConfig` | enabled, mode, space | Slide break settings |
+
+**JSON save/load** (`ProfileConfig`):
+
+```python
+from streamtex import ProfileConfig
+
+# Save
+config = ProfileConfig(name="my_config", profiles=profiles)
+config.save("config.json")
+
+# Load
+config = ProfileConfig.load("config.json")
+st_book([...], presentation_profiles=config.profiles)
 ```
 
 ### st_chrome_banner — Browser Recommendation
@@ -1763,7 +1849,6 @@ set_presentation_config(PresentationConfig(
     title="My Presentation",
     aspect_ratio="16/9",       # 16:9 viewport fitting
     footer=True,               # Auto footer via st_presentation_footer()
-    counter_mode="bloc",       # "bloc" = "Bloc 3/12" (sections), "slide" = "Slide 37/282" (markers)
     center_content=True,       # Center slide content vertically
     hide_streamlit_header=True, # Hide Streamlit hamburger menu
 ))
@@ -1881,11 +1966,33 @@ set_presentation_config(PresentationConfig(
     title="My Presentation",
     aspect_ratio="16/9",
     footer=True,
-    counter_mode="bloc",       # "bloc" (default) or "slide" (synced with marker bar)
     center_content=True,
     hide_streamlit_header=True,
 ))
 ```
+
+**PresentationConfig fields:**
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `title` | `str` | `""` | Title displayed in the presentation footer |
+| `subtitle` | `str` | `""` | Optional subtitle (not currently rendered in footer) |
+| `aspect_ratio` | `str` | `"16/9"` | CSS aspect-ratio value ("16/9", "4/3", "16/10") |
+| `enforce_ratio` | `bool` | `True` | Apply aspect-ratio + overflow:hidden to slide container |
+| `footer` | `bool` | `True` | Show fixed slide counter bar at viewport bottom |
+| `counter_mode` | `str` | `"bloc"` | Counter display: `"bloc"` (section count) or `"slide"` (marker-based) |
+| `footer_height` | `str` | `"48px"` | CSS height of the footer bar |
+| `footer_bg` | `str \| None` | `None` | Footer background colour (None = inherit from theme) |
+| `footer_text_color` | `str \| None` | `None` | Footer text colour (None = inherit from theme) |
+| `footer_font_size` | `str` | `"18px"` | Font size for footer text |
+| `center_content` | `bool` | `True` | Vertically centre slide content within viewport |
+| `content_padding` | `str` | `"48px 64px"` | CSS padding inside each slide container |
+| `hide_streamlit_header` | `bool` | `True` | Hide the Streamlit header bar |
+| `hide_streamlit_footer` | `bool` | `True` | Hide the "Made with Streamlit" footer |
+| `hide_deploy_button` | `bool` | `True` | Hide the Streamlit deploy button |
+| `sidebar_default` | `str` | `"collapsed"` | Initial sidebar state ("collapsed" or "expanded") |
+| `slide_transition` | `str` | `"none"` | Transition effect ("none", "fade", "slide") |
+| `transition_duration` | `str` | `"0.3s"` | CSS transition duration |
 
 ### get_presentation_config()
 

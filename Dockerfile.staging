@@ -41,5 +41,6 @@ HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 ENTRYPOINT ["/bin/sh", "-c", \
             "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
              uv pip install --no-cache --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
+             uv run --no-sync python -c \"import streamtex; print('streamtex version:', streamtex.__version__)\" && \
              sh /app/staging-banner.sh && \
-             cd /app/${FOLDER} && exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]
+             cd /app/${FOLDER} && exec uv run --no-sync streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

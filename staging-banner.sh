@@ -8,7 +8,7 @@ set -e
 STX_BRANCH="${STX_BRANCH:-main}"
 
 # Locate Streamlit's index.html
-IDX=$(python3 -c "import streamlit, pathlib; print(pathlib.Path(streamlit.__file__).parent / 'static' / 'index.html')")
+IDX=$(uv run python3 -c "import streamlit, pathlib; print(pathlib.Path(streamlit.__file__).parent / 'static' / 'index.html')")
 
 if [ ! -f "$IDX" ]; then
     echo "[staging-banner] WARNING: Streamlit index.html not found at $IDX — skipping banner injection."

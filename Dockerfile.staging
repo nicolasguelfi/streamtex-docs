@@ -25,11 +25,14 @@ COPY CHANGELOG.md ./
 # Staging banner injection script (patches Streamlit's index.html at startup)
 COPY staging-banner.sh ./
 
-# Runtime env vars (set via Coolify API or UI)
+# Runtime env vars (set via Coolify API or deploy-staging.sh)
 # FOLDER: which manual to serve (default: intro)
 # STX_BRANCH: which streamtex library branch to install (default: main)
+# STX_DOCS_BRANCH, STX_DOCS_COMMIT: set by deploy-staging.sh for banner display
 ENV FOLDER="manuals/stx_manual_intro" \
-    STX_BRANCH="main"
+    STX_BRANCH="main" \
+    STX_DOCS_BRANCH="main" \
+    STX_DOCS_COMMIT="?"
 
 EXPOSE 8501
 
@@ -43,9 +46,7 @@ ENTRYPOINT ["/bin/sh", "-c", \
              uv pip install --no-cache --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
              export STX_VERSION=$(/app/.venv/bin/python -c 'import streamtex; print(streamtex.__version__)') && \
              export STX_LIB_COMMIT=$(/app/.venv/bin/python -c 'from importlib.metadata import distribution; import json; d=distribution(\"streamtex\"); du=d.read_text(\"direct_url.json\"); print(json.loads(du)[\"vcs_info\"][\"commit_id\"][:7])' 2>/dev/null || echo '?') && \
-             export STX_DOCS_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?') && \
-             export STX_DOCS_COMMIT=$(git rev-parse --short HEAD 2>/dev/null || echo '?') && \
              export STX_DEPLOY_TIME=$(date '+%Y-%m-%d %H:%M') && \
-             echo \"streamtex $STX_VERSION | lib: $STX_BRANCH | docs: $STX_DOCS_BRANCH @ $STX_DOCS_COMMIT\" && \
+             echo \"streamtex $STX_VERSION | lib: $STX_BRANCH @ $STX_LIB_COMMIT | docs: $STX_DOCS_BRANCH @ $STX_DOCS_COMMIT\" && \
              sh /app/staging-banner.sh && \
              cd /app/${FOLDER} && exec /app/.venv/bin/streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

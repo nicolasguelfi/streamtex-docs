@@ -208,16 +208,24 @@ trigger_deploy() {
 
 # --- Helper: reset staging to main/main ---
 reset_to_main() {
-    echo "[1/3] Setting docs branch to 'main'..."
+    echo "[1/5] Setting docs branch to 'main'..."
     curl -s -X PATCH "$COOLIFY_URL/api/v1/applications/$STAGING_UUID" \
         -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
         -H "Content-Type: application/json" \
         -d '{"git_branch": "main"}' > /dev/null
 
-    echo "[2/3] Setting STX_BRANCH=main..."
+    echo "[2/5] Setting STX_BRANCH=main..."
     update_env "STX_BRANCH" "main"
 
-    echo "[3/3] Triggering deploy on main/main..."
+    echo "[3/5] Setting STX_DOCS_BRANCH=main..."
+    update_env "STX_DOCS_BRANCH" "main"
+
+    echo "[4/5] Setting STX_DOCS_COMMIT..."
+    local main_commit
+    main_commit=$(cd "$SCRIPT_DIR" && git rev-parse --short origin/main 2>/dev/null || echo "?")
+    update_env "STX_DOCS_COMMIT" "$main_commit"
+
+    echo "[5/5] Triggering deploy on main/main..."
     trigger_deploy
     clear_session
 }
@@ -377,23 +385,33 @@ if [ -z "$PURPOSE" ] && { [ "$LIB_BRANCH" != "main" ] || [ "$DOCS_BRANCH" != "ma
     read -p "Purpose of this staging session (optional): " PURPOSE
 fi
 
+# Resolve docs commit hash locally
+DOCS_COMMIT=$(cd "$SCRIPT_DIR" && git rev-parse --short "origin/$DOCS_BRANCH" 2>/dev/null || echo "?")
+
 # Step 1: Update the docs branch
-echo "[1/4] Setting docs branch to '$DOCS_BRANCH'..."
+echo "[1/6] Setting docs branch to '$DOCS_BRANCH'..."
 curl -s -X PATCH "$COOLIFY_URL/api/v1/applications/$STAGING_UUID" \
     -H "Authorization: Bearer $COOLIFY_API_TOKEN" \
     -H "Content-Type: application/json" \
     -d "{\"git_branch\": \"$DOCS_BRANCH\"}" > /dev/null
 
 # Step 2: Update FOLDER
-echo "[2/4] Setting FOLDER=$FOLDER..."
+echo "[2/6] Setting FOLDER=$FOLDER..."
 update_env "FOLDER" "$FOLDER"
 
 # Step 3: Update STX_BRANCH (lib branch, read at container startup)
-echo "[3/4] Setting STX_BRANCH=$LIB_BRANCH..."
+echo "[3/6] Setting STX_BRANCH=$LIB_BRANCH..."
 update_env "STX_BRANCH" "$LIB_BRANCH"
 
-# Step 4: Trigger deploy
-echo "[4/4] Triggering deploy..."
+# Step 4: Update STX_DOCS_BRANCH and STX_DOCS_COMMIT (for banner display)
+echo "[4/6] Setting STX_DOCS_BRANCH=$DOCS_BRANCH..."
+update_env "STX_DOCS_BRANCH" "$DOCS_BRANCH"
+
+echo "[5/6] Setting STX_DOCS_COMMIT=$DOCS_COMMIT..."
+update_env "STX_DOCS_COMMIT" "$DOCS_COMMIT"
+
+# Step 6: Trigger deploy
+echo "[6/6] Triggering deploy..."
 trigger_deploy
 
 # Save session

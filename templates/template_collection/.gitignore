@@ -24,3 +24,8 @@ Thumbs.db
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Claude profile — managed by stx claude install/update, not git
+.claude/*
+!.claude/custom/
+!.claude/.stx-profile

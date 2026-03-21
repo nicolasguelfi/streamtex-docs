@@ -2,7 +2,7 @@
 
 import streamlit as st
 from pathlib import Path
-from streamtex import st_write, st_space
+from streamtex import st_write, st_space, st_block
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
 
@@ -13,6 +13,7 @@ _CHANGELOG = Path(__file__).resolve().parent.parent.parent.parent / "CHANGELOG.m
 
 class BlockStyles:
     heading = Style("font-size:1.6em; font-weight:bold; text-align:center;", "changelog_heading")
+    body = Style("font-size:1.1em; line-height:1.6;", "changelog_body")
 
 
 bs = BlockStyles
@@ -39,7 +40,8 @@ def build():
                 start = i + 1
                 break
         body = "\n".join(lines[start:]).strip()
-        st.markdown(body)
+        with st_block(bs.body):
+            st.markdown(body)
     else:
         st_write(None, "No changelog available.")
     st_space("v", 2)

@@ -1,0 +1,41 @@
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_BROWSER_GATHERUSAGESTATS=false \
+    UV_LINK_MODE=copy
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y curl git && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
+
+# Install base dependencies (without streamtex — installed at startup from branch)
+COPY pyproject.toml uv.lock ./
+RUN uv sync --no-sources --no-dev && \
+    sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml
+
+# Copy all manuals
+COPY manuals/ ./manuals/
+COPY CHANGELOG.md ./
+
+# Runtime env vars (set via Coolify API or UI)
+# FOLDER: which manual to serve (default: intro)
+# STX_BRANCH: which streamtex library branch to install (default: main)
+ENV FOLDER="manuals/stx_manual_intro" \
+    STX_BRANCH="main"
+
+EXPOSE 8501
+
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+
+# At startup: install the specified streamtex branch, then launch the manual.
+# This ensures STX_BRANCH (a runtime env var) is respected without needing build args.
+# The install takes ~10-15s — acceptable for staging, keeps the workflow simple.
+ENTRYPOINT ["/bin/sh", "-c", \
+            "echo \"Installing streamtex from branch: $STX_BRANCH\" && \
+             uv pip install --force-reinstall \"git+https://github.com/nicolasguelfi/streamtex@${STX_BRANCH}\" && \
+             cd /app/${FOLDER} && exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

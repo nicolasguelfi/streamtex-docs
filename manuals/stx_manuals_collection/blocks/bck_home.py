@@ -18,6 +18,7 @@ _URL_ADVANCED = os.environ.get("STX_URL_TEST_ADVANCED", "http://localhost:8503")
 _URL_DEPLOY = os.environ.get("STX_URL_TEST_DEPLOY", "http://localhost:8504")
 _URL_DEVELOPER = os.environ.get("STX_URL_TEST_DEVELOPER", "http://localhost:8505")
 _URL_AI = os.environ.get("STX_URL_TEST_AI", "http://localhost:8506")
+_URL_CE = os.environ.get("STX_URL_TEST_CE", "http://localhost:8507")
 
 
 class BlockStyles:
@@ -117,6 +118,7 @@ def build():
             with l.item(): st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
             with l.item(): st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
             with l.item(): st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
+            with l.item(): st_write(s.medium, "Compound Engineering: structured document production, 7-phase cycle, 17 agents")
 
     # === Project cards — Row 1 (3 cards) ===
     st_space("v", 2)
@@ -174,10 +176,10 @@ def build():
                 st.link_button("⚡ Open Course", _URL_ADVANCED, use_container_width=True)
             st_space("v", 1)
 
-    # === Project cards — Row 2 (2 cards) ===
+    # === Project cards — Row 2 (3 cards) ===
     st_space("v", 1)
 
-    with st_grid(cols=2, responsive=True, grid_style=bs.grid_with_gap):
+    with st_grid(cols=3, responsive=True, grid_style=bs.grid_with_gap):
 
         # Card 4: Deployment Guide
         with st_block(bs.card_container):
@@ -211,6 +213,23 @@ def build():
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 st.link_button("🔧 Open Guide", _URL_DEVELOPER, use_container_width=True)
+            st_space("v", 1)
+
+        # Card 6: Compound Engineering
+        with st_block(bs.card_container):
+            st_space("v", 1)
+            st_write(s.huge + "text-align:center;", "🔄")
+            st_space("v", 1)
+            st_write(bs.project_title + "text-align:center;", "Compound Engineering")
+            st_space("v", 1)
+            st_write(
+                bs.card_description + "text-align:center;",
+                "Structured document production: 7-phase cycle, 3 pathways, 17 agents",
+            )
+            st_space("v", 2)
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.link_button("🔄 Open Manual", _URL_CE, use_container_width=True)
             st_space("v", 1)
 
     # === Footer ===

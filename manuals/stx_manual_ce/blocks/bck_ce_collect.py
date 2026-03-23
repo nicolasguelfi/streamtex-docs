@@ -67,18 +67,20 @@ def build():
     **4. COLLECT REPORT** — Produce a structured summary for the next phase
     """)
 
+    st_space("v", 1)
+
     show_explanation("Specialized Agents", """
-    Three agents collaborate during COLLECT:
+    Two agents collaborate during COLLECT:
 
     | Agent | Role |
     |-------|------|
     | **source-scanner** | Discovers and inventories all available material |
     | **import-assessor** | Evaluates structural fit and import effort |
-    | **content-strategist** | Classifies items and recommends a collection strategy |
 
-    Each agent writes its findings into the shared collect report. The
-    content-strategist has final authority on classification decisions.
+    Each agent writes its findings into the shared collect report.
     """)
+
+    st_space("v", 1)
 
     show_details("Example Collect Report Output", """
     ```
@@ -106,6 +108,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("Command Reference", """
     ```bash
     # Run COLLECT independently
@@ -121,6 +125,8 @@ def build():
     /stx-ce:collect --incremental
     ```
 
-    The collect report is saved to `.ce/collect-report.md` and is consumed
+    The collect report is saved to `docs/inventory.md` and is consumed
     by the ASSESS phase.
     """)
+
+    st_space("v", 1)

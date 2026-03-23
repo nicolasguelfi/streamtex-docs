@@ -41,13 +41,15 @@ def build():
 
     | Pathway | Trigger Condition | Behavior |
     |---------|-------------------|----------|
-    | **A — Import-heavy** | >60% items are importable | Prioritize import, minimal creation |
-    | **B — Balanced** | Mix of importable and new content | Interleave import and creation |
-    | **C — Creation-heavy** | <20% importable or no sources | Focus on from-scratch production |
+    | **A — Import** | >60% items are importable | Prioritize import, minimal creation |
+    | **B — Improve** | Mix of importable and new content | Interleave import and creation |
+    | **C — Create** | <20% importable or no sources | Focus on from-scratch production |
 
     The pathway determines how the PLAN and PRODUCE phases will operate.
     Pathway detection is automatic but can be overridden with `--pathway A|B|C`.
     """)
+
+    st_space("v", 1)
 
     show_explanation("Material Evaluation", """
     For each collected item, ASSESS produces a quality evaluation:
@@ -68,6 +70,8 @@ def build():
     - Are references and links still valid?
     """)
 
+    st_space("v", 1)
+
     show_explanation("User Dialogue — Requirements R1-R18", """
     ASSESS initiates a structured dialogue to capture user requirements:
 
@@ -87,22 +91,26 @@ def build():
     explicitly discussed.
     """)
 
+    st_space("v", 1)
+
     show_details("Pathway-Specific Behaviors", """
-    **Pathway A (Import-heavy)**
+    **Pathway A (Import)**
     - ASSESS focuses on mapping source items to target blocks
     - Minimal requirements dialogue (R1-R3 only, rest inferred)
     - Produces an import manifest with block-level assignments
 
-    **Pathway B (Balanced)**
+    **Pathway B (Improve)**
     - ASSESS identifies gaps between imported and needed content
     - Medium dialogue (R1-R9 confirmed, R10-R18 inferred)
     - Produces a gap analysis alongside the import manifest
 
-    **Pathway C (Creation-heavy)**
+    **Pathway C (Create)**
     - ASSESS conducts full requirements elicitation (R1-R18)
     - Builds a content specification from scratch
     - Produces a creation brief with detailed block descriptions
     """)
+
+    st_space("v", 1)
 
     show_details("Command Reference", """
     ```bash
@@ -119,5 +127,7 @@ def build():
     /stx-ce:assess --auto
     ```
 
-    The assess report is saved to `.ce/assess-report.md`.
+    The assess report is saved to `docs/assessment.md`.
     """)
+
+    st_space("v", 1)

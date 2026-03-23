@@ -55,6 +55,8 @@ def build():
     to make informed recommendations.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 2: ASSESS — Define Objectives and Explore Angles
 
@@ -82,6 +84,8 @@ def build():
     and trade-off analysis.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Angle Selection Criteria
 
@@ -98,6 +102,8 @@ def build():
     The choice is recorded in the assessment brief and guides the
     entire PLAN and PRODUCE phases.
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 3: PLAN — Build the Skeleton
@@ -119,6 +125,8 @@ def build():
     - Then fill in remaining blocks in reading order
     - Custom styles and helpers scheduled before the blocks that need them
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 4: PRODUCE — Write from Scratch
@@ -143,6 +151,8 @@ def build():
     in prior COMPOUND phases, the block-writer follows them automatically.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Steps 5-6: REVIEW, FIX, and COMPOUND
 
@@ -166,3 +176,5 @@ def build():
     - Block patterns that worked well are documented for future projects
     - The producer profile gains new structural preferences
     """)
+
+    st_space("v", 1)

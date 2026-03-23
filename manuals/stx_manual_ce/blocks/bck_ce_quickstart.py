@@ -85,15 +85,18 @@ def build():
 
     with st_list(list_type=lt.ordered, li_style=s.large, align="center") as l:
         with l.item():
-            st_write((s.bold, "Gate 1 — After ASSESS: "),
+            st_write((s.bold, "Gate 1 — After "), (s.project.titles.phase_kw, "ASSESS"),
+                     (s.bold, ": "),
                      "CE shows the detected pathway, objectives, and "
                      "constraints. You approve or adjust before planning.")
         with l.item():
-            st_write((s.bold, "Gate 2 — After PLAN: "),
+            st_write((s.bold, "Gate 2 — After "), (s.project.titles.phase_kw, "PLAN"),
+                     (s.bold, ": "),
                      "CE shows the block list, structure, and style choices. "
                      "You approve or revise before production starts.")
         with l.item():
-            st_write((s.bold, "Gate 3 — After REVIEW: "),
+            st_write((s.bold, "Gate 3 — After "), (s.project.titles.phase_kw, "REVIEW"),
+                     (s.bold, ": "),
                      "CE shows review findings from 5 perspectives. "
                      "You decide which issues to fix and which to accept.")
     st_space("v", 2)
@@ -136,10 +139,10 @@ def build():
 
     show_details("""\
         After the cycle, check `docs/` for the generated artifacts:
-        - `docs/assess/` — assessment report
-        - `docs/plans/` — production plan
-        - `docs/reviews/` — review findings
-        - `docs/solutions/` — fix log
+        - `docs/assessment.md` — assessment report
+        - `docs/plan.md` — production plan
+        - `docs/review.md` — review findings
+        - `docs/solutions/` — reusable solution packages
 
         These files are reusable references for future cycles.
         Run `stx run` to see your new project live.

@@ -76,6 +76,8 @@ st_book([
     blocks.bck_ce_agents_overview,
     blocks.bck_ce_agents_collect,
     blocks.bck_ce_agents_assess,
+    blocks.bck_ce_agents_plan,
+    blocks.bck_ce_agents_produce,
     blocks.bck_ce_agents_review,
 
     # Part 4: Practical Guides

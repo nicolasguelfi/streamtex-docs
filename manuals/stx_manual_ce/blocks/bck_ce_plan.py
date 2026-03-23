@@ -68,6 +68,8 @@ def build():
     - Milestone checkpoints
     """)
 
+    st_space("v", 1)
+
     show_explanation("Auto Mode vs Interactive Mode", """
     | Aspect | Auto Mode | Interactive Mode |
     |--------|-----------|------------------|
@@ -86,6 +88,8 @@ def build():
     asking for user input at each decision point. See the next block for
     details on the interactive 4-step approach.
     """)
+
+    st_space("v", 1)
 
     show_explanation("Plan Output Format", """
     The plan is saved as a structured document with executable metadata:
@@ -114,6 +118,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("Command Reference", """
     ```bash
     # Auto-plan from assess report
@@ -129,5 +135,7 @@ def build():
     /stx-ce:plan --parts 1,2,3
     ```
 
-    The plan is saved to `.ce/plan.md` and drives the PRODUCE phase.
+    The plan is saved to `docs/plan.md` and drives the PRODUCE phase.
     """)
+
+    st_space("v", 1)

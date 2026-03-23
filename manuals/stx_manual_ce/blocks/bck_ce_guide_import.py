@@ -61,6 +61,8 @@ def build():
     want to import, and adjust priorities if needed.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 2: ASSESS — Analyze Content and Gaps
 
@@ -82,6 +84,8 @@ def build():
     is outdated or irrelevant. Mark those items as "skip" before planning.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 3: PLAN — Design the Structure
 
@@ -101,6 +105,8 @@ def build():
     Review the plan in `docs/plan.md`. Adjust block names, reorder parts,
     or split/merge blocks as needed.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Step 4: PRODUCE — Convert Content
@@ -130,6 +136,8 @@ def build():
     | Gap content | Written from scratch | block-writer |
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 5: REVIEW — Quality Check
 
@@ -148,6 +156,8 @@ def build():
     severity (blocker / major / minor / suggestion) and a specific fix
     recommendation.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Step 6: FIX and COMPOUND
@@ -181,3 +191,5 @@ def build():
     | REVIEW + FIX | 15-30 minutes | 1-2 hours |
     | COMPOUND | 5-10 minutes | 10-20 minutes |
     """)
+
+    st_space("v", 1)

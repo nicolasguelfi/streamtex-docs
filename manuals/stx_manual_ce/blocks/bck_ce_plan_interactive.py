@@ -70,6 +70,8 @@ def build():
     respects this structure.
     """)
 
+    st_space("v", 1)
+
     show_explanation("Step 2: Objectives", """
     With the skeleton locked, CE assigns learning objectives to each block.
 
@@ -93,6 +95,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_explanation("Step 3: Design", """
     Design decisions are made block by block, with sensible defaults.
 
@@ -113,6 +117,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_explanation("Step 4: Final Plan", """
     The final step assembles everything into the production plan.
 
@@ -132,6 +138,8 @@ def build():
     re-entering PLAN with `/stx-ce:plan --revise`.
     """)
 
+    st_space("v", 1)
+
     show_details("Command Reference", """
     ```bash
     # Start interactive planning
@@ -150,3 +158,5 @@ def build():
     Interactive plans are saved incrementally. If interrupted, the process
     resumes from the last completed step.
     """)
+
+    st_space("v", 1)

@@ -81,6 +81,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_explanation("The 3 Gates", """
     Gates are automatic checkpoints that can pause or abort the pipeline:
 
@@ -102,6 +104,8 @@ def build():
     - In `--quick` mode: accepts WARNING-level quality
     """)
 
+    st_space("v", 1)
+
     show_explanation("Behavior Flags", """
     Flags customize how `/stx-ce:go` operates:
 
@@ -122,6 +126,8 @@ def build():
     auto pathway detection, REVIEW-FIX loop enabled.
     """)
 
+    st_space("v", 1)
+
     show_details("Full Pipeline Diagram", """
     ```
     [COLLECT] -> [ASSESS] -> [PLAN] -> [PRODUCE] -> [REVIEW] -> [FIX] -> [COMPOUND]
@@ -134,6 +140,8 @@ def build():
       validate   interactive  approve    on fail     only       quality   merge
     ```
     """)
+
+    st_space("v", 1)
 
     show_details("Command Reference", """
     ```bash
@@ -162,5 +170,7 @@ def build():
     /stx-ce:go --dry-run
     ```
 
-    Pipeline state is persisted in `.ce/pipeline-state.json` for resumability.
+    Pipeline state is persisted in `docs/pipeline-state.json` for resumability.
     """)
+
+    st_space("v", 1)

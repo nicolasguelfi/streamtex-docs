@@ -28,12 +28,12 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             ("The ", (s.project.titles.phase_kw, "REVIEW"),
+             "The ", (s.project.titles.phase_kw, "REVIEW"),
               " phase applies ", (s.bold, "five independent perspectives"),
               " to the produced content. Each reviewer examines the same blocks "
               "but through a different lens, ensuring comprehensive quality coverage. "
               "The ", (s.project.titles.phase_kw, "COMPOUND"),
-              " phase then harvests learnings from the entire cycle."))
+              " phase then harvests learnings from the entire cycle.")
     st_space("v", 1)
 
     show_explanation("""
@@ -63,6 +63,8 @@ def build():
     and tone. Suggests rewording for awkward sentences, flags factual errors,
     and checks that all promised content is actually delivered.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Review Severity Levels
@@ -98,6 +100,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### COMPOUND Agents
 
@@ -123,12 +127,14 @@ def build():
       bug reports, feature requests, and documentation improvements.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### COMPOUND Agent Outputs
 
     | Agent | Output | Template Used | Destination |
     |-------|--------|---------------|-------------|
-    | feedback-detector | Insight report | `tpl_feedback_report` | dev-governance input |
+    | feedback-detector | Insight report | `tpl_ecosystem_feedback` | dev-governance input |
     | dev-governance | Solution package | `tpl_solution_package` | Project `docs/solutions/` |
     | dev-governance | Profile update | `tpl_producer_profile` | Project `docs/profile.md` |
     | dev-governance | Ecosystem feedback | `tpl_ecosystem_feedback` | GitHub issue / discussion |
@@ -141,3 +147,5 @@ def build():
     ecosystem feedback items. The feedback-detector uses heuristics to avoid
     generating noise — it only reports insights that meet a significance threshold.
     """)
+
+    st_space("v", 1)

@@ -60,6 +60,8 @@ def build():
     full current state of the project.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 2: ASSESS — Identify Gaps and Opportunities
 
@@ -83,6 +85,8 @@ def build():
     The gap report is the key output here. It drives all subsequent work.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Common Gap Categories in Pathway B
 
@@ -96,6 +100,8 @@ def build():
     | redundancy | Same concept explained in two different blocks | minor |
     | depth-mismatch | Advanced topic explained too superficially | important |
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 3: PLAN — Prioritize Improvements
@@ -118,6 +124,8 @@ def build():
     everything — focus on the gaps identified in the assessment.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Step 4: PRODUCE — Implement Improvements
 
@@ -137,6 +145,8 @@ def build():
     project infrastructure (book.py, styles, helpers) already exists.
     The work is incremental rather than foundational.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Steps 5-6: REVIEW, FIX, and COMPOUND
@@ -167,3 +177,5 @@ def build():
     project, each time tackling a different set of improvements. The
     producer profile accumulates knowledge across cycles.
     """)
+
+    st_space("v", 1)

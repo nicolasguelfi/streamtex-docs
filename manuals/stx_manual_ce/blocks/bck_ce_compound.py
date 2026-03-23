@@ -49,26 +49,35 @@ def build():
     - Content structures that matched the audience
     - Import mappings (source format to StreamTeX patterns)
 
-    **The Producer Profile:**
+    **The Producer Profile** (`docs/profile.md`):
     ```
-    producer-profile.toml:
-      [preferences]
-      heading_style = "sentence-case"
-      code_pattern = "tabs-by-language"
-      explanation_depth = "intermediate"
+    ---
+    template: producer_profile
+    author: <name>
+    last_updated: <date>
+    cycles_completed: <count>
+    ---
 
-      [templates]
-      intro_block = "bck_template_intro_v2"
-      concept_block = "bck_template_concept_v3"
+    ## Writing Style
+    - Tone: semi-formal
+    - Sentence length: medium
+    - Example frequency: every-concept
 
-      [import_mappings]
-      pptx_slide = "one-block-per-slide"
-      html_section = "preserve-hierarchy"
+    ## Structural Preferences
+    - Max block length: 120
+    - Preferred block types: show_explanation, show_details, tabs
+    - Part size: 4-6 blocks per part
+
+    ## Lessons Learned
+    - 2026-03-01: tabs-by-language pattern works well for install blocks
+    - 2026-03-15: preserve-hierarchy for HTML imports
     ```
 
     The profile grows across cycles. After 3-5 projects, production speed
     increases measurably because the CE engine reuses proven patterns.
     """)
+
+    st_space("v", 1)
 
     show_explanation("Axis 2: Ecosystem Feedback", """
     Issues discovered during production are fed back to the StreamTeX
@@ -91,6 +100,8 @@ def build():
     Tickets include full reproduction context (block file, error trace,
     environment info) so they can be acted on without back-and-forth.
     """)
+
+    st_space("v", 1)
 
     show_explanation("Axis 3: Dev Governance", """
     COMPOUND manages the development branch lifecycle for the project.
@@ -119,6 +130,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("Command Reference", """
     ```bash
     # Run full COMPOUND phase
@@ -140,3 +153,5 @@ def build():
     COMPOUND marks the end of the CE cycle. The project is ready for
     deployment or the next cycle iteration.
     """)
+
+    st_space("v", 1)

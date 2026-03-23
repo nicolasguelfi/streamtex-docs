@@ -28,11 +28,11 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             ("The Capitalization Engine orchestrates ",
+             "Compound Document Engineering orchestrates ",
               (s.bold, "17 specialized agents"),
               " across the five CE phases. Each agent has a focused responsibility "
               "and communicates through structured artifacts — templates, checklists, "
-              "and reports — that flow from one phase to the next."))
+              "and reports — that flow from one phase to the next.")
     st_space("v", 1)
 
     show_explanation("""
@@ -50,6 +50,8 @@ def build():
     This modular design means you can understand each agent independently, yet
     they combine into a coherent pipeline when the full cycle runs.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Complete Agent Registry
@@ -75,6 +77,8 @@ def build():
     | 17 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### How Agents Collaborate
 
@@ -90,6 +94,8 @@ def build():
     outside this linear flow. They harvest insights from any phase and channel them
     into the three capitalization axes: solutions, profiles, and ecosystem feedback.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Agent Activation by Pathway
@@ -111,3 +117,5 @@ def build():
     | Review agents (5) | Yes | Yes | Yes |
     | Compound agents (2) | Yes | Yes | Yes |
     """)
+
+    st_space("v", 1)

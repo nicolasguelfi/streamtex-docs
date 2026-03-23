@@ -65,7 +65,7 @@ def build():
             with g.cell():
                 st_write(
                     stx.StxStyles.LARGE + stx.StxStyles.bold + "color:white;",
-                    "StreamTeX Manual: Compound Engineering",
+                    "StreamTeX Manual: Compound Document Engineering",
                     tag=t.div,
                     toc_lvl="1",
                 )
@@ -88,7 +88,7 @@ def build():
         st_write(
             bs.description,
             "This manual covers the ",
-            (s.bold, "Compound Engineering"),
+            (s.bold, "Compound Document Engineering"),
             " methodology — a ",
             (s.bold, "repeatable cycle"),
             " to produce, review, and improve documents with ",

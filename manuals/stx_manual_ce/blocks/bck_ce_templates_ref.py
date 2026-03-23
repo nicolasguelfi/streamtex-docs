@@ -58,6 +58,8 @@ def build():
     | 12 | `tpl_ecosystem_feedback` | COMPOUND | Bug report or feature request |
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Template Structure
 
@@ -74,6 +76,8 @@ def build():
     Templates are plain Markdown files stored in `docs/`. They are
     designed for both human reading and agent parsing.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### COLLECT Templates
@@ -110,6 +114,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### ASSESS Templates
 
@@ -129,6 +135,8 @@ def build():
     - Required: at least 3 angle descriptions with skeletons
     - Optional: trade-off matrix, hybrid angle suggestions
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### PLAN, REVIEW, and COMPOUND Templates
@@ -157,3 +165,5 @@ def build():
     - Required: problem statement, impact assessment, priority
     - Optional: proposed solution, reproduction steps, screenshots
     """)
+
+    st_space("v", 1)

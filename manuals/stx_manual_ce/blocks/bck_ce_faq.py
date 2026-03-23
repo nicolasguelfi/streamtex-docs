@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """FAQ: common questions about the Capitalization Engine."""
+    """FAQ: common questions about Compound Document Engineering."""
 
     st_space("v", 1)
     st_write(bs.heading, "Frequently Asked Questions",
@@ -29,7 +29,7 @@ def build():
 
     st_write(s.large,
              "Answers to the most common questions about using the "
-             "Capitalization Engine in practice.")
+             "Compound Document Engineering methodology in practice.")
     st_space("v", 1)
 
     show_explanation("""
@@ -55,6 +55,8 @@ def build():
     - Skipping COMPOUND habitually — you lose the long-term learning benefit.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### How do I resume an interrupted cycle?
 
@@ -73,6 +75,8 @@ def build():
     and resume without losing context — everything is in the `docs/` files.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### What if I don't have any sources?
 
@@ -90,6 +94,8 @@ def build():
     agents use their built-in knowledge of document patterns and
     StreamTeX capabilities to guide you.
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### How does CE interact with stx-designer?
@@ -116,6 +122,8 @@ def build():
     stx-designer works in `blocks/` and `custom/`.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Can I use CE for presentations?
 
@@ -135,6 +143,8 @@ def build():
     or point to existing Marp/HTML slides for Pathway A.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Quick Answers
 
@@ -151,3 +161,5 @@ def build():
     | How many solutions should I have? | Quality over quantity. 5 good solutions beat 50 vague ones. |
     | Can I use CE without stx-designer? | Yes. They are independent tools. |
     """)
+
+    st_space("v", 1)

@@ -91,13 +91,13 @@ def build():
 
     with st_list(list_type=lt.unordered, li_style=s.large, align="center") as l:
         with l.item():
-            st_write((s.bold, "Pathway A — Import"), ": you have external material "
+            st_write((s.project.titles.pathway_kw, "Pathway A — Import"), ": you have external material "
                      "(HTML, PDF, Marp, Markdown) to bring into StreamTeX.")
         with l.item():
-            st_write((s.bold, "Pathway B — Improve"), ": you have an existing "
+            st_write((s.project.titles.pathway_kw, "Pathway B — Improve"), ": you have an existing "
                      "StreamTeX project that needs restructuring or polish.")
         with l.item():
-            st_write((s.bold, "Pathway C — Create"), ": you start from a description "
+            st_write((s.project.titles.pathway_kw, "Pathway C — Create"), ": you start from a description "
                      "or outline and build a new document from scratch.")
     st_space("v", 1)
 

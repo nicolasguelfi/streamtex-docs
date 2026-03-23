@@ -113,9 +113,9 @@ def build():
     with st_grid(cols=4, cell_styles=bs.cell) as g:
         # Header row
         with g.cell(): st_write(s.bold + s.large, "")
-        with g.cell(): st_write(s.bold + s.large, "A — Import")
-        with g.cell(): st_write(s.bold + s.large, "B — Improve")
-        with g.cell(): st_write(s.bold + s.large, "C — Create")
+        with g.cell(): st_write(s.project.titles.pathway_kw + s.large, "A — Import")
+        with g.cell(): st_write(s.project.titles.pathway_kw + s.large, "B — Improve")
+        with g.cell(): st_write(s.project.titles.pathway_kw + s.large, "C — Create")
         # Starting point
         with g.cell(): st_write(s.bold + s.large, "Starting point")
         with g.cell(): st_write(s.large, "External files")
@@ -123,14 +123,14 @@ def build():
         with g.cell(): st_write(s.large, "Description / outline")
         # Heaviest phase
         with g.cell(): st_write(s.bold + s.large, "Heaviest phase")
-        with g.cell(): st_write(s.large, "COLLECT + PRODUCE")
-        with g.cell(): st_write(s.large, "ASSESS + REVIEW")
-        with g.cell(): st_write(s.large, "PLAN + PRODUCE")
+        with g.cell(): st_write(s.large, (s.project.titles.phase_kw, "COLLECT"), " + ", (s.project.titles.phase_kw, "PRODUCE"))
+        with g.cell(): st_write(s.large, (s.project.titles.phase_kw, "ASSESS"), " + ", (s.project.titles.phase_kw, "REVIEW"))
+        with g.cell(): st_write(s.large, (s.project.titles.phase_kw, "PLAN"), " + ", (s.project.titles.phase_kw, "PRODUCE"))
         # Main tool
         with g.cell(): st_write(s.bold + s.large, "Main tool")
-        with g.cell(): st_write(s.large, "stx-import")
-        with g.cell(): st_write(s.large, "stx-designer:update")
-        with g.cell(): st_write(s.large, "stx-designer:init")
+        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-import"))
+        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-designer:update"))
+        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-designer:init"))
         # Typical duration
         with g.cell(): st_write(s.bold + s.large, "Typical duration")
         with g.cell(): st_write(s.large, "15-60 min")

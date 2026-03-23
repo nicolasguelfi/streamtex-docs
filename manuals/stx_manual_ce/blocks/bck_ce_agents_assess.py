@@ -29,7 +29,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             ("The ", (s.project.titles.phase_kw, "ASSESS"),
+             "The ", (s.project.titles.phase_kw, "ASSESS"),
               " phase transforms raw inventory data into strategic decisions. "
               "Five agents work here, though not all activate for every pathway. ",
               (s.project.titles.pathway_kw, "Pathways A"),
@@ -37,7 +37,7 @@ def build():
               " use the gap-analyst; ",
               (s.project.titles.pathway_kw, "Pathway C"),
               " uses the angle-generator instead. "
-              "The other three agents are shared across all pathways."))
+              "The other three agents are shared across all pathways.")
     st_space("v", 1)
 
     show_explanation("""
@@ -56,6 +56,8 @@ def build():
     to visual complexity.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Agent: content-strategist
 
@@ -71,6 +73,8 @@ def build():
       between themes and their relative importance.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Agent: gap-analyst (Pathways A and B)
 
@@ -85,6 +89,8 @@ def build():
     - **Gap severity** — each gap is rated: *critical* (blocks progress),
       *important* (degrades quality), or *minor* (nice to fix).
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### gap-analyst Output Structure
@@ -111,6 +117,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Agent: format-explorer
 
@@ -124,6 +132,8 @@ def build():
     - **Visual density** — balances information density against readability
       based on the audience-analyst's recommendations.
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### Agent: angle-generator (Pathway C Only)
@@ -143,6 +153,8 @@ def build():
     choice feeds into the PLAN phase.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### ASSESS Agent Activation Summary
 
@@ -154,3 +166,5 @@ def build():
     | format-explorer | Yes | Yes | Yes | Content map + audience | Format recommendations |
     | angle-generator | -- | -- | Yes | Project brief + audience | Angle proposals |
     """)
+
+    st_space("v", 1)

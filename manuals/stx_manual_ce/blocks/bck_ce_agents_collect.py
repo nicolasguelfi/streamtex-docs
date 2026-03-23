@@ -28,11 +28,11 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             ("The ", (s.project.titles.phase_kw, "COLLECT"),
+             "The ", (s.project.titles.phase_kw, "COLLECT"),
               " phase is the entry point of every CE cycle. Its two agents "
               "gather raw material and evaluate what it will take to bring that material "
               "into a StreamTeX project. Together, they answer: ",
-              (s.bold, "\"What do we have, and how hard is it to use?\"")))
+              (s.bold, "\"What do we have, and how hard is it to use?\""))
     st_space("v", 1)
 
     show_explanation("""
@@ -57,6 +57,8 @@ def build():
     The source-scanner does NOT evaluate quality or recommend actions — that is
     left to the import-assessor and the ASSESS phase agents.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### source-scanner Output Format
@@ -86,6 +88,8 @@ def build():
     to trace content back to its origin.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Agent: import-assessor
 
@@ -106,6 +110,8 @@ def build():
     - **Priority ranking** — orders sources by import priority considering
       dependencies, content value, and conversion difficulty.
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### import-assessor Complexity Criteria
@@ -132,3 +138,5 @@ def build():
     The import-assessor writes its findings to the `tpl_assessment_brief`
     template, which feeds directly into the ASSESS phase.
     """)
+
+    st_space("v", 1)

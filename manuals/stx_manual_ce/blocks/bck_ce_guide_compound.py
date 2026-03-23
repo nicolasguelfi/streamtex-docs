@@ -61,6 +61,8 @@ def build():
     5. Reference solutions in future PLAN phases.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Solution Package Format
 
@@ -90,6 +92,8 @@ def build():
     consult this library when designing new document structures.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Axis 2: Managing Producer Profiles
 
@@ -115,6 +119,8 @@ def build():
     - The profile is stored in `docs/profile.md` and versioned with git.
     """)
 
+    st_space("v", 1)
+
     show_explanation("""
     ### Axis 3: Submitting Ecosystem Feedback
 
@@ -135,6 +141,8 @@ def build():
     - Proposed solution (when applicable)
     - Priority recommendation
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### Dev Governance in Practice
@@ -162,3 +170,5 @@ def build():
     conventional commit message: `compound(<axis>): <description>`.
     This makes it easy to trace the capitalization history of a project.
     """)
+
+    st_space("v", 1)

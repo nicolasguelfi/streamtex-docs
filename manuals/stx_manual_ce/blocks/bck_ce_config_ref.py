@@ -29,7 +29,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "The Capitalization Engine relies on conventions rather than "
+             "Compound Document Engineering relies on conventions rather than "
              "configuration files. This reference documents the directory "
              "structure, naming rules, severity levels, and other conventions "
              "that CE ", (s.project.titles.concept_kw, "agents"), " expect.")
@@ -67,6 +67,8 @@ def build():
     directory.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### File Naming Conventions
 
@@ -88,6 +90,8 @@ def build():
     - Block files always start with `bck_`
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Severity Levels
 
@@ -108,6 +112,8 @@ def build():
     **Escalation rule**: if a `minor` issue appears in 3+ blocks, it is
     automatically escalated to `major` (systemic problem).
     """)
+
+    st_space("v", 1)
 
     show_explanation("""
     ### Producer Profile Format
@@ -147,6 +153,8 @@ def build():
     profile gets tailored recommendations.
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### Git Preferences
 
@@ -165,3 +173,5 @@ def build():
     **Git behavior is opt-in**: CE commands do not auto-commit unless you
     pass `--commit` or have `auto_commit = true` in your profile.
     """)
+
+    st_space("v", 1)

@@ -77,13 +77,13 @@ def build():
     st_space("v", 1)
 
     with st_list(list_type=lt.ordered, li_style=s.large, align="center") as l:
-        with l.item(): st_write((s.bold, "COLLECT"), " — scan files, classify formats, evaluate importability")
-        with l.item(): st_write((s.bold, "ASSESS"), " — detect pathway (A/B/C), define objectives and constraints")
-        with l.item(): st_write((s.bold, "PLAN"), " — structure, block list, style choices, production order")
-        with l.item(): st_write((s.bold, "PRODUCE"), " — create or import blocks, wire book.py, apply styles")
-        with l.item(): st_write((s.bold, "REVIEW"), " — audience, pedagogy, visual, style, editorial checks")
-        with l.item(): st_write((s.bold, "FIX"), " — correct automatable issues, verify manually")
-        with l.item(): st_write((s.bold, "COMPOUND"), " — production log, ecosystem feedback, governance")
+        with l.item(): st_write((s.project.titles.phase_kw, "COLLECT"), " — scan files, classify formats, evaluate importability")
+        with l.item(): st_write((s.project.titles.phase_kw, "ASSESS"), " — detect pathway (A/B/C), define objectives and constraints")
+        with l.item(): st_write((s.project.titles.phase_kw, "PLAN"), " — structure, block list, style choices, production order")
+        with l.item(): st_write((s.project.titles.phase_kw, "PRODUCE"), " — create or import blocks, wire book.py, apply styles")
+        with l.item(): st_write((s.project.titles.phase_kw, "REVIEW"), " — audience, pedagogy, visual, style, editorial checks")
+        with l.item(): st_write((s.project.titles.phase_kw, "FIX"), " — correct automatable issues, verify manually")
+        with l.item(): st_write((s.project.titles.phase_kw, "COMPOUND"), " — production log, ecosystem feedback, governance")
     st_space("v", 2)
 
     # ── Iterative nature ──────────────────────────────────────────

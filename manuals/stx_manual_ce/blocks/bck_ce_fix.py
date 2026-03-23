@@ -59,14 +59,14 @@ def build():
     FIX operates in five sequential steps:
 
     **1. LOAD** — Read the review report
-    - Parse all findings by severity (CRITICAL first)
+    - Parse all findings by severity (blocker first)
     - Group findings by block for efficient processing
     - Identify dependencies between fixes
 
     **2. APPLY** — Execute corrections
     - Each finding is addressed with a targeted edit
-    - CRITICAL fixes are applied first, then WARNINGs
-    - INFO items are applied only with `--thorough`
+    - Blocker fixes are applied first, then majors
+    - Minor and suggestion items are applied only with `--thorough`
     - Edits use minimal changes (no unnecessary rewrites)
 
     **3. VERIFY** — Check each fix individually
@@ -85,6 +85,8 @@ def build():
     - Overall quality score before and after FIX
     """)
 
+    st_space("v", 1)
+
     show_explanation("The REVIEW-FIX-REVIEW Iteration Loop", """
     FIX is designed to iterate with REVIEW until quality converges:
 
@@ -99,12 +101,14 @@ def build():
     **Convergence rules:**
     - Maximum 3 iterations (prevents infinite loops)
     - If a fix introduces new findings, it is rolled back
-    - Iteration stops when: no CRITICAL, no WARNING, or max reached
-    - Remaining INFO items are logged but do not block completion
+    - Iteration stops when: no blocker, no major, or max reached
+    - Remaining minor and suggestion items are logged but do not block completion
 
     **The loop is automatic** in `/stx-ce:go` mode. In manual mode,
     the user triggers each REVIEW and FIX explicitly.
     """)
+
+    st_space("v", 1)
 
     show_explanation("Traceability Report", """
     ```
@@ -115,12 +119,12 @@ def build():
 
     FIXES APPLIED:
       [FIX-01] bck_start_welcome: Added introduction paragraph
-        Finding: [CRITICAL] content-editor
+        Finding: [blocker] content-editor
         Diff: +5 lines added at line 42
         Verified: PASS
 
       [FIX-02] bck_start_install: Added BlockStyles class
-        Finding: [CRITICAL] style-consistency-checker
+        Finding: [blocker] style-consistency-checker
         Diff: +8 lines added at line 1
         Verified: PASS
 
@@ -133,18 +137,20 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("Command Reference", """
     ```bash
     # Apply fixes from review report
     /stx-ce:fix
 
-    # Fix critical issues only
-    /stx-ce:fix --severity critical
+    # Fix blocker issues only
+    /stx-ce:fix --severity blocker
 
     # Fix specific blocks only
     /stx-ce:fix --blocks bck_start_welcome,bck_start_install
 
-    # Include INFO-level improvements
+    # Include minor and suggestion-level improvements
     /stx-ce:fix --thorough
 
     # Dry run (show planned fixes without applying)
@@ -154,5 +160,7 @@ def build():
     /stx-ce:fix --iterate
     ```
 
-    Fix reports are saved to `.ce/fix-report-N.md` (one per iteration).
+    Fix reports are saved to `docs/fix-report-N.md` (one per iteration).
     """)
+
+    st_space("v", 1)

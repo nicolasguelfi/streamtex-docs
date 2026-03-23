@@ -28,7 +28,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "The Capitalization Engine provides ", (s.bold, "8 commands"),
+             "Compound Document Engineering provides ", (s.bold, "8 commands"),
              " that map directly to the CE ",
              (s.project.titles.phase_kw, "phases"),
              ". Each command activates the ",
@@ -52,16 +52,19 @@ def build():
     | `/stx-ce:status` | (any) | Show current cycle state and progress |
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### /stx-ce:collect
 
-    **Syntax**: `/stx-ce:collect [path] [--project .] [--brief "description"]`
+    **Syntax**: `/stx-ce:collect [path] [--project .] [--brief "description"] [--sources dir1 dir2]`
 
     | Option | Description | Pathway |
     |--------|-------------|---------|
     | `path` | Directory containing source files to scan | A |
     | `--project .` | Scan current StreamTeX project | B |
     | `--brief "..."` | Provide project description (no files) | C |
+    | `--sources` | Explicit list of source directories to scan | A |
 
     **Agents activated**: source-scanner, import-assessor (pathway A only)
     **Output**: `docs/inventory.md`
@@ -74,6 +77,8 @@ def build():
     /stx-ce:collect --brief "API reference for the analytics module"
     ```
     """)
+
+    st_space("v", 1)
 
     show_details("""
     ### /stx-ce:assess
@@ -99,13 +104,16 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### /stx-ce:plan
 
-    **Syntax**: `/stx-ce:plan [--max-blocks N] [--focus "area"]`
+    **Syntax**: `/stx-ce:plan [--interactive] [--max-blocks N] [--focus "area"]`
 
     | Option | Description | Default |
     |--------|-------------|---------|
+    | `--interactive` | 4-step collaborative planning process | Auto mode |
     | `--max-blocks` | Limit the number of blocks planned | No limit |
     | `--focus` | Concentrate on a specific part or topic | Full scope |
 
@@ -120,6 +128,8 @@ def build():
     ```
     """)
 
+    st_space("v", 1)
+
     show_details("""
     ### /stx-ce:produce, /stx-ce:review, /stx-ce:fix, /stx-ce:compound
 
@@ -133,9 +143,11 @@ def build():
     - `--block`: review a single block
     - Output: `docs/review.md`
 
-    **`/stx-ce:fix`** `[--severity blocker|major|minor] [--auto]`
+    **`/stx-ce:fix`** `[--severity blocker|major|minor] [--auto] [--thorough] [--dry-run]`
     - `--severity`: fix only findings at or above the given severity
     - `--auto`: apply fixes without confirmation prompts
+    - `--thorough`: include minor and suggestion-level improvements
+    - `--dry-run`: show planned fixes without applying
 
     **`/stx-ce:compound`** `[--skip-solutions] [--skip-profile] [--skip-feedback]`
     - Selectively skip capitalization axes
@@ -151,3 +163,5 @@ def build():
     Inventory: 12 sources | Assessment: 8 gaps | Plan: 5 blocks
     ```
     """)
+
+    st_space("v", 1)

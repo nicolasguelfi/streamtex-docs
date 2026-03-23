@@ -71,6 +71,8 @@ def build():
     - Uses: `/stx-designer:init`, `/stx-designer:update`
     """)
 
+    st_space("v", 1)
+
     show_explanation("Orchestration Flow", """
     PRODUCE processes blocks in dependency order:
 
@@ -95,6 +97,8 @@ def build():
     - Each completed milestone triggers a gate check
     """)
 
+    st_space("v", 1)
+
     show_explanation("Quality Gates During Production", """
     After each milestone, PRODUCE runs a lightweight quality check:
 
@@ -109,6 +113,8 @@ def build():
     If critical errors are found, PRODUCE pauses and reports. The user can
     fix manually or let the FIX phase handle it later.
     """)
+
+    st_space("v", 1)
 
     show_details("Command Reference", """
     ```bash
@@ -128,6 +134,8 @@ def build():
     /stx-ce:produce --dry-run
     ```
 
-    Production progress is tracked in `.ce/produce-progress.json`.
+    Production progress is tracked in `docs/produce-progress.json`.
     Block files are written to the project's `blocks/` directory.
     """)
+
+    st_space("v", 1)

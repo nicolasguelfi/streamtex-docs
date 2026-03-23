@@ -63,7 +63,8 @@ jobs:
             "streamtex-docs-advanced":  {"folder": "manuals/stx_manual_advanced",    "uuid": "shx575v6f333to4f02cc3d0m"},
             "streamtex-docs-deploy":    {"folder": "manuals/stx_manual_deploy",      "uuid": "yqoe91fox1on0czhld3goa3h"},
             "streamtex-docs-developer": {"folder": "manuals/stx_manual_developer",   "uuid": "f8dvg08kuvuxjh1txahrwmx7"},
-            "streamtex-docs-ai":        {"folder": "manuals/stx_manual_ai",          "uuid": "chcszbtifrb9mvzlttjzbo46"}
+            "streamtex-docs-ai":        {"folder": "manuals/stx_manual_ai",          "uuid": "chcszbtifrb9mvzlttjzbo46"},
+            "streamtex-docs-ce":        {"folder": "manuals/stx_manual_ce",          "uuid": "un7tvmnhh2jfk9yec56x9r7n"}
           }
           SERVICES
 

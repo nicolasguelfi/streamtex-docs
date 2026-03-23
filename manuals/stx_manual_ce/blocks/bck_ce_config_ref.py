@@ -1,0 +1,161 @@
+"""CE Manual — Part 5: Configuration Reference."""
+
+from streamtex import *
+
+try:
+    from blocks.helpers import show_explanation, show_details
+except ImportError:
+    from streamtex import show_explanation, show_details
+
+from custom.styles import Styles as s
+
+
+class BlockStyles:
+    """Styles for the configuration reference block."""
+
+    title = s.section_title
+    table = s.reference_table
+
+
+def build():
+    """Configuration reference: directory structure, naming, severity levels,
+    producer profile format, git preferences."""
+
+    st_write("""
+    ## Configuration Reference
+
+    The Capitalization Engine relies on conventions rather than configuration
+    files. This reference documents the directory structure, naming rules,
+    severity levels, and other conventions that CE agents expect.
+    """)
+
+    show_details("""
+    ### Project Directory Structure
+
+    CE artifacts live in the `docs/` directory within your StreamTeX project:
+
+    ```
+    my-project/
+    +-- blocks/                  # StreamTeX block files
+    |   +-- bck_intro.py
+    |   +-- bck_chapter1.py
+    +-- custom/
+    |   +-- styles.py            # Project styles
+    +-- docs/                    # CE artifacts directory
+    |   +-- inventory.md         # Source inventory (COLLECT)
+    |   +-- assessment.md        # Assessment brief (ASSESS)
+    |   +-- plan.md              # Structure plan (PLAN)
+    |   +-- review.md            # Review findings (REVIEW)
+    |   +-- profile.md           # Producer profile (COMPOUND)
+    |   +-- solutions/           # Reusable solution packages
+    |   |   +-- sol_api_ref_structure.md
+    |   |   +-- sol_tutorial_progression.md
+    |   +-- feedback/            # Ecosystem feedback drafts
+    |       +-- fb_001_missing_feature.md
+    +-- book.py                  # StreamTeX book definition
+    +-- pyproject.toml
+    ```
+
+    The `docs/` directory is created automatically by `/stx-ce:collect`
+    if it does not exist. All CE commands read from and write to this
+    directory.
+    """)
+
+    show_details("""
+    ### File Naming Conventions
+
+    | Artifact | Pattern | Example |
+    |----------|---------|---------|
+    | Inventory | `inventory.md` | `docs/inventory.md` |
+    | Assessment | `assessment.md` | `docs/assessment.md` |
+    | Plan | `plan.md` | `docs/plan.md` |
+    | Review | `review.md` | `docs/review.md` |
+    | Profile | `profile.md` | `docs/profile.md` |
+    | Solution | `sol_<description>.md` | `docs/solutions/sol_api_ref_structure.md` |
+    | Feedback | `fb_<number>_<description>.md` | `docs/feedback/fb_001_missing_feature.md` |
+    | Block files | `bck_<name>.py` | `blocks/bck_intro_welcome.py` |
+
+    **Naming rules:**
+    - Use lowercase with underscores (snake_case)
+    - Solution files start with `sol_`
+    - Feedback files start with `fb_` followed by a sequential number
+    - Block files always start with `bck_`
+    """)
+
+    show_details("""
+    ### Severity Levels
+
+    CE uses a consistent 4-level severity scale across all phases:
+
+    | Level | Code | Meaning | Action |
+    |-------|------|---------|--------|
+    | Blocker | `blocker` | Prevents the document from being usable | Must fix before any release |
+    | Major | `major` | Significantly impacts quality | Should fix in current cycle |
+    | Minor | `minor` | Small improvement opportunity | Fix if time permits |
+    | Suggestion | `suggestion` | Stylistic or optional improvement | Consider for next cycle |
+
+    **Severity is used in:**
+    - Gap reports (ASSESS phase): gaps rated by impact on document goals
+    - Review findings (REVIEW phase): issues rated by impact on reader experience
+    - Fix prioritization (FIX phase): `--severity` flag filters what gets fixed
+
+    **Escalation rule**: if a `minor` issue appears in 3+ blocks, it is
+    automatically escalated to `major` (systemic problem).
+    """)
+
+    show_explanation("""
+    ### Producer Profile Format
+
+    The producer profile in `docs/profile.md` follows a structured format
+    that CE agents can read and update programmatically:
+
+    ```
+    ---
+    template: producer_profile
+    author: <name>
+    last_updated: <date>
+    cycles_completed: <count>
+    ---
+
+    ## Writing Style
+    - Tone: <formal|semi-formal|informal>
+    - Sentence length: <short|medium|varied>
+    - Example frequency: <every-concept|key-concepts|minimal>
+
+    ## Structural Preferences
+    - Max block length: <lines>
+    - Preferred block types: <list>
+    - Part size: <number of blocks per part>
+
+    ## Quality Standards
+    - Minimum review pass: <severity level>
+    - Required perspectives: <list of reviewers>
+    - Auto-fix threshold: <severity>
+
+    ## Lessons Learned
+    - <date>: <insight from a specific cycle>
+    ```
+
+    The profile is optional but strongly recommended. A project without
+    a profile gets default agent behavior; a project with a detailed
+    profile gets tailored recommendations.
+    """)
+
+    show_details("""
+    ### Git Preferences
+
+    CE integrates with git for versioning artifacts:
+
+    | Convention | Format | Example |
+    |------------|--------|---------|
+    | Collect commit | `ce(collect): <summary>` | `ce(collect): inventory 12 HTML sources` |
+    | Assess commit | `ce(assess): <summary>` | `ce(assess): 5 critical gaps identified` |
+    | Plan commit | `ce(plan): <summary>` | `ce(plan): 8 blocks across 3 parts` |
+    | Produce commit | `ce(produce): <block>` | `ce(produce): bck_intro_welcome` |
+    | Review commit | `ce(review): <summary>` | `ce(review): 2 blockers, 5 majors` |
+    | Fix commit | `ce(fix): <summary>` | `ce(fix): resolve 2 blockers` |
+    | Compound commit | `compound(<axis>): <desc>` | `compound(solution): API ref structure` |
+
+    **Git behavior is opt-in**: CE commands do not auto-commit unless you
+    pass `--commit` or have `auto_commit = true` in your profile.
+    """)

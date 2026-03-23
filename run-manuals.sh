@@ -12,7 +12,8 @@
 #   --deployment         Lance que le guide de déploiement (port 8504)
 #   --developer          Lance que le manuel développeur (port 8505)
 #   --ai                 Lance que le manuel AI (port 8506)
-#   --ports P1,P2,P3,P4,P5,P6  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506)
+#   --ce                 Lance que le manuel CE (port 8507)
+#   --ports P1,P2,P3,P4,P5,P6,P7  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506,8507)
 #   --no-intro           Exclut le manuel intro
 #   --no-advanced        Exclut le manuel advanced
 #   --no-collection      Exclut la collection
@@ -31,6 +32,7 @@ ADVANCED_PROJECT="$SCRIPT_DIR/manuals/stx_manual_advanced"
 DEPLOYMENT_PROJECT="$SCRIPT_DIR/manuals/stx_manual_deploy"
 DEVELOPER_PROJECT="$SCRIPT_DIR/manuals/stx_manual_developer"
 AI_PROJECT="$SCRIPT_DIR/manuals/stx_manual_ai"
+CE_PROJECT="$SCRIPT_DIR/manuals/stx_manual_ce"
 
 # Ports par défaut
 COLLECTION_PORT=8501
@@ -39,6 +41,7 @@ ADVANCED_PORT=8503
 DEPLOYMENT_PORT=8504
 DEVELOPER_PORT=8505
 AI_PORT=8506
+CE_PORT=8507
 
 # Flags pour les manuels à lancer
 LAUNCH_COLLECTION=true
@@ -47,6 +50,7 @@ LAUNCH_ADVANCED=true
 LAUNCH_DEPLOYMENT=true
 LAUNCH_DEVELOPER=true
 LAUNCH_AI=true
+LAUNCH_CE=true
 
 WATCH_MODE=false
 
@@ -174,6 +178,17 @@ EOF
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=true
+            LAUNCH_CE=false
+            shift
+            ;;
+        --ce)
+            LAUNCH_COLLECTION=false
+            LAUNCH_INTRO=false
+            LAUNCH_ADVANCED=false
+            LAUNCH_DEPLOYMENT=false
+            LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
+            LAUNCH_CE=true
             shift
             ;;
         --no-intro)
@@ -198,6 +213,10 @@ EOF
             ;;
         --no-ai)
             LAUNCH_AI=false
+            shift
+            ;;
+        --no-ce)
+            LAUNCH_CE=false
             shift
             ;;
         --ports)
@@ -250,6 +269,7 @@ check_project() {
 [ "$LAUNCH_DEPLOYMENT" = true ] && check_project "$DEPLOYMENT_PROJECT" "deployment"
 [ "$LAUNCH_DEVELOPER" = true ] && check_project "$DEVELOPER_PROJECT" "developer"
 [ "$LAUNCH_AI" = true ] && check_project "$AI_PROJECT" "ai"
+[ "$LAUNCH_CE" = true ] && check_project "$CE_PROJECT" "ce"
 
 # Logs
 LOG_DIR="/tmp/streamtex-manuals"

@@ -1,0 +1,115 @@
+"""CE Manual — Part 2: ASSESS Phase."""
+
+from streamtex import *
+
+try:
+    from blocks.helpers import show_explanation, show_details
+except ImportError:
+    from streamtex import show_explanation, show_details
+
+from custom.styles import Styles as s
+
+
+class BlockStyles:
+    """Styles for the ASSESS phase block."""
+    title = s.part_title if hasattr(s, "part_title") else {}
+    phase = s.phase if hasattr(s, "phase") else {}
+
+
+def build():
+    """ASSESS phase: auto-detect pathway, evaluate, dialogue."""
+
+    st_write("""
+    ## ASSESS — Evaluate Material and Detect Pathway
+
+    The **ASSESS** phase analyzes the collect report and determines the optimal
+    production pathway. It evaluates the quality of source material, identifies
+    gaps, and initiates a structured dialogue with the user to clarify
+    requirements (R1-R18).
+    """)
+
+    show_explanation("Pathway Auto-Detection", """
+    ASSESS automatically selects one of three pathways based on the collect report:
+
+    | Pathway | Trigger Condition | Behavior |
+    |---------|-------------------|----------|
+    | **A — Import-heavy** | >60% items are importable | Prioritize import, minimal creation |
+    | **B — Balanced** | Mix of importable and new content | Interleave import and creation |
+    | **C — Creation-heavy** | <20% importable or no sources | Focus on from-scratch production |
+
+    The pathway determines how the PLAN and PRODUCE phases will operate.
+    Pathway detection is automatic but can be overridden with `--pathway A|B|C`.
+    """)
+
+    show_explanation("Material Evaluation", """
+    For each collected item, ASSESS produces a quality evaluation:
+
+    **Structural Evaluation**
+    - Does the content map to StreamTeX block types?
+    - Are headings, lists, and code blocks well-formed?
+    - Is the content self-contained or does it depend on external context?
+
+    **Pedagogical Evaluation**
+    - Is the content appropriate for the target audience?
+    - Are learning objectives clearly stated or inferable?
+    - Does the content follow a logical progression?
+
+    **Technical Evaluation**
+    - Are code examples correct and runnable?
+    - Are diagrams and images available in usable formats?
+    - Are references and links still valid?
+    """)
+
+    show_explanation("User Dialogue — Requirements R1-R18", """
+    ASSESS initiates a structured dialogue to capture user requirements:
+
+    | Req | Question Domain | Example |
+    |-----|-----------------|---------|
+    | R1 | Target audience | "Who is the primary audience?" |
+    | R2 | Prerequisite knowledge | "What should readers already know?" |
+    | R3 | Learning objectives | "What should readers be able to do after?" |
+    | R4-R6 | Scope and boundaries | "What topics are in/out of scope?" |
+    | R7-R9 | Style preferences | "Formal or conversational tone?" |
+    | R10-R12 | Structure constraints | "Max depth? Number of parts?" |
+    | R13-R15 | Content priorities | "Which topics are most important?" |
+    | R16-R18 | Delivery constraints | "Timeline? Incremental delivery?" |
+
+    In **auto mode**, ASSESS infers answers from the source material and
+    confirms with the user. In **interactive mode**, each requirement is
+    explicitly discussed.
+    """)
+
+    show_details("Pathway-Specific Behaviors", """
+    **Pathway A (Import-heavy)**
+    - ASSESS focuses on mapping source items to target blocks
+    - Minimal requirements dialogue (R1-R3 only, rest inferred)
+    - Produces an import manifest with block-level assignments
+
+    **Pathway B (Balanced)**
+    - ASSESS identifies gaps between imported and needed content
+    - Medium dialogue (R1-R9 confirmed, R10-R18 inferred)
+    - Produces a gap analysis alongside the import manifest
+
+    **Pathway C (Creation-heavy)**
+    - ASSESS conducts full requirements elicitation (R1-R18)
+    - Builds a content specification from scratch
+    - Produces a creation brief with detailed block descriptions
+    """)
+
+    show_details("Command Reference", """
+    ```bash
+    # Run ASSESS on existing collect report
+    /stx-ce:assess
+
+    # Force a specific pathway
+    /stx-ce:assess --pathway B
+
+    # Interactive mode (ask all R1-R18)
+    /stx-ce:assess --interactive
+
+    # Auto mode (infer and confirm)
+    /stx-ce:assess --auto
+    ```
+
+    The assess report is saved to `.ce/assess-report.md`.
+    """)

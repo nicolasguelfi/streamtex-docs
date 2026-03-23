@@ -21,10 +21,11 @@ MANUALS = {
     "deployment": {"path": "manuals/stx_manual_deploy", "port": 8504},
     "developer": {"path": "manuals/stx_manual_developer", "port": 8505},
     "ai": {"path": "manuals/stx_manual_ai", "port": 8506},
+    "ce": {"path": "manuals/stx_manual_ce", "port": 8507},
 }
 
 # Display order
-DISPLAY_ORDER = ["collection", "intro", "ai", "advanced", "deployment", "developer"]
+DISPLAY_ORDER = ["collection", "intro", "ai", "advanced", "deployment", "developer", "ce"]
 
 LOG_DIR = Path(tempfile.gettempdir()) / "streamtex-manuals"
 
@@ -181,6 +182,7 @@ def print_status(active: dict[str, dict], log_dir: Path, watch: bool,
         "advanced": "Advanced:  ",
         "deployment": "Deployment:",
         "developer": "Developer: ",
+        "ce": "CE:        ",
     }
     for name in DISPLAY_ORDER:
         if name in active:
@@ -236,7 +238,7 @@ EXAMPLES:
   python run-manuals.py --developer
 
   # Lance collection et advanced sur ports personnalisés
-  python run-manuals.py --no-intro --no-deployment --no-developer --no-ai --ports 9001,_,9003,_,_,_
+  python run-manuals.py --no-intro --no-deployment --no-developer --no-ai --no-ce --ports 9001,_,9003,_,_,_,_
 
   # Tue tous les Streamlit
   python run-manuals.py --kill
@@ -251,6 +253,7 @@ URLs:
   Deployment: http://localhost:8504
   Developer:  http://localhost:8505
   AI:         http://localhost:8506
+  CE:         http://localhost:8507
 """,
     )
 
@@ -265,10 +268,10 @@ URLs:
                             help=f"Exclut le manuel {name}")
 
     parser.add_argument("--all", action="store_true",
-                        help="Lance les 6 manuels (défaut)")
+                        help="Lance les 7 manuels (défaut)")
     parser.add_argument("--ports",
-                        help="Ports personnalisés: P1,P2,P3,P4,P5,P6 "
-                             "(ordre: collection,intro,advanced,deployment,developer,ai). "
+                        help="Ports personnalisés: P1,P2,P3,P4,P5,P6,P7 "
+                             "(ordre: collection,intro,advanced,deployment,developer,ai,ce). "
                              "Utilisez _ pour le port par défaut.")
     parser.add_argument("--kill", action="store_true",
                         help="Tue tous les processus Streamlit lancés")
@@ -304,7 +307,7 @@ URLs:
 
     # Apply custom ports
     if args.ports:
-        port_names = ["collection", "intro", "advanced", "deployment", "developer", "ai"]
+        port_names = ["collection", "intro", "advanced", "deployment", "developer", "ai", "ce"]
         parts = args.ports.split(",")
         for i, part in enumerate(parts):
             if i < len(port_names):
@@ -374,6 +377,7 @@ URLs:
             "advanced": "Advanced:  ",
             "deployment": "Deployment:",
             "developer": "Developer: ",
+            "ce": "CE:        ",
         }
         for name in DISPLAY_ORDER:
             if name in active:

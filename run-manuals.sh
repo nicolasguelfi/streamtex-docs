@@ -65,13 +65,14 @@ USAGE:
   ./run-manuals.sh [OPTIONS]
 
 OPTIONS:
-  --all              Lance les 6 manuels (défaut)
+  --all              Lance les 7 manuels (défaut)
   --collection       Lance que le hub collection (port 8501)
   --intro            Lance que le manuel intro (port 8502)
   --advanced         Lance que le manuel advanced (port 8503)
   --deployment       Lance que le guide de déploiement (port 8504)
   --developer        Lance que le manuel développeur (port 8505)
   --ai               Lance que le manuel AI (port 8506)
+  --ce               Lance que le manuel CE (port 8507)
 
   --no-intro         Exclut le manuel intro
   --no-advanced      Exclut le manuel advanced
@@ -79,8 +80,9 @@ OPTIONS:
   --no-deployment    Exclut le guide de déploiement
   --no-developer     Exclut le manuel développeur
   --no-ai            Exclut le manuel AI
+  --no-ce            Exclut le manuel CE
 
-  --ports P1,P2,P3,P4,P5,P6  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506)
+  --ports P1,P2,P3,P4,P5,P6,P7  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506,8507)
   --kill             Tue tous les processus Streamlit lancés
   --watch            Lance et regarde les logs (Ctrl+C pour quitter)
   --help             Affiche cette aide
@@ -114,6 +116,7 @@ URLs:
   Deployment: http://localhost:8504
   Developer:  http://localhost:8505
   AI:         http://localhost:8506
+  CE:         http://localhost:8507
 EOF
             exit 0
             ;;
@@ -124,6 +127,7 @@ EOF
             LAUNCH_DEPLOYMENT=true
             LAUNCH_DEVELOPER=true
             LAUNCH_AI=true
+            LAUNCH_CE=true
             shift
             ;;
         --collection)
@@ -133,6 +137,7 @@ EOF
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
+            LAUNCH_CE=false
             shift
             ;;
         --intro)
@@ -142,6 +147,7 @@ EOF
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
+            LAUNCH_CE=false
             shift
             ;;
         --advanced)
@@ -151,6 +157,7 @@ EOF
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
+            LAUNCH_CE=false
             shift
             ;;
         --deployment)
@@ -160,6 +167,7 @@ EOF
             LAUNCH_DEPLOYMENT=true
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
+            LAUNCH_CE=false
             shift
             ;;
         --developer)
@@ -169,6 +177,7 @@ EOF
             LAUNCH_DEPLOYMENT=false
             LAUNCH_DEVELOPER=true
             LAUNCH_AI=false
+            LAUNCH_CE=false
             shift
             ;;
         --ai)
@@ -220,7 +229,7 @@ EOF
             shift
             ;;
         --ports)
-            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT AI_PORT <<< "$2"
+            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT AI_PORT CE_PORT <<< "$2"
             # Remplacer '_' par le port par défaut
             [ "$COLLECTION_PORT" = "_" ] && COLLECTION_PORT=8501
             [ "$INTRO_PORT" = "_" ] && INTRO_PORT=8502
@@ -228,6 +237,7 @@ EOF
             [ "$DEPLOYMENT_PORT" = "_" ] && DEPLOYMENT_PORT=8504
             [ "$DEVELOPER_PORT" = "_" ] && DEVELOPER_PORT=8505
             [ "$AI_PORT" = "_" ] || [ -z "$AI_PORT" ] && AI_PORT=8506
+            [ "$CE_PORT" = "_" ] || [ -z "$CE_PORT" ] && CE_PORT=8507
             shift 2
             ;;
         --kill)
@@ -280,6 +290,7 @@ ADVANCED_LOG="$LOG_DIR/advanced.log"
 DEPLOYMENT_LOG="$LOG_DIR/deployment.log"
 DEVELOPER_LOG="$LOG_DIR/developer.log"
 AI_LOG="$LOG_DIR/ai.log"
+CE_LOG="$LOG_DIR/ce.log"
 
 # Fonction pour afficher les PID
 print_pids() {
@@ -293,6 +304,7 @@ print_pids() {
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT (PID: $(pgrep -f "stx_manual_advanced" | head -1 || echo '—'))"
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT (PID: $(pgrep -f "stx_manual_deploy" | head -1 || echo '—'))"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT (PID: $(pgrep -f "stx_manual_developer" | head -1 || echo '—'))"
+    [ "$LAUNCH_CE" = true ] && echo "  CE:          http://localhost:$CE_PORT (PID: $(pgrep -f "stx_manual_ce" | head -1 || echo '—'))"
     echo ""
     echo "Logs: $LOG_DIR"
     [ "$WATCH_MODE" = false ] && echo "Utilisez --kill pour arrêter tous les processus"
@@ -346,8 +358,8 @@ launch_project() {
 cleanup() {
     echo ""
     echo "Arrêt des manuels..."
-    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer\|stx_manual_ai" || true
-    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer\|streamlit run.*stx_manual_ai" || true
+    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer\|stx_manual_ai\|stx_manual_ce" || true
+    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer\|streamlit run.*stx_manual_ai\|streamlit run.*stx_manual_ce" || true
     sleep 1
     echo "Tous les manuels ont été arrêtés"
 }
@@ -384,6 +396,10 @@ if [ "$LAUNCH_DEVELOPER" = true ]; then
     launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
 fi
 
+if [ "$LAUNCH_CE" = true ]; then
+    launch_project "$CE_PROJECT" "CE" "$CE_PORT" "$CE_LOG"
+fi
+
 print_pids
 
 # Attendre si en watch mode
@@ -418,6 +434,10 @@ if [ "$WATCH_MODE" = true ]; then
             echo "Developer est arrêté. Redémarrage..."
             launch_project "$DEVELOPER_PROJECT" "Developer" "$DEVELOPER_PORT" "$DEVELOPER_LOG"
         fi
+        if [ "$LAUNCH_CE" = true ] && ! pgrep -f "streamlit run.*stx_manual_ce" > /dev/null 2>&1; then
+            echo "CE est arrêté. Redémarrage..."
+            launch_project "$CE_PROJECT" "CE" "$CE_PORT" "$CE_LOG"
+        fi
     done
 else
     # Attendre un peu puis ouvrir dans Chrome
@@ -430,7 +450,8 @@ else
     [ "$LAUNCH_AI" = true ] && echo "  AI:          http://localhost:$AI_PORT" && open -a "Google Chrome" "http://localhost:$AI_PORT" && sleep 0.5
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT" && sleep 0.5
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT" && sleep 0.5
-    [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT"
+    [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT" && sleep 0.5
+    [ "$LAUNCH_CE" = true ] && echo "  CE:          http://localhost:$CE_PORT" && open -a "Google Chrome" "http://localhost:$CE_PORT"
     echo ""
     echo "Utilisez './run-manuals.sh --kill' pour arrêter tous les manuels"
     echo ""

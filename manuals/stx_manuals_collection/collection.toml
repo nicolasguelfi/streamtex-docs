@@ -3,7 +3,7 @@
 
 [collection]
 title = "StreamTeX Training Collection"
-description = "Introduction, AI Workflows, Advanced, Deployment, and Developer courses for learning StreamTeX"
+description = "Introduction, AI Workflows, Advanced, Deployment, Developer, and Compound Engineering courses for learning StreamTeX"
 cards_per_row = 3
 
 [projects.test-intro]
@@ -33,3 +33,17 @@ description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, HuggingFace, 
 cover = "static/images/covers/test-deploy.png"
 project_url = "http://localhost:8504"
 order = 4
+
+[projects.test-developer]
+title = "Developer Guide"
+description = "Library internals: architecture, testing, block system, CLI, release workflow"
+cover = "static/images/covers/test-developer.png"
+project_url = "http://localhost:8505"
+order = 5
+
+[projects.test-ce]
+title = "Compound Document Engineering"
+description = "Structured document production: 7-phase cycle, 3 pathways, 17 agents, producer profiles"
+cover = "static/images/covers/test-ce.png"
+project_url = "http://localhost:8507"
+order = 6

@@ -13,8 +13,8 @@ from custom.styles import Styles as s
 class BlockStyles:
     """Styles for the import guide block."""
 
-    title = s.section_title
-    table = s.reference_table
+    title = s.project.titles.section_title
+    table = s.large
 
 
 def build():

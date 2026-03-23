@@ -1,6 +1,14 @@
-"""Collection home — gradient header + level badge + project cards."""
+"""Collection home — gradient header + project cards from collection.toml.
 
+Cards are generated dynamically from collection.toml.
+To add a manual: add a [projects.xxx] section in collection.toml
+and set STX_URL_XXX env var in Coolify. No code change needed.
+"""
+
+import math
 import os
+import tomllib
+from pathlib import Path
 
 import streamlit as st
 from custom.styles import Styles as s
@@ -12,19 +20,33 @@ from streamtex.styles import Style
 
 _LOGO = "https://media.githubusercontent.com/media/nicolasguelfi/streamtex/main/documentation/images/logos/logo-stx-full.png"
 
-# URLs: environment variables override localhost defaults (set by Render envVars)
-_URL_INTRO = os.environ.get("STX_URL_TEST_INTRO", "http://localhost:8502")
-_URL_ADVANCED = os.environ.get("STX_URL_TEST_ADVANCED", "http://localhost:8503")
-_URL_DEPLOY = os.environ.get("STX_URL_TEST_DEPLOY", "http://localhost:8504")
-_URL_DEVELOPER = os.environ.get("STX_URL_TEST_DEVELOPER", "http://localhost:8505")
-_URL_AI = os.environ.get("STX_URL_TEST_AI", "http://localhost:8506")
-_URL_CE = os.environ.get("STX_URL_TEST_CE", "http://localhost:8507")
+# Load collection config once
+_TOML_PATH = Path(__file__).parent.parent / "collection.toml"
+with open(_TOML_PATH, "rb") as _f:
+    _CONFIG = tomllib.load(_f)
+
+_CARDS_PER_ROW = _CONFIG.get("collection", {}).get("cards_per_row", 3)
+
+# Build sorted project list with resolved URLs
+_PROJECTS = []
+for _key, _data in sorted(
+    _CONFIG.get("projects", {}).items(),
+    key=lambda item: item[1].get("order", 0),
+):
+    env_key = "STX_URL_" + _key.upper().replace("-", "_")
+    _PROJECTS.append({
+        "key": _key,
+        "title": _data.get("title", _key),
+        "description": _data.get("description", ""),
+        "emoji": _data.get("emoji", "📄"),
+        "button_label": _data.get("button_label", "Open"),
+        "url": os.environ.get(env_key, _data.get("project_url", "#")),
+    })
 
 
 class BlockStyles:
     """Styles for the collection home page."""
 
-    # --- Header ---
     header = Style(
         "background: linear-gradient(135deg, #f46b45 0%, #eea849 100%); "
         "padding: 40px 20px; border-radius: 8px;",
@@ -41,28 +63,22 @@ class BlockStyles:
         "text-transform: uppercase; letter-spacing: 2px;",
         "collection_level_label",
     )
-    description = s.large + s.project.colors.neutral_gray
-    logo = Style("width: 100%; height: auto;", "collection_logo")
-    logo_cell = Style("display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;", "collection_logo_cell")
-
-    # --- Cards ---
-    card_container = Style.create(
-        s.container.bg_colors.dark_bg_secondary
-        + "border-radius:12px;padding:24px;transition:all 0.3s ease;"
-        + "box-shadow:0 4px 16px rgba(0,0,0,0.3);",
-        "card_container",
+    description = s.large
+    logo = Style("width: 100%; max-width: 200px;", "collection_logo")
+    logo_cell = Style("display: flex; flex-direction: column; align-items: center; gap: 12px;", "collection_logo_cell")
+    card_container = Style(
+        "border: 1px solid rgba(255,255,255,0.1); "
+        "border-radius: 12px; padding: 24px; "
+        "background: rgba(255,255,255,0.03); "
+        "transition: transform 0.2s, box-shadow 0.2s;",
+        "collection_card",
     )
-    card_description = Style.create(
-        s.medium + s.text.colors.white + "opacity:0.85;",
-        "card_description",
-    )
-    project_title = Style.create(
-        s.large + s.text.weights.bold_weight + s.text.colors.white,
+    card_description = s.medium
+    project_title = Style(
+        "font-weight: bold; font-size: 22pt;",
         "project_title",
     )
     grid_with_gap = stx.StxStyles.container.grid.gap_24
-
-    # --- Footer ---
     footer = Style.create(
         s.medium + s.text.colors.white + "opacity:0.6;text-align:center;",
         "collection_footer",
@@ -70,6 +86,26 @@ class BlockStyles:
 
 
 bs = BlockStyles
+
+
+def _render_card(project: dict) -> None:
+    """Render a single project card from a project dict."""
+    with st_block(bs.card_container):
+        st_space("v", 1)
+        st_write(s.huge + "text-align:center;", project["emoji"])
+        st_space("v", 1)
+        st_write(bs.project_title + "text-align:center;", project["title"])
+        st_space("v", 1)
+        st_write(bs.card_description + "text-align:center;", project["description"])
+        st_space("v", 2)
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.link_button(
+                f"{project['emoji']} {project['button_label']}",
+                project["url"],
+                use_container_width=True,
+            )
+        st_space("v", 1)
 
 
 def build():
@@ -113,123 +149,22 @@ def build():
         )
         st_space("v", 1)
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.medium, "Introduction: text, styles, grids, lists, images, code, export")
-            with l.item(): st_write(s.medium, "AI Manual: commands, agents, blueprints, profiles, AI-driven workflows")
-            with l.item(): st_write(s.medium, "Advanced: shared blocks, collections, deployment, data visualization")
-            with l.item(): st_write(s.medium, "Deploy: Docker, Streamlit Cloud, Render, GCP, CI/CD")
-            with l.item(): st_write(s.medium, "Developer: library internals, testing, CI/CD, release process")
-            with l.item(): st_write(s.medium, "Compound Engineering: structured document production, 7-phase cycle, 17 agents")
+            for proj in _PROJECTS:
+                with l.item(): st_write(s.medium, f"{proj['title']}: {proj['description']}")
 
-    # === Project cards — Row 1 (3 cards) ===
+    # === Project cards — dynamic rows ===
     st_space("v", 2)
 
-    with st_grid(cols=3, responsive=True, grid_style=bs.grid_with_gap):
+    num_rows = math.ceil(len(_PROJECTS) / _CARDS_PER_ROW)
+    for row_idx in range(num_rows):
+        row_projects = _PROJECTS[row_idx * _CARDS_PER_ROW:(row_idx + 1) * _CARDS_PER_ROW]
+        cols_in_row = len(row_projects)
 
-        # Card 1: Introduction
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "📚")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "Introduction to StreamTeX")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "Learn the basics: text styling, containers, grids, layouts, and more",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("📚 Open Course", _URL_INTRO, use_container_width=True)
-            st_space("v", 1)
+        with st_grid(cols=cols_in_row, responsive=True, grid_style=bs.grid_with_gap):
+            for proj in row_projects:
+                _render_card(proj)
 
-        # Card 2: AI Manual
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "🤖")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "AI-Powered Workflows")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "22 commands, 4 agents, 10 blueprints: create content with AI assistants",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("🤖 Open Manual", _URL_AI, use_container_width=True)
-            st_space("v", 1)
-
-        # Card 3: Advanced
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "⚡")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "Advanced Features & Architecture")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "Master advanced concepts: shared blocks, multi-source resolution, and deployment",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("⚡ Open Course", _URL_ADVANCED, use_container_width=True)
-            st_space("v", 1)
-
-    # === Project cards — Row 2 (3 cards) ===
-    st_space("v", 1)
-
-    with st_grid(cols=3, responsive=True, grid_style=bs.grid_with_gap):
-
-        # Card 4: Deployment Guide
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "🚀")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "Deployment Guide")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "Deploy StreamTeX projects: Docker, Streamlit Cloud, Render.com, GCP, CI/CD",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("🚀 Open Course", _URL_DEPLOY, use_container_width=True)
-            st_space("v", 1)
-
-        # Card 5: Developer Guide
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "🔧")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "Developer Guide")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "Contribute to StreamTeX: repo structure, testing, CI/CD, release process",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("🔧 Open Guide", _URL_DEVELOPER, use_container_width=True)
-            st_space("v", 1)
-
-        # Card 6: Compound Engineering
-        with st_block(bs.card_container):
-            st_space("v", 1)
-            st_write(s.huge + "text-align:center;", "🔄")
-            st_space("v", 1)
-            st_write(bs.project_title + "text-align:center;", "Compound Engineering")
-            st_space("v", 1)
-            st_write(
-                bs.card_description + "text-align:center;",
-                "Structured document production: 7-phase cycle, 3 pathways, 17 agents",
-            )
-            st_space("v", 2)
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                st.link_button("🔄 Open Manual", _URL_CE, use_container_width=True)
+        if row_idx < num_rows - 1:
             st_space("v", 1)
 
     # === Footer ===

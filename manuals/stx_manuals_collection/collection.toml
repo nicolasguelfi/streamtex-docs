@@ -1,49 +1,55 @@
-# StreamTeX Test Collection
-# Demonstrates Phase 2: Collections feature
+# StreamTeX Training Collection
+# Adding a manual = add a [projects.xxx] section here + set STX_URL_XXX env var in Coolify
 
 [collection]
 title = "StreamTeX Training Collection"
-description = "Introduction, AI Workflows, Advanced, Deployment, Developer, and Compound Engineering courses for learning StreamTeX"
+description = "Interactive documentation for modern web education"
 cards_per_row = 3
 
 [projects.test-intro]
 title = "Introduction to StreamTeX"
 description = "Learn the basics: text styling, containers, grids, layouts, and more"
-cover = "static/images/covers/test-intro.png"
+emoji = "📚"
+button_label = "Open Course"
 project_url = "http://localhost:8502"
 order = 1
 
 [projects.test-ai]
 title = "AI-Powered Workflows"
 description = "22 commands, 4 agents, 10 blueprints, 4 profiles: create content with AI assistants"
-cover = "static/images/covers/test-ai.png"
+emoji = "🤖"
+button_label = "Open Manual"
 project_url = "http://localhost:8506"
 order = 2
 
 [projects.test-advanced]
-title = "Advanced Features & Multi-Repo Architecture"
-description = "Master advanced concepts: shared blocks, multi-source resolution, and deployment strategies"
-cover = "static/images/covers/test-advanced.png"
+title = "Advanced Features & Architecture"
+description = "Master advanced concepts: shared blocks, multi-source resolution, and deployment"
+emoji = "⚡"
+button_label = "Open Course"
 project_url = "http://localhost:8503"
 order = 3
 
 [projects.test-deploy]
 title = "Deployment Guide"
-description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, HuggingFace, Render.com, GCP, CI/CD"
-cover = "static/images/covers/test-deploy.png"
+description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, Render.com, GCP, CI/CD"
+emoji = "🚀"
+button_label = "Open Course"
 project_url = "http://localhost:8504"
 order = 4
 
 [projects.test-developer]
 title = "Developer Guide"
-description = "Library internals: architecture, testing, block system, CLI, release workflow"
-cover = "static/images/covers/test-developer.png"
+description = "Contribute to StreamTeX: repo structure, testing, CI/CD, release process"
+emoji = "🔧"
+button_label = "Open Guide"
 project_url = "http://localhost:8505"
 order = 5
 
 [projects.test-ce]
-title = "Compound Document Engineering"
-description = "Structured document production: 7-phase cycle, 3 pathways, 17 agents, producer profiles"
-cover = "static/images/covers/test-ce.png"
+title = "Compound Engineering"
+description = "Structured document production: 7-phase cycle, 3 pathways, 17 agents"
+emoji = "🔄"
+button_label = "Open Manual"
 project_url = "http://localhost:8507"
 order = 6

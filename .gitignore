@@ -18,3 +18,8 @@ build/
 # === Generated ===
 html_exports/
 .stx_cache/
+
+# Claude profile — managed by stx claude install/update, not git
+.claude/*
+!.claude/custom/
+!.claude/.stx-profile

@@ -46,7 +46,9 @@ def build():
              " is the standard entry point.")
     st_space("v", 1)
 
-    show_explanation("The 11-Step Pipeline", """
+    show_explanation("""\
+    ### The 11-Step Pipeline
+
     ```
     /stx-ce:go
       |
@@ -83,7 +85,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("The 3 Gates", """
+    show_explanation("""\
+    ### The 3 Gates
+
     Gates are automatic checkpoints that can pause or abort the pipeline:
 
     **Gate 1 — Source Validation** (after COLLECT)
@@ -106,7 +110,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Behavior Flags", """
+    show_explanation("""\
+    ### Behavior Flags
+
     Flags customize how `/stx-ce:go` operates:
 
     | Flag | Effect |
@@ -128,7 +134,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Full Pipeline Diagram", """
+    show_details("""\
+    ### Full Pipeline Diagram
+
     ```
     [COLLECT] -> [ASSESS] -> [PLAN] -> [PRODUCE] -> [REVIEW] -> [FIX] -> [COMPOUND]
         |            |          |           |            |          |          |
@@ -143,7 +151,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Full autonomous pipeline (default)
     /stx-ce:go

@@ -45,7 +45,9 @@ def build():
              ", respecting dependencies and milestone checkpoints.")
     st_space("v", 1)
 
-    show_explanation("Processing by Item Type", """
+    show_explanation("""\
+    ### Processing by Item Type
+
     Each block in the plan has a type tag that determines how it is processed:
 
     **IMPORT** — Bring existing content into StreamTeX
@@ -73,7 +75,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Orchestration Flow", """
+    show_explanation("""\
+    ### Orchestration Flow
+
     PRODUCE processes blocks in dependency order:
 
     ```
@@ -99,7 +103,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Quality Gates During Production", """
+    show_explanation("""\
+    ### Quality Gates During Production
+
     After each milestone, PRODUCE runs a lightweight quality check:
 
     | Check | What it verifies |
@@ -116,7 +122,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Execute the full production plan
     /stx-ce:produce

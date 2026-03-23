@@ -45,7 +45,9 @@ def build():
              ".")
     st_space("v", 1)
 
-    show_explanation("The 4 Sub-Phases of COLLECT", """
+    show_explanation("""\
+    ### The 4 Sub-Phases of COLLECT
+
     COLLECT operates through four sequential sub-phases:
 
     **1. SOURCE SCAN** — Enumerate all input sources
@@ -69,7 +71,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Specialized Agents", """
+    show_explanation("""\
+    ### Specialized Agents
+
     Two agents collaborate during COLLECT:
 
     | Agent | Role |
@@ -82,7 +86,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Example Collect Report Output", """
+    show_details("""\
+    ### Example Collect Report Output
+
     ```
     === CE COLLECT REPORT ===
     Project: my-training-course
@@ -110,7 +116,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Run COLLECT independently
     /stx-ce:collect

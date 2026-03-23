@@ -41,7 +41,9 @@ def build():
              " phase.")
     st_space("v", 1)
 
-    show_explanation("The 5 Review Agents", """
+    show_explanation("""\
+    ### The 5 Review Agents
+
     Each agent focuses on a specific quality dimension:
 
     | Agent | Focus | What it checks |
@@ -58,7 +60,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Severity Levels", """
+    show_explanation("""\
+    ### Severity Levels
+
     Every finding is tagged with a severity level:
 
     **blocker** — Must be fixed before delivery
@@ -88,7 +92,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Review Report Structure", """
+    show_explanation("""\
+    ### Review Report Structure
+
     ```
     === CE REVIEW REPORT ===
     Project: my-training-course
@@ -120,7 +126,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Review all produced blocks
     /stx-ce:review

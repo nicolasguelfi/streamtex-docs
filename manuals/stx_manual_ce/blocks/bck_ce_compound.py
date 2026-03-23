@@ -40,7 +40,9 @@ def build():
              " ensures that every CE cycle makes the next one faster and better.")
     st_space("v", 1)
 
-    show_explanation("Axis 1: Production Capitalization", """
+    show_explanation("""\
+    ### Axis 1: Production Capitalization
+
     The **producer profile** captures reusable knowledge from the cycle.
 
     **What is capitalized:**
@@ -79,7 +81,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Axis 2: Ecosystem Feedback", """
+    show_explanation("""\
+    ### Axis 2: Ecosystem Feedback
+
     Issues discovered during production are fed back to the StreamTeX
     ecosystem via `/stx-issue:*` ticket submission.
 
@@ -103,7 +107,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Axis 3: Dev Governance", """
+    show_explanation("""\
+    ### Axis 3: Dev Governance
+
     COMPOUND manages the development branch lifecycle for the project.
 
     **Branch management:**
@@ -132,7 +138,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Run full COMPOUND phase
     /stx-ce:compound

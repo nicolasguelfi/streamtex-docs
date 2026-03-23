@@ -42,7 +42,9 @@ def build():
              ". Structure drives everything else.")
     st_space("v", 1)
 
-    show_explanation("Step 1: Skeleton", """
+    show_explanation("""\
+    ### Step 1: Skeleton
+
     The first and most important step defines the structural backbone.
 
     **What happens:**
@@ -72,7 +74,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Step 2: Objectives", """
+    show_explanation("""\
+    ### Step 2: Objectives
+
     With the skeleton locked, CE assigns learning objectives to each block.
 
     **What happens:**
@@ -97,7 +101,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Step 3: Design", """
+    show_explanation("""\
+    ### Step 3: Design
+
     Design decisions are made block by block, with sensible defaults.
 
     **What happens:**
@@ -119,7 +125,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Step 4: Final Plan", """
+    show_explanation("""\
+    ### Step 4: Final Plan
+
     The final step assembles everything into the production plan.
 
     **What happens:**
@@ -140,7 +148,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Start interactive planning
     /stx-ce:plan --interactive

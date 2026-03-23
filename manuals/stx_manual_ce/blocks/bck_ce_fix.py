@@ -55,7 +55,9 @@ def build():
              ").")
     st_space("v", 1)
 
-    show_explanation("The FIX Pipeline", """
+    show_explanation("""\
+    ### The FIX Pipeline
+
     FIX operates in five sequential steps:
 
     **1. LOAD** — Read the review report
@@ -87,7 +89,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("The REVIEW-FIX-REVIEW Iteration Loop", """
+    show_explanation("""\
+    ### The REVIEW-FIX-REVIEW Iteration Loop
+
     FIX is designed to iterate with REVIEW until quality converges:
 
     ```
@@ -110,7 +114,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Traceability Report", """
+    show_explanation("""\
+    ### Traceability Report
+
     ```
     === CE FIX REPORT ===
     Iteration: 1 of 3
@@ -139,7 +145,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Apply fixes from review report
     /stx-ce:fix

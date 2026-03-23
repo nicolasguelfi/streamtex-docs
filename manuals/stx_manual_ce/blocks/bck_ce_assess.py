@@ -36,7 +36,9 @@ def build():
              "requirements (R1-R18).")
     st_space("v", 1)
 
-    show_explanation("Pathway Auto-Detection", """
+    show_explanation("""\
+    ### Pathway Auto-Detection
+
     ASSESS automatically selects one of three pathways based on the collect report:
 
     | Pathway | Trigger Condition | Behavior |
@@ -51,7 +53,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Material Evaluation", """
+    show_explanation("""\
+    ### Material Evaluation
+
     For each collected item, ASSESS produces a quality evaluation:
 
     **Structural Evaluation**
@@ -72,7 +76,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("User Dialogue — Requirements R1-R18", """
+    show_explanation("""\
+    ### User Dialogue — Requirements R1-R18
+
     ASSESS initiates a structured dialogue to capture user requirements:
 
     | Req | Question Domain | Example |
@@ -93,7 +99,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Pathway-Specific Behaviors", """
+    show_details("""\
+    ### Pathway-Specific Behaviors
+
     **Pathway A (Import)**
     - ASSESS focuses on mapping source items to target blocks
     - Minimal requirements dialogue (R1-R3 only, rest inferred)
@@ -112,7 +120,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Run ASSESS on existing collect report
     /stx-ce:assess

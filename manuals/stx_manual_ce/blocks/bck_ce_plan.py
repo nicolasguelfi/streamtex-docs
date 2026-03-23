@@ -44,7 +44,9 @@ def build():
              " (for fine-grained control).")
     st_space("v", 1)
 
-    show_explanation("The Plan Structure", """
+    show_explanation("""\
+    ### The Plan Structure
+
     Every CE plan contains four components, produced in order:
 
     **1. SKELETON** — The structural backbone
@@ -70,7 +72,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Auto Mode vs Interactive Mode", """
+    show_explanation("""\
+    ### Auto Mode vs Interactive Mode
+
     | Aspect | Auto Mode | Interactive Mode |
     |--------|-----------|------------------|
     | **Speed** | Fast (minutes) | Deliberate (iterative) |
@@ -91,7 +95,9 @@ def build():
 
     st_space("v", 1)
 
-    show_explanation("Plan Output Format", """
+    show_explanation("""\
+    ### Plan Output Format
+
     The plan is saved as a structured document with executable metadata:
 
     ```
@@ -120,7 +126,9 @@ def build():
 
     st_space("v", 1)
 
-    show_details("Command Reference", """
+    show_details("""\
+    ### Command Reference
+
     ```bash
     # Auto-plan from assess report
     /stx-ce:plan

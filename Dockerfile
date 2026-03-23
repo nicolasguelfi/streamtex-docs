@@ -39,7 +39,7 @@ COPY manuals/ ./manuals/
 # Changelog (read by bck_changelog block in each manual)
 COPY CHANGELOG.md ./
 
-# FOLDER is set at runtime by Render envVars (not build-time ARG)
+# FOLDER is set at runtime by Coolify/Hetzner envVars (not build-time ARG)
 ENV FOLDER="manuals/stx_manual_intro"
 
 # Pre-warm the page cache for every manual so the first visitor loads instantly.
@@ -53,5 +53,9 @@ EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
+# On startup: clear stale caches then re-warm the target manual.
+# The build-time warmup covers most cases, but env var changes (FOLDER)
+# or content updates via restart (without rebuild) would serve stale data.
+# Re-warming adds ~5s to startup but guarantees fresh content.
 ENTRYPOINT ["/bin/sh", "-c", \
-            "cd /app/${FOLDER} && exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]
+            "cd /app/${FOLDER} && rm -rf .stx_cache .streamlit/cache && uv run stx cache warmup . 2>/dev/null; exec uv run streamlit run book.py --server.port=8501 --server.address=0.0.0.0"]

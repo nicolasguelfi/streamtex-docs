@@ -1,34 +1,48 @@
 """CE Manual — Part 2: PLAN Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the PLAN phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """PLAN phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """PLAN phase: auto mode vs interactive mode."""
 
-    st_write("""
-    ## PLAN — Structure the Production Plan
+    st_space("v", 1)
+    st_write(bs.heading, "PLAN — Structure the Production Plan",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **PLAN** phase transforms the assessment results into a concrete,
-    actionable production plan. It defines the project skeleton, learning
-    objectives, design choices, and production sequence.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "PLAN"),
+             " phase transforms the assessment results into a concrete, "
+             "actionable production plan. It defines the project skeleton, learning "
+             "objectives, design choices, and production sequence.")
+    st_space("v", 1)
 
-    PLAN operates in two modes: **auto** (for experienced users) and
-    **interactive** (for fine-grained control).
-    """)
+    st_write(s.large,
+             (s.project.titles.phase_kw, "PLAN"),
+             " operates in two modes: ",
+             (s.bold, "auto"),
+             " (for experienced users) and ",
+             (s.bold, "interactive"),
+             " (for fine-grained control).")
+    st_space("v", 1)
 
     show_explanation("The Plan Structure", """
     Every CE plan contains four components, produced in order:

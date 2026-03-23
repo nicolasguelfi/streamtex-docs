@@ -1,33 +1,40 @@
 """CE Manual — Part 4: Guide — Create a New Document (Pathway C)."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the create guide block."""
+    """Create Guide styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Guide: Create a new document — Pathway C walkthrough."""
 
-    st_write("""
-    ## Guide: Create a New Document (Pathway C)
+    st_space("v", 1)
+    st_write(bs.heading, "Guide: Create a New Document (Pathway C)",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    Pathway C starts from a blank canvas. You have an idea for a document
-    but no existing material to import or improve. This pathway replaces
-    the gap-analyst with the **angle-generator**, which proposes creative
-    structural approaches before any content is written.
-    """)
+    st_write(s.large,
+             (s.project.titles.pathway_kw, "Pathway C"),
+             (" starts from a blank canvas. You have an idea for a document "
+              "but no existing material to import or improve. This pathway replaces "
+              "the gap-analyst with the "),
+             (s.bold, "angle-generator"),
+             ", which proposes creative structural approaches before any content is written.")
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 1: COLLECT — Gather Context

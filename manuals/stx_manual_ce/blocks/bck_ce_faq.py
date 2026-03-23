@@ -1,31 +1,36 @@
 """CE Manual — Part 5: Frequently Asked Questions."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the FAQ block."""
+    """Frequently Asked Questions styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """FAQ: common questions about the Capitalization Engine."""
 
-    st_write("""
-    ## Frequently Asked Questions
+    st_space("v", 1)
+    st_write(bs.heading, "Frequently Asked Questions",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    Answers to the most common questions about using the Capitalization
-    Engine in practice.
-    """)
+    st_write(s.large,
+             "Answers to the most common questions about using the "
+             "Capitalization Engine in practice.")
+    st_space("v", 1)
 
     show_explanation("""
     ### Can I skip phases?

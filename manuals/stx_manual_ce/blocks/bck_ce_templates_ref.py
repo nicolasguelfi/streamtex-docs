@@ -1,33 +1,43 @@
 """CE Manual — Part 5: Templates Reference."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the templates reference block."""
+    """Templates Reference styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Reference of all 12 CE templates: structure, usage, and frontmatter."""
 
-    st_write("""
-    ## Templates Reference
+    st_space("v", 1)
+    st_write(bs.heading, "Templates Reference",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    CE agents communicate through **12 structured templates**. Each template
-    defines a document format with required sections, optional sections, and
-    frontmatter metadata. Templates ensure consistency across cycles and
-    make artifacts machine-readable for downstream agents.
-    """)
+    st_write(s.large,
+             "CE ", (s.project.titles.concept_kw, "agents"),
+             " communicate through ", (s.bold, "12 structured templates"),
+             ". Each ", (s.project.titles.concept_kw, "template"),
+             " defines a document format with required sections, optional "
+             "sections, and frontmatter metadata. ",
+             (s.project.titles.concept_kw, "Templates"),
+             " ensure consistency across cycles and make ",
+             (s.project.titles.concept_kw, "artifacts"),
+             " machine-readable for downstream agents.")
+    st_space("v", 1)
 
     show_details("""
     ### Template Overview

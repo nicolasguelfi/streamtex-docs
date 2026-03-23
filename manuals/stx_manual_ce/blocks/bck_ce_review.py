@@ -1,33 +1,45 @@
 """CE Manual — Part 2: REVIEW Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the REVIEW phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """REVIEW phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """REVIEW phase: 5 parallel agents, severity levels, read-only."""
 
-    st_write("""
-    ## REVIEW — Multi-Agent Quality Evaluation
+    st_space("v", 1)
+    st_write(bs.heading, "REVIEW — Multi-Agent Quality Evaluation",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **REVIEW** phase performs a comprehensive, **read-only** evaluation of
-    all produced blocks. Five specialized agents work in parallel, each
-    analyzing the content from a different perspective. No modifications are
-    made during REVIEW — all findings are recorded in a review report for
-    the FIX phase.
-    """)
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "REVIEW"),
+             " phase performs a comprehensive, ",
+             (s.bold, "read-only"),
+             " evaluation of all produced blocks. Five specialized agents work in parallel, each "
+             "analyzing the content from a different perspective. No modifications are "
+             "made during ",
+             (s.project.titles.phase_kw, "REVIEW"),
+             " — all findings are recorded in a review report for the ",
+             (s.project.titles.phase_kw, "FIX"),
+             " phase.")
+    st_space("v", 1)
 
     show_explanation("The 5 Review Agents", """
     Each agent focuses on a specific quality dimension:

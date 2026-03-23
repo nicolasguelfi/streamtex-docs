@@ -40,6 +40,23 @@ class TextStylesCustom:
         ColorsCustom.primary_blue + Text.weights.bold_weight + Text.sizes.LARGE_size,
         "page_title"
     )
+    # Colored keyword styles for inline emphasis
+    phase_kw = Style.create(
+        ColorsCustom.accent_teal + Text.weights.bold_weight,
+        "phase_kw"
+    )
+    pathway_kw = Style.create(
+        ColorsCustom.highlight_amber + Text.weights.bold_weight,
+        "pathway_kw"
+    )
+    tool_kw = Style.create(
+        ColorsCustom.success_green + Text.weights.bold_weight,
+        "tool_kw"
+    )
+    concept_kw = Style.create(
+        ColorsCustom.primary_blue + Text.weights.bold_weight,
+        "concept_kw"
+    )
     section_title = Style.create(
         ColorsCustom.accent_teal + Text.weights.bold_weight + Text.sizes.Large_size,
         "section_title"

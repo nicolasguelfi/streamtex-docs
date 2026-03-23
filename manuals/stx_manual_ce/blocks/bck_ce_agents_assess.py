@@ -1,34 +1,44 @@
 """CE Manual — Part 3: ASSESS Agents Detail."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the ASSESS agents block."""
+    """ASSESS Phase Agents styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """ASSESS agents: audience-analyst, content-strategist, gap-analyst,
     format-explorer, angle-generator."""
 
-    st_write("""
-    ## ASSESS Phase Agents
+    st_space("v", 1)
+    st_write(bs.heading, "ASSESS Phase Agents",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The ASSESS phase transforms raw inventory data into strategic decisions.
-    Five agents work here, though not all activate for every pathway.
-    Pathways A and B use the gap-analyst; pathway C uses the angle-generator
-    instead. The other three agents are shared across all pathways.
-    """)
+    st_write(s.large,
+             ("The ", (s.project.titles.phase_kw, "ASSESS"),
+              " phase transforms raw inventory data into strategic decisions. "
+              "Five agents work here, though not all activate for every pathway. ",
+              (s.project.titles.pathway_kw, "Pathways A"),
+              " and ", (s.project.titles.pathway_kw, "B"),
+              " use the gap-analyst; ",
+              (s.project.titles.pathway_kw, "Pathway C"),
+              " uses the angle-generator instead. "
+              "The other three agents are shared across all pathways."))
+    st_space("v", 1)
 
     show_explanation("""
     ### Agent: audience-analyst

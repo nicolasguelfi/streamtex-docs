@@ -1,33 +1,39 @@
 """CE Manual — Part 3: Overview of All 17 Agents."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the agents overview block."""
+    """Agents Overview styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Overview of all 17 agents: table listing by phase, role, and collaboration."""
 
-    st_write("""
-    ## Agents Overview
+    st_space("v", 1)
+    st_write(bs.heading, "Agents Overview",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The Capitalization Engine orchestrates **17 specialized agents** across the five
-    CE phases. Each agent has a focused responsibility and communicates through
-    structured artifacts — templates, checklists, and reports — that flow from
-    one phase to the next.
-    """)
+    st_write(s.large,
+             ("The Capitalization Engine orchestrates ",
+              (s.bold, "17 specialized agents"),
+              " across the five CE phases. Each agent has a focused responsibility "
+              "and communicates through structured artifacts — templates, checklists, "
+              "and reports — that flow from one phase to the next."))
+    st_space("v", 1)
 
     show_explanation("""
     ### Agent Design Principles

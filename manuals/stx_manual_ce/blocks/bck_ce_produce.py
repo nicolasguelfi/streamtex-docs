@@ -1,34 +1,49 @@
 """CE Manual — Part 2: PRODUCE Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the PRODUCE phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """PRODUCE phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """PRODUCE phase: orchestration of stx-designer and stx-import."""
 
-    st_write("""
-    ## PRODUCE — Execute the Production Plan
+    st_space("v", 1)
+    st_write(bs.heading, "PRODUCE — Execute the Production Plan",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **PRODUCE** phase is where blocks are actually created, imported, or
-    improved. It orchestrates the `stx-designer` and `stx-import` command
-    families to process each item in the plan according to its type tag.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "PRODUCE"),
+             " phase is where blocks are actually created, imported, or "
+             "improved. It orchestrates the ",
+             (s.project.titles.tool_kw, "stx-designer"),
+             " and ",
+             (s.project.titles.tool_kw, "stx-import"),
+             " command families to process each item in the plan according to its type tag.")
+    st_space("v", 1)
 
-    PRODUCE follows the sequence defined in PLAN, respecting dependencies
-    and milestone checkpoints.
-    """)
+    st_write(s.large,
+             (s.project.titles.phase_kw, "PRODUCE"),
+             " follows the sequence defined in ",
+             (s.project.titles.phase_kw, "PLAN"),
+             ", respecting dependencies and milestone checkpoints.")
+    st_space("v", 1)
 
     show_explanation("Processing by Item Type", """
     Each block in the plan has a type tag that determines how it is processed:

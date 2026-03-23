@@ -1,34 +1,41 @@
 """CE Manual — Part 4: Guide — Improve a StreamTeX Project (Pathway B)."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the improve guide block."""
+    """Improve Guide styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Guide: Improve a StreamTeX project — Pathway B walkthrough."""
 
-    st_write("""
-    ## Guide: Improve a StreamTeX Project (Pathway B)
+    st_space("v", 1)
+    st_write(bs.heading, "Guide: Improve a StreamTeX Project (Pathway B)",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    Pathway B is for projects that already exist as StreamTeX but need
-    enhancement: adding new sections, fixing quality issues, updating
-    outdated content, or restructuring for better flow. Unlike Pathway A,
-    there is no format conversion — the work is purely about content
-    and structure improvement.
-    """)
+    st_write(s.large,
+             (s.project.titles.pathway_kw, "Pathway B"),
+             (" is for projects that already exist as StreamTeX but need "
+              "enhancement: adding new sections, fixing quality issues, updating "
+              "outdated content, or restructuring for better flow. Unlike "),
+             (s.project.titles.pathway_kw, "Pathway A"),
+             (", there is no format conversion — the work is purely about content "
+              "and structure improvement."))
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 1: COLLECT — Inventory Current State

@@ -1,34 +1,46 @@
 """CE Manual — Part 2: Interactive Planning."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the interactive planning block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """Interactive Planning styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """Interactive planning: the 4-step skeleton-first approach."""
 
-    st_write("""
-    ## Interactive Planning — The Skeleton-First Approach
+    st_space("v", 1)
+    st_write(bs.heading, "Interactive Planning — The Skeleton-First Approach",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    When `/stx-ce:plan --interactive` is used, the CE engine walks through
-    a **4-step collaborative process**. Each step builds on the previous one,
-    and the user has full control at every decision point.
+    st_write(s.large,
+             "When ",
+             (s.project.titles.tool_kw, "/stx-ce:plan --interactive"),
+             " is used, the CE engine walks through a ",
+             (s.bold, "4-step collaborative process"),
+             ". Each step builds on the previous one, "
+             "and the user has full control at every decision point.")
+    st_space("v", 1)
 
-    The key principle: **skeleton first, details later**. Structure drives
-    everything else.
-    """)
+    st_write(s.large,
+             "The key principle: ",
+             (s.bold, "skeleton first, details later"),
+             ". Structure drives everything else.")
+    st_space("v", 1)
 
     show_explanation("Step 1: Skeleton", """
     The first and most important step defines the structural backbone.

@@ -1,33 +1,41 @@
 """CE Manual — Part 4: Guide — Capitalize Effectively."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the compound guide block."""
+    """Compound Guide styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Guide: Capitalize effectively — the three axes in practice."""
 
-    st_write("""
-    ## Guide: Capitalize Effectively
+    st_space("v", 1)
+    st_write(bs.heading, "Guide: Capitalize Effectively",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The COMPOUND phase is what transforms the CE from a simple production
-    pipeline into a **learning system**. Every cycle produces not just
-    documents, but knowledge that makes future cycles faster and better.
-    This guide explains how to get the most out of each capitalization axis.
-    """)
+    st_write(s.large,
+             "The ", (s.project.titles.phase_kw, "COMPOUND"),
+             (" phase is what transforms the CE from a simple production "
+              "pipeline into a "),
+             (s.bold, "learning system"),
+             (". Every cycle produces not just documents, but knowledge that "
+              "makes future cycles faster and better. "
+              "This guide explains how to get the most out of each capitalization axis."))
+    st_space("v", 1)
 
     show_explanation("""
     ### Axis 1: Writing Good Solutions

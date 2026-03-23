@@ -1,33 +1,39 @@
 """CE Manual — Part 5: Configuration Reference."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the configuration reference block."""
+    """Configuration Reference styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Configuration reference: directory structure, naming, severity levels,
     producer profile format, git preferences."""
 
-    st_write("""
-    ## Configuration Reference
+    st_space("v", 1)
+    st_write(bs.heading, "Configuration Reference",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The Capitalization Engine relies on conventions rather than configuration
-    files. This reference documents the directory structure, naming rules,
-    severity levels, and other conventions that CE agents expect.
-    """)
+    st_write(s.large,
+             "The Capitalization Engine relies on conventions rather than "
+             "configuration files. This reference documents the directory "
+             "structure, naming rules, severity levels, and other conventions "
+             "that CE ", (s.project.titles.concept_kw, "agents"), " expect.")
+    st_space("v", 1)
 
     show_details("""
     ### Project Directory Structure

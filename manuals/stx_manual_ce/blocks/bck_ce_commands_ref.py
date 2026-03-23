@@ -1,32 +1,41 @@
 """CE Manual — Part 5: Commands Reference."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_details
 except ImportError:
     from streamtex import show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the commands reference block."""
+    """Commands Reference styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Reference table of all 8 CE commands with options and examples."""
 
-    st_write("""
-    ## Commands Reference
+    st_space("v", 1)
+    st_write(bs.heading, "Commands Reference",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The Capitalization Engine provides **8 commands** that map directly to
-    the CE phases. Each command activates the agents for its phase, reads
-    inputs from prior phases, and writes structured outputs.
-    """)
+    st_write(s.large,
+             "The Capitalization Engine provides ", (s.bold, "8 commands"),
+             " that map directly to the CE ",
+             (s.project.titles.phase_kw, "phases"),
+             ". Each command activates the ",
+             (s.project.titles.concept_kw, "agents"),
+             " for its phase, reads inputs from prior phases, and writes "
+             "structured outputs.")
+    st_space("v", 1)
 
     show_details("""
     ### Command Overview

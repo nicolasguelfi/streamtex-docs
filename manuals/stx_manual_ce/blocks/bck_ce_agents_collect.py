@@ -1,33 +1,39 @@
 """CE Manual — Part 3: COLLECT Agents Detail."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the COLLECT agents block."""
+    """COLLECT Phase Agents styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """COLLECT agents: source-scanner and import-assessor."""
 
-    st_write("""
-    ## COLLECT Phase Agents
+    st_space("v", 1)
+    st_write(bs.heading, "COLLECT Phase Agents",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The COLLECT phase is the entry point of every CE cycle. Its two agents
-    gather raw material and evaluate what it will take to bring that material
-    into a StreamTeX project. Together, they answer: **"What do we have, and
-    how hard is it to use?"**
-    """)
+    st_write(s.large,
+             ("The ", (s.project.titles.phase_kw, "COLLECT"),
+              " phase is the entry point of every CE cycle. Its two agents "
+              "gather raw material and evaluate what it will take to bring that material "
+              "into a StreamTeX project. Together, they answer: ",
+              (s.bold, "\"What do we have, and how hard is it to use?\"")))
+    st_space("v", 1)
 
     show_explanation("""
     ### Agent: source-scanner

@@ -1,34 +1,44 @@
 """CE Manual — Part 2: COMPOUND Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the COMPOUND phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """COMPOUND phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """COMPOUND phase: capitalization, ecosystem feedback, governance."""
 
-    st_write("""
-    ## COMPOUND — Capitalize and Feed the Ecosystem
+    st_space("v", 1)
+    st_write(bs.heading, "COMPOUND — Capitalize and Feed the Ecosystem",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **COMPOUND** phase closes the CE cycle by extracting value from the
-    production process itself. It operates along three axes: production
-    capitalization, ecosystem feedback, and development governance.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "COMPOUND"),
+             " phase closes the CE cycle by extracting value from the "
+             "production process itself. It operates along three axes: production "
+             "capitalization, ecosystem feedback, and development governance.")
+    st_space("v", 1)
 
-    COMPOUND ensures that every CE cycle makes the next one faster and
-    better.
-    """)
+    st_write(s.large,
+             (s.project.titles.phase_kw, "COMPOUND"),
+             " ensures that every CE cycle makes the next one faster and better.")
+    st_space("v", 1)
 
     show_explanation("Axis 1: Production Capitalization", """
     The **producer profile** captures reusable knowledge from the cycle.

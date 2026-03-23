@@ -1,33 +1,39 @@
 """CE Manual — Part 4: Guide — Import Existing Material (Pathway A)."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the import guide block."""
+    """Import Guide styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
 
-    title = s.project.titles.section_title
-    table = s.large
+
+bs = BlockStyles
 
 
 def build():
     """Guide: Import existing material — Pathway A walkthrough."""
 
-    st_write("""
-    ## Guide: Import Existing Material (Pathway A)
+    st_space("v", 1)
+    st_write(bs.heading, "Guide: Import Existing Material (Pathway A)",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    This guide walks through the complete CE cycle for the most common
-    scenario: you have existing documents (HTML pages, Marp presentations,
-    PDFs) and want to convert them into a StreamTeX project. Pathway A
-    is designed for exactly this situation.
-    """)
+    st_write(s.large,
+             ("This guide walks through the complete CE cycle for the most common "
+              "scenario: you have existing documents (HTML pages, Marp presentations, "
+              "PDFs) and want to convert them into a StreamTeX project. "),
+             (s.project.titles.pathway_kw, "Pathway A"),
+             " is designed for exactly this situation.")
+    st_space("v", 1)
 
     show_explanation("""
     ### Step 1: COLLECT — Gather Your Sources

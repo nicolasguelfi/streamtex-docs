@@ -1,35 +1,50 @@
 """CE Manual — Part 2: /stx-ce:go Autonomous Workflow."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the /stx-ce:go block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """/stx-ce:go styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """/stx-ce:go autonomous workflow: 11 steps, 3 gates, flags."""
 
-    st_write("""
-    ## /stx-ce:go — The Autonomous Pipeline
+    st_space("v", 1)
+    st_write(bs.heading, "/stx-ce:go — The Autonomous Pipeline",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The `/stx-ce:go` command runs the **complete CE cycle** as an autonomous
-    pipeline. It chains all phases (COLLECT through COMPOUND) with automatic
-    gate checks and configurable behavior flags.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.tool_kw, "/stx-ce:go"),
+             " command runs the ",
+             (s.bold, "complete CE cycle"),
+             " as an autonomous pipeline. It chains all phases (",
+             (s.project.titles.phase_kw, "COLLECT"),
+             " through ",
+             (s.project.titles.phase_kw, "COMPOUND"),
+             ") with automatic gate checks and configurable behavior flags.")
+    st_space("v", 1)
 
-    This is the primary command for production use. Individual phase commands
-    exist for debugging and fine-tuning, but `/stx-ce:go` is the standard
-    entry point.
-    """)
+    st_write(s.large,
+             "This is the primary command for production use. Individual phase commands "
+             "exist for debugging and fine-tuning, but ",
+             (s.project.titles.tool_kw, "/stx-ce:go"),
+             " is the standard entry point.")
+    st_space("v", 1)
 
     show_explanation("The 11-Step Pipeline", """
     ```

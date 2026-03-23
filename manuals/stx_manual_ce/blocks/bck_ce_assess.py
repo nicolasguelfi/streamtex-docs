@@ -1,32 +1,40 @@
 """CE Manual — Part 2: ASSESS Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the ASSESS phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """ASSESS phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """ASSESS phase: auto-detect pathway, evaluate, dialogue."""
 
-    st_write("""
-    ## ASSESS — Evaluate Material and Detect Pathway
+    st_space("v", 1)
+    st_write(bs.heading, "ASSESS — Evaluate Material and Detect Pathway",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **ASSESS** phase analyzes the collect report and determines the optimal
-    production pathway. It evaluates the quality of source material, identifies
-    gaps, and initiates a structured dialogue with the user to clarify
-    requirements (R1-R18).
-    """)
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "ASSESS"),
+             " phase analyzes the collect report and determines the optimal "
+             "production pathway. It evaluates the quality of source material, identifies "
+             "gaps, and initiates a structured dialogue with the user to clarify "
+             "requirements (R1-R18).")
+    st_space("v", 1)
 
     show_explanation("Pathway Auto-Detection", """
     ASSESS automatically selects one of three pathways based on the collect report:

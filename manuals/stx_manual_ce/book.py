@@ -52,6 +52,9 @@ marker_config = MarkerConfig(
 )
 
 st_book([
+    # Welcome page (gradient header + level badge)
+    blocks.bck_ce_welcome,
+
     # Part 1: Introduction
     blocks.bck_ce_overview,
     blocks.bck_ce_philosophy,
@@ -105,6 +108,8 @@ st_book([
             timestamp=True,
         ),
     ],
+    page_width=60,
     view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS],
+    doc_version=_doc_version,
     presentation_profiles=PresentationProfile.desktop_mobile_preset(),
 )

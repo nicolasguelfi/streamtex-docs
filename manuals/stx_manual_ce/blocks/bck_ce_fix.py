@@ -1,35 +1,59 @@
 """CE Manual — Part 2: FIX Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the FIX phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """FIX phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """FIX phase: load review, apply corrections, verify, re-audit."""
 
-    st_write("""
-    ## FIX — Apply Corrections from Review
+    st_space("v", 1)
+    st_write(bs.heading, "FIX — Apply Corrections from Review",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **FIX** phase is the complement to REVIEW. While REVIEW is read-only,
-    FIX is **write-only in purpose**: it loads the review report, applies
-    corrections to block files, verifies each fix, and runs a global re-audit
-    to confirm resolution.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "FIX"),
+             " phase is the complement to ",
+             (s.project.titles.phase_kw, "REVIEW"),
+             ". While ",
+             (s.project.titles.phase_kw, "REVIEW"),
+             " is read-only, ",
+             (s.project.titles.phase_kw, "FIX"),
+             " is ",
+             (s.bold, "write-only in purpose"),
+             ": it loads the review report, applies "
+             "corrections to block files, verifies each fix, and runs a global re-audit "
+             "to confirm resolution.")
+    st_space("v", 1)
 
-    FIX is a **new phase** in the CE cycle, introduced to separate the
-    concerns of evaluation (REVIEW) and correction (FIX).
-    """)
+    st_write(s.large,
+             (s.project.titles.phase_kw, "FIX"),
+             " is a ",
+             (s.bold, "new phase"),
+             " in the CE cycle, introduced to separate the "
+             "concerns of evaluation (",
+             (s.project.titles.phase_kw, "REVIEW"),
+             ") and correction (",
+             (s.project.titles.phase_kw, "FIX"),
+             ").")
+    st_space("v", 1)
 
     show_explanation("The FIX Pipeline", """
     FIX operates in five sequential steps:

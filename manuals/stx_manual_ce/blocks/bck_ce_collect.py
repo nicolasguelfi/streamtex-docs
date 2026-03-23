@@ -1,34 +1,49 @@
 """CE Manual — Part 2: COLLECT Phase."""
 
 from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
 
 try:
     from blocks.helpers import show_explanation, show_details
 except ImportError:
     from streamtex import show_explanation, show_details
 
-from custom.styles import Styles as s
-
 
 class BlockStyles:
-    """Styles for the COLLECT phase block."""
-    title = s.part_title if hasattr(s, "part_title") else {}
-    phase = s.phase if hasattr(s, "phase") else {}
+    """COLLECT phase styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+
+
+bs = BlockStyles
 
 
 def build():
     """COLLECT phase: scan sources, classify, evaluate importability."""
 
-    st_write("""
-    ## COLLECT — Gather and Classify Source Material
+    st_space("v", 1)
+    st_write(bs.heading, "COLLECT — Gather and Classify Source Material",
+             tag=t.div, toc_lvl="1")
+    st_space("v", 2)
 
-    The **COLLECT** phase is the entry point of every CE cycle. Its purpose is to
-    systematically scan all available sources, classify their content, and evaluate
-    what can be imported into the target StreamTeX project.
+    st_write(s.large,
+             "The ",
+             (s.project.titles.phase_kw, "COLLECT"),
+             " phase is the entry point of every CE cycle. Its purpose is to "
+             "systematically scan all available sources, classify their content, and evaluate "
+             "what can be imported into the target StreamTeX project.")
+    st_space("v", 1)
 
-    This phase runs **automatically** when `/stx-ce:go` is invoked, or can be
-    triggered independently with `/stx-ce:collect`.
-    """)
+    st_write(s.large,
+             "This phase runs ",
+             (s.bold, "automatically"),
+             " when ",
+             (s.project.titles.tool_kw, "/stx-ce:go"),
+             " is invoked, or can be triggered independently with ",
+             (s.project.titles.tool_kw, "/stx-ce:collect"),
+             ".")
+    st_space("v", 1)
 
     show_explanation("The 4 Sub-Phases of COLLECT", """
     COLLECT operates through four sequential sub-phases:

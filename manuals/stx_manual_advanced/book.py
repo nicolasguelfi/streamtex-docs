@@ -127,6 +127,7 @@ st_book([
 
     # --- Section 7: Presentation ---
     blocks.bck_presentation_mode,
+    blocks.bck_spacing_profiles,
 
     # Shared block footer
     shared_blocks.bck_footer_training,

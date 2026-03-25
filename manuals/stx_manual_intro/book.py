@@ -88,6 +88,7 @@ st_book([
     blocks.bck_media_rendering,
     blocks.bck_navigation_and_organization,
     blocks.bck_zoom_and_responsive,
+    blocks.bck_spacing,
     blocks.bck_export_and_sharing,
 
     # CLI Quick Start

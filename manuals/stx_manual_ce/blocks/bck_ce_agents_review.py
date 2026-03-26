@@ -73,10 +73,10 @@ def build():
 
     | Severity | Meaning | Action Required |
     |----------|---------|-----------------|
-    | **blocker** | Prevents publication | Must fix before release |
-    | **major** | Significantly degrades quality | Should fix in current cycle |
-    | **minor** | Small improvement opportunity | Fix if time permits |
-    | **suggestion** | Stylistic preference | Consider for next cycle |
+    | **CRITICAL** | Prevents publication | Must fix before release |
+    | **MAJOR** | Significantly degrades quality | Should fix in current cycle |
+    | **MINOR** | Small improvement opportunity | Fix if time permits |
+    | **SUGGESTION** | Stylistic preference | Consider for next cycle |
 
     ### Review Report Structure
 

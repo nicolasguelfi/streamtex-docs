@@ -126,6 +126,8 @@ def build():
     **tpl_content_map**
     - Required: themes list, learning objectives, scope boundaries
     - Optional: theme relationships, prerequisite graph
+    - Assessment covers requirements R1-R26 (content, structure,
+      bibliography R19-R21, AI images R22-R24, export R25-R26)
 
     **tpl_gap_report** (pathways A/B)
     - Required: gap entries with severity, type, and affected items
@@ -143,7 +145,12 @@ def build():
 
     **tpl_structure_plan**
     - Required: parts with titles, blocks with names and responsibilities
-    - Optional: navigation flow diagram, style requirements
+    - Optional: navigation flow diagram, style requirements,
+      bibliography setup (sources, citation style),
+      presentation profiles (if applicable),
+      section spacing configuration,
+      AI image configuration (provider, defaults),
+      export configuration (PDF format, asset mode)
 
     **tpl_task_sequence**
     - Required: ordered task list with dependencies and estimates
@@ -151,6 +158,7 @@ def build():
 
     **tpl_review_report**
     - Required: perspective name, blocks reviewed, findings with severity
+    - Severity levels: CRITICAL, MAJOR, MINOR, SUGGESTION
     - Optional: summary statistics, comparison with prior reviews
 
     **tpl_solution_package**

@@ -56,6 +56,13 @@ def build():
 
     All five agents run **in parallel** on each block. Their findings are
     merged into a single review report with no duplicates.
+
+    **Additional review perspectives** (applied when relevant features are used):
+
+    - **Bibliography review** — Citation consistency, missing or orphan keys, format compliance with BibConfig
+    - **AI image review** — Visual coherence with surrounding content, relevance to topic, prompt quality
+    - **Presentation profile coherence** — Multi-ViewMode compatibility (paginated vs continuous), layout stability across profiles
+    - **Section spacing consistency** — Uniform SpacingConfig application, detection of ad-hoc `st_space` overrides that break profile rules
     """)
 
     st_space("v", 1)
@@ -65,28 +72,28 @@ def build():
 
     Every finding is tagged with a severity level:
 
-    **blocker** — Must be fixed before delivery
+    **CRITICAL** — Must be fixed before delivery
     - Broken imports or render errors
     - Factually incorrect content
     - Missing blocks referenced in navigation
     - Accessibility violations
 
-    **major** — Should be fixed, but not blocking
+    **MAJOR** — Should be fixed, but not blocking
     - Inconsistent style across blocks
     - Suboptimal pedagogical flow
     - Missing `show_details()` for optional content
     - Overly long blocks (>150 lines)
 
-    **minor** — Small improvement opportunity
+    **MINOR** — Small improvement opportunity
     - Alternative widget choices
     - Additional examples that could help
     - Minor wording improvements
 
-    **suggestion** — Stylistic or optional improvement
+    **SUGGESTION** — Stylistic or optional improvement
     - Cosmetic layout tweaks
     - Alternative approaches worth considering
 
-    The FIX phase processes blocker items first, then majors. Minor items
+    The FIX phase processes CRITICAL items first, then MAJORs. MINOR items
     are optional and applied only if `--thorough` is specified.
     """)
 
@@ -102,25 +109,25 @@ def build():
     Total findings: 47
 
     SUMMARY:
-      blocker    ...  3 findings (must fix)
-      major      ... 18 findings (should fix)
-      minor      ... 16 findings (fix if time permits)
-      suggestion ... 10 findings (optional)
+      CRITICAL   ...  3 findings (must fix)
+      MAJOR      ... 18 findings (should fix)
+      MINOR      ... 16 findings (fix if time permits)
+      SUGGESTION ... 10 findings (optional)
 
     PER-BLOCK FINDINGS:
       bck_start_welcome (3 findings):
-        [blocker]    content-editor: Missing introduction paragraph
-        [major]      visual-reviewer: Hero banner has no fallback text
-        [suggestion] pedagogy-analyst: Consider adding a "what you'll learn" list
+        [CRITICAL]   content-editor: Missing introduction paragraph
+        [MAJOR]      visual-reviewer: Hero banner has no fallback text
+        [SUGGESTION] pedagogy-analyst: Consider adding a "what you'll learn" list
 
       bck_start_install (5 findings):
-        [blocker] style-consistency-checker: Missing BlockStyles class
-        [major]   audience-advocate: Assumes Linux; add Windows/macOS tabs
+        [CRITICAL] style-consistency-checker: Missing BlockStyles class
+        [MAJOR]    audience-advocate: Assumes Linux; add Windows/macOS tabs
         ...
 
     CROSS-BLOCK FINDINGS:
-      [major] style-consistency-checker: 4 blocks use different heading levels
-      [major] pedagogy-analyst: No summary block at end of Part 2
+      [MAJOR] style-consistency-checker: 4 blocks use different heading levels
+      [MAJOR] pedagogy-analyst: No summary block at end of Part 2
     ```
     """)
 
@@ -139,8 +146,8 @@ def build():
     # Review with specific agents only
     /stx-ce:review --agents pedagogy-analyst,content-editor
 
-    # Show only blocker findings
-    /stx-ce:review --severity blocker
+    # Show only CRITICAL findings
+    /stx-ce:review --severity CRITICAL
 
     # Export review report as standalone file
     /stx-ce:review --export review-report.md

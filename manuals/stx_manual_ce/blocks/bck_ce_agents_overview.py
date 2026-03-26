@@ -1,4 +1,4 @@
-"""CE Manual — Part 3: Overview of All 17 Agents."""
+"""CE Manual — Part 3: Overview of All 17 Agents and Command-Driven PRODUCE."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -65,16 +65,17 @@ def build():
     | 5 | ASSESS | **gap-analyst** | Compares current vs. desired state, lists gaps (pathways A/B) |
     | 6 | ASSESS | **format-explorer** | Surveys output formats, recommends block types and layouts |
     | 7 | ASSESS | **angle-generator** | Proposes creative angles and structural options (pathway C) |
-    | 8 | PLAN | **structure-planner** | Designs document skeleton: parts, blocks, navigation flow |
-    | 9 | PLAN | **task-sequencer** | Orders production tasks, estimates effort, flags dependencies |
-    | 10 | PRODUCE | **block-writer** | Generates StreamTeX block code from plan specifications |
-    | 11 | PRODUCE | **style-applicator** | Applies custom styles, themes, and visual consistency |
-    | 12 | PRODUCE | **content-migrator** | Converts legacy HTML/Marp/PDF content into StreamTeX blocks |
-    | 13 | REVIEW | **audience-advocate** | Reviews from the reader's perspective: clarity, accessibility |
-    | 14 | REVIEW | **pedagogy-analyst** | Checks learning flow, progression, and explanation quality |
-    | 15 | REVIEW | **visual-reviewer** | Evaluates layout, spacing, visual hierarchy, and responsiveness |
-    | 16 | REVIEW | **style-consistency-checker** | Verifies adherence to project style guide and conventions |
-    | 17 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
+    | 8 | PLAN | **structure-architect** | Designs document skeleton: parts, blocks, navigation flow |
+    | 9 | PLAN | **domain-researcher** | Gathers domain knowledge, best practices, technical references |
+    | 10 | PLAN | **learnings-researcher** | Mines past project experience, surfaces reusable patterns |
+    | 11 | PRODUCE | *(command-driven)* | Delegates to `/stx-designer:*`, `/stx-import:*`, `/stx-export:*`, `/stx-deploy:*` |
+    | 12 | REVIEW | **audience-advocate** | Reviews from the reader's perspective: clarity, accessibility |
+    | 13 | REVIEW | **pedagogy-analyst** | Checks learning flow, progression, and explanation quality |
+    | 14 | REVIEW | **visual-reviewer** | Evaluates layout, spacing, visual hierarchy, and responsiveness |
+    | 15 | REVIEW | **style-consistency-checker** | Verifies adherence to project style guide and conventions |
+    | 16 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
+    | 17 | COMPOUND | **feedback-detector** | Detects ecosystem issues from review findings |
+    | 18 | COMPOUND | **dev-governance** | Enforces development discipline across the cycle |
     """)
 
     st_space("v", 1)
@@ -87,7 +88,7 @@ def build():
     - **COLLECT** agents produce a **source inventory** and **complexity report**.
     - **ASSESS** agents read those reports and produce an **assessment brief**.
     - **PLAN** agents consume the brief and emit a **structured plan**.
-    - **PRODUCE** agents execute the plan, generating blocks and content.
+    - **PRODUCE** is command-driven — it executes the plan via `/stx-designer:*` and `/stx-import:*` commands.
     - **REVIEW** agents evaluate the output against the assessment criteria.
 
     Two **COMPOUND** agents — **feedback-detector** and **dev-governance** — operate
@@ -100,22 +101,21 @@ def build():
     show_details("""
     ### Agent Activation by Pathway
 
-    | Agent | Pathway A (Import) | Pathway B (Improve) | Pathway C (Create) |
-    |-------|--------------------|---------------------|--------------------|
-    | source-scanner | Yes | Yes | -- |
-    | import-assessor | Yes | -- | -- |
-    | audience-analyst | Yes | Yes | Yes |
-    | content-strategist | Yes | Yes | Yes |
-    | gap-analyst | Yes | Yes | -- |
-    | format-explorer | Yes | Yes | Yes |
-    | angle-generator | -- | -- | Yes |
-    | structure-planner | Yes | Yes | Yes |
-    | task-sequencer | Yes | Yes | Yes |
-    | block-writer | Yes | Yes | Yes |
-    | style-applicator | Yes | Yes | Yes |
-    | content-migrator | Yes | -- | -- |
-    | Review agents (5) | Yes | Yes | Yes |
-    | Compound agents (2) | Yes | Yes | Yes |
+    | Agent | Phase | Pathway A (Import) | Pathway B (Improve) | Pathway C (Create) |
+    |-------|-------|--------------------|---------------------|--------------------|
+    | source-scanner | COLLECT | Yes | Yes | -- |
+    | import-assessor | COLLECT | Yes | -- | -- |
+    | audience-analyst | ASSESS | Yes | Yes | Yes |
+    | content-strategist | ASSESS | Yes | Yes | Yes |
+    | gap-analyst | ASSESS | Yes | Yes | -- |
+    | format-explorer | ASSESS | Yes | Yes | Yes |
+    | angle-generator | ASSESS | -- | -- | Yes |
+    | structure-architect | PLAN | Yes | Yes | Yes |
+    | domain-researcher | PLAN | Yes | Yes | Yes |
+    | learnings-researcher | PLAN | Yes | Yes | Yes |
+    | *(commands)* | PRODUCE | Yes | Yes | Yes |
+    | Review agents (5) | REVIEW | Yes | Yes | Yes |
+    | Compound agents (2) | COMPOUND | Yes | Yes | Yes |
     """)
 
     st_space("v", 1)

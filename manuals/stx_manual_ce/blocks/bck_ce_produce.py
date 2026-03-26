@@ -55,7 +55,7 @@ def build():
     2. Content is mapped to StreamTeX primitives (`st_write`, `st_code`, etc.)
     3. A new block file is generated with proper structure
     4. The block is validated against StreamTeX patterns
-    - Uses: `/stx-import:convert`, `/stx-import:html`
+    - Uses: `/stx-import:convert`, `/stx-import:html`, `/stx-import:latex`
 
     **IMPROVE** — Enhance existing StreamTeX blocks
     1. The existing block is loaded and analyzed
@@ -71,6 +71,22 @@ def build():
     3. StreamTeX patterns are applied (show_explanation, show_details, etc.)
     4. The block is written and validated
     - Uses: `/stx-designer:init`, `/stx-designer:update`
+
+    **Additional Production Steps** (applied per plan design choices):
+
+    **Bibliography setup** — When the plan includes bibliography:
+    1. Configure `set_bib_config()` with format and citation style
+    2. Load references with `load_bib()` from `.bib` files
+    3. Insert citations with `cite()` in block content
+    4. Place `st_bibliography()` at the designated location
+
+    **AI image integration** — When the plan includes AI-generated visuals:
+    1. Configure `set_ai_image_config()` with provider, model, and cache strategy
+    2. Insert `st_ai_image(prompt)` calls where visuals are needed
+    3. Review generated images during quality gates
+
+    > **Note:** PRODUCE is command-driven — it delegates to `/stx-designer:*`,
+    > `/stx-import:*`, and `/stx-export:*` rather than editing files directly.
     """)
 
     st_space("v", 1)

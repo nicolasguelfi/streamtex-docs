@@ -1,4 +1,4 @@
-"""CE Manual — Part 3: PRODUCE Agents Detail."""
+"""CE Manual — Part 3: PRODUCE Phase — Command-Driven Production."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -11,7 +11,7 @@ except ImportError:
 
 
 class BlockStyles:
-    """PRODUCE Phase Agents styles."""
+    """PRODUCE Phase styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 
@@ -20,20 +20,26 @@ bs = BlockStyles
 
 
 def build():
-    """PRODUCE phase: 4-phase orchestration with 3 production pipelines."""
+    """PRODUCE phase: command-driven production with 3 pipelines."""
 
     st_space("v", 1)
-    st_write(bs.heading, "PRODUCE Phase Agents",
+    st_write(bs.heading, "PRODUCE Phase — Command-Driven",
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     st_write(s.large,
              ("The ", (s.project.titles.phase_kw, "PRODUCE"),
-              " phase executes the approved plan by orchestrating ",
-              (s.project.titles.tool_kw, "/stx-designer"),
-              " and ",
-              (s.project.titles.tool_kw, "/stx-import"),
-              " commands across four phases. Each plan item is routed through "
+              " phase is unique among CE phases: it uses ",
+              (s.bold, "no standalone agents"),
+              ". Instead, it delegates all production work to existing commands — ",
+              (s.project.titles.tool_kw, "/stx-designer:*"),
+              ", ",
+              (s.project.titles.tool_kw, "/stx-import:*"),
+              ", ",
+              (s.project.titles.tool_kw, "/stx-export:*"),
+              ", and ",
+              (s.project.titles.tool_kw, "/stx-deploy:*"),
+              ". Each plan item is routed through "
               "one of three pipelines based on its type: ",
               (s.project.titles.pathway_kw, "Import"),
               ", ",
@@ -143,22 +149,24 @@ def build():
     """)
 
     show_details("""
-    ### PRODUCE Agents and Tools Summary
+    ### PRODUCE Commands Summary
 
-    The PRODUCE phase does not use standalone AI agents in the same way as
-    COLLECT or ASSESS. Instead, it orchestrates existing stx-designer and
-    stx-import commands, each of which encapsulates agent-like behavior:
+    The PRODUCE phase delegates all work to existing commands. There are
+    no standalone PRODUCE agents — this is by design:
 
-    | Role | Tool / Command | Equivalent Agent |
-    |------|---------------|-----------------|
-    | Block creation | `/stx-designer:block-new`, `/stx-designer:slide-new` | block-writer |
-    | Content migration | `/stx-import:html`, `/stx-import:marp` | content-migrator |
-    | Style alignment | `/stx-designer:style-refactor` | style-applicator |
-    | Quality check | `/stx-designer:audit` | quality-auditor |
-    | Issue correction | `/stx-designer:fix` | issue-fixer |
-    | Content update | `/stx-designer:update` | content-editor |
+    | Role | Command |
+    |------|---------|
+    | Block creation | `/stx-designer:block-new`, `/stx-designer:slide-new` |
+    | Content migration | `/stx-import:html`, `/stx-import:marp` |
+    | Style alignment | `/stx-designer:update` (style changes) |
+    | Quality check | `/stx-designer:audit` |
+    | Issue correction | `/stx-designer:fix` |
+    | Content update | `/stx-designer:update` |
+    | HTML export | `/stx-export:html` |
+    | Deployment | `/stx-deploy:deploy` |
 
-    This command-based architecture means the PRODUCE phase is fully
+    This command-driven architecture means the PRODUCE phase is fully
     traceable: every action maps to a specific command invocation that
-    can be replayed or inspected.
+    can be replayed or inspected. Unlike other phases, no agent artifacts
+    (reports, assessments) are produced — only concrete project files.
     """)

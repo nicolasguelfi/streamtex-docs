@@ -63,6 +63,11 @@ def build():
     - Style profile selection or customization
     - Widget and interaction patterns
     - Layout decisions (columns, tabs, expanders)
+    - Bibliography setup (BibConfig: format, citation style, placement)
+    - Presentation profiles (preset selection, ViewMode per profile)
+    - Section spacing (SpacingConfig, per-profile overrides)
+    - AI image configuration (provider, model, cache strategy, prompt guidelines)
+    - Export configuration (AssetMode EMBEDDED/EXTERNAL, ExportMode, PdfConfig)
 
     **4. SEQUENCE** — The production order
     - Which blocks to produce first (dependencies)

@@ -145,6 +145,88 @@ def build():
 
     st_space("v", 1)
 
+    show_explanation("""
+    ### How do I add bibliography and citations to my CE project?
+
+    Bibliography support is built into the CE workflow across multiple phases:
+
+    1. **ASSESS**: Requirements R19-R21 cover citation presence, BibTeX
+       validity, and reference completeness. The assessment will flag
+       missing citations as gaps.
+    2. **PLAN**: Include a `BibConfig` section in your plan with the
+       citation style (APA, IEEE, etc.) and the path to your `.bib` file.
+       The structure plan template has dedicated fields for bibliography
+       setup.
+    3. **PRODUCE**: Use `cite("key")` for inline citations and
+       `st_bibliography()` to render the reference list. The PRODUCE
+       agents will insert citations according to the plan.
+    4. **REVIEW**: The editorial reviewer checks citation consistency
+       and completeness against the bibliography file.
+
+    **Quick start**: add a `references.bib` file to your project root,
+    then mention bibliography in your `/stx-ce:plan` description.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### Can CE generate AI images?
+
+    **Yes.** CE supports AI image generation through requirements R22-R24
+    and the `AIImageConfig` configuration object.
+
+    **Setup:**
+    1. Install AI dependencies: `uv add streamtex[ai]` (or a specific
+       provider: `streamtex[ai-openai]`, `streamtex[ai-google]`,
+       `streamtex[ai-fal]`).
+    2. Set the appropriate API key environment variable (`STX_OPENAI_API_KEY`,
+       `STX_GOOGLE_AI_KEY`, or `STX_FAL_KEY`).
+    3. In your PLAN, include `AIImageConfig` with your preferred provider,
+       default image size, and quality settings.
+
+    **During PRODUCE:** Use `st_ai_image(prompt)` in your blocks. Images
+    are cached by a deterministic hash of the prompt, provider, size,
+    quality, and seed, so regeneration only happens when parameters change.
+
+    **During REVIEW:** R22-R24 check that the AI provider is configured,
+    prompts are descriptive, and caching is used effectively.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### How do I check my CE cycle progress?
+
+    Use the `/stx-ce:status` command. It displays a dashboard showing:
+
+    - Which phases are completed, in progress, or pending
+    - Block-by-block production progress (during PRODUCE)
+    - Review findings summary by severity level
+    - Producer profile state and last update date
+
+    For a detailed breakdown, use `/stx-ce:status --verbose`.
+
+    **Example:**
+    ```
+    /stx-ce:status
+    ```
+    ```
+    CE Cycle Status
+    ===============
+    Pathway: B (Improve)
+    Current phase: REVIEW
+    Inventory: 8 sources | Assessment: 3 gaps | Plan: 6 blocks
+    Production: 6/6 blocks done
+    Review: 1 CRITICAL, 3 MAJOR, 5 MINOR
+    Profile: exists (2026-03-20)
+    ```
+
+    Run `/stx-ce:status` at any time — it reads the `docs/` artifacts
+    and reports the current state without modifying anything.
+    """)
+
+    st_space("v", 1)
+
     show_details("""
     ### Quick Answers
 

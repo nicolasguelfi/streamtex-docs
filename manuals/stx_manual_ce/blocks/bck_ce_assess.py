@@ -33,7 +33,7 @@ def build():
              " phase analyzes the collect report and determines the optimal "
              "production pathway. It evaluates the quality of source material, identifies "
              "gaps, and initiates a structured dialogue with the user to clarify "
-             "requirements (R1-R18).")
+             "requirements (R1-R26).")
     st_space("v", 1)
 
     show_explanation("""\
@@ -77,7 +77,7 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-    ### User Dialogue — Requirements R1-R18
+    ### User Dialogue — Requirements R1-R26
 
     ASSESS initiates a structured dialogue to capture user requirements:
 
@@ -88,9 +88,12 @@ def build():
     | R3 | Learning objectives | "What should readers be able to do after?" |
     | R4-R6 | Scope and boundaries | "What topics are in/out of scope?" |
     | R7-R9 | Style preferences | "Formal or conversational tone?" |
-    | R10-R12 | Structure constraints | "Max depth? Number of parts?" |
+    | R10-R12 | Form and layout | "Presentation profile? Section spacing? Max depth?" |
     | R13-R15 | Content priorities | "Which topics are most important?" |
     | R16-R18 | Delivery constraints | "Timeline? Incremental delivery?" |
+    | R19-R21 | Bibliography | "Sources to cite? Citation format? Citation style?" |
+    | R22-R24 | AI Images | "Image needs? Preferred provider? Manual or auto mode?" |
+    | R25-R26 | Data Sources | "Google Sheets to integrate? Access configuration?" |
 
     In **auto mode**, ASSESS infers answers from the source material and
     confirms with the user. In **interactive mode**, each requirement is
@@ -109,11 +112,11 @@ def build():
 
     **Pathway B (Improve)**
     - ASSESS identifies gaps between imported and needed content
-    - Medium dialogue (R1-R9 confirmed, R10-R18 inferred)
+    - Medium dialogue (R1-R9 confirmed, R10-R26 inferred)
     - Produces a gap analysis alongside the import manifest
 
     **Pathway C (Create)**
-    - ASSESS conducts full requirements elicitation (R1-R18)
+    - ASSESS conducts full requirements elicitation (R1-R26)
     - Builds a content specification from scratch
     - Produces a creation brief with detailed block descriptions
     """)
@@ -130,7 +133,7 @@ def build():
     # Force a specific pathway
     /stx-ce:assess --pathway B
 
-    # Interactive mode (ask all R1-R18)
+    # Interactive mode (ask all R1-R26)
     /stx-ce:assess --interactive
 
     # Auto mode (infer and confirm)

@@ -52,8 +52,10 @@ def build():
 
     **1. SOURCE SCAN** — Enumerate all input sources
     - Local files (PDF, DOCX, PPTX, HTML, Markdown)
+    - Bibliography files (`.bib`, `.ris`, `.json` CSL-JSON)
     - Existing StreamTeX projects and blocks
     - URLs and external references provided by the user
+    - Google Sheets URLs and spreadsheet IDs (data sources)
 
     **2. CONTENT CLASSIFICATION** — Categorize each source item
     - **Importable**: content that maps directly to StreamTeX blocks

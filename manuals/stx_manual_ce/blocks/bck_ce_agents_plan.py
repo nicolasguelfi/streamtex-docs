@@ -20,8 +20,8 @@ bs = BlockStyles
 
 
 def build():
-    """PLAN agents: structure-architect, content-strategist,
-    learnings-researcher, audience-analyst, visual-reviewer."""
+    """PLAN agents: structure-architect, domain-researcher,
+    learnings-researcher."""
 
     st_space("v", 1)
     st_write(bs.heading, "PLAN Phase Agents",
@@ -33,9 +33,9 @@ def build():
               " phase transforms assessment results into a concrete document "
               "skeleton. One main agent — the ",
               (s.project.titles.concept_kw, "structure-architect"),
-              " — designs the skeleton, supported by four agents that feed it "
-              "content analysis, past learnings, audience insights, and visual "
-              "proposals. The phase operates in two modes: ",
+              " — designs the skeleton, supported by two agents that feed it "
+              "domain expertise and past learnings. "
+              "The phase operates in two modes: ",
               (s.bold, "auto"),
               " (fully autonomous) and ",
               (s.bold, "interactive"),
@@ -74,7 +74,7 @@ def build():
 
     **Auto mode:**
     1. Load approved assessment from `docs/assess/`
-    2. Run supporting agents (content-strategist, learnings-researcher)
+    2. Run supporting agents (domain-researcher, learnings-researcher)
     3. Structure-architect generates full plan in one pass
     4. **GATE** — user reviews and approves or requests changes
 
@@ -94,27 +94,26 @@ def build():
     st_space("v", 1)
 
     show_explanation("""
-    ### Agent: content-strategist (supporting)
+    ### Agent: domain-researcher (supporting)
 
-    The **content-strategist** provides the structure-architect with a
-    deep analysis of the available content.
+    The **domain-researcher** gathers domain knowledge, best practices,
+    and technical references to inform the structure-architect's decisions.
 
     **Responsibilities:**
 
-    - **Theme clustering** — groups content by theme and identifies natural
-      section boundaries.
-    - **Gap identification** — detects missing topics, prerequisites that
-      lack coverage, and practical elements (examples, exercises) that
-      should be added.
-    - **Duplicate detection** — finds overlapping content across sources
-      and recommends consolidation strategies.
-    - **Progression logic** — evaluates whether the proposed reading order
-      respects conceptual dependencies and builds knowledge incrementally.
-    - **Objective validation** — cross-checks content coverage against the
-      learning objectives from the ASSESS phase.
+    - **Extract key topics** — identifies the core concepts and their
+      relationships from the document plan and assessment outputs.
+    - **Research best practices** — finds authoritative sources, standards,
+      and patterns relevant to the subject matter.
+    - **Identify technical references** — locates API documentation,
+      specifications, and examples that should be referenced or included.
+    - **Validate technical accuracy** — cross-checks planned content
+      against authoritative sources to prevent errors.
+    - **Recommend depth** — advises on how deeply each topic should be
+      covered based on audience level and available references.
 
-    **Output:** content strategy report with theme map, gap analysis, and
-    recommendations for the structure-architect.
+    **Output:** domain research report with key references, best practices,
+    and depth recommendations for the structure-architect.
     """)
 
     st_space("v", 1)
@@ -140,47 +139,12 @@ def build():
     **Output:** learnings research report with scored and annotated insights.
     """)
 
-    st_space("v", 1)
-
-    show_explanation("""
-    ### Agent: audience-analyst (advisory)
-
-    The **audience-analyst** revisits the audience profile established
-    during ASSESS, refining it for PLAN-phase decisions.
-
-    - Confirms or adjusts the audience profile based on structural choices
-      being considered by the structure-architect.
-    - Advises on reading level, section granularity, and example density.
-
-    **Output:** audience profile card (updated if needed).
-    """)
-
-    st_space("v", 1)
-
-    show_explanation("""
-    ### Agent: visual-reviewer (advisory)
-
-    The **visual-reviewer** operates in advisory mode during the PLAN phase,
-    providing design direction before production begins.
-
-    - **Color palette** — proposes a palette aligned with content tone and
-      audience expectations.
-    - **Layout patterns** — recommends grid layouts, sidebar usage, and
-      block density per page.
-    - **Visual hierarchy** — defines heading sizes, spacing rhythm, and
-      emphasis techniques for the document.
-
-    **Output:** design proposals integrated into the structure plan.
-    """)
-
     show_details("""
     ### PLAN Agent Activation Summary
 
     | Agent | Role | Runs In | Input From | Output To |
     |-------|------|---------|------------|-----------|
     | structure-architect | Main | Auto + Interactive | Assessment brief, all supporting outputs | Document structure plan |
-    | content-strategist | Supporting | Auto + Interactive | Source inventory, assessment | Content strategy report |
+    | domain-researcher | Supporting | Auto + Interactive | Assessment brief, document plan | Domain research report |
     | learnings-researcher | Supporting | Auto + Interactive | `docs/solutions/` | Learnings research report |
-    | audience-analyst | Advisory | Auto + Interactive | Assessment brief | Audience profile card |
-    | visual-reviewer | Advisory | Auto + Interactive | Content strategy, audience profile | Design proposals |
     """)

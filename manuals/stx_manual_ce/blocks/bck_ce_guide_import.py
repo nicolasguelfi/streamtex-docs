@@ -153,7 +153,7 @@ def build():
     5. **content-editor**: Is the text accurate and well-written?
 
     Review findings are saved to `docs/review.md`. Each finding has a
-    severity (blocker / major / minor / suggestion) and a specific fix
+    severity (CRITICAL / MAJOR / MINOR / SUGGESTION) and a specific fix
     recommendation.
     """)
 
@@ -162,7 +162,7 @@ def build():
     show_details("""
     ### Step 6: FIX and COMPOUND
 
-    **Fix** blockers and major issues:
+    **Fix** CRITICAL and MAJOR issues:
     ```
     /stx-ce:fix
     ```

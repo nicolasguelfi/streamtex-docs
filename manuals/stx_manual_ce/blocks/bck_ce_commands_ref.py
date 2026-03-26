@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference table of all 8 CE commands with options and examples."""
+    """Reference table of all 9 CE commands with options and examples."""
 
     st_space("v", 1)
     st_write(bs.heading, "Commands Reference",
@@ -28,7 +28,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "Compound Document Engineering provides ", (s.bold, "8 commands"),
+             "Compound Document Engineering provides ", (s.bold, "9 commands"),
              " that map directly to the CE ",
              (s.project.titles.phase_kw, "phases"),
              ". Each command activates the ",
@@ -143,7 +143,7 @@ def build():
     - `--block`: review a single block
     - Output: `docs/review.md`
 
-    **`/stx-ce:fix`** `[--severity blocker|major|minor] [--auto] [--thorough] [--dry-run]`
+    **`/stx-ce:fix`** `[--severity CRITICAL|MAJOR|MINOR] [--auto] [--thorough] [--dry-run]`
     - `--severity`: fix only findings at or above the given severity
     - `--auto`: apply fixes without confirmation prompts
     - `--thorough`: include minor and suggestion-level improvements
@@ -153,14 +153,62 @@ def build():
     - Selectively skip capitalization axes
     - Agents: feedback-detector, dev-governance
     - Output: `docs/solutions/`, `docs/profile.md`, `docs/feedback/`
+    """)
 
-    **`/stx-ce:status`** — no options, shows cycle state:
+    st_space("v", 1)
+
+    show_details("""
+    ### /stx-ce:status
+
+    **Syntax**: `/stx-ce:status [--verbose] [--help]`
+
+    | Option | Description | Default |
+    |--------|-------------|---------|
+    | `--verbose` | Show detailed breakdown per phase and per block | Summary only |
+    | `--help` | Display usage information for the status command | Off |
+
+    **Purpose**: Shows the CE cycle dashboard for the current project. This
+    is the go-to command for understanding where you are in the cycle.
+
+    **Dashboard contents:**
+    - **Phase status** — which phases are completed, in progress, or pending
+    - **Production progress** — block-by-block completion in PRODUCE phase
+    - **Review findings summary** — count of findings by severity level
+    - **Producer profile state** — whether a profile exists and its last update date
+
+    **Output**: displayed in the terminal (no file written).
+
+    **Examples**:
+    ```
+    /stx-ce:status
+    /stx-ce:status --verbose
+    ```
+
+    **Verbose output example**:
     ```
     CE Cycle Status
     ===============
     Pathway: A (Import)
     Current phase: PRODUCE (3/5 blocks done)
-    Inventory: 12 sources | Assessment: 8 gaps | Plan: 5 blocks
+
+    Phases:
+      COLLECT   : done (2026-03-20)
+      ASSESS    : done (2026-03-21)
+      PLAN      : done (2026-03-21)
+      PRODUCE   : in progress (3/5 blocks)
+      REVIEW    : pending
+      FIX       : pending
+      COMPOUND  : pending
+
+    Production:
+      bck_intro_welcome    : done
+      bck_chapter1_overview: done
+      bck_chapter1_details : done
+      bck_chapter2_overview: pending
+      bck_chapter2_details : pending
+
+    Review findings: (none yet)
+    Producer profile: exists (last updated 2026-03-19)
     ```
     """)
 

@@ -61,15 +61,17 @@ def build():
     FIX operates in five sequential steps:
 
     **1. LOAD** — Read the review report
-    - Parse all findings by severity (blocker first)
+    - Parse all findings by severity (CRITICAL first)
     - Group findings by block for efficient processing
     - Identify dependencies between fixes
 
     **2. APPLY** — Execute corrections
     - Each finding is addressed with a targeted edit
-    - Blocker fixes are applied first, then majors
-    - Minor and suggestion items are applied only with `--thorough`
+    - CRITICAL fixes are applied first, then MAJORs
+    - MINOR and SUGGESTION items are applied only with `--thorough`
     - Edits use minimal changes (no unnecessary rewrites)
+    - Spacing inconsistencies: apply uniform SpacingConfig across blocks
+    - Bibliography issues: add missing `st_bibliography()`, remove orphan `cite()` keys
 
     **3. VERIFY** — Check each fix individually
     - After each fix, the affected block is re-validated
@@ -105,8 +107,8 @@ def build():
     **Convergence rules:**
     - Maximum 3 iterations (prevents infinite loops)
     - If a fix introduces new findings, it is rolled back
-    - Iteration stops when: no blocker, no major, or max reached
-    - Remaining minor and suggestion items are logged but do not block completion
+    - Iteration stops when: no CRITICAL, no MAJOR, or max reached
+    - Remaining MINOR and SUGGESTION items are logged but do not block completion
 
     **The loop is automatic** in `/stx-ce:go` mode. In manual mode,
     the user triggers each REVIEW and FIX explicitly.
@@ -125,12 +127,12 @@ def build():
 
     FIXES APPLIED:
       [FIX-01] bck_start_welcome: Added introduction paragraph
-        Finding: [blocker] content-editor
+        Finding: [CRITICAL] content-editor
         Diff: +5 lines added at line 42
         Verified: PASS
 
       [FIX-02] bck_start_install: Added BlockStyles class
-        Finding: [blocker] style-consistency-checker
+        Finding: [CRITICAL] style-consistency-checker
         Diff: +8 lines added at line 1
         Verified: PASS
 
@@ -152,8 +154,8 @@ def build():
     # Apply fixes from review report
     /stx-ce:fix
 
-    # Fix blocker issues only
-    /stx-ce:fix --severity blocker
+    # Fix CRITICAL issues only
+    /stx-ce:fix --severity CRITICAL
 
     # Fix specific blocks only
     /stx-ce:fix --blocks bck_start_welcome,bck_start_install

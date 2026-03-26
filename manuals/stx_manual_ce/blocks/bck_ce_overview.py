@@ -103,3 +103,26 @@ def build():
         or execute phases individually for fine-grained control.
     """)
     st_space("v", 1)
+
+    # ── Extended capabilities ────────────────────────────────────
+    st_write(bs.sub, "Extended capabilities", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""\
+        The CE cycle integrates several advanced StreamTeX features
+        that enrich document production:
+
+        - **Bibliography management** — cite sources with `st_bibliography`,
+          load `.bib`, `.ris`, and CSL-JSON files, multiple citation styles.
+        - **AI image generation** — multi-provider support (OpenAI, Google,
+          fal.ai) with caching and version control.
+        - **Presentation profiles** — responsive layouts with multi-device
+          preview and audience-specific rendering.
+        - **Section spacing configuration** — fine-grained vertical rhythm
+          tuning across parts and blocks.
+        - **LaTeX import** — `/stx-import:latex` converts LaTeX documents
+          into StreamTeX blocks.
+        - **Google Sheets integration** — live data from spreadsheets as
+          tables, charts, or block content.
+    """)
+    st_space("v", 1)

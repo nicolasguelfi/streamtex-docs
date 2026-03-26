@@ -106,3 +106,100 @@ def build():
             "then verifies the **health endpoint** responds.\n\n"
             "To add deployment automation, extend the workflow with push-to-registry steps."
         )
+        st_space("v", 3)
+
+        # --- Hetzner auto-deploy workflow ---
+        st_write(bs.sub, "Hetzner auto-deploy (hetzner-deploy.yml)", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation(
+            "A dedicated workflow automates deployment to Hetzner/Coolify "
+            "on every push to main. It also supports manual dispatch."
+        )
+        st_space("v", 1)
+
+        with st_grid(cols=2, cell_styles=(
+            s.container.borders.solid_border
+            + s.container.paddings.small_padding
+            + s.container.layouts.vertical_center_layout
+        )) as g:
+            with g.cell(): st_write(s.bold + s.large, "Feature")
+            with g.cell(): st_write(s.bold + s.large, "Details")
+
+            with g.cell(): st_write(s.large, "Triggers")
+            with g.cell(): st_write(s.large, "Push to main + manual dispatch (workflow_dispatch)")
+
+            with g.cell(): st_write(s.large, "PyPI version guard")
+            with g.cell(): st_write(s.large,
+                                    "Waits for the new library version to be published on PyPI "
+                                    "before deploying (Coolify installs from PyPI, not local)")
+
+            with g.cell(): st_write(s.large, "Change detection")
+            with g.cell(): st_write(s.large,
+                                    "Selective deploy based on changed files — only affected "
+                                    "services are redeployed")
+
+            with g.cell(): st_write(s.large, "Deploy mechanism")
+            with g.cell(): st_write(s.large,
+                                    "Coolify API: GET /api/v1/deploy?uuid=<service-uuid>")
+
+            with g.cell(): st_write(s.large, "Required secret")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large, "COOLIFY_API_TOKEN")
+
+        st_space("v", 2)
+
+        show_explanation(
+            "The workflow deploys 7 services, each identified by its Coolify UUID."
+        )
+        st_space("v", 1)
+
+        with st_grid(cols=2, cell_styles=(
+            s.container.borders.solid_border
+            + s.container.paddings.small_padding
+            + s.container.layouts.vertical_center_layout
+        )) as g:
+            with g.cell(): st_write(s.bold + s.large, "Service")
+            with g.cell(): st_write(s.bold + s.large, "Subdomain")
+
+            with g.cell(): st_write(s.large, "docs (collection hub)")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large, "docs.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-intro")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-intro.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-advanced")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-advanced.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-deploy")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-deploy.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-developer")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-developer.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-ai")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-ai.streamtex.org")
+
+            with g.cell(): st_write(s.large, "docs-ce")
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large,
+                                    "docs-ce.streamtex.org")
+
+        st_space("v", 2)
+
+        show_code("""\
+            # Example: triggering a single service deploy via Coolify API
+            curl -s -H "Authorization: Bearer $COOLIFY_API_TOKEN" \\
+              "https://coolify.streamtex.org/api/v1/deploy?uuid=<service-uuid>"
+        """, language="bash")
+        st_space("v", 2)
+
+        show_details(
+            "The **PyPI version guard** is critical: Coolify builds Docker images that "
+            "install streamtex from PyPI. If you deploy before the new version is published, "
+            "the containers will use the old version and new features will be missing.\n\n"
+            "The workflow polls PyPI every 15 seconds until the expected version appears."
+        )

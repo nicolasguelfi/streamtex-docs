@@ -25,6 +25,13 @@ def build():
         st_space("v", 2)
 
         show_explanation(
+            "**For new deployments, Hetzner/Coolify is recommended.** "
+            "See the Hetzner chapter for the recommended production setup. "
+            "Render remains fully supported for existing deployments."
+        )
+        st_space("v", 1)
+
+        show_explanation(
             "Production-ready hosting with a **free tier** (750h/month) and **custom domains**. "
             "No credit card required. Supports **Docker** and **auto-deploys** from GitHub."
         )
@@ -137,12 +144,12 @@ def build():
 
             with g.cell(): st_write(s.large, "streamtex-intro")
             with g.cell(): st_write(s.project.colors.neutral_gray + s.large,
-                                    "documentation/manuals/stx_manual_intro")
+                                    "manuals/stx_manual_intro")
             with g.cell(): st_write(s.large, "docs-intro.streamtex.org")
 
             with g.cell(): st_write(s.large, "streamtex-advanced")
             with g.cell(): st_write(s.project.colors.neutral_gray + s.large,
-                                    "documentation/manuals/stx_manual_advanced")
+                                    "manuals/stx_manual_advanced")
             with g.cell(): st_write(s.large, "docs-advanced.streamtex.org")
 
             with g.cell(): st_write(s.large, "my-project")

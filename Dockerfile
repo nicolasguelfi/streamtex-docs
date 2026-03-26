@@ -23,13 +23,15 @@ RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
     sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
     uv run playwright install --with-deps chromium
 
-# Fail the build if the installed streamtex version is older than required
+# Fail the build if the installed streamtex version is older than required.
+# Uses importlib.metadata (package registry) — NOT streamtex.__version__
+# which was historically hardcoded and could be stale.
 RUN REQUIRED=$(cat .stx-version | tr -d '[:space:]') && \
-    INSTALLED=$(uv run python -c "import streamtex; print(streamtex.__version__)") && \
+    INSTALLED=$(uv run python -c "from importlib.metadata import version; print(version('streamtex'))") && \
     echo "streamtex: required >= ${REQUIRED}, installed ${INSTALLED}" && \
-    uv run python -c "import sys, streamtex; \
+    uv run python -c "import sys; \
 r = tuple(int(x) for x in '${REQUIRED}'.split('.')); \
-i = tuple(int(x) for x in streamtex.__version__.split('.')); \
+i = tuple(int(x) for x in '${INSTALLED}'.split('.')); \
 sys.exit(1) if i < r else sys.exit(0)" || \
     { echo "ERROR: streamtex ${INSTALLED} < ${REQUIRED} — aborting build"; exit 1; }
 

@@ -5,6 +5,11 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.14] — 2026-03-26
+
+### Fixed
+- **Version display**: bumped docs version from 0.5.10 to 0.5.14 — sidebar now shows correct "docs 0.5.14 · lib 0.5.14"
+
 ## [0.4.1] — 2026-03-20
 
 ### Changed

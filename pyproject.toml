@@ -1,6 +1,6 @@
 [project]
 name = "streamtex-docs"
-version = "0.5.10"
+version = "0.5.14"
 description = "StreamTeX interactive manuals and documentation"
 requires-python = ">=3.11"
 license = {text = "MIT"}

@@ -99,14 +99,16 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Check the current deployment status across all
-            configured platforms. Reports build state, URL,
-            and last deployment timestamp.
+            Check deployment status for a specific platform.
+            Supports coolify (Hetzner), render, and huggingface.
         """)
         st_space("v", 1)
 
         show_code("""\
-            stx deploy status
+            stx deploy status coolify              # Hetzner/Coolify services
+            stx deploy status coolify docs-intro   # specific service
+            stx deploy status render               # Render services
+            stx deploy status huggingface          # HuggingFace Spaces
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 

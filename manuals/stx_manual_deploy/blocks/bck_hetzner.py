@@ -322,7 +322,7 @@ def build():
         st_space("v", 2)
 
         show_details(
-            "**Server**: Hetzner cax21 ARM (4 vCPU, 8 GB RAM, 40 GB SSD) at 138.199.148.59\n\n"
+            "**Server**: Hetzner cax21 ARM (4 vCPU, 8 GB RAM, 80 GB SSD) at 138.199.148.59\n\n"
             "**Domain**: streamtex.org registered at OVH, DNS managed by Cloudflare (free CDN + WAF)\n\n"
             "**Coolify admin**: https://coolify.streamtex.org\n\n"
             "**SSH access**: `ssh root@138.199.148.59 -i ~/.ssh/hetzner_streamtex`\n\n"

@@ -40,7 +40,7 @@ def build():
 
             # Project-specific checks (also validates config and assets)
             ./deploy/preflight.sh projects/your_project
-            ./deploy/preflight.sh documentation/manuals/stx_manual_intro
+            ./deploy/preflight.sh manuals/stx_manual_intro
         """, language="bash")
         st_space("v", 2)
 

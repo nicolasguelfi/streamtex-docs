@@ -84,7 +84,7 @@ def build():
 
         show_explanation("""\
             Deploy your project to HuggingFace Spaces.
-            Pushes the project as a Streamlit Space with the
+            Pushes the project as a Docker Space with the
             correct app configuration.
         """)
         st_space("v", 1)

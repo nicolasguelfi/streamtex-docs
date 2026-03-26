@@ -145,12 +145,12 @@ def build():
             with g.cell(): st_write(s.large, "streamtex-intro")
             with g.cell(): st_write(s.project.colors.neutral_gray + s.large,
                                     "manuals/stx_manual_intro")
-            with g.cell(): st_write(s.large, "docs-intro.streamtex.org")
+            with g.cell(): st_write(s.large, "streamtex-intro.onrender.com")
 
             with g.cell(): st_write(s.large, "streamtex-advanced")
             with g.cell(): st_write(s.project.colors.neutral_gray + s.large,
                                     "manuals/stx_manual_advanced")
-            with g.cell(): st_write(s.large, "docs-advanced.streamtex.org")
+            with g.cell(): st_write(s.large, "streamtex-advanced.onrender.com")
 
             with g.cell(): st_write(s.large, "my-project")
             with g.cell(): st_write(s.project.colors.neutral_gray + s.large,

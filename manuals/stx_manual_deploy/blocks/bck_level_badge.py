@@ -83,7 +83,8 @@ def build():
         st_space("v", 1)
         with st_list(list_type="ul") as l:
             with l.item(): st_write(s.medium, "Local: Docker build and compose for testing")
-            with l.item(): st_write(s.medium, "Cloud: Streamlit Cloud, HuggingFace Spaces, Render.com")
-            with l.item(): st_write(s.medium, "Production: GCP VM + Ansible, CI/CD pipelines")
+            with l.item(): st_write(s.medium, "Cloud: Streamlit Cloud, HuggingFace Spaces")
+            with l.item(): st_write(s.medium + s.bold, "Production: Hetzner + Coolify (recommended)")
+            with l.item(): st_write(s.medium, "Legacy: Render.com, GCP VM + Ansible")
 
     st_space("v", 2)

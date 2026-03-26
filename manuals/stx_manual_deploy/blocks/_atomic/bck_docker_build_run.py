@@ -19,7 +19,7 @@ def build():
 
         show_explanation(
             "Build the Docker image and run it. "
-            "The default target project is documentation/manuals/stx_manual_intro."
+            "The default target project is manuals/stx_manual_intro."
         )
         st_space("v", 1)
 
@@ -53,13 +53,13 @@ def build():
 
             # Deploy the advanced manual
             docker build \\
-                --build-arg FOLDER=documentation/manuals/stx_manual_advanced \\
+                --build-arg FOLDER=manuals/stx_manual_advanced \\
                 -t advanced-app .
             docker run -p 8502:8501 advanced-app
 
             # Deploy this deployment manual
             docker build \\
-                --build-arg FOLDER=documentation/manuals/stx_manual_deploy \\
+                --build-arg FOLDER=manuals/stx_manual_deploy \\
                 -t deploy-manual .
             docker run -p 8503:8501 deploy-manual
         """, language="bash")

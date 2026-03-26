@@ -84,7 +84,7 @@ def build():
             # 1. Click "New app"
             # 2. Select your GitHub repo
             # 3. Set Main file path:
-            #    documentation/manuals/stx_manual_intro/book.py
+            #    manuals/stx_manual_intro/book.py
             #    OR: projects/your_project/book.py
             # 4. Set Python version to 3.13 (optional)
             # 5. Click "Deploy"

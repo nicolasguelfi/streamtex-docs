@@ -2219,8 +2219,8 @@ wheels = [
 
 [[package]]
 name = "streamtex"
-version = "0.5.15"
-source = { editable = "../streamtex" }
+version = "0.5.16"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "graphviz" },
@@ -2231,6 +2231,10 @@ dependencies = [
     { name = "streamlit" },
     { name = "streamlit-mermaid" },
     { name = "watchdog" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/e5/8c8cc8e8bc6ea7390a4124d3baef2464feaf3cb438b63e94595536c81db5/streamtex-0.5.16.tar.gz", hash = "sha256:8b6a85bb2694ae288cf7d4a293943e770f7d10dbaeecd7f4e68a01f705a90f9c", size = 1406069, upload-time = "2026-03-29T20:05:36.678Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/13/09528ddd1890237612c3c82f62bc7870fb18bb6a6fda37cd1feaba91bab2/streamtex-0.5.16-py3-none-any.whl", hash = "sha256:a94dd6713f9cc845d25c6f50643678ce98de7db02cf9630a35e27c3114386180", size = 1434074, upload-time = "2026-03-29T20:05:34.642Z" },
 ]
 
 [package.optional-dependencies]
@@ -2244,48 +2248,6 @@ inspector = [
 ]
 pdf = [
     { name = "playwright" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "beautifulsoup4", specifier = ">=4.10.0" },
-    { name = "click", marker = "extra == 'cli'", specifier = ">=8.0" },
-    { name = "fal-client", marker = "extra == 'ai'", specifier = ">=0.5" },
-    { name = "fal-client", marker = "extra == 'ai-fal'", specifier = ">=0.5" },
-    { name = "google-genai", marker = "extra == 'ai'", specifier = ">=1.0" },
-    { name = "google-genai", marker = "extra == 'ai-google'", specifier = ">=1.0" },
-    { name = "graphviz", specifier = ">=0.21" },
-    { name = "jinja2", marker = "extra == 'cli'", specifier = ">=3.0" },
-    { name = "matplotlib", specifier = ">=3.10.8" },
-    { name = "mermaid-py", specifier = ">=0.5.0" },
-    { name = "openai", marker = "extra == 'ai'", specifier = ">=1.0" },
-    { name = "openai", marker = "extra == 'ai-openai'", specifier = ">=1.0" },
-    { name = "playwright", marker = "extra == 'cli'", specifier = ">=1.40" },
-    { name = "playwright", marker = "extra == 'pdf'", specifier = ">=1.40" },
-    { name = "python-dotenv", specifier = ">=1.2.1" },
-    { name = "requests", specifier = ">=2.28.0" },
-    { name = "rich", marker = "extra == 'cli'", specifier = ">=13.0" },
-    { name = "streamlit", specifier = ">=1.54.0" },
-    { name = "streamlit-ace", marker = "extra == 'inspector'", specifier = ">=0.1.1" },
-    { name = "streamlit-mermaid", specifier = ">=0.3.0" },
-    { name = "watchdog" },
-]
-provides-extras = ["inspector", "cli", "pdf", "ai", "ai-openai", "ai-google", "ai-fal"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "build", specifier = ">=1.4.0" },
-    { name = "click", specifier = ">=8.0" },
-    { name = "fal-client", specifier = ">=0.13.1" },
-    { name = "google-genai", specifier = ">=1.66.0" },
-    { name = "jinja2", specifier = ">=3.0" },
-    { name = "openai", specifier = ">=2.26.0" },
-    { name = "playwright", specifier = ">=1.58.0" },
-    { name = "pre-commit", specifier = ">=3.0" },
-    { name = "pytest", specifier = ">=7.0" },
-    { name = "rich", specifier = ">=13.0" },
-    { name = "ruff", specifier = ">=0.4.0" },
-    { name = "twine", specifier = ">=6.2.0" },
 ]
 
 [[package]]
@@ -2305,7 +2267,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "streamtex", extras = ["ai", "inspector", "pdf"], editable = "../streamtex" }]
+requires-dist = [{ name = "streamtex", extras = ["ai", "inspector", "pdf"], specifier = ">=0.3.0" }]
 
 [package.metadata.requires-dev]
 dev = [

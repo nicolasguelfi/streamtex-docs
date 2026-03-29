@@ -10,5 +10,9 @@
   "size": "1536x1024",
   "quality": "hd",
   "base_image": null,
-  "revised_prompt": null
+  "revised_prompt": null,
+  "display_zoom": 45,
+  "display_width": null,
+  "display_height": null,
+  "display_keep_ratio": true
 }

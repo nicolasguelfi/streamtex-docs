@@ -7,6 +7,7 @@ from streamtex import st_include
 bck_text_basics = stx.load_atomic_block("bck_text_basics", __file__)
 bck_text_styles = stx.load_atomic_block("bck_text_styles", __file__)
 bck_text_inline = stx.load_atomic_block("bck_text_inline", __file__)
+bck_text_wrapping = stx.load_atomic_block("bck_text_wrapping", __file__)
 
 
 class BlockStyles:
@@ -22,3 +23,4 @@ def build():
     st_include(bck_text_basics)
     st_include(bck_text_styles)
     st_include(bck_text_inline)
+    st_include(bck_text_wrapping)

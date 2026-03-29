@@ -6,6 +6,7 @@ from streamtex import st_include
 bck_setup_clone = stx.load_atomic_block("bck_setup_clone", __file__)
 bck_setup_workspace = stx.load_atomic_block("bck_setup_workspace", __file__)
 bck_setup_editable = stx.load_atomic_block("bck_setup_editable", __file__)
+bck_dev_link = stx.load_atomic_block("bck_dev_link", __file__)
 
 
 class BlockStyles:
@@ -21,3 +22,4 @@ def build():
     st_include(bck_setup_clone)
     st_include(bck_setup_workspace)
     st_include(bck_setup_editable)
+    st_include(bck_dev_link)

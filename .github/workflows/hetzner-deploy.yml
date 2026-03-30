@@ -96,7 +96,7 @@ jobs:
           echo "$changed_files"
 
           # Shared files → deploy all
-          shared_patterns="^Dockerfile$|^pyproject.toml|^uv.lock|^shared-blocks/|^\.github/|^setup\.py|^scripts/"
+          shared_patterns="^Dockerfile$|^\.stx-version$|^pyproject.toml|^uv.lock|^shared-blocks/|^\.github/|^setup\.py|^scripts/"
           if echo "$changed_files" | grep -qE "$shared_patterns"; then
             echo "Shared files changed — deploying ALL services"
             echo "deploy_all=true" >> "$GITHUB_OUTPUT"

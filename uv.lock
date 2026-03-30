@@ -2219,7 +2219,7 @@ wheels = [
 
 [[package]]
 name = "streamtex"
-version = "0.5.16"
+version = "0.5.18"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -2232,9 +2232,9 @@ dependencies = [
     { name = "streamlit-mermaid" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5c/e5/8c8cc8e8bc6ea7390a4124d3baef2464feaf3cb438b63e94595536c81db5/streamtex-0.5.16.tar.gz", hash = "sha256:8b6a85bb2694ae288cf7d4a293943e770f7d10dbaeecd7f4e68a01f705a90f9c", size = 1406069, upload-time = "2026-03-29T20:05:36.678Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/63/16/9d52123ef553da0fb7f822fd889093a03a3d203190d4eb8034aaf6d9c3e7/streamtex-0.5.18.tar.gz", hash = "sha256:b808da70038eedd8b8dbc3335081657de072190e28bad424be3e36d4d8f9da3e", size = 1406874, upload-time = "2026-03-30T17:45:17.659Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cf/13/09528ddd1890237612c3c82f62bc7870fb18bb6a6fda37cd1feaba91bab2/streamtex-0.5.16-py3-none-any.whl", hash = "sha256:a94dd6713f9cc845d25c6f50643678ce98de7db02cf9630a35e27c3114386180", size = 1434074, upload-time = "2026-03-29T20:05:34.642Z" },
+    { url = "https://files.pythonhosted.org/packages/48/75/c5946c62d89ab2704dbd66efdbeebfc37d269c9b0ac049518fd9db5811ab/streamtex-0.5.18-py3-none-any.whl", hash = "sha256:5aa315db20c59578401c4841fd3be353c067888b7f1bbbb02b97aa8b4a265992", size = 1434940, upload-time = "2026-03-30T17:45:15.442Z" },
 ]
 
 [package.optional-dependencies]

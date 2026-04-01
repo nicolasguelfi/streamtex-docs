@@ -73,7 +73,8 @@ jobs:
             "streamtex-docs-deploy":    {"folder": "manuals/stx_manual_deploy",      "uuid": "yqoe91fox1on0czhld3goa3h", "replicas": []},
             "streamtex-docs-developer": {"folder": "manuals/stx_manual_developer",   "uuid": "f8dvg08kuvuxjh1txahrwmx7", "replicas": []},
             "streamtex-docs-ai":        {"folder": "manuals/stx_manual_ai",          "uuid": "chcszbtifrb9mvzlttjzbo46", "replicas": []},
-            "streamtex-docs-ce":        {"folder": "manuals/stx_manual_ce",          "uuid": "un7tvmnhh2jfk9yec56x9r7n", "replicas": []}
+            "streamtex-docs-ce":        {"folder": "manuals/stx_manual_ce",          "uuid": "un7tvmnhh2jfk9yec56x9r7n", "replicas": []},
+            "streamtex-docs-staging":   {"folder": "manuals/stx_manuals_collection", "uuid": "fvg70iwqsqkhu3bfds4dozyf", "replicas": []}
           }
           SERVICES
 

@@ -15,7 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
-# Install dependencies (cached layer)
+# Cache-bust: Coolify passes SOURCE_COMMIT automatically. Changing this ARG
+# invalidates all subsequent layers, ensuring uv sync fetches the latest PyPI packages.
+ARG SOURCE_COMMIT=unknown
+
+# Install dependencies
 # .stx-version is copied first: changing the required version invalidates the cache.
 # --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path
 # --upgrade-package streamtex forces latest PyPI version regardless of uv.lock

@@ -5,6 +5,16 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.2] — 2026-04-01
+
+### Fixed
+- **Dual-mode deployment**: added `cli` extra to dependencies (`streamtex[ai,cli,inspector,pdf]`) so `stx export html` works in Docker containers — `rich` and `jinja2` were missing.
+- **Dockerfile**: added `uv pip install rich jinja2` as safety net for CLI dependencies.
+- **nginx.conf**: added `autoindex on` fallback for static HTML directory listing.
+
+### Changed
+- **Templates**: all 3 project templates (project, slides, collection) now include `streamtex[cli]` in dependencies.
+
 ## [0.5.18] — 2026-03-30
 
 ### Changed

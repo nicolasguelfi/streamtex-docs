@@ -27,6 +27,7 @@ ARG SOURCE_COMMIT=unknown
 COPY .stx-version pyproject.toml uv.lock ./
 RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
     sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
+    uv pip install rich jinja2 && \
     uv run playwright install --with-deps chromium
 
 # Fail the build if the installed streamtex version is older than required.

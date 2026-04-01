@@ -148,10 +148,28 @@ jobs:
             uuids="${{ steps.changed.outputs.uuids }}"
           fi
 
+          # Deploy in batches of 4 to avoid overloading the server.
+          # The cax21 (4 vCPU, 8 GB) hangs with too many concurrent Docker builds.
+          BATCH_SIZE=4
+          BATCH_WAIT=300  # seconds to wait between batches
+
           deployed=0
           failed=0
-          for uuid in $uuids; do
-            echo "Deploying $uuid..."
+          count=0
+          batch_num=1
+          uuid_array=($uuids)
+          total=${#uuid_array[@]}
+          total_batches=$(( (total + BATCH_SIZE - 1) / BATCH_SIZE ))
+
+          for uuid in "${uuid_array[@]}"; do
+            if [ "$count" -gt 0 ] && [ $((count % BATCH_SIZE)) -eq 0 ]; then
+              echo ""
+              echo "Batch $batch_num/$total_batches complete — waiting ${BATCH_WAIT}s for builds to finish..."
+              sleep $BATCH_WAIT
+              batch_num=$((batch_num + 1))
+            fi
+
+            echo "[$((count + 1))/$total] Deploying $uuid..."
             result=$(curl -s "$COOLIFY_URL/api/v1/deploy?uuid=$uuid" \
               -H "Authorization: Bearer $COOLIFY_TOKEN" \
               -H "Accept: application/json")
@@ -164,10 +182,11 @@ jobs:
               echo "::error::Deploy failed for $uuid: $result"
               failed=$((failed + 1))
             fi
+            count=$((count + 1))
           done
 
           echo ""
-          echo "Summary: $deployed deployed, $failed failed"
+          echo "Summary: $deployed deployed, $failed failed (in $total_batches batch(es))"
           [ "$failed" -eq 0 ] || exit 1
 
       - name: No deploy needed

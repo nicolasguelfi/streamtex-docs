@@ -63,16 +63,17 @@ jobs:
       - name: Detect changed files and select services
         id: changed
         run: |
-          # Service mapping: name → folder → Coolify UUID
+          # Service mapping: name → folder → Coolify UUID(s)
+          # "replicas" lists additional container UUIDs sharing the same FQDN.
           cat > /tmp/services.json << 'SERVICES'
           {
-            "streamtex-docs":           {"folder": "manuals/stx_manuals_collection", "uuid": "ts40jw5o8i1ocebd1yzx353v"},
-            "streamtex-docs-intro":     {"folder": "manuals/stx_manual_intro",       "uuid": "e35xfitods34qlfv0rt3upc3"},
-            "streamtex-docs-advanced":  {"folder": "manuals/stx_manual_advanced",    "uuid": "shx575v6f333to4f02cc3d0m"},
-            "streamtex-docs-deploy":    {"folder": "manuals/stx_manual_deploy",      "uuid": "yqoe91fox1on0czhld3goa3h"},
-            "streamtex-docs-developer": {"folder": "manuals/stx_manual_developer",   "uuid": "f8dvg08kuvuxjh1txahrwmx7"},
-            "streamtex-docs-ai":        {"folder": "manuals/stx_manual_ai",          "uuid": "chcszbtifrb9mvzlttjzbo46"},
-            "streamtex-docs-ce":        {"folder": "manuals/stx_manual_ce",          "uuid": "un7tvmnhh2jfk9yec56x9r7n"}
+            "streamtex-docs":           {"folder": "manuals/stx_manuals_collection", "uuid": "ts40jw5o8i1ocebd1yzx353v", "replicas": []},
+            "streamtex-docs-intro":     {"folder": "manuals/stx_manual_intro",       "uuid": "e35xfitods34qlfv0rt3upc3", "replicas": []},
+            "streamtex-docs-advanced":  {"folder": "manuals/stx_manual_advanced",    "uuid": "shx575v6f333to4f02cc3d0m", "replicas": []},
+            "streamtex-docs-deploy":    {"folder": "manuals/stx_manual_deploy",      "uuid": "yqoe91fox1on0czhld3goa3h", "replicas": []},
+            "streamtex-docs-developer": {"folder": "manuals/stx_manual_developer",   "uuid": "f8dvg08kuvuxjh1txahrwmx7", "replicas": []},
+            "streamtex-docs-ai":        {"folder": "manuals/stx_manual_ai",          "uuid": "chcszbtifrb9mvzlttjzbo46", "replicas": []},
+            "streamtex-docs-ce":        {"folder": "manuals/stx_manual_ce",          "uuid": "un7tvmnhh2jfk9yec56x9r7n", "replicas": []}
           }
           SERVICES
 
@@ -114,6 +115,8 @@ jobs:
               for name, info in services.items():
                   if f.startswith(info['folder'] + '/'):
                       to_deploy.add(info['uuid'])
+                      for r in info.get('replicas', []):
+                          to_deploy.add(r)
           print(' '.join(sorted(to_deploy)))
           ")
           echo "UUIDs to deploy: ${uuids:-none}"
@@ -132,7 +135,14 @@ jobs:
           DEPLOY_ALL="${{ steps.changed.outputs.deploy_all }}"
 
           if [ "$DEPLOY_ALL" = "true" ]; then
-            uuids=$(python3 -c "import json; services=json.load(open('/tmp/services.json')); print(' '.join(s['uuid'] for s in services.values()))")
+            uuids=$(python3 -c "
+          import json; services=json.load(open('/tmp/services.json'))
+          all_uuids = []
+          for s in services.values():
+              all_uuids.append(s['uuid'])
+              all_uuids.extend(s.get('replicas', []))
+          print(' '.join(all_uuids))
+          ")
           else
             uuids="${{ steps.changed.outputs.uuids }}"
           fi

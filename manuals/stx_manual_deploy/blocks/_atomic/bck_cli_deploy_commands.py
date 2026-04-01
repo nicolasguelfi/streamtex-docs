@@ -248,6 +248,42 @@ def build():
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
+        # --- stx deploy scale ---
+        st_write(bs.sub, "stx deploy scale TARGET --replicas N", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Scale a service to N containers. All replicas share the same
+            URL — Traefik load-balances automatically. Use before a course
+            session with many concurrent users, then scale back to 1 after.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            # Scale up for 100 students
+            stx deploy scale ai4se6d-genai-intro --replicas 5
+
+            # Scale back
+            stx deploy scale ai4se6d-genai-intro --replicas 1
+        """, language="bash", line_numbers=False)
+        st_space("v", 2)
+
+        # --- stx export html ---
+        st_write(bs.sub, "stx export html [PATH]", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Export a StreamTeX project to static HTML. Used by the Dockerfile
+            in dual/static-only serve modes, or standalone for offline archives.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            stx export html .
+            stx export html --output /app/static-html/ ./manuals/stx_manual_intro
+        """, language="bash", line_numbers=False)
+        st_space("v", 2)
+
         # --- stx deploy env-sync ---
         st_write(bs.sub, "stx deploy env-sync", toc_lvl="+1")
         st_space("v", 1)

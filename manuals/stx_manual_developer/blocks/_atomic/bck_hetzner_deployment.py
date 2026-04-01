@@ -100,7 +100,15 @@ class AppEntry:
     url: str = ""            # e.g. "https://docs-intro.streamtex.org"
     folder: str = ""         # e.g. "manuals/stx_manual_intro"
     branch: str = "main"
-    deployed_at: str = ""    # ISO timestamp""", language="python")
+    deployed_at: str = ""    # ISO timestamp
+    replicas: int = 1        # Number of containers (1 = no replicas)
+    replica_uuids: list[str] | None = None  # UUIDs of secondary replicas
+    serve_mode: str = "streamlit-only"  # dual, static-only, streamlit-only
+
+    @property
+    def all_uuids(self) -> list[str]:
+        \"\"\"Primary UUID + all replica UUIDs.\"\"\"
+        ...""", language="python")
         st_space("v", 1)
 
         show_details("""\
@@ -144,6 +152,11 @@ ok = client.wait_healthy("uuid", timeout=300)  # poll until healthy
 # --- Configuration ---
 client.set_env_var("uuid", "FOLDER", "manuals/stx_manual_intro")
 client.set_fqdn("uuid", "https://docs-intro.streamtex.org")
+
+# --- Scaling (replicas) ---
+app = client.scale_app(app_entry, 3, project_uuid, server_uuid)  # scale to 3
+results = client.rebuild_all_replicas(app_entry)   # rebuild primary + replicas
+results = client.restart_all_replicas(app_entry)   # restart primary + replicas
 
 # --- Diagnostics ---
 valid = client.verify_token()           # True if token works""", language="python")

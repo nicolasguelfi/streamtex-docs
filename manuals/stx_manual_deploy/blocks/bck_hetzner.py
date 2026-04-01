@@ -329,3 +329,76 @@ def build():
             "**Tokens**: Hetzner and Coolify API tokens are stored in streamtex/.env "
             "(HETZNER_API_TOKEN, COOLIFY_API_TOKEN) and in GitHub secrets."
         )
+
+        # --- Scaling ---
+        st_space("v", 4)
+        st_write(bs.heading, "Scaling", tag=t.div, toc_lvl="1")
+        st_space("v", 2)
+
+        show_explanation(
+            "Each Streamlit container handles ~10-15 concurrent users (limited by Python GIL). "
+            "To serve more users (e.g. a university course with 100 students), "
+            "scale a service to multiple containers:"
+        )
+        st_space("v", 1)
+
+        st_code(s.none, language="bash", code="""
+            # Scale up before a course session
+            stx deploy scale ai4se6d-genai-intro --replicas 5
+
+            # Scale back after the session
+            stx deploy scale ai4se6d-genai-intro --replicas 1
+
+            # Check status (shows replica count)
+            stx deploy status coolify
+        """)
+        st_space("v", 1)
+
+        show_explanation(
+            "All replicas share the same URL — Traefik load-balances automatically. "
+            "Each replica is a separate Coolify application created via the API. "
+            "The state is tracked in `.stx-deploy.json` (fields: `replicas`, `replica_uuids`)."
+        )
+
+        # --- Serve Modes ---
+        st_space("v", 4)
+        st_write(bs.heading, "Serve Modes", tag=t.div, toc_lvl="1")
+        st_space("v", 2)
+
+        show_explanation(
+            "StreamTeX supports three serve modes that control how containers serve content. "
+            "The mode is set at deployment time and can be changed on existing services."
+        )
+        st_space("v", 1)
+
+        with st_grid("1fr 1fr 2fr", s.none, [s.large] * 3) as g:
+            with g.cell(): st_write(s.bold, "Mode")
+            with g.cell(): st_write(s.bold, "Components")
+            with g.cell(): st_write(s.bold, "Use case")
+
+            with g.cell(): st_write(s.large, "streamlit-only")
+            with g.cell(): st_write(s.large, "Streamlit (:8501)")
+            with g.cell(): st_write(s.large, "Default, fully interactive, legacy behavior")
+
+            with g.cell(): st_write(s.large, "dual")
+            with g.cell(): st_write(s.large, "Nginx (:80) + Streamlit")
+            with g.cell(): st_write(s.large, "Static HTML at /html/ + interactive at /. "
+                                    "Auto-fallback to static if Streamlit is down.")
+
+            with g.cell(): st_write(s.large, "static-only")
+            with g.cell(): st_write(s.large, "Nginx (:80)")
+            with g.cell(): st_write(s.large, "Lowest resource usage, no interactivity. "
+                                    "Ideal for read-only documentation.")
+
+        st_space("v", 1)
+
+        st_code(s.none, language="bash", code="""
+            # Deploy in dual mode
+            stx deploy hetzner --serve-mode dual .
+
+            # Switch existing service to static-only
+            stx deploy update docs-intro --serve-mode static-only
+
+            # Export HTML locally
+            stx export html .
+        """)

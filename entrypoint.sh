@@ -28,21 +28,24 @@ if [ "$MODE" != "static-only" ]; then
     uv run stx cache warmup . 2>/dev/null || true
 fi
 
-# Generate static HTML export
+# Generate static HTML export — clean first to remove stale exports from other FOLDERs
+rm -rf /app/static-html/*
 echo "[entrypoint] Generating static HTML..."
 uv run stx export html --output /app/static-html/ . 2>/dev/null || true
 
-# Create a simple index.html that redirects if the export didn't produce one
-if [ ! -f /app/static-html/index.html ]; then
-    # Find the generated HTML file and create a redirect
-    HTML_FILE=$(find /app/static-html/ -name "*.html" -maxdepth 2 | head -1)
-    if [ -n "$HTML_FILE" ]; then
-        # Strip the /app/static-html/ prefix to get a relative path
-        REL_PATH="${HTML_FILE#/app/static-html/}"
-        echo "<meta http-equiv=\"refresh\" content=\"0;url=${REL_PATH}\">" \
-            > /app/static-html/index.html
-    fi
+# Derive base_name the same way the export CLI does:
+#   basename of FOLDER, with "stx_manual_" prefix stripped
+BASE_NAME=$(basename "${FOLDER}" | sed 's/^stx_manual_//')
+TARGET="${BASE_NAME}/${BASE_NAME}.html"
+
+if [ -f "/app/static-html/${TARGET}" ]; then
+    echo "[entrypoint] Static HTML: /html/ → ${TARGET}"
+else
+    echo "[entrypoint] Warning: expected ${TARGET} not found, using fallback"
 fi
+# Nginx snippet: 302 redirect from /html/ to the correct exported file.
+# Nginx includes this before starting (see nginx.conf location = /html/).
+echo "return 302 /html/${TARGET};" > /app/static-html/.nginx-redirect.conf
 
 # --- Start services based on mode ---
 

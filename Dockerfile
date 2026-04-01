@@ -66,7 +66,10 @@ RUN for dir in manuals/stx_manual_*/; do \
     done
 
 # Pre-generate static HTML for every manual (served by Nginx on /html/).
+# The entrypoint will clean and regenerate for the active FOLDER at runtime.
+# This build-time export speeds up first cold-start.
 RUN mkdir -p /app/static-html && \
+    echo 'return 302 /html/;' > /app/static-html/.nginx-redirect.conf && \
     for dir in manuals/stx_manual_*/; do \
         echo "Exporting HTML for $dir ..." && \
         (cd "$dir" && uv run stx export html --output /app/static-html/ .) || true; \
@@ -80,9 +83,9 @@ ENV STX_SERVE_MODE="dual"
 
 EXPOSE 80 8501
 
-# Health check: try Nginx first (dual/static-only), then Streamlit (streamlit-only)
-HEALTHCHECK CMD curl --fail http://localhost:80/html/ 2>/dev/null \
-    || curl --fail http://localhost:8501/_stcore/health
+# Health check: try Streamlit first, then Nginx static HTML
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health 2>/dev/null \
+    || curl -fsL http://localhost:80/html/ -o /dev/null
 
 # Entrypoint handles mode selection, cache refresh, and HTML re-generation
 ENTRYPOINT ["/app/entrypoint.sh"]

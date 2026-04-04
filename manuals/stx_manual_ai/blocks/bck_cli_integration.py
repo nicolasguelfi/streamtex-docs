@@ -50,7 +50,7 @@ def build():
         # Example output:
         # Installing profile 'project' into .claude/...
         #   Created CLAUDE.md
-        #   Installed 8 commands (project: 4, designer: 3, developer: 1)
+        #   Installed 15 commands (stx-block: 15)
         #   Installed 3 agents
         #   Installed 4 skills
         #   Created settings.json
@@ -76,8 +76,8 @@ def build():
         # Comparing installed 'project' (v1.2.0) with latest (v1.3.0)
         #
         # Commands:
-        #   + designer/chart-new.md          (new)
-        #   ~ stx-designer/init.md            (modified)
+        #   + stx-block/chart-new.md          (new)
+        #   ~ stx-block/init.md             (modified)
         #
         # Agents:
         #   ~ architect-agent.md             (modified)
@@ -109,8 +109,8 @@ def build():
 
         # Example output:
         # Updating profile 'project' from v1.2.0 to v1.3.0...
-        #   Updated 1 command (stx-designer/init.md)
-        #   Added 1 command (designer/chart-new.md)
+        #   Updated 1 command (stx-block/init.md)
+        #   Added 1 command (stx-block/chart-new.md)
         #   Updated 1 agent (architect-agent.md)
         #   Added 1 skill (data_visualization.md)
         #   Preserved CLAUDE.md custom sections

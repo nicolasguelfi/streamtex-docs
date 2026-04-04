@@ -61,6 +61,7 @@ def build():
 
     - **Bibliography review** — Citation consistency, missing or orphan keys, format compliance with BibConfig
     - **AI image review** — Visual coherence with surrounding content, relevance to topic, prompt quality
+    - **Reference traceability** — Are factual claims, statistics, and attributions traceable to verifiable sources? The content-editor checks for `# REF:` comments in block source code. Unsourced claims are flagged as MINOR (missing comment) or MAJOR (dubious/unverifiable claim)
     - **Presentation profile coherence** — Multi-ViewMode compatibility (paginated vs continuous), layout stability across profiles
     - **Section spacing consistency** — Uniform SpacingConfig application, detection of ad-hoc `st_space` overrides that break profile rules
     """)

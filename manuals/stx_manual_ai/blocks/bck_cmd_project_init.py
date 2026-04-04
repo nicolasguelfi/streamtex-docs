@@ -1,4 +1,4 @@
-"""Command: stx-designer init — Create a StreamTeX project from natural language."""
+"""Command: stx-block init — Create a StreamTeX project from natural language."""
 
 from streamtex import st_write, st_space, st_block
 from streamtex.enums import Tags as t
@@ -7,7 +7,7 @@ from blocks.helpers import show_code, show_explanation, show_details
 
 
 class BlockStyles:
-    """stx-designer init block styles."""
+    """stx-block init block styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     step_label = s.project.colors.ai_violet + s.bold + s.large
@@ -17,14 +17,14 @@ bs = BlockStyles
 
 
 def build():
-    """Render the stx-designer init command documentation."""
+    """Render the stx-block init command documentation."""
     st_space("v", 1)
-    st_write(bs.heading, "Command: stx-designer init", tag=t.div, toc_lvl="1")
+    st_write(bs.heading, "Command: stx-block init", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     # ── Purpose ────────────────────────────────────────────────────
     show_explanation("""\
-        /stx-designer:init creates a complete, ready-to-run
+        /stx-block:init creates a complete, ready-to-run
         StreamTeX project from a simple natural language description.
         It generates the directory structure, styles, starter blocks,
         and the orchestration file (book.py) in one pass.
@@ -45,7 +45,7 @@ def build():
         )
     st_space("v", 1)
 
-    show_code("/stx-designer:init", language="bash", line_numbers=False)
+    show_code("/stx-block:init", language="bash", line_numbers=False)
     st_space("v", 2)
 
     # Step 2

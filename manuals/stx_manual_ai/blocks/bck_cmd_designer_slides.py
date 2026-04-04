@@ -1,4 +1,4 @@
-"""Designer: Slide Commands — update, audit, fix pipeline via stx-designer."""
+"""Designer: Slide Commands — update, audit, fix pipeline via stx-block."""
 
 from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
@@ -25,14 +25,14 @@ def build():
     st_space("v", 2)
 
     show_explanation("""\
-        The stx-designer slide workflow forms a creation-validation-fix
+        The stx-block slide workflow forms a creation-validation-fix
         pipeline. First create a slide with update, then validate it with
         audit, and finally auto-fix any violations with fix.
     """)
     st_space("v", 2)
 
     # ── Command 1: update (add slide) ──────────────────────────────
-    st_write(bs.sub, "/stx-designer:update (add slide)", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:update (add slide)", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -48,7 +48,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:update
+        /stx-block:update
 
         > Add a slide comparing Python vs Java performance.
           Use a two-column layout with bullet points.
@@ -87,7 +87,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 2: audit --target <block> ──────────────────────────
-    st_write(bs.sub, "/stx-designer:audit --target <block>", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:audit --target <block>", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -128,7 +128,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:audit --target bck_03_what_is_ml
+        /stx-block:audit --target bck_03_what_is_ml
 
         === Slide Audit Report ===
         bck_03_what_is_ml.py ........... PASS
@@ -141,7 +141,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 3: fix --target <block> ────────────────────────────
-    st_write(bs.sub, "/stx-designer:fix --target <block>", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:fix --target <block>", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -157,7 +157,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:fix --target bck_05_unsupervised
+        /stx-block:fix --target bck_05_unsupervised
 
         Fixing bck_05_unsupervised.py ...
           - Extracted inline CSS to BlockStyles.highlight
@@ -192,7 +192,7 @@ def build():
 
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        Tip: always run /stx-designer:audit before committing your
+        Tip: always run /stx-block:audit before committing your
         blocks. Catching issues early prevents style drift across your
         project. The audit-fix cycle is designed to be run repeatedly
         during development until all blocks pass.

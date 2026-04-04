@@ -64,7 +64,7 @@ def build():
 
     with st_list(list_type="ol") as l:
         with l.item(): st_write(bs.body, "The ", (s.bold, "full error traceback"), " (copy-paste from the terminal)")
-        with l.item(): st_write(bs.body, "The ", (s.bold, "command you ran"), " (e.g. stx project new, /stx-designer:init, stx run)")
+        with l.item(): st_write(bs.body, "The ", (s.bold, "command you ran"), " (e.g. stx project new, /stx-block:init, stx run)")
         with l.item(): st_write(bs.body, "Your ", (s.bold, "StreamTeX version"))
     st_space("v", 1)
 

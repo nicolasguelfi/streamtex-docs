@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """PRODUCE phase: orchestration of stx-designer and stx-import."""
+    """PRODUCE phase: orchestration of stx-block and stx-import."""
 
     st_space("v", 1)
     st_write(bs.heading, "PRODUCE — Execute the Production Plan",
@@ -32,7 +32,7 @@ def build():
              (s.project.titles.phase_kw, "PRODUCE"),
              " phase is where blocks are actually created, imported, or "
              "improved. It orchestrates the ",
-             (s.project.titles.tool_kw, "stx-designer"),
+             (s.project.titles.tool_kw, "stx-block"),
              " and ",
              (s.project.titles.tool_kw, "stx-import"),
              " command families to process each item in the plan according to its type tag.")
@@ -63,14 +63,14 @@ def build():
        richer interactions (tabs, expanders, columns)
     3. The improved block replaces the original
     4. Diff is generated for traceability
-    - Uses: `/stx-designer:update`, `/stx-designer:audit`
+    - Uses: `/stx-block:update`, `/stx-block:audit`
 
     **CREATE** — Build new blocks from scratch
     1. Block specification is read from the plan (objectives, design tokens)
     2. Content is authored following the style profile
     3. StreamTeX patterns are applied (show_explanation, show_details, etc.)
     4. The block is written and validated
-    - Uses: `/stx-designer:init`, `/stx-designer:update`
+    - Uses: `/stx-block:init`, `/stx-block:update`
 
     **Additional Production Steps** (applied per plan design choices):
 
@@ -85,7 +85,14 @@ def build():
     2. Insert `st_ai_image(prompt)` calls where visuals are needed
     3. Review generated images during quality gates
 
-    > **Note:** PRODUCE is command-driven — it delegates to `/stx-designer:*`,
+    **Reference traceability** — For every factual claim, statistic, or
+    attribution written in content, a `# REF: <source url or citation>`
+    comment is added above the corresponding `st_write()` call. This applies
+    regardless of whether bibliography is configured — source traceability
+    in code is always required. If the plan specifies visible references,
+    inline attribution or `cite()` calls are also added.
+
+    > **Note:** PRODUCE is command-driven — it delegates to `/stx-block:*`,
     > `/stx-import:*`, and `/stx-export:*` rather than editing files directly.
     """)
 

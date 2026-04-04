@@ -100,7 +100,7 @@ def build():
 
         **Key phases:** PLAN is the heaviest phase — defining structure,
         block breakdown, and style palette. PRODUCE generates everything
-        via `stx-designer:init`.
+        via `stx-block:init`.
 
         **Trigger:** `/stx-ce:go "create a 5-chapter ML course"`
     """)
@@ -129,8 +129,8 @@ def build():
         # Main tool
         with g.cell(): st_write(s.bold + s.large, "Main tool")
         with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-import"))
-        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-designer:update"))
-        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-designer:init"))
+        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-block:update"))
+        with g.cell(): st_write(s.large, (s.project.titles.tool_kw, "stx-block:init"))
         # Typical duration
         with g.cell(): st_write(s.bold + s.large, "Typical duration")
         with g.cell(): st_write(s.large, "15-60 min")

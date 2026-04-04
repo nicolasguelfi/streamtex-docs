@@ -1,4 +1,4 @@
-"""More stx-designer Commands — update (course), init --collection, update --upgrade."""
+"""More stx-block Commands — update (course), init --collection, update --upgrade."""
 
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
@@ -19,18 +19,18 @@ bs = BlockStyles
 def build():
     """Render the Other Project Commands section."""
     st_space("v", 1)
-    st_write(bs.heading, "More stx-designer Commands", tag=t.div, toc_lvl="1")
+    st_write(bs.heading, "More stx-block Commands", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     show_explanation("""\
-        Beyond init and update, the stx-designer command offers
+        Beyond init and update, the stx-block command offers
         additional options for generating courses, creating
         multi-project collections, and upgrading project boilerplate.
     """)
     st_space("v", 2)
 
     # ── Command 1: update (generate course) ────────────────────────
-    st_write(bs.sub, "/stx-designer:update (generate course)", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:update (generate course)", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -95,7 +95,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 2: init --collection ───────────────────────────────
-    st_write(bs.sub, "/stx-designer:init --collection", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:init --collection", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -111,7 +111,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:init --collection
+        /stx-block:init --collection
 
         > Create a collection hub linking:
           - Introduction Manual (docs-intro.streamtex.org)
@@ -153,7 +153,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 3: update --upgrade ────────────────────────────────
-    st_write(bs.sub, "/stx-designer:update --upgrade", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:update --upgrade", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -199,7 +199,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:update --upgrade
+        /stx-block:update --upgrade
 
         Checking project version ...
           Current: streamtex X.Y.Z patterns
@@ -219,7 +219,7 @@ def build():
 
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        Tip: run /stx-designer:update --upgrade after updating the streamtex library
+        Tip: run /stx-block:update --upgrade after updating the streamtex library
         to a new version. It ensures your boilerplate matches the
         latest conventions without touching your content blocks or
         custom styles. Always review the changes before committing.

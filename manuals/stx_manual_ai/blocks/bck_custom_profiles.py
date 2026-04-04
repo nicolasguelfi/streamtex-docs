@@ -41,10 +41,10 @@ def build():
                 ├── manifest.toml          # Profile metadata
                 ├── CLAUDE.md.j2           # Template for CLAUDE.md
                 ├── commands/
-                │   ├── project/
+                │   ├── stx-block/
                 │   │   └── my-command.md
-                │   └── designer/
-                │       └── my-design-cmd.md
+                │   └── custom/
+                │       └── my-custom-cmd.md
                 ├── agents/
                 │   └── my-agent.md
                 └── skills/
@@ -71,7 +71,7 @@ def build():
         extends = "project"   # Inherit from the base project profile
 
         [commands]
-        stx-designer = [
+        stx-block = [
             "init",
             "update",
             "audit",
@@ -151,7 +151,7 @@ def build():
         # No 'extends' — fully self-contained
 
         [commands]
-        stx-designer = ["init"]
+        stx-block = ["init"]
 
         [agents]
         agents = []

@@ -32,7 +32,7 @@ def build():
               " phase is unique among CE phases: it uses ",
               (s.bold, "no standalone agents"),
               ". Instead, it delegates all production work to existing commands — ",
-              (s.project.titles.tool_kw, "/stx-designer:*"),
+              (s.project.titles.tool_kw, "/stx-block:*"),
               ", ",
               (s.project.titles.tool_kw, "/stx-import:*"),
               ", ",
@@ -56,7 +56,7 @@ def build():
     The initialization phase prepares the workspace for production.
 
     - **Load plan** — reads the approved structure plan from `docs/plans/`.
-    - **Initialize project** — runs `/stx-designer:init` if the StreamTeX
+    - **Initialize project** — runs `/stx-block:init` if the StreamTeX
       project does not yet exist (common for Pathway A and C).
     - **Create task list** — converts plan items into an ordered task list
       with dependencies, types (IMPORT / IMPROVE / CREATE), and status
@@ -78,23 +78,23 @@ def build():
     **IMPORT pipeline** (for items sourced from external files):
 
     1. `/stx-import:html` or `/stx-import:marp` — automated conversion
-    2. `/stx-designer:audit` — quality check on the imported block
-    3. `/stx-designer:fix` — correct issues found by the audit
+    2. `/stx-block:audit` — quality check on the imported block
+    3. `/stx-block:fix` — correct issues found by the audit
 
     **IMPROVE pipeline** (for existing blocks that need enhancement):
 
-    1. `/stx-designer:update` — apply content changes
-    2. `/stx-designer:style-refactor` — align styles with `custom/styles.py`
-    3. `/stx-designer:audit` — quality check
-    4. `/stx-designer:fix` — correct issues
+    1. `/stx-block:update` — apply content changes
+    2. `/stx-block:style-refactor` — align styles with `custom/styles.py`
+    3. `/stx-block:audit` — quality check
+    4. `/stx-block:fix` — correct issues
 
     **CREATE pipeline** (for new blocks written from scratch):
 
-    1. `/stx-designer:block-new` or `/stx-designer:slide-new` — scaffold
+    1. `/stx-block:new` or `/stx-block:slide-new` — scaffold
     2. Write content using `stx.*` functions
     3. Apply styles from `custom/styles.py`
-    4. `/stx-designer:audit` — quality check
-    5. `/stx-designer:fix` — correct issues
+    4. `/stx-block:audit` — quality check
+    5. `/stx-block:fix` — correct issues
     """)
 
     show_details("""
@@ -104,9 +104,9 @@ def build():
     |---------------|--------|----------|-------------|
     | IMPORT | HTML file | Import | `/stx-import:html` |
     | IMPORT | Marp/Markdown | Import | `/stx-import:marp` |
-    | IMPROVE | Existing block | Improve | `/stx-designer:update` |
-    | CREATE | New content | Create | `/stx-designer:block-new` |
-    | CREATE | New slides | Create | `/stx-designer:slide-new` |
+    | IMPROVE | Existing block | Improve | `/stx-block:update` |
+    | CREATE | New content | Create | `/stx-block:new` |
+    | CREATE | New slides | Create | `/stx-block:slide-new` |
 
     Each pipeline ends with the same audit-fix cycle, ensuring consistent
     quality regardless of the production method.
@@ -120,7 +120,7 @@ def build():
     After all individual items are produced, a global verification pass
     ensures the document works as a whole.
 
-    - **Full audit** — `/stx-designer:audit --all` checks every block for
+    - **Full audit** — `/stx-block:audit --all` checks every block for
       style consistency, coding standards, and content completeness.
     - **Navigation check** — verifies that `book.py` references all blocks
       in the correct order and that the navigation flow matches the plan.
@@ -156,14 +156,15 @@ def build():
 
     | Role | Command |
     |------|---------|
-    | Block creation | `/stx-designer:block-new`, `/stx-designer:slide-new` |
+    | Block creation | `/stx-block:new`, `/stx-block:slide-new` |
     | Content migration | `/stx-import:html`, `/stx-import:marp` |
-    | Style alignment | `/stx-designer:update` (style changes) |
-    | Quality check | `/stx-designer:audit` |
-    | Issue correction | `/stx-designer:fix` |
-    | Content update | `/stx-designer:update` |
+    | Style alignment | `/stx-block:update` (style changes) |
+    | Quality check | `/stx-block:audit` |
+    | Issue correction | `/stx-block:fix` |
+    | Content update | `/stx-block:update` |
     | HTML export | `/stx-export:html` |
     | Deployment | `/stx-deploy:deploy` |
+
 
     This command-driven architecture means the PRODUCE phase is fully
     traceable: every action maps to a specific command invocation that

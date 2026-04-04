@@ -104,7 +104,7 @@ def build():
         with g.cell():
             _render_profile_column(
                 name="project",
-                commands="20 (project + designer + migration + developer)",
+                commands="26 (stx-block 15 + stx-ce 11)",
                 agents="3 (Architect, Designer, Reviewer)",
                 audience="Course authors, documentation writers",
                 focus="Full project lifecycle from init to deploy",
@@ -115,12 +115,12 @@ def build():
         with g.cell():
             _render_profile_column(
                 name="presentation",
-                commands="15 (project + designer + presentation)",
+                commands="29 (stx-block 15 + stx-ce 11 + presentation 3)",
                 agents="4 (all, including Presentation Designer)",
                 audience="Speakers, trainers, lecturers",
                 focus="Live projection with large fonts and high contrast",
                 extends="project profile",
-                unique="audit (presentation), fix (presentation), tool survey-convert",
+                unique="audit --scope slide, fix --scope slide, tool survey-convert",
             )
     st_space("v", 2)
 
@@ -129,7 +129,7 @@ def build():
         with g.cell():
             _render_profile_column(
                 name="documentation",
-                commands="17 (project + designer + migration)",
+                commands="26 (stx-block 15 + stx-ce 11)",
                 agents="3 (Architect, Designer, Reviewer)",
                 audience="Technical writers, doc teams",
                 focus="HTML migration and documentation workflows",
@@ -139,12 +139,12 @@ def build():
         with g.cell():
             _render_profile_column(
                 name="library",
-                commands="15 (project + designer + developer)",
+                commands="2 (stx-block: test + lint)",
                 agents="3 (Architect, Designer, Reviewer)",
                 audience="StreamTeX library contributors",
-                focus="Library development, testing, deployment",
+                focus="Library development, testing, linting",
                 extends="project profile",
-                unique="deploy, testing-patterns.md, architecture.md",
+                unique="test, lint, testing-patterns.md, architecture.md",
             )
     st_space("v", 2)
 
@@ -158,7 +158,7 @@ def build():
         st_space("v", 1)
         st_write(s.large, """\
             The project profile covers 90% of use cases. It includes
-            all project, designer, and developer commands plus three
+            all 15 stx-block commands plus 11 stx-ce commands and three
             agents. Switch to a specialized profile only when you
             need presentation optimization, HTML migration tools,
             or library development capabilities.

@@ -38,41 +38,48 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:init
-        /stx-designer:update
-        /stx-designer:audit
-        /stx-designer:fix
-        /stx-designer:tool
-        /stx-developer:test-run""", language="bash",
+        /stx-block:init
+        /stx-block:update
+        /stx-block:audit
+        /stx-block:fix
+        /stx-block:tool
+        /stx-block:test""", language="bash",
         line_numbers=False)
     st_space("v", 2)
 
-    # ── Five categories grid ───────────────────────────────────────
+    # ── Three categories ──────────────────────────────────────────
     st_write(bs.sub, "Command Categories", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
-    # Row 1: stx-designer + Developer
-    with st_grid(cols=2) as g:
-        with g.cell():
-            with st_block(s.project.containers.ai_callout):
-                st_write(bs.cat_title, "stx-designer", tag=t.div)
-                st_write(bs.cat_count, "5 sub-commands", tag=t.div)
-                st_space("v", 1)
+    with st_block(s.project.containers.ai_callout):
+        st_write(bs.cat_title, "stx-block", tag=t.div)
+        st_write(bs.cat_count, "15 commands", tag=t.div)
+        st_space("v", 1)
+        with st_grid(cols=3) as g:
+            with g.cell():
+                st_write(s.bold + s.large, "Project lifecycle")
                 with st_list(list_type="ul") as l:
                     with l.item(): st_write(s.large, "init — create projects")
-                    with l.item(): st_write(s.large, "update — add/customize/migrate content")
-                    with l.item(): st_write(s.large, "audit — validate quality")
-                    with l.item(): st_write(s.large, "fix — auto-fix issues")
-                    with l.item(): st_write(s.large, "tool — utilities (survey-convert)")
-        with g.cell():
-            with st_block(s.project.containers.ai_callout):
-                st_write(bs.cat_title, "Developer", tag=t.div)
-                st_write(bs.cat_count, "3 commands", tag=t.div)
-                st_space("v", 1)
+                    with l.item(): st_write(s.large, "update — modify projects")
+                    with l.item(): st_write(s.large, "audit [--scope] — check quality")
+                    with l.item(): st_write(s.large, "fix [--scope] — auto-fix issues")
+                    with l.item(): st_write(s.large, "tool — utilities")
+                    with l.item(): st_write(s.large, "customize — customize project")
+                    with l.item(): st_write(s.large, "upgrade — upgrade template")
+            with g.cell():
+                st_write(s.bold + s.large, "Blocks & slides")
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "test-run")
-                    with l.item(): st_write(s.large, "lint")
-                    with l.item(): st_write(s.large, "deploy")
+                    with l.item(): st_write(s.large, "new — create a block")
+                    with l.item(): st_write(s.large, "slide-new — create a slide")
+                    with l.item(): st_write(s.large, "preview — preview block")
+                    with l.item(): st_write(s.large, "style-refactor — refactor styles")
+                    with l.item(): st_write(s.large, "collection-new — create collection")
+                    with l.item(): st_write(s.large, "course-generate — generate book.py")
+            with g.cell():
+                st_write(s.bold + s.large, "Testing")
+                with st_list(list_type="ul") as l:
+                    with l.item(): st_write(s.large, "test — run test suite")
+                    with l.item(): st_write(s.large, "lint — run linter")
     st_space("v", 2)
 
     # ── Anatomy of a command file ──────────────────────────────────
@@ -100,7 +107,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        # /stx-designer:init
+        # /stx-block:init
 
         ## Description
         Create a complete StreamTeX project from a natural
@@ -117,7 +124,7 @@ def build():
         2. Generate custom/styles.py from project theme
         3. Create blocks/ directory with starter blocks
         4. Generate book.py to orchestrate all blocks
-        5. Validate structure with /stx-developer:lint""", language="markdown")
+        5. Validate structure with /stx-block:lint""", language="markdown")
     st_space("v", 2)
 
     # ── Summary ────────────────────────────────────────────────────

@@ -177,8 +177,8 @@ def build():
         "Audit and fix",
         "Check if all styles are consistent and fix any "
         "layout problems",
-        "The AI runs /stx-designer:audit, identifies issues, "
-        "and applies fixes with /stx-designer:fix.",
+        "The AI runs /stx-block:audit, identifies issues, "
+        "and applies fixes with /stx-block:fix.",
     )
 
     st_space("v", 2)
@@ -225,7 +225,7 @@ def build():
         st_space("v", 0.5)
         with st_list(list_type="ul", li_style=bs.body) as l:
             with l.item(): st_write((s.bold, "Setup"), " — install AI profiles and configure your workspace")
-            with l.item(): st_write((s.bold, "Commands"), " — /stx-designer:init, update, audit, fix")
+            with l.item(): st_write((s.bold, "Commands"), " — /stx-block:init, update, audit, fix")
             with l.item(): st_write((s.bold, "Agents"), " — architect, designer, and presentation specialists")
             with l.item(): st_write((s.bold, "Best practices"), " — prompting techniques and team workflows")
             with l.item(): st_write((s.bold, "AI images"), " — generate illustrations with OpenAI, Google, or fal.ai")

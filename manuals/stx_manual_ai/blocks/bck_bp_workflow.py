@@ -71,13 +71,13 @@ def build():
 
     show_code("""\
         # Typical session
-        /stx-designer:init             # 1. Plan + Generate
-        /stx-designer:audit            # 3. Audit all blocks
-        /stx-designer:fix              # 4. Auto-fix violations
+        /stx-block:init             # 1. Plan + Generate
+        /stx-block:audit            # 3. Audit all blocks
+        /stx-block:fix              # 4. Auto-fix violations
         # 5. Review in browser
         stx run
         # 6. Iterate on individual blocks
-        /stx-designer:update           # Refine or add blocks""",
+        /stx-block:update           # Refine or add blocks""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 

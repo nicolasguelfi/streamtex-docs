@@ -68,7 +68,7 @@ def build():
     | 8 | PLAN | **structure-architect** | Designs document skeleton: parts, blocks, navigation flow |
     | 9 | PLAN | **domain-researcher** | Gathers domain knowledge, best practices, technical references |
     | 10 | PLAN | **learnings-researcher** | Mines past project experience, surfaces reusable patterns |
-    | 11 | PRODUCE | *(command-driven)* | Delegates to `/stx-designer:*`, `/stx-import:*`, `/stx-export:*`, `/stx-deploy:*` |
+    | 11 | PRODUCE | *(command-driven)* | Delegates to `/stx-block:*`, `/stx-import:*`, `/stx-export:*`, `/stx-deploy:*` |
     | 12 | REVIEW | **audience-advocate** | Reviews from the reader's perspective: clarity, accessibility |
     | 13 | REVIEW | **pedagogy-analyst** | Checks learning flow, progression, and explanation quality |
     | 14 | REVIEW | **visual-reviewer** | Evaluates layout, spacing, visual hierarchy, and responsiveness |
@@ -93,7 +93,7 @@ def build():
     - **COLLECT** agents produce a **source inventory** and **complexity report**.
     - **ASSESS** agents read those reports and produce an **assessment brief**.
     - **PLAN** agents consume the brief and emit a **structured plan**.
-    - **PRODUCE** is command-driven — it executes the plan via `/stx-designer:*` and `/stx-import:*` commands.
+    - **PRODUCE** is command-driven — it executes the plan via `/stx-block:*` and `/stx-import:*` commands.
     - **REVIEW** agents evaluate the output against the assessment criteria.
 
     Two **COMPOUND** agents — **feedback-detector** and **dev-governance** — operate

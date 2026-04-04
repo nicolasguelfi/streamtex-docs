@@ -66,7 +66,7 @@ def build():
                         st_write(
                             s.large,
                             "Example: ",
-                            (s.bold, "/stx-designer:update"),
+                            (s.bold, "/stx-block:update"),
                             " adds one block file",
                         )
 

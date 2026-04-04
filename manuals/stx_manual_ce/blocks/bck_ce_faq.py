@@ -98,12 +98,12 @@ def build():
     st_space("v", 1)
 
     show_explanation("""
-    ### How does CE interact with stx-designer?
+    ### How does CE interact with stx-block?
 
-    CE and stx-designer are **complementary tools** that operate at
+    CE and stx-block are **complementary tools** that operate at
     different levels:
 
-    - **stx-designer** focuses on the *technical* level: creating blocks,
+    - **stx-block** focuses on the *technical* level: creating blocks,
       applying styles, auditing code quality, and fixing implementation
       issues. It works with individual blocks and StreamTeX code.
     - **CE** focuses on the *content* level: analyzing what to write,
@@ -112,14 +112,14 @@ def build():
 
     **Typical combined workflow:**
     1. Use CE to plan and assess (COLLECT, ASSESS, PLAN phases).
-    2. Use `/stx-designer:init` or `/stx-designer:update` to implement
+    2. Use `/stx-block:init` or `/stx-block:update` to implement
        the plan at the block level (CE's PRODUCE phase).
     3. Use CE to review and capitalize (REVIEW, COMPOUND phases).
-    4. Use `/stx-designer:audit` and `/stx-designer:fix` for technical
+    4. Use `/stx-block:audit` and `/stx-block:fix` for technical
        quality issues found during CE review.
 
     The tools do not interfere with each other. CE writes to `docs/`,
-    stx-designer works in `blocks/` and `custom/`.
+    stx-block works in `blocks/` and `custom/`.
     """)
 
     st_space("v", 1)
@@ -128,7 +128,7 @@ def build():
     ### Can I use CE for presentations?
 
     **Yes.** CE works with any StreamTeX project type, including
-    presentations created with the stx-designer presentation profile.
+    presentations created with the stx-block presentation profile.
 
     **Pathway adjustments for presentations:**
     - COLLECT scans slide-based content (Marp files map naturally to
@@ -286,7 +286,7 @@ def build():
     | Does CE work offline? | Yes. All agents run locally through Claude. |
     | Can I customize severity levels? | No. The 4-level scale is fixed for consistency. |
     | How many solutions should I have? | Quality over quantity. 5 good solutions beat 50 vague ones. |
-    | Can I use CE without stx-designer? | Yes. They are independent tools. |
+    | Can I use CE without stx-block? | Yes. They are independent tools. |
     """)
 
     st_space("v", 1)

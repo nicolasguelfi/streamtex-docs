@@ -1,4 +1,4 @@
-"""Designer: Style Commands — audit styles, fix styles, audit block via stx-designer."""
+"""Designer: Style Commands — audit styles, fix styles, audit block via stx-block."""
 
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
@@ -32,7 +32,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 1: audit --target styles ────────────────────────────
-    st_write(bs.sub, "/stx-designer:audit --target styles", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:audit --target styles", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -67,7 +67,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:audit --target styles
+        /stx-block:audit --target styles
 
         === Style Audit Report ===
 
@@ -92,7 +92,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 2: fix --target styles ─────────────────────────────
-    st_write(bs.sub, "/stx-designer:fix --target styles", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:fix --target styles", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -107,7 +107,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:fix --target styles
+        /stx-block:fix --target styles
 
         Refactoring 6 issues ...
 
@@ -127,7 +127,7 @@ def build():
     st_space("v", 2)
 
     # ── Command 3: audit --target <block> ──────────────────────────
-    st_write(bs.sub, "/stx-designer:audit --target <block>", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "/stx-block:audit --target <block>", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     with st_block(s.project.containers.ai_callout):
@@ -169,7 +169,7 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:audit --target bck_03_what_is_ml
+        /stx-block:audit --target bck_03_what_is_ml
 
         === Block Structure Check ===
         Module docstring ............. PASS
@@ -183,12 +183,42 @@ def build():
         language="bash", line_numbers=False)
     st_space("v", 2)
 
+    # ── Scope option ──────────────────────────────────────────────
+    st_write(bs.sub, "Focused audits with --scope", tag=t.div, toc_lvl="2")
+    st_space("v", 1)
+
+    show_explanation("""\
+        The audit and fix commands support a --scope option to focus on
+        a specific category of checks. This replaces the old separate
+        slide-audit, style-audit, and slide-fix commands with a single,
+        unified interface.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # Audit only visual design (slide layout, fonts, spacing)
+        /stx-block:audit --target bck_intro --scope slide
+
+        # Audit only style consistency (duplicates, inline CSS, colors)
+        /stx-block:audit --all --scope style
+
+        # Audit only structure (imports, BlockStyles, build(), raw HTML)
+        /stx-block:audit --target bck_intro --scope structure
+
+        # Fix only slide-related issues
+        /stx-block:fix --target bck_intro --scope slide
+
+        # Default: --scope all (checks everything)
+        /stx-block:audit --all""",
+        language="bash", line_numbers=False)
+    st_space("v", 2)
+
     # ── Tip ────────────────────────────────────────────────────────
     show_details("""\
-        The recommended workflow is: run /stx-designer:audit --target styles
-        first to identify problems, then /stx-designer:fix --target styles
-        to fix them automatically. Use /stx-designer:audit --target <block>
-        to validate individual blocks during development. Together, these
-        commands keep your project styles clean and consistent as it grows.
+        The recommended workflow is: run /stx-block:audit --target styles
+        first to identify problems, then /stx-block:fix --target styles
+        to fix them automatically. Use /stx-block:audit --target <block>
+        to validate individual blocks during development. Use --scope to
+        focus on specific categories when you know what to look for.
     """)
     st_space("v", 1)

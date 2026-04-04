@@ -230,7 +230,7 @@ def build():
 
     # Error 5
     _render_error(
-        "Command not found: /stx-designer:init",
+        "Command not found: /stx-block:init",
         "The profile is not installed or the .claude/commands/ "
         "directory is missing. Run stx claude install to set up "
         "the profile, or verify the .md file exists in the "

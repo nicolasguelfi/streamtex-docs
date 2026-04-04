@@ -105,7 +105,7 @@ def build():
         **Zero-code path** — Instead of writing the block file manually,
         you can describe what you want in natural language:
 
-        `/stx-designer:init Create a training course about
+        `/stx-block:init Create a training course about
         marine biology with 5 chapters and a blue/teal theme`
 
         The AI generates the entire project — book.py, blocks, styles,
@@ -113,7 +113,7 @@ def build():
 
         You can then refine the result:
 
-        `/stx-designer:update Add a diagram of the food chain
+        `/stx-block:update Add a diagram of the food chain
         in chapter 3 using Mermaid`
 
         See the **AI Manual** for the full command reference.

@@ -60,7 +60,7 @@ def build():
     # Blueprints = skills (11) + templates (4) + tools (1) across all profiles
     with st_grid(cols=4, cell_styles=bs.badge) as g:
         with g.cell():
-            st_write(bs.badge_number, "50", tag=t.div)
+            st_write(bs.badge_number, "55", tag=t.div)
             st_write(bs.badge_label, "Commands", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "6", tag=t.div)

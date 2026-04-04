@@ -50,22 +50,23 @@ def build():
     show_code("""\
         .claude/
         └── commands/
-            ├── stx-designer/
+            ├── stx-block/
             │   ├── init.md
             │   ├── update.md
             │   ├── audit.md
             │   ├── fix.md
-            │   └── tool.md
-            └── developer/
-                ├── test-run.md
-                └── lint.md""",
+            │   ├── tool.md
+            │   ├── test.md
+            │   └── lint.md
+            └── my-custom-cmd/
+                └── run.md""",
         language="bash", line_numbers=False)
     st_space("v", 1)
 
     show_explanation("""\
         The directory name becomes the command prefix.
-        For example, stx-designer/update.md is invoked as
-        /stx-designer:update in Claude Code.
+        For example, stx-block/update.md is invoked as
+        /stx-block:update in Claude Code.
     """)
     st_space("v", 2)
 

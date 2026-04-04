@@ -130,7 +130,7 @@ def build():
                 "when answering questions or generating blocks. Includes "
                 "manual index, search strategy, and common lookup patterns. "
                 "Falls back gracefully when manuals are not installed.",
-                "stx-designer (init, update, audit, fix), Q&A",
+                "stx-block (init, update, audit, fix), Q&A",
                 "project, presentation, documentation",
             )
         with g.cell():

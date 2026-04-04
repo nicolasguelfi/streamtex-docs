@@ -40,7 +40,7 @@ def build():
     st_space("v", 2)
 
     # ══════════════════════════════════════════════════════════════
-    # PHASE 1 — stx-designer init
+    # PHASE 1 — stx-block init
     # ══════════════════════════════════════════════════════════════
     st_write(bs.sub, "Phase 1 — Generate the Project", toc_lvl="+1")
     st_space("v", 1)
@@ -49,7 +49,7 @@ def build():
     with st_block(s.project.containers.tip_callout):
         st_write(
             bs.step_label,
-            "Step 1 — Launch stx-designer init",
+            "Step 1 — Launch stx-block init",
             tag=t.div,
         )
         st_space("v", 1)
@@ -60,7 +60,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/stx-designer:init",
+        "/stx-block:init",
         language="bash", line_numbers=False,
     )
     st_space("v", 2)
@@ -274,7 +274,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/stx-designer:audit",
+        "/stx-block:audit",
         language="bash", line_numbers=False,
     )
     st_space("v", 1)
@@ -307,7 +307,7 @@ def build():
     st_space("v", 1)
 
     show_code(
-        "/stx-designer:fix",
+        "/stx-block:fix",
         language="bash", line_numbers=False,
     )
     st_space("v", 2)
@@ -323,13 +323,13 @@ def build():
         st_write(
             s.large,
             "Need to adjust a specific slide? Use ",
-            (bs.highlight, "/stx-designer:update"),
+            (bs.highlight, "/stx-block:update"),
             " to regenerate it with more details:",
         )
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:update "bck_live_demo — Show a responsive
+        /stx-block:update "bck_live_demo — Show a responsive
         2-column grid: left column has a screenshot of a StreamTeX
         dark presentation, right column lists 4 key features as
         bold keywords. Add a wow-factor headline in L1." """,
@@ -376,13 +376,13 @@ def build():
             s.large,
             "Want a different color scheme or larger fonts for "
             "a conference room? Use ",
-            (bs.highlight, "/stx-designer:update"),
+            (bs.highlight, "/stx-block:update"),
             ":",
         )
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:update "Switch to a teal/orange palette,
+        /stx-block:update "Switch to a teal/orange palette,
         increase body text to 48pt for a large auditorium." """,
         language="bash", line_numbers=False)
     st_space("v", 2)
@@ -403,8 +403,8 @@ def build():
     st_space("v", 1)
 
     show_code("""\
-        /stx-designer:audit --target styles
-        /stx-designer:fix --target styles""",
+        /stx-block:audit --target styles
+        /stx-block:fix --target styles""",
         language="bash", line_numbers=False)
     st_space("v", 2)
 
@@ -481,21 +481,21 @@ def build():
 
     show_code("""\
         # Create a full project from scratch
-        /stx-designer:init "description..."
+        /stx-block:init "description..."
 
         # Create or refine a single slide
-        /stx-designer:update "bck_name — description..."
+        /stx-block:update "bck_name — description..."
 
         # Audit and fix design compliance
-        /stx-designer:audit
-        /stx-designer:fix
+        /stx-block:audit
+        /stx-block:fix
 
         # Customize visual theme
-        /stx-designer:update "description..."
+        /stx-block:update "description..."
 
         # Ensure style consistency
-        /stx-designer:audit --target styles
-        /stx-designer:fix --target styles
+        /stx-block:audit --target styles
+        /stx-block:fix --target styles
 
         # Run the presentation
         stx run""",
@@ -507,9 +507,9 @@ def build():
         Tips for best results:
         • Be specific in your descriptions — include audience,
           slide count, theme, and key messages per slide.
-        • Always run /stx-designer:audit after generation — the AI catches
+        • Always run /stx-block:audit after generation — the AI catches
           issues like line length, missing spacing, or style violations.
-        • Use /stx-designer:update for individual refinements — it's faster
+        • Use /stx-block:update for individual refinements — it's faster
           than regenerating the entire project.
         • The Slide Designer follows the L1/L2/L3 grid system:
           L1 = headline, L2 = image + text grid, L3 = transition question.

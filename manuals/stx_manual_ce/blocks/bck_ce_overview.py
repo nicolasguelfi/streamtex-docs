@@ -69,7 +69,7 @@ def build():
         **COLLECT** — Inventory and classify existing material.
         **ASSESS** — Evaluate material and define document objectives.
         **PLAN** — Design the production plan (structure, blocks, styles).
-        **PRODUCE** — Execute the plan using stx-designer and stx-import.
+        **PRODUCE** — Execute the plan using stx-block and stx-import.
         **REVIEW** — Multi-perspective quality review (5 lenses).
         **FIX** — Correct issues found during review.
         **COMPOUND** — Capitalize learnings for future cycles.

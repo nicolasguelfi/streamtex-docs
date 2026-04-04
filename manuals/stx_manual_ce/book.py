@@ -66,11 +66,14 @@ st_book([
     blocks.bck_ce_assess,
     blocks.bck_ce_plan,
     blocks.bck_ce_plan_interactive,
+    blocks.bck_ce_plan_versioning,
     blocks.bck_ce_produce,
     blocks.bck_ce_review,
     blocks.bck_ce_fix,
     blocks.bck_ce_compound,
     blocks.bck_ce_go,
+    blocks.bck_ce_task,
+    blocks.bck_ce_continue,
 
     # Part 3: Agents
     blocks.bck_ce_agents_overview,
@@ -79,16 +82,19 @@ st_book([
     blocks.bck_ce_agents_plan,
     blocks.bck_ce_agents_produce,
     blocks.bck_ce_agents_review,
+    blocks.bck_ce_agents_task,
 
     # Part 4: Practical Guides
     blocks.bck_ce_guide_import,
     blocks.bck_ce_guide_improve,
     blocks.bck_ce_guide_create,
     blocks.bck_ce_guide_compound,
+    blocks.bck_ce_task_recipes,
 
     # Part 5: Reference
     blocks.bck_ce_commands_ref,
     blocks.bck_ce_templates_ref,
+    blocks.bck_ce_templates_task,
     blocks.bck_ce_config_ref,
     blocks.bck_ce_faq,
 

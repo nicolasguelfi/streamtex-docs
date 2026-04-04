@@ -88,6 +88,8 @@ def build():
     - Solution files start with `sol_`
     - Feedback files start with `fb_` followed by a sequential number
     - Block files always start with `bck_`
+    - Plan versions: `YYYY-MM-DD-NNN-<pathway>-<name>-plan.md` (NNN = sequence, latest = current)
+    - Task reviews: `YYYY-MM-DD-task-review.md` or `YYYY-MM-DD-coverage-task.md`
     """)
 
     st_space("v", 1)
@@ -146,6 +148,10 @@ def build():
 
     ## Lessons Learned
     - <date>: <insight from a specific cycle>
+
+    ## Task Configuration
+    - task_gate: <always|write-only|never> (confirmation gate for /stx-ce:task)
+    - task_history: <true|false> (append task summaries to profile)
     ```
 
     The profile is optional but strongly recommended. A project without

@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference of all 12 CE templates: structure, usage, and frontmatter."""
+    """Reference of all 16 CE templates: structure, usage, and frontmatter."""
 
     st_space("v", 1)
     st_write(bs.heading, "Templates Reference",
@@ -29,7 +29,7 @@ def build():
 
     st_write(s.large,
              "CE ", (s.project.titles.concept_kw, "agents"),
-             " communicate through ", (s.bold, "12 structured templates"),
+             " communicate through ", (s.bold, "16 structured templates"),
              ". Each ", (s.project.titles.concept_kw, "template"),
              " defines a document format with required sections, optional "
              "sections, and frontmatter metadata. ",
@@ -56,6 +56,10 @@ def build():
     | 10 | `tpl_solution_package` | COMPOUND | Reusable pattern documentation |
     | 11 | `tpl_producer_profile` | COMPOUND | Personal conventions and skills |
     | 12 | `tpl_ecosystem_feedback` | COMPOUND | Bug report or feature request |
+    | 13 | `tpl_task_review` | TASK | Targeted review findings (scope, criteria, severity table) |
+    | 14 | `tpl_coverage_matrix` | TASK | Source vs production coverage matrix |
+    | 15 | `tpl_task_analysis` | TASK | Structured source document analysis |
+    | 16 | `tpl_task_report` | TASK | Task execution summary with cycle impact |
     """)
 
     st_space("v", 1)

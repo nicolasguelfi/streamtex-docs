@@ -27,12 +27,12 @@ def build():
     st_space("v", 2)
 
     # ── 3 common patterns ─────────────────────────────────────────
-    st_write(bs.sub, "3 common usage patterns", toc_lvl="+1")
+    st_write(bs.sub, "5 common usage patterns", toc_lvl="+1")
     st_space("v", 1)
 
     st_write(s.large,
-             "CE adapts to your situation. Here are the three most "
-             "common ways to start a cycle:")
+             "CE adapts to your situation. Here are the five most "
+             "common ways to start or continue a cycle:")
     st_space("v", 1)
 
     # Pattern 1: Full cycle
@@ -76,6 +76,35 @@ def build():
         every file, and evaluates importability. PRODUCE converts each
         file using stx-import commands. Ideal when you have a folder
         of existing material.
+    """)
+    st_space("v", 1)
+
+    # Pattern 4: Quick task
+    st_write(s.large + s.bold, "4. Ad-hoc task — do one thing without a full cycle")
+    st_space("v", 0.5)
+    show_code("""\
+        /stx-ce:task "Compare source lines 500-600 with my produced blocks"
+    """, language="bash", line_numbers=False)
+    st_space("v", 0.5)
+    show_explanation("""\
+        Executes a targeted task (compare, review, produce, plan update,
+        etc.) without running the full pipeline. Lifecycle artifacts are
+        updated automatically so the cycle can resume coherently.
+    """)
+    st_space("v", 1)
+
+    # Pattern 5: Resume after break
+    st_write(s.large + s.bold, "5. Resume — come back after a break")
+    st_space("v", 0.5)
+    show_code("""\
+        /stx-ce:continue
+    """, language="bash", line_numbers=False)
+    st_space("v", 0.5)
+    show_explanation("""\
+        Shows where you left off, detects what changed since your last
+        session (source updates, manual edits, stale artifacts), and
+        proposes the most useful next steps. The recommended first
+        command after any session break.
     """)
     st_space("v", 2)
 

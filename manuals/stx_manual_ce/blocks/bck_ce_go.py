@@ -183,4 +183,20 @@ def build():
     Pipeline state is persisted in `docs/pipeline-state.json` for resumability.
     """)
 
+    st_space("v", 2)
+    st_write(bs.sub, "Which command should I use?", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""
+    ### Choosing the right CE command
+
+    | Situation | Command | Why |
+    |-----------|---------|-----|
+    | Start a new project or full production cycle | `/stx-ce:go` | Runs all 7 phases with gates |
+    | Do a specific punctual task (compare, review, add block) | `/stx-ce:task "..."` | Targeted execution with lifecycle reconciliation |
+    | Return after a break, unsure where you left off | `/stx-ce:continue` | Briefing + drift detection + proposals |
+    | Run a specific phase directly | `/stx-ce:collect`, `:review`, etc. | Direct control, no orchestration |
+    | Check project status without action | `/stx-ce:status` | Read-only diagnostic |
+    """)
+
     st_space("v", 1)

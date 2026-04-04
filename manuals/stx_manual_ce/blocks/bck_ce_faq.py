@@ -227,6 +227,51 @@ def build():
 
     st_space("v", 1)
 
+    show_explanation("""
+    ### How do I do a quick task without the full cycle?
+
+    Use `/stx-ce:task` with a free-text description:
+    ```
+    /stx-ce:task "Compare source lines 524-600 with produced blocks"
+    /stx-ce:task "Review danger blocks on citation accuracy"
+    /stx-ce:task "Add a block on AI ethics from source lines 402-410"
+    ```
+
+    The system auto-detects what you need (compare, review, produce, etc.)
+    and executes it while keeping lifecycle artifacts in sync. No need to
+    run the full COLLECT → COMPOUND pipeline.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### I'm coming back after a 2-week break. Where do I start?
+
+    Run `/stx-ce:continue`. It will:
+    1. **Brief you** on the project state (last activity, progress, plan version)
+    2. **Detect drift** (source changes, manual edits, stale reviews)
+    3. **Propose** prioritized next steps with executable commands
+    4. Let you **choose** a proposal or describe your own task
+
+    This is the recommended first command after any session break.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### How does plan versioning work?
+
+    When a task modifies the plan, the current plan is kept as-is and a
+    **new version** is created with all modifications integrated inline.
+    The new version includes a Change Log header documenting what changed.
+
+    **Naming**: `YYYY-MM-DD-NNN-<name>-plan.md` — latest by date+sequence is current.
+    **No amendments**: Each version is a complete, self-contained document.
+    **Auto-detection**: `/stx-ce:produce` always uses the latest plan version.
+    """)
+
+    st_space("v", 1)
+
     show_details("""
     ### Quick Answers
 

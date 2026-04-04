@@ -1,4 +1,4 @@
-"""CE Manual — Part 3: Overview of All 17 Agents and Command-Driven PRODUCE."""
+"""CE Manual — Part 3: Overview of All 18 Agents and Command-Driven PRODUCE."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Overview of all 17 agents: table listing by phase, role, and collaboration."""
+    """Overview of all 18 agents: table listing by phase, role, and collaboration."""
 
     st_space("v", 1)
     st_write(bs.heading, "Agents Overview",
@@ -29,7 +29,7 @@ def build():
 
     st_write(s.large,
              "Compound Document Engineering orchestrates ",
-              (s.bold, "17 specialized agents"),
+              (s.bold, "18 specialized agents"),
               " across the five CE phases. Each agent has a focused responsibility "
               "and communicates through structured artifacts — templates, checklists, "
               "and reports — that flow from one phase to the next.")
@@ -43,7 +43,7 @@ def build():
     1. **Single Responsibility** — each agent handles exactly one concern
        (e.g., scanning sources, evaluating pedagogy, detecting feedback).
     2. **Template-Driven Output** — agents produce structured documents using
-       the 12 CE templates, ensuring consistency across projects.
+       the 16 CE templates, ensuring consistency across projects.
     3. **Phase Boundaries** — agents only activate during their designated phase,
        reading inputs from prior phases and writing outputs for subsequent ones.
 
@@ -76,6 +76,11 @@ def build():
     | 16 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
     | 17 | COMPOUND | **feedback-detector** | Detects ecosystem issues from review findings |
     | 18 | COMPOUND | **dev-governance** | Enforces development discipline across the cycle |
+    | 19 | TASK | **ad-hoc-reviewer** | Executes custom-criteria reviews on scoped blocks |
+
+    **Extended modes** (activated by `/stx-ce:task`):
+    - **gap-analyst**: bidirectional comparison (source→blocks + blocks→source)
+    - **learnings-researcher**: targeted search (single topic/pattern dedup)
     """)
 
     st_space("v", 1)

@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference table of all 9 CE commands with options and examples."""
+    """Reference table of all 11 CE commands with options and examples."""
 
     st_space("v", 1)
     st_write(bs.heading, "Commands Reference",
@@ -28,7 +28,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "Compound Document Engineering provides ", (s.bold, "9 commands"),
+             "Compound Document Engineering provides ", (s.bold, "11 commands"),
              " that map directly to the CE ",
              (s.project.titles.phase_kw, "phases"),
              ". Each command activates the ",
@@ -50,6 +50,8 @@ def build():
     | `/stx-ce:fix` | FIX | Apply review recommendations |
     | `/stx-ce:compound` | COMPOUND | Extract and package learnings |
     | `/stx-ce:status` | (any) | Show current cycle state and progress |
+    | `/stx-ce:task` | (any) | Execute an ad-hoc task with lifecycle reconciliation |
+    | `/stx-ce:continue` | (any) | Resume work after a session break |
     """)
 
     st_space("v", 1)
@@ -210,6 +212,54 @@ def build():
     Review findings: (none yet)
     Producer profile: exists (last updated 2026-03-19)
     ```
+    """)
+
+    st_space("v", 2)
+    st_write(bs.sub, "/stx-ce:task", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""
+    **Syntax**: `/stx-ce:task "<free-text description>"`
+
+    **Options**: `--from-plan <path>`, `--help`
+
+    **Purpose**: Execute an ad-hoc task with lifecycle reconciliation.
+
+    **6 Archetypes** (auto-detected):
+    | Archetype | Triggers | Artifact |
+    |-----------|----------|----------|
+    | COMPARE | "compare", "coverage", "gaps" | `docs/reviews/YYYY-MM-DD-coverage-task.md` |
+    | TARGETED REVIEW | "review", "check" + scope | `docs/reviews/YYYY-MM-DD-task-review.md` |
+    | TARGETED PRODUCTION | "add", "create" | New blocks + new plan version |
+    | PLAN AMENDMENT | "update plan", "reorder" | New plan version with Change Log |
+    | TARGETED COMPOUND | "capitalize", "extract pattern" | `docs/solutions/` |
+    | SOURCE ANALYSIS | "analyze source" | `docs/collect/YYYY-MM-DD-task-analysis.md` |
+
+    **Agents activated**: ad-hoc-reviewer (for custom review), gap-analyst (for COMPARE), learnings-researcher (for COMPOUND)
+
+    **Gate**: No gate for read-only tasks; confirmation for write tasks. Configurable via `task_gate` in producer profile.
+    """)
+
+    st_space("v", 2)
+    st_write(bs.sub, "/stx-ce:continue", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""
+    **Syntax**: `/stx-ce:continue [--verbose]`
+
+    **Options**: `--verbose` (detailed drift analysis), `--help`
+
+    **Purpose**: Resume work after a session break.
+
+    **Output**:
+    1. **Briefing** — project name, last activity, plan version, block progress
+    2. **Drift detection** — source changes, manual edits, plan mismatch, stale artifacts
+    3. **Proposals** — prioritized next steps with commands
+    4. **Dispatch** — select proposal or describe custom task
+
+    **Priority**: CRITICAL > HIGH > MEDIUM > LOW > INFO
+
+    **Agents activated**: None (inspection-only, delegates to other commands)
     """)
 
     st_space("v", 1)

@@ -108,6 +108,17 @@ def build():
     st_write(bs.sub, "Extended capabilities", toc_lvl="+1")
     st_space("v", 1)
 
+    st_space("v", 1)
+    st_write(s.large,
+             "Beyond the sequential pipeline, CE provides ",
+             (s.bold, "ad-hoc task execution"),
+             " via ", (s.project.titles.tool_kw, "/stx-ce:task"),
+             " for punctual work (coverage audits, targeted reviews, plan amendments), "
+             "and ", (s.project.titles.tool_kw, "/stx-ce:continue"),
+             " for session resumption with drift detection and prioritized proposals.")
+
+    st_space("v", 1)
+
     show_details("""\
         The CE cycle integrates several advanced StreamTeX features
         that enrich document production:

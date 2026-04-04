@@ -1,4 +1,4 @@
-"""CE Manual — Part 3: Overview of All 19 Agents and Command-Driven PRODUCE."""
+"""CE Manual — Part 3: Overview of All 18 Agents and Command-Driven PRODUCE."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Overview of all 19 agents: table listing by phase, role, and collaboration."""
+    """Overview of all 18 agents: table listing by phase, role, and collaboration."""
 
     st_space("v", 1)
     st_write(bs.heading, "Agents Overview",
@@ -29,7 +29,7 @@ def build():
 
     st_write(s.large,
              "Compound Document Engineering orchestrates ",
-              (s.bold, "19 specialized agents"),
+              (s.bold, "18 specialized agents"),
               " across the five CE phases. Each agent has a focused responsibility "
               "and communicates through structured artifacts — templates, checklists, "
               "and reports — that flow from one phase to the next.")

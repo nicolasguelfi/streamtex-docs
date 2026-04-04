@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference table of all 11 CE commands with options and examples."""
+    """Reference table of all 11 CE commands (10 here + go in its own block) with options and examples."""
 
     st_space("v", 1)
     st_write(bs.heading, "Commands Reference",

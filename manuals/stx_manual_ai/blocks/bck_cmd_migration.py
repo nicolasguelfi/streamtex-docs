@@ -108,9 +108,11 @@ def build():
                             "Welcome to the course.",
                         )
                         st_space("v", 1)
-                        with st_list(list_type="ul"):
-                            st_write(s.large, "Topic A")
-                            st_write(s.large, "Topic B")
+                        with st_list(list_type="ul") as l:
+                            with l.item():
+                                st_write(s.large, "Topic A")
+                            with l.item():
+                                st_write(s.large, "Topic B")
                     """, language="python")
     st_space("v", 2)
 

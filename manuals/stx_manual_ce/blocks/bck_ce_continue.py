@@ -32,17 +32,20 @@ def build():
              "sources may change, blocks may be edited manually, or the "
              "plan may become stale. The ",
              (s.project.titles.tool_kw, "/stx-ce:continue"),
-             " command detects what changed, evaluates the impact, and "
-             "proposes corrective actions before resuming work.")
+             " command restores checkpoint context (if saved via ",
+             (s.project.titles.tool_kw, "/stx-ce:pause"),
+             "), detects drift, and proposes corrective actions before "
+             "resuming work.")
     st_space("v", 1)
 
     st_write(s.large,
              "Without ",
              (s.project.titles.tool_kw, "/stx-ce:continue"),
              ", resuming a cycle risks working from outdated assumptions. "
-             "A source file might have been updated, a block might have been "
-             "manually tweaked, or the plan might reference blocks that no "
-             "longer exist.")
+             "If a checkpoint exists, it restores the decisions, in-progress "
+             "items, and context from the previous session. Otherwise, "
+             "drift detection still identifies what changed since the last "
+             "CE activity.")
     st_space("v", 1)
 
     show_code("""\
@@ -55,7 +58,13 @@ def build():
     st_space("v", 1)
 
     show_details("""\
-    ### INSPECT -> DETECT DRIFT -> PROPOSE -> INTERACT
+    ### CHECKPOINT -> INSPECT -> DETECT DRIFT -> PROPOSE -> INTERACT
+
+    **Step 0: RESTORE CHECKPOINT**
+    If `docs/ce-checkpoint.md` exists (created by `/stx-ce:pause`),
+    reads it and displays a restoration banner with the previous
+    session's context: active work items, decisions, and pending
+    issues. The checkpoint is archived after restoration.
 
     **Step 1: INSPECT**
     Reads all CE artifacts in `docs/` and all block files. Builds a
@@ -64,13 +73,13 @@ def build():
     blocks are registered.
 
     **Step 2: DETECT DRIFT**
-    Compares the current snapshot against the last known state (stored
-    in `docs/pipeline-state.json`). Identifies any discrepancies across
-    five drift categories (see below).
+    Compares the current snapshot against the last CE activity date.
+    Identifies discrepancies across five drift categories (see below).
 
     **Step 3: PROPOSE**
     For each detected drift, generates a corrective proposal ranked by
-    priority. Proposals are actionable: they specify exactly which CE
+    priority. Checkpoint active items are integrated as HIGH-priority
+    proposals. Proposals are actionable: they specify exactly which CE
     command to run or which artifact to update.
 
     **Step 4: INTERACT**
@@ -197,21 +206,22 @@ def build():
     show_explanation("""\
     ### Best Practices for Multi-Session CE Work
 
-    **1. Always start with /stx-ce:continue** — Even if you think nothing
+    **1. Pause before leaving, continue when returning** — Use
+    `/stx-ce:pause` before ending a session and `/stx-ce:continue`
+    when starting the next one. This preserves context across sessions.
+
+    **2. Always start with /stx-ce:continue** — Even if you think nothing
     changed, the command takes seconds and catches subtle drift (stale
-    artifacts, unresolved findings) that you might miss.
+    artifacts, unresolved findings) that you might miss. If a checkpoint
+    exists, it restores your previous context automatically.
 
-    **2. Commit CE artifacts to git** — The `docs/` folder should be
+    **3. Commit CE artifacts to git** — The `docs/` folder should be
     version-controlled. This gives `/stx-ce:continue` reliable timestamps
-    and makes drift detection more accurate.
+    and makes drift detection more accurate. Include `ce-checkpoint.md`.
 
-    **3. Prefer small sessions** — A 2-hour session that completes one
+    **4. Prefer small sessions** — A 2-hour session that completes one
     phase is better than a marathon that leaves the cycle in an ambiguous
     state. Each phase boundary is a natural pause point.
-
-    **4. Use the briefing as a stand-up** — The briefing format is
-    designed to be read in 10 seconds. Use it to orient yourself before
-    diving into work.
 
     **5. Do not ignore CRITICAL drift** — If a source changed, the
     downstream artifacts (assessment, plan, blocks) may be based on

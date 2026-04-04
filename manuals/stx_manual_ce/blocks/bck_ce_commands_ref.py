@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference table of all 11 CE commands (10 here + go in its own block) with options and examples."""
+    """Reference table of all 12 CE commands (11 here + go in its own block) with options and examples."""
 
     st_space("v", 1)
     st_write(bs.heading, "Commands Reference",
@@ -28,7 +28,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "Compound Document Engineering provides ", (s.bold, "11 commands"),
+             "Compound Document Engineering provides ", (s.bold, "12 commands"),
              " that map directly to the CE ",
              (s.project.titles.phase_kw, "phases"),
              ". Each command activates the ",
@@ -51,6 +51,7 @@ def build():
     | `/stx-ce:compound` | COMPOUND | Extract and package learnings |
     | `/stx-ce:status` | (any) | Show current cycle state and progress |
     | `/stx-ce:task` | (any) | Execute an ad-hoc task with lifecycle reconciliation |
+    | `/stx-ce:pause` | (any) | Save session checkpoint before pausing work |
     | `/stx-ce:continue` | (any) | Resume work after a session break |
     """)
 
@@ -241,6 +242,37 @@ def build():
     """)
 
     st_space("v", 2)
+    st_write(bs.sub, "/stx-ce:pause", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_details("""
+    **Syntax**: `/stx-ce:pause [--message "<text>"]`
+
+    **Options**: `--message` (context annotation), `--help`
+
+    **Purpose**: Save a session checkpoint before pausing work.
+
+    **Output**: `docs/ce-checkpoint.md` (overwritten each time)
+
+    **Checkpoint captures**:
+    - **Active work items** — blocks in progress, incomplete, out-of-plan
+    - **Decisions log** — design choices, scope decisions, plan deviations
+    - **Pending issues** — blockers, missing assets, partial fixes
+    - **Uncommitted changes** — summary of git status
+    - **Context for next session** — free-text briefing
+
+    **Workflow**: INSPECT → DETECT in-progress → CAPTURE context → WRITE
+
+    **Agents activated**: None (inspection-only)
+
+    **Examples**:
+    ```
+    /stx-ce:pause
+    /stx-ce:pause --message "Stopped mid-review, visual done, 2 remaining"
+    ```
+    """)
+
+    st_space("v", 2)
     st_write(bs.sub, "/stx-ce:continue", toc_lvl="+1")
     st_space("v", 1)
 
@@ -252,9 +284,10 @@ def build():
     **Purpose**: Resume work after a session break.
 
     **Output**:
+    0. **Checkpoint restore** — if `docs/ce-checkpoint.md` exists, restore and archive it
     1. **Briefing** — project name, last activity, plan version, block progress
     2. **Drift detection** — source changes, manual edits, plan mismatch, stale artifacts
-    3. **Proposals** — prioritized next steps with commands
+    3. **Proposals** — prioritized next steps with commands (checkpoint items integrated)
     4. **Dispatch** — select proposal or describe custom task
 
     **Priority**: CRITICAL > HIGH > MEDIUM > LOW > INFO

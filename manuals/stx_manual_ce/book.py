@@ -73,6 +73,7 @@ st_book([
     blocks.bck_ce_compound,
     blocks.bck_ce_go,
     blocks.bck_ce_task,
+    blocks.bck_ce_pause,
     blocks.bck_ce_continue,
 
     # Part 3: Agents

@@ -5,6 +5,18 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.6] — 2026-04-05
+
+### Added
+- **`bck_ce_pause` block** (CE manual): new documentation block for `/stx-ce:pause` session checkpoint — workflow diagram, checkpoint format, best practices.
+- **CE cheatsheet updated**: 12 commands, 17 templates, pause/continue sections.
+
+### Changed
+- **`bck_ce_continue` block**: updated to document Step 0 checkpoint restoration and revised best practices (pause before leaving, continue when returning).
+- **`bck_ce_commands_ref` block**: updated from 11 to 12 commands, added `/stx-ce:pause` entry.
+- **`bck_ce_templates_ref` block**: updated from 16 to 17 templates, added `tpl_checkpoint` entry.
+- **Library upgrade**: bumped streamtex dependency to 0.6.6 from PyPI.
+
 ## [0.6.2] — 2026-04-01
 
 ### Fixed

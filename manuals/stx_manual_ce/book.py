@@ -71,6 +71,7 @@ st_book([
     blocks.bck_ce_review,
     blocks.bck_ce_fix,
     blocks.bck_ce_compound,
+    blocks.bck_ce_integrate,
     blocks.bck_ce_go,
     blocks.bck_ce_task,
     blocks.bck_ce_pause,

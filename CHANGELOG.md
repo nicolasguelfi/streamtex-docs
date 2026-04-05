@@ -5,6 +5,17 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.7] — 2026-04-05
+
+### Added
+- **`bck_ce_integrate` block** (CE manual): new documentation block for `/stx-ce:integrate` — routing table, workflow, frontmatter format.
+- **CE cycle diagram updated**: 8 phases (was 7), INTEGRATE added after COMPOUND.
+
+### Changed
+- **`bck_ce_overview` block**: updated cycle list to 8 phases, updated iterative description.
+- **CE manual `book.py`**: wired `bck_ce_integrate` after `bck_ce_compound`.
+- **Library upgrade**: bumped streamtex dependency to 0.6.7 from PyPI.
+
 ## [0.6.6] — 2026-04-05
 
 ### Added

@@ -73,6 +73,7 @@ def build():
         **REVIEW** — Multi-perspective quality review (5 lenses).
         **FIX** — Correct issues found during review.
         **COMPOUND** — Capitalize learnings for future cycles.
+        **INTEGRATE** — Route solutions to operational destinations.
     """)
     st_space("v", 1)
 
@@ -84,6 +85,7 @@ def build():
         with l.item(): st_write((s.project.titles.phase_kw, "REVIEW"), " — audience, pedagogy, visual, style, editorial checks")
         with l.item(): st_write((s.project.titles.phase_kw, "FIX"), " — correct automatable issues, verify manually")
         with l.item(): st_write((s.project.titles.phase_kw, "COMPOUND"), " — production log, ecosystem feedback, governance")
+        with l.item(): st_write((s.project.titles.phase_kw, "INTEGRATE"), " — route solutions to lib issues, skill updates, or custom rules")
     st_space("v", 2)
 
     # ── Iterative nature ──────────────────────────────────────────
@@ -95,9 +97,10 @@ def build():
         findings feed directly into fixes, and you can re-review
         until quality gates pass.
 
-        The COMPOUND phase closes the outer loop: lessons learned
-        in one cycle improve the next. Over time, your templates,
-        styles, and processes get better automatically.
+        The COMPOUND phase captures learnings as solutions.
+        The INTEGRATE phase routes them to operational destinations
+        (lib issues, skill updates, custom rules). Together, they
+        close the outer loop: every cycle improves the next.
 
         You can run a full cycle with `/stx-ce:go "description"`
         or execute phases individually for fine-grained control.

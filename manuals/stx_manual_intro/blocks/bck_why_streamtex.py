@@ -244,6 +244,21 @@ def build():
                 with l.item(): st_write("Cloud deployment (Docker, Render)")
                 with l.item(): st_write("Instant sharing, works everywhere")
 
+    st_space("v", 1)
+
+    with st_grid(
+        cols="1fr",
+        grid_style=stx.StxStyles.container.grid.gap_24,
+    ):
+        with st_block(s.project.containers.explanation_box):
+            st_write(s.project.titles.subsection_title, "Maintain & Improve")
+            st_space("v", 0.5)
+            with st_list(list_type="ul", li_style=bs.body) as l:
+                with l.item(): st_write("Structured production cycle (Compound Engineering)")
+                with l.item(): st_write("Import, improve, or create from scratch — 3 guided pathways")
+                with l.item(): st_write("Multi-perspective review with 17 AI agents")
+                with l.item(): st_write("Continuous improvement through capitalization")
+
     st_space("v", 2)
     st_slide_break()
 

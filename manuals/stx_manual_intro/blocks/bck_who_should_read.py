@@ -106,6 +106,12 @@ def build():
     st_space("v", 1)
 
     _manual(
+        "Compound Engineering Manual",
+        "Structured document production: a 7-phase cycle "
+        "(collect → assess → plan → produce → review → fix → compound) "
+        "with 17 AI agents and 3 pathways (import, improve, create).",
+    )
+    _manual(
         "AI Manual",
         "Learn to create and maintain documents entirely through natural "
         "language — without writing code. Commands, agents, and best practices.",

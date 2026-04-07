@@ -10,6 +10,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl nginx-light \
+        texlive-latex-base texlive-fonts-recommended dvisvgm ghostscript \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv

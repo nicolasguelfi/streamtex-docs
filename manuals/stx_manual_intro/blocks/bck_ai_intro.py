@@ -207,19 +207,42 @@ def build():
     st_space("v", 2)
 
     # ── Go further ──────────────────────────────────────────────────
-    st_write(bs.sub, "Go further: the AI Manual", toc_lvl="+1")
+    st_write(bs.sub, "Go further", toc_lvl="+1")
     st_space("v", 1)
 
     with st_block(bs.manual_link):
         st_write(
             s.Large + s.bold + bs.ai_accent,
-            "The AI Manual",
+            "Compound Engineering Manual",
             tag=t.div,
         )
         st_space("v", 0.5)
         st_write(
             bs.body,
-            "The dedicated AI manual covers everything you need "
+            "The ",
+            (s.bold, "Compound Engineering"),
+            " manual describes the structured methodology for producing "
+            "and maintaining documents with StreamTeX and AI:",
+        )
+        st_space("v", 0.5)
+        with st_list(list_type="ul", li_style=bs.body) as l:
+            with l.item(): st_write((s.bold, "7-phase cycle"), " — collect, assess, plan, produce, review, fix, compound")
+            with l.item(): st_write((s.bold, "3 pathways"), " — import existing content, improve a document, or create from scratch")
+            with l.item(): st_write((s.bold, "17 AI agents"), " — specialized for each phase (content strategist, visual reviewer, etc.)")
+            with l.item(): st_write((s.bold, "Full automation"), " — /stx-ce:go runs the entire cycle with validation gates")
+
+    st_space("v", 1)
+
+    with st_block(bs.manual_link):
+        st_write(
+            s.Large + s.bold + bs.ai_accent,
+            "AI Manual",
+            tag=t.div,
+        )
+        st_space("v", 0.5)
+        st_write(
+            bs.body,
+            "The dedicated AI manual covers the technical tools "
             "to work with StreamTeX through AI:",
         )
         st_space("v", 0.5)

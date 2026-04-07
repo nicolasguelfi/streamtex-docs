@@ -14,13 +14,21 @@ button_label = "Open Course"
 project_url = "http://localhost:8502"
 order = 1
 
+[projects.test-ce]
+title = "Compound Engineering"
+description = "Structured document production: 7-phase cycle, 3 pathways, 17 agents"
+emoji = "🔄"
+button_label = "Open Manual"
+project_url = "http://localhost:8507"
+order = 2
+
 [projects.test-ai]
 title = "AI-Powered Workflows"
 description = "22 commands, 4 agents, 10 blueprints, 4 profiles: create content with AI assistants"
 emoji = "🤖"
 button_label = "Open Manual"
 project_url = "http://localhost:8506"
-order = 2
+order = 3
 
 [projects.test-advanced]
 title = "Advanced Features & Architecture"
@@ -28,7 +36,7 @@ description = "Master advanced concepts: shared blocks, multi-source resolution,
 emoji = "⚡"
 button_label = "Open Course"
 project_url = "http://localhost:8503"
-order = 3
+order = 4
 
 [projects.test-deploy]
 title = "Deployment Guide"
@@ -36,7 +44,7 @@ description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, Render.com, G
 emoji = "🚀"
 button_label = "Open Course"
 project_url = "http://localhost:8504"
-order = 4
+order = 5
 
 [projects.test-developer]
 title = "Developer Guide"
@@ -44,12 +52,4 @@ description = "Contribute to StreamTeX: repo structure, testing, CI/CD, release 
 emoji = "🔧"
 button_label = "Open Guide"
 project_url = "http://localhost:8505"
-order = 5
-
-[projects.test-ce]
-title = "Compound Engineering"
-description = "Structured document production: 7-phase cycle, 3 pathways, 17 agents"
-emoji = "🔄"
-button_label = "Open Manual"
-project_url = "http://localhost:8507"
 order = 6

@@ -64,6 +64,9 @@ st_book([
     blocks.bck_who_should_read,
     blocks.bck_ai_intro,
 
+    # Compound Engineering introduction
+    blocks.bck_ce_intro,
+
     # Library overview (what it is, live showcase)
     blocks.bck_what_is_streamtex,
 

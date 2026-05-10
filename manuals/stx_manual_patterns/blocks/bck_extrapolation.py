@@ -1,6 +1,6 @@
 """Extrapolation contract — INVARIANTS / PARAMS / INTERDITS.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *

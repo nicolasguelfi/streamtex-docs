@@ -1,12 +1,14 @@
 """Demo — exercise_flow multi-slide template (briefing / action / debrief).
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_explanation, show_details
+from blocks.helpers import (
+    show_explanation, show_details, show_and_run,
+)
 
 
 class BlockStyles:
@@ -66,117 +68,75 @@ def build():
         - **Debrief** — a question (callout) plus typical
           observations, optional takeaways.
 
-        Used for the `practice_pN` series in the GenSEM module
-        (8 exercises in the corpus).
+        Typically used for `practice_pN` series in workshop modules.
     """)
     st_space("v", 2)
 
-    # ---- Code skeleton ----
-    st_write(bs.sub, "Code skeleton", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_code("""\
-def build():
-    # === Slide 1: Briefing ====================================
-    st_slide_break(marker_label="Practice N: <name>")
-    with st_block(s.project.containers.page_fill_top):
-        with st_block(s.center_txt):
-            # slide_heading + tooltip
-            ...
-            with st_grid(cols="3fr 7fr", gap="24px") as g:
-                with g.cell():
-                    st_image(s.center_txt, width="90%",
-                             uri="<logo path>")
-                with g.cell():
-                    with st_block(_cell):
-                        with st_list(list_type=lt.unordered) as l:
-                            with l.item():
-                                st_write(bs.body,
-                                         (bs.keyword, "1. <step>"),
-                                         " <continuation>")
-                            ...
-            st_space("v", 1)
-            st_write(bs.accent, "Time: 30 minutes")
-
-    # === Slide 2: Action ======================================
-    st_slide_break(marker_label="Practice N: Action")
-    with st_block(s.project.containers.page_fill_center):
-        with st_block(s.center_txt):
-            st_write(bs.instruction, "<Action instruction>")
-            st_space("v", 4)
-            st_write(bs.timer, "30 min")
-
-    # === Slide 3: Debrief =====================================
-    st_slide_break(marker_label="Practice N: Debrief")
-    with st_block(s.project.containers.page_fill_top):
-        with st_block(s.center_txt):
-            st_write(bs.heading, "Debrief -- Practice N",
-                     tag=t.div, toc_lvl="+1")
-            with st_block(s.project.containers.callout):
-                st_write(bs.accent, "What did you notice?")
-            # card_grid of typical observations...""")
-    st_space("v", 2)
-
-    # ---- Live render ----
-    st_write(bs.sub, "Live render — three layouts side by side", toc_lvl="+1")
+    # ---- Live render (code shown == code rendered) ----
+    st_write(bs.sub, "Live render — three layouts side by side",
+             toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Below the three slides are rendered side-by-side as compact
-        previews — actual rendering uses `st_slide_break` between
-        each, producing one slide per page in paginated mode.
+        The three slides are rendered side-by-side as compact previews
+        for documentation purposes. Real usage inserts
+        `st_slide_break` between each, producing one slide per page in
+        paginated mode.
     """)
     st_space("v", 1)
 
-    with st_grid(cols="1fr 1fr 1fr", gap="16px",
-                 cell_styles=bs.slide_box) as g:
-        # Slide 1: Briefing
-        with g.cell():
-            st_write(bs.slide_label, "1. Briefing")
-            st_space("v", 0.5)
-            st_write(bs.slide_title, "Practice 1: Vibecoding clinic",
-                     tag=t.div)
-            st_space("v", 0.5)
-            st_write(bs.body_c,
-                     (bs.keyword, "1. Install Cursor"),
-                     " from cursor.sh")
-            st_write(bs.body_c,
-                     (bs.keyword, "2. Open the demo repo"),
-                     " in `.cursor` mode")
-            st_write(bs.body_c,
-                     (bs.keyword, "3. Run the agent"),
-                     " on the failing test")
-            st_space("v", 0.5)
-            st_write(bs.accent, "Time: 30 minutes")
+    def _demo():
+        with st_grid(cols="1fr 1fr 1fr", gap="16px",
+                     cell_styles=bs.slide_box) as g:
+            # Slide 1: Briefing
+            with g.cell():
+                st_write(bs.slide_label, "1. Briefing")
+                st_space("v", 0.5)
+                st_write(bs.slide_title, "Practice 1: Vibecoding clinic",
+                         tag=t.div)
+                st_space("v", 0.5)
+                st_write(bs.body_c,
+                         (bs.keyword, "1. Install Cursor"),
+                         " from cursor.sh")
+                st_write(bs.body_c,
+                         (bs.keyword, "2. Open the demo repo"),
+                         " in `.cursor` mode")
+                st_write(bs.body_c,
+                         (bs.keyword, "3. Run the agent"),
+                         " on the failing test")
+                st_space("v", 0.5)
+                st_write(bs.accent, "Time: 30 minutes")
 
-        # Slide 2: Action
-        with g.cell():
-            st_write(bs.slide_label, "2. Action")
-            st_space("v", 0.5)
-            st_write(bs.instruction,
-                     "Follow the agent.")
-            st_space("v", 0.5)
-            st_write(bs.body_c,
-                     "Note what surprises you.")
-            st_space("v", 1)
-            st_write(bs.timer, "30 min")
+            # Slide 2: Action
+            with g.cell():
+                st_write(bs.slide_label, "2. Action")
+                st_space("v", 0.5)
+                st_write(bs.instruction,
+                         "Follow the agent.")
+                st_space("v", 0.5)
+                st_write(bs.body_c,
+                         "Note what surprises you.")
+                st_space("v", 1)
+                st_write(bs.timer, "30 min")
 
-        # Slide 3: Debrief
-        with g.cell():
-            st_write(bs.slide_label, "3. Debrief")
-            st_space("v", 0.5)
-            st_write(bs.slide_title, "Debrief — Practice 1",
-                     tag=t.div)
-            st_space("v", 0.5)
-            with st_block(s.project.containers.tip_callout):
-                st_write(bs.accent, "What did you notice?")
-            st_space("v", 0.5)
-            st_write(bs.body_c, (bs.keyword, "Speed"),
-                     " — felt fast, was it really?")
-            st_write(bs.body_c, (bs.keyword, "Trust"),
-                     " — when did you check?")
-            st_write(bs.body_c, (bs.keyword, "Surprise"),
-                     " — what didn't work?")
+            # Slide 3: Debrief
+            with g.cell():
+                st_write(bs.slide_label, "3. Debrief")
+                st_space("v", 0.5)
+                st_write(bs.slide_title, "Debrief — Practice 1",
+                         tag=t.div)
+                st_space("v", 0.5)
+                with st_block(s.project.containers.tip_callout):
+                    st_write(bs.accent, "What did you notice?")
+                st_space("v", 0.5)
+                st_write(bs.body_c, (bs.keyword, "Speed"),
+                         " — felt fast, was it really?")
+                st_write(bs.body_c, (bs.keyword, "Trust"),
+                         " — when did you check?")
+                st_write(bs.body_c, (bs.keyword, "Surprise"),
+                         " — what didn't work?")
+
+    show_and_run(_demo)
     st_space("v", 1)
 
     show_details("""\

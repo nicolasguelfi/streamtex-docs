@@ -1,12 +1,12 @@
 """Gallery — list-shaped patterns: card_grid, comparison_table, takeaways.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_explanation
+from blocks.helpers import show_explanation, show_and_run
 
 
 class BlockStyles:
@@ -55,7 +55,8 @@ TAKEAWAYS = [
 def build():
     """Compact gallery of list-shaped patterns."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "List Patterns — card_grid, comparison_table, takeaways",
+        st_write(bs.heading,
+                 "List Patterns — card_grid, comparison_table, takeaways",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -67,44 +68,39 @@ def build():
     st_space("v", 2)
 
     # ---- card_grid ----
-    st_write(bs.sub, "card_grid — responsive equal-weight cards", toc_lvl="+1")
+    st_write(bs.sub, "card_grid — responsive equal-weight cards",
+             toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Responsive grid (`auto-fit, minmax(280px, 1fr)`) of equal
+        Responsive grid (`auto-fit, minmax(220px, 1fr)`) of equal
         cards, each with a bolded keyword title and an optional body
         fragment. Used for taxonomies, inventories of risks, tools,
         principles.
     """)
     st_space("v", 1)
 
-    show_code("""\
-with st_grid(cols="repeat(auto-fit, minmax(280px, 1fr))",
-             gap="12px", cell_styles=_cell) as g:
-    for title, body in CARDS:
-        with g.cell():
-            st_write(bs.body_c,
-                     (bs.keyword, title),
-                     (bs.body, f" -- {body}"))""")
-    st_space("v", 1)
+    def _demo_card_grid():
+        with st_grid(cols="repeat(auto-fit, minmax(220px, 1fr))",
+                     gap="12px", cell_styles=bs.cell) as g:
+            for title, body in CARDS:
+                with g.cell():
+                    st_write(bs.body_c,
+                             (bs.keyword, title),
+                             (bs.body, f" — {body}"))
 
-    # Live demo
-    with st_grid(cols="repeat(auto-fit, minmax(220px, 1fr))",
-                 gap="12px", cell_styles=bs.cell) as g:
-        for title, body in CARDS:
-            with g.cell():
-                st_write(bs.body_c,
-                         (bs.keyword, title),
-                         (bs.body, f" — {body}"))
+    show_and_run(_demo_card_grid)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/card_grid.md"),
-             (bs.accent, " for cell tints (primary / accent / active) and limits."))
+             (bs.keyword, "core/ptn_card_grid.md"),
+             (bs.accent,
+              " for cell tints (primary / accent / active) and limits."))
     st_space("v", 2)
 
     # ---- comparison_table ----
-    st_write(bs.sub, "comparison_table — header row + aligned rows", toc_lvl="+1")
+    st_write(bs.sub, "comparison_table — header row + aligned rows",
+             toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -115,44 +111,34 @@ with st_grid(cols="repeat(auto-fit, minmax(280px, 1fr))",
     """)
     st_space("v", 1)
 
-    show_code("""\
-def _row(cells, cell_style=_normal_cell, label_style=None):
-    cols = " ".join(["1fr"] * len(cells))
-    with st_grid(cols=cols, gap="12px", cell_styles=cell_style) as g:
-        for i, txt in enumerate(cells):
+    def _demo_comparison_table():
+        with st_grid(cols="1fr 2fr 2fr", gap="8px",
+                     cell_styles=bs.cell) as g:
             with g.cell():
-                st_write(label_style if i == 0 else bs.body, txt)
+                st_write(bs.body_c, (bs.label, "Day"))
+            with g.cell():
+                st_write(bs.body_c, (bs.label, "Morning"))
+            with g.cell():
+                st_write(bs.body_c, (bs.label, "Afternoon"))
+            for day, am, pm in TABLE_ROWS:
+                with g.cell():
+                    st_write(bs.body_c, (bs.keyword, day))
+                with g.cell():
+                    st_write(bs.body_c, am)
+                with g.cell():
+                    st_write(bs.body_c, pm)
 
-_row(["Day", "Morning", "Afternoon"],
-     cell_style=_hdr_cell, label_style=bs.table_hdr)
-for day, am, pm in DATA_ROWS:
-    _row([day, am, pm])""")
-    st_space("v", 1)
-
-    # Live demo — header row + 3 rows
-    with st_grid(cols="1fr 2fr 2fr", gap="8px", cell_styles=bs.cell) as g:
-        with g.cell():
-            st_write(bs.body_c, (bs.label, "Day"))
-        with g.cell():
-            st_write(bs.body_c, (bs.label, "Morning"))
-        with g.cell():
-            st_write(bs.body_c, (bs.label, "Afternoon"))
-        for day, am, pm in TABLE_ROWS:
-            with g.cell():
-                st_write(bs.body_c, (bs.keyword, day))
-            with g.cell():
-                st_write(bs.body_c, am)
-            with g.cell():
-                st_write(bs.body_c, pm)
+    show_and_run(_demo_comparison_table)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/comparison_table.md"),
+             (bs.keyword, "core/ptn_comparison_table.md"),
              (bs.accent, " for active-row variants and column ratios."))
     st_space("v", 2)
 
     # ---- takeaways ----
-    st_write(bs.sub, "takeaways — 3 to 5 numbered key insights", toc_lvl="+1")
+    st_write(bs.sub, "takeaways — 3 to 5 numbered key insights",
+             toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -163,32 +149,22 @@ for day, am, pm in DATA_ROWS:
     """)
     st_space("v", 1)
 
-    show_code("""\
-with st_zoom(110):
-    with st_list(li_style=bs.body) as l:
-        for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
-            with l.item():
-                st_write(bs.body,
-                         (bs.label, f"{i}. {lead} "),
-                         (bs.body, f"-- {body}"))
-st_space("v", 2)
-st_write(bs.highlight, PUNCH_LINE)""")
-    st_space("v", 1)
+    def _demo_takeaways():
+        with st_block(s.project.containers.result_box):
+            with st_list(li_style=bs.body) as l:
+                for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
+                    with l.item():
+                        st_write(bs.body,
+                                 (bs.label, f"{i}. {lead} "),
+                                 (bs.body, f"— {body}"))
+            st_space("v", 1)
+            st_write(bs.highlight + s.center_txt,
+                     "This is why we need a methodology, not just tools.")
 
-    # Live demo
-    with st_block(s.project.containers.result_box):
-        with st_list(li_style=bs.body) as l:
-            for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
-                with l.item():
-                    st_write(bs.body,
-                             (bs.label, f"{i}. {lead} "),
-                             (bs.body, f"— {body}"))
-        st_space("v", 1)
-        st_write(bs.highlight + s.center_txt,
-                 "This is why we need a methodology, not just tools.")
+    show_and_run(_demo_takeaways)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/takeaways.md"),
+             (bs.keyword, "core/ptn_takeaways.md"),
              (bs.accent, " for the punch-line and cite composition."))
     st_space("v", 1)

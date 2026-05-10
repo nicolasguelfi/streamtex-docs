@@ -1,12 +1,14 @@
 """Demo — categorized_grid template (named groups with tinted cells).
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_explanation, show_details
+from blocks.helpers import (
+    show_explanation, show_details, show_and_run,
+)
 
 
 class BlockStyles:
@@ -88,83 +90,47 @@ def build():
     """)
     st_space("v", 2)
 
-    # ---- Code skeleton ----
-    st_write(bs.sub, "Code skeleton", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_code("""\
-CATEGORIES = [
-    ("Adaptations -- Existing methods extended", _cat_primary, [
-        ("AgileGen", "Gherkin + memory pool"),
-        ("Agentic DevOps", "Microsoft vision"),
-    ]),
-    ("AI-Native -- Built for GenAI from scratch", _cat_accent, [
-        ("SE 3.0", "intent-centric"),
-        ("V-Bounce", "V-model adapted"),
-    ]),
-    ("Process Plugins -- Portable methodology", _cat_active, [
-        ("Compound Engineering -> GSE-One", ""),
-    ]),
-]
-
-
-def build():
-    for label, cell_style, items in CATEGORIES:
-        st_write(bs.cat_label, label)
-        st_space("v", 0.5)
-
-        with st_grid(cols="repeat(auto-fit, minmax(280px, 1fr))",
-                     gap="12px", cell_styles=cell_style) as g:
-            for title, body in items:
-                with g.cell():
-                    if body:
-                        st_write(bs.body_c,
-                                 (bs.keyword, title),
-                                 (bs.body, f" -- {body}"))
-                    else:
-                        st_write(bs.body_c,
-                                 (bs.highlight, title))
-        st_space("v", 1)""")
-    st_space("v", 2)
-
-    # ---- Live render ----
+    # ---- Live render (code shown == code rendered) ----
     st_write(bs.sub, "Live render", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Below: three categories, each with its own tint. The eye
-        identifies the grouping by color, never by header style
-        alone.
+        Three categories, each with its own tint. The eye identifies
+        the grouping by color, never by header style alone.
     """)
     st_space("v", 1)
 
-    _tint_map = {
-        "primary": bs.cell_primary,
-        "accent": bs.cell_accent,
-        "active": bs.cell_active,
-    }
-    for label, tint, items in CATEGORIES:
-        st_write(bs.cat_label, label)
-        st_space("v", 0.5)
-        cell_style = _tint_map[tint]
-        with st_grid(cols="repeat(auto-fit, minmax(220px, 1fr))",
-                     gap="12px", cell_styles=cell_style) as g:
-            for title, body in items:
-                with g.cell():
-                    if body:
-                        st_write(bs.body_c,
-                                 (bs.keyword, title),
-                                 (bs.body, f" — {body}"))
-                    else:
-                        st_write(bs.body_c,
-                                 (bs.highlight, title))
-        st_space("v", 1)
+    def _demo():
+        _tint_map = {
+            "primary": bs.cell_primary,
+            "accent": bs.cell_accent,
+            "active": bs.cell_active,
+        }
+        for label, tint, items in CATEGORIES:
+            st_write(bs.cat_label, label)
+            st_space("v", 0.5)
+            cell_style = _tint_map[tint]
+            with st_grid(cols="repeat(auto-fit, minmax(220px, 1fr))",
+                         gap="12px", cell_styles=cell_style) as g:
+                for title, body in items:
+                    with g.cell():
+                        if body:
+                            st_write(bs.body_c,
+                                     (bs.keyword, title),
+                                     (bs.body, f" — {body}"))
+                        else:
+                            st_write(bs.body_c,
+                                     (bs.highlight, title))
+            st_space("v", 1)
+
+    show_and_run(_demo)
+    st_space("v", 1)
 
     show_details("""\
         **INVARIANTS**: each category has its `cat_label` header; all
         cards within a single category share the same cell tint;
         different categories use different tints (that's how the eye
-        identifies the grouping); responsive `auto-fit, minmax(280px,
+        identifies the grouping); responsive `auto-fit, minmax(220px,
         1fr)` is preserved from the underlying `card_grid`.
     """)
     st_space("v", 1)

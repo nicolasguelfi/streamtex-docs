@@ -189,7 +189,7 @@ user can invoke by name when creating or editing manual blocks.
 - A **blueprint** = a complete block type (`title`, `conclusion`,
   `exercise`).
 - A **pattern** = a reusable composition primitive used inside a block
-  (`manual_section`, `api_reference_card`, `callout_critical`).
+  (`ptn_manual_section`, `ptn_api_reference_card`, `callout_critical`).
 
 A block can combine: 1 blueprint × N patterns × style conventions.
 

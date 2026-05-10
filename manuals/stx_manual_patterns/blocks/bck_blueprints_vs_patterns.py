@@ -1,6 +1,6 @@
 """Patterns vs Blueprints — where the frontier sits.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *

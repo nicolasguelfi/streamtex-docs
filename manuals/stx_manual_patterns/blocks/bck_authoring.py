@@ -1,6 +1,6 @@
 """Authoring a new pattern — end-to-end walkthrough.
 
-# @pattern: feature_walkthrough
+# @pattern: ptn_feature_walkthrough
 """
 
 from streamtex import *

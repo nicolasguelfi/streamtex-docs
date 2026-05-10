@@ -1,6 +1,6 @@
 """`stx patterns` CLI reference — install / update / promote.
 
-# @pattern: api_reference_card
+# @pattern: ptn_api_reference_card
 """
 
 from streamtex import *

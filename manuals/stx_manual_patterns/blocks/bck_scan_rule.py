@@ -1,6 +1,6 @@
 """Scan & discovery rules — how patterns are found, presets, drift detection.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *

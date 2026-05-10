@@ -1,12 +1,12 @@
 """Gallery — atomic patterns: slide_heading, cite, inline_emphasis.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_explanation
+from blocks.helpers import show_explanation, show_and_run
 
 
 class BlockStyles:
@@ -14,10 +14,17 @@ class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
+    body_c = s.large + s.center_txt
     keyword = s.bold + s.project.colors.primary_violet
     accent = s.bold + s.project.colors.accent_teal
     highlight = s.bold + s.project.colors.highlight_amber
     label = s.bold + s.project.colors.primary_violet + s.center_txt
+    slide_title = (
+        s.Large + s.bold + s.project.colors.accent_teal + s.center_txt
+    )
+    source = (
+        s.large + s.italic + s.center_txt + s.project.colors.neutral_gray
+    )
     cell = (
         s.container.borders.solid_border
         + s.container.paddings.small_padding
@@ -32,15 +39,16 @@ bs = BlockStyles
 def build():
     """Compact gallery of three atomic patterns."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Atoms Gallery — slide_heading, cite, inline_emphasis",
+        st_write(bs.heading,
+                 "Atoms Gallery — slide_heading, cite, inline_emphasis",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
     show_explanation("""\
-        Three small but pervasive atoms used across the `ai4se6d`
-        corpus. They appear in nearly every content slide. Each entry
-        below shows what the pattern does, the smallest meaningful
-        skeleton, and a pointer to its full markdown file.
+        Three small but pervasive atoms used across StreamTeX
+        presentation projects. They appear in nearly every content
+        slide. Each entry below shows what the pattern does and renders
+        it live, with the *exact same code* shown above the render.
     """)
     st_space("v", 2)
 
@@ -50,27 +58,26 @@ def build():
 
     show_explanation("""\
         A 95% / 5% grid: a centered slide title on the left and a
-        small hover-tooltip icon on the right (presenter notes
-        revealed on hover). Used on roughly **54 slides** of the
-        `ai4se6d` corpus.
+        small marker on the right (placeholder for the presenter's
+        hover tooltip). Below: code shown == code rendered.
     """)
     st_space("v", 1)
 
-    show_code("""\
-with st_grid(cols="95% 5%", gap="0px",
-             cell_styles=s.project.containers.grid_cell_centered) as g:
-    with g.cell():
-        with st_zoom(90):
-            st_write(bs.heading, "<Slide title>",
-                     tag=t.div, toc_lvl="+1")
-    with g.cell():
-        st_hover_tooltip(title="<Note>",
-                         entries=[("Label", "Body")],
-                         scale="2vw", width="70vw", position="left")""")
+    def _demo_slide_heading():
+        with st_grid(cols="95% 5%", gap="0px",
+                     cell_styles=bs.cell) as g:
+            with g.cell():
+                st_write(bs.slide_title,
+                         "Evidence Synthesis — METR Paradox",
+                         tag=t.div)
+            with g.cell():
+                st_write(s.large + s.center_txt, (bs.keyword, "?"))
+
+    show_and_run(_demo_slide_heading)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/slide_heading.md"),
+             (bs.keyword, "core/ptn_slide_heading.md"),
              (bs.accent, " for full details."))
     st_space("v", 2)
 
@@ -80,28 +87,32 @@ with st_grid(cols="95% 5%", gap="0px",
 
     show_explanation("""\
         A small italic centered citation footer placed under stats,
-        quotes, or claims. Backed by the project's BibTeX file via
-        `streamtex.bib.cite`. About **55 blocks** of the corpus
-        import the helper.
+        quotes, or claims. Real usage wires it to the project's BibTeX
+        file via `streamtex.bib.cite("<bib_key>")`. The demo below
+        renders a static string so the gallery has no external
+        dependency.
     """)
     st_space("v", 1)
 
-    show_code("""\
-from streamtex.bib import cite
+    def _demo_cite():
+        st_write(bs.body_c, "GenAI tools made developers ",
+                 (bs.keyword, "19% slower"),
+                 " on real-world tasks.")
+        st_space("v", 0.5)
+        st_write(bs.source, "— METR (2025), arXiv:2507.09089")
 
-class BlockStyles:
-    source = s.project.citation + s.large + s.center_txt
-
-st_write(bs.source, cite("<bib_key>"))""")
+    show_and_run(_demo_cite)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/cite.md"),
+             (bs.keyword, "core/ptn_cite.md"),
              (bs.accent, " for full details."))
     st_space("v", 2)
 
     # ---- inline_emphasis ----
-    st_write(bs.sub, "inline_emphasis — keyword / accent / highlight", toc_lvl="+1")
+    st_write(bs.sub,
+             "inline_emphasis — keyword / accent / highlight",
+             toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -109,36 +120,23 @@ st_write(bs.source, cite("<bib_key>"))""")
         inside a single `st_write` call. Each variant carries
         **semantic meaning**, not just color: `keyword` (primary
         term), `accent` (tool / identifier), `highlight` (paradox /
-        warning fact). Used in roughly **150 blocks** of the corpus.
+        warning fact).
     """)
     st_space("v", 1)
 
-    show_code("""\
-class BlockStyles:
-    body = s.project.titles.body
-    keyword = s.bold + s.project.colors.primary
-    accent = s.bold + s.project.colors.accent
-    highlight = s.bold + s.project.colors.highlight
+    def _demo_inline_emphasis():
+        with st_block(s.project.containers.result_box):
+            st_write(bs.body,
+                     "Predicted AI would make them ",
+                     (bs.keyword, "24% faster"),
+                     ", but they were ",
+                     (bs.highlight, "actually 19% slower"),
+                     ".")
 
-st_write(bs.body,
-         "Predicted AI would make them ",
-         (bs.keyword, "24% faster"),
-         ", but they were ",
-         (bs.highlight, "actually 19% slower"),
-         ".")""")
-    st_space("v", 1)
-
-    # Live demo for inline_emphasis (renders cleanly here)
-    with st_block(s.project.containers.result_box):
-        st_write(bs.body,
-                 "Predicted AI would make them ",
-                 (bs.keyword, "24% faster"),
-                 ", but they were ",
-                 (bs.highlight, "actually 19% slower"),
-                 ".")
+    show_and_run(_demo_inline_emphasis)
     st_space("v", 1)
 
     st_write(bs.body, (bs.accent, "See "),
-             (bs.keyword, "core/inline_emphasis.md"),
+             (bs.keyword, "core/ptn_inline_emphasis.md"),
              (bs.accent, " for full details."))
     st_space("v", 1)

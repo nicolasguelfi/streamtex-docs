@@ -20,17 +20,17 @@ frontmatter.
 <!-- BEGIN AUTO -->
 | Name | Description | Tags | Extrapolable |
 |---|---|---|---|
-| api_reference_card | Reference card for one StreamTeX API function — signature, params, return, example | docs, api, reference | ✓ |
-| callout | Highlighted box for emphasized content (info / warning / critical / success variants) | callout, container, emphasis | ✓ |
-| card_grid | Grid of equal-size cards with title and body, used for taxonomies and inventories | grid, cards, taxonomy | ✓ |
-| cite | Inline source citation with author, year, and optional URL — placed under a quote, stat, or claim | citation, evidence, footer | ✗ |
-| comparison_table | Multi-column comparison table with header row and aligned rows | grid, table, comparison | ✓ |
-| composite_block | Composite block aggregating several atomic sub-blocks via st_include | docs, manual, composition, atomic | ✓ |
-| feature_walkthrough | Multi-step feature presentation — numbered steps, each with explanation, code, and demo | docs, manual, walkthrough, tutorial | ✓ |
-| inline_emphasis | Inline keyword/label/accent variants for mixed-style text inside a single st_write | inline, text, emphasis | ✓ |
-| manual_section | Documentation section — heading + sub + explanation + code snippet + live demo | docs, manual, demo, code | ✓ |
-| slide_heading | Two-cell heading row (title + tooltip icon) at the top of a slide | atom, heading, layout | ✓ |
-| takeaways | Numbered list of 3–5 key takeaways with bold lead and explanation | list, summary, conclusion | ✓ |
+| ptn_api_reference_card | Reference card for one StreamTeX API function — signature, params, return, example | docs, api, reference | ✓ |
+| ptn_callout | Highlighted box for emphasized content (info / warning / critical / success variants) | callout, container, emphasis | ✓ |
+| ptn_card_grid | Grid of equal-size cards with title and body, used for taxonomies and inventories | grid, cards, taxonomy | ✓ |
+| ptn_cite | Inline source citation with author, year, and optional URL — placed under a quote, stat, or claim | citation, evidence, footer | ✗ |
+| ptn_comparison_table | Multi-column comparison table with header row and aligned rows | grid, table, comparison | ✓ |
+| ptn_composite_block | Composite block aggregating several atomic sub-blocks via st_include | docs, manual, composition, atomic | ✓ |
+| ptn_feature_walkthrough | Multi-step feature presentation — numbered steps, each with explanation, code, and demo | docs, manual, walkthrough, tutorial | ✓ |
+| ptn_inline_emphasis | Inline keyword/label/accent variants for mixed-style text inside a single st_write | inline, text, emphasis | ✓ |
+| ptn_manual_section | Documentation section — heading + sub + explanation + code snippet + live demo | docs, manual, demo, code | ✓ |
+| ptn_slide_heading | Two-cell heading row (title + tooltip icon) at the top of a slide | atom, heading, layout | ✓ |
+| ptn_takeaways | Numbered list of 3–5 key takeaways with bold lead and explanation | list, summary, conclusion | ✓ |
 <!-- END AUTO -->
 
 ## Application rules (manual)
@@ -50,29 +50,29 @@ seen across the manuals (`stx_manual_intro`, `stx_manual_advanced`,
 `stx_manual_ai`, `stx_manual_ce`, `stx_manual_deploy`,
 `stx_manual_developer`):
 
-- `manual_section` (heading + sub + explanation + code + live demo) is
+- `ptn_manual_section` (heading + sub + explanation + code + live demo) is
   the **canonical** building block — use it for nearly every feature
   illustration.
-- `feature_walkthrough` for end-to-end, **sequential** tutorials
+- `ptn_feature_walkthrough` for end-to-end, **sequential** tutorials
   (Quick Start, "first block", "import a marp deck").
-- `api_reference_card` for **single-symbol** reference entries
+- `ptn_api_reference_card` for **single-symbol** reference entries
   (`st_grid`, `Style`, `st_book`, …).
-- `composite_block` to aggregate several atomic sub-blocks (under a
+- `ptn_composite_block` to aggregate several atomic sub-blocks (under a
   sibling `_atomic/` folder) into one TOC entry while keeping each file
   small and focused.
-- `slide_heading` + `card_grid` / `comparison_table` for taxonomy or
+- `ptn_slide_heading` + `ptn_card_grid` / `ptn_comparison_table` for taxonomy or
   feature-comparison sections.
-- `slide_heading` + `callout` (`info` / `warning` / `critical` /
-  `success`) + optional `cite` for tips, gotchas, and evidence-backed
+- `ptn_slide_heading` + `ptn_callout` (`info` / `warning` / `critical` /
+  `success`) + optional `ptn_cite` for tips, gotchas, and evidence-backed
   claims.
-- `takeaways` to close a manual chapter.
+- `ptn_takeaways` to close a manual chapter.
 
 ### Manuals conventions
 
 - The doc engine renders code via `show_code()`, the live render via
   `show_explanation()`, and extra notes via `show_details()`. Patterns
-  that include a "code + demo" slot (e.g. `manual_section`,
-  `feature_walkthrough`) should map onto these helpers — do not bypass
+  that include a "code + demo" slot (e.g. `ptn_manual_section`,
+  `ptn_feature_walkthrough`) should map onto these helpers — do not bypass
   them with raw `st_code` / `st.code`.
 - Each manual block file is `bck_*.py` and exposes a `def build():` — a
   composite block uses `st_include` to mount its `_atomic/` siblings.

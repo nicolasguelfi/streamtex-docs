@@ -7,70 +7,70 @@
   "installed_at": "2026-05-10T00:00:00Z",
   "patterns": [
     {
-      "name": "slide_heading",
-      "from": "core/slide_heading.md",
-      "sha": "30836e01b73c6befbc86138d2e04da62889f62eaeb1a728140943ac6280b4f25",
-      "installed_sha": "30836e01b73c6befbc86138d2e04da62889f62eaeb1a728140943ac6280b4f25"
+      "name": "ptn_slide_heading",
+      "from": "core/ptn_slide_heading.md",
+      "sha": "6f6ed6266c7bc3fcf45bb885a4d2e055bd03a6dafa3dad18dd39172f4b50a7a1",
+      "installed_sha": "6f6ed6266c7bc3fcf45bb885a4d2e055bd03a6dafa3dad18dd39172f4b50a7a1"
     },
     {
-      "name": "cite",
-      "from": "core/cite.md",
-      "sha": "bfffe32d22422aeacc617c057e91a9fd9278f396b23627e4f9c032fb307f4e48",
-      "installed_sha": "bfffe32d22422aeacc617c057e91a9fd9278f396b23627e4f9c032fb307f4e48"
+      "name": "ptn_cite",
+      "from": "core/ptn_cite.md",
+      "sha": "d6bec00512b1a4b7dc2086e53a3204b86e31231c6d102441ad0e06c4aae15c9d",
+      "installed_sha": "d6bec00512b1a4b7dc2086e53a3204b86e31231c6d102441ad0e06c4aae15c9d"
     },
     {
-      "name": "inline_emphasis",
-      "from": "core/inline_emphasis.md",
-      "sha": "6ead3ad21b9172136dd2563bf01b89d3f0bc94355b1837392662ab5f1fe7c5c2",
-      "installed_sha": "6ead3ad21b9172136dd2563bf01b89d3f0bc94355b1837392662ab5f1fe7c5c2"
+      "name": "ptn_inline_emphasis",
+      "from": "core/ptn_inline_emphasis.md",
+      "sha": "3284083321ce5fb22a1df0595d0fb0fee1a99d499a96131302697781d0d66752",
+      "installed_sha": "3284083321ce5fb22a1df0595d0fb0fee1a99d499a96131302697781d0d66752"
     },
     {
-      "name": "callout",
-      "from": "core/callout.md",
-      "sha": "19444a472dd27f38188c3634f3e672af548e83c46ac6ffc752ff5d9194a0030e",
-      "installed_sha": "19444a472dd27f38188c3634f3e672af548e83c46ac6ffc752ff5d9194a0030e"
+      "name": "ptn_callout",
+      "from": "core/ptn_callout.md",
+      "sha": "8e9970b62d8f43c38e174181c0dac0271ee7a59509b140b40d8e9d44f647fcf0",
+      "installed_sha": "8e9970b62d8f43c38e174181c0dac0271ee7a59509b140b40d8e9d44f647fcf0"
     },
     {
-      "name": "card_grid",
-      "from": "core/card_grid.md",
-      "sha": "9adf4bdec97a8edb8ffb5426063ee04ab0cc803f6cc87a1665efb6918e7edd02",
-      "installed_sha": "9adf4bdec97a8edb8ffb5426063ee04ab0cc803f6cc87a1665efb6918e7edd02"
+      "name": "ptn_card_grid",
+      "from": "core/ptn_card_grid.md",
+      "sha": "38febc4c647cd9d86700116e93f8cac0a6ebaca0806984b324b383b7b33ea532",
+      "installed_sha": "38febc4c647cd9d86700116e93f8cac0a6ebaca0806984b324b383b7b33ea532"
     },
     {
-      "name": "comparison_table",
-      "from": "core/comparison_table.md",
-      "sha": "1d765fbd65b7134397c03da9be428a5fd9a90162b078f6779c6e1a05fa7f2330",
-      "installed_sha": "1d765fbd65b7134397c03da9be428a5fd9a90162b078f6779c6e1a05fa7f2330"
+      "name": "ptn_comparison_table",
+      "from": "core/ptn_comparison_table.md",
+      "sha": "0b37b0e596438215caefc612f563b4dc7ee43b5746f2dd3583f8d851cd6b6363",
+      "installed_sha": "0b37b0e596438215caefc612f563b4dc7ee43b5746f2dd3583f8d851cd6b6363"
     },
     {
-      "name": "takeaways",
-      "from": "core/takeaways.md",
-      "sha": "9bfbd15c1c1a0f5cad86bea504f603861bb654b232675758b488514e19a2e5e7",
-      "installed_sha": "9bfbd15c1c1a0f5cad86bea504f603861bb654b232675758b488514e19a2e5e7"
+      "name": "ptn_takeaways",
+      "from": "core/ptn_takeaways.md",
+      "sha": "2b58db8a96e85b0e25b5f1eec6f7ef7e066a57c2a85a2d0dd8fbe841c6835b98",
+      "installed_sha": "2b58db8a96e85b0e25b5f1eec6f7ef7e066a57c2a85a2d0dd8fbe841c6835b98"
     },
     {
-      "name": "manual_section",
-      "from": "docs/manual_section.md",
-      "sha": "445e6e5f9a7a479488e6b1eb970d4fe7ea215ab4b84dd53b4626c62577418f59",
-      "installed_sha": "445e6e5f9a7a479488e6b1eb970d4fe7ea215ab4b84dd53b4626c62577418f59"
+      "name": "ptn_manual_section",
+      "from": "docs/ptn_manual_section.md",
+      "sha": "8323c9987acef1890e4ec1f86df4486fd68af4074c52062822bf79fcf09a28c2",
+      "installed_sha": "8323c9987acef1890e4ec1f86df4486fd68af4074c52062822bf79fcf09a28c2"
     },
     {
-      "name": "feature_walkthrough",
-      "from": "docs/feature_walkthrough.md",
-      "sha": "fe8f0ae7b3f65f5f92e422e84f8b405d1b1d786acb5fe50efd47fb55f8e3a423",
-      "installed_sha": "fe8f0ae7b3f65f5f92e422e84f8b405d1b1d786acb5fe50efd47fb55f8e3a423"
+      "name": "ptn_feature_walkthrough",
+      "from": "docs/ptn_feature_walkthrough.md",
+      "sha": "9dd23f56860a4a48becdec3eeb63b6330b304d068a738cd19e9bdabd233cf697",
+      "installed_sha": "9dd23f56860a4a48becdec3eeb63b6330b304d068a738cd19e9bdabd233cf697"
     },
     {
-      "name": "api_reference_card",
-      "from": "docs/api_reference_card.md",
-      "sha": "2f330a8290e7e14fa00a15af23511393643b12e722034313d7f7a27a6fe5b9b2",
-      "installed_sha": "2f330a8290e7e14fa00a15af23511393643b12e722034313d7f7a27a6fe5b9b2"
+      "name": "ptn_api_reference_card",
+      "from": "docs/ptn_api_reference_card.md",
+      "sha": "cc895af97dba963685c8892bc2e9fabbadd72eec4dec0a8f3749c828ef193357",
+      "installed_sha": "cc895af97dba963685c8892bc2e9fabbadd72eec4dec0a8f3749c828ef193357"
     },
     {
-      "name": "composite_block",
-      "from": "docs/composite_block.md",
-      "sha": "1b0a504077eab6a5d14173e3ab512b84fe22e4b0077da8391a8ec789ebbdd5dc",
-      "installed_sha": "1b0a504077eab6a5d14173e3ab512b84fe22e4b0077da8391a8ec789ebbdd5dc"
+      "name": "ptn_composite_block",
+      "from": "docs/ptn_composite_block.md",
+      "sha": "bd9fe713ecbe6bd2829c1067b4a12c49ead74daefcd2a734c9232ff44c30b949",
+      "installed_sha": "bd9fe713ecbe6bd2829c1067b4a12c49ead74daefcd2a734c9232ff44c30b949"
     }
   ]
 }

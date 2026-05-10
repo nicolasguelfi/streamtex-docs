@@ -1,6 +1,6 @@
 """What is a pattern? — introduction to the StreamTeX pattern catalog.
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *

@@ -1,12 +1,14 @@
 """Demo — title_slide template (image-dominant cover slide).
 
-# @pattern: manual_section
+# @pattern: ptn_manual_section
 """
 
 from streamtex import *
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
-from blocks.helpers import show_code, show_explanation, show_details
+from blocks.helpers import (
+    show_explanation, show_details, show_and_run,
+)
 
 
 class BlockStyles:
@@ -56,82 +58,38 @@ def build():
     """)
     st_space("v", 2)
 
-    # ---- Code skeleton ----
-    st_write(bs.sub, "Code skeleton", toc_lvl="+1")
-    st_space("v", 1)
-
-    show_code("""\
-class BlockStyles:
-    title = Style.create(
-        s.Huge + s.bold + s.center_txt + s.project.colors.primary
-        + ns("line-height:1.1;", "title_lh"),
-        "title",
-    )
-    subtitle = s.project.titles.subtitle + s.center_txt
-    info = s.project.titles.caption + s.center_txt
-bs = BlockStyles
-
-
-HERO_PROMPT = (
-    f"{_PREFIX} <Visual concept of the hero image>. {_SUFFIX}"
-)
-
-
-def build():
-    with st_block(s.project.containers.page_fill_center):
-        with st_block(s.center_txt):
-            st_write(bs.title, "<Title>",
-                     tag=t.div, toc_lvl="1")
-
-            st_image(
-                s.none, width="80%",
-                editable=IS_EDITABLE,
-                name="<image_name>",
-                prompt=HERO_PROMPT,
-                provider="openai",
-                ai_size="1536x1024",
-            )
-
-            with st_zoom(150):
-                st_write(bs.subtitle, "<Subtitle line 1>",
-                         tag=t.div)
-                st_write(bs.subtitle, "<Subtitle line 2>",
-                         tag=t.div)
-                st_space("v", 0.5)
-                st_write(bs.info,
-                         (s.project.colors.muted,
-                          "<Session info -- Location>"))""")
-    st_space("v", 2)
-
-    # ---- Live render ----
+    # ---- Live render (code shown == code rendered) ----
     st_write(bs.sub, "Live render", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
-        Below is a faithful render of the layout — the AI image is
-        replaced by a dashed placeholder so the demo runs without
-        the AI provider configured.
+        The AI hero image is replaced by a dashed placeholder so the
+        demo runs without the AI provider configured.
     """)
     st_space("v", 1)
 
-    with st_block(s.project.containers.tip_callout + s.center_txt):
-        st_write(bs.title, "AI for Software Engineering",
-                 tag=t.div)
-        st_space("v", 1)
+    def _demo():
+        with st_block(s.project.containers.tip_callout + s.center_txt):
+            st_write(bs.title, "AI for Software Engineering",
+                     tag=t.div)
+            st_space("v", 1)
 
-        with st_block(bs.placeholder):
-            st_write(s.large + s.center_txt + s.italic,
-                     "[ AI hero illustration -- "
-                     "1536x1024 landscape -- editable=True ]")
-        st_space("v", 1)
+            with st_block(bs.placeholder):
+                st_write(s.large + s.center_txt + s.italic,
+                         "[ AI hero illustration -- "
+                         "1536x1024 landscape -- editable=True ]")
+            st_space("v", 1)
 
-        st_write(bs.subtitle,
-                 "VibeEngineering: The Future of Software", tag=t.div)
-        st_write(bs.subtitle,
-                 "Development with Generative AI", tag=t.div)
-        st_space("v", 0.5)
-        st_write(bs.info,
-                 "Session 1 — DLH Luxembourg")
+            st_write(bs.subtitle,
+                     "VibeEngineering: The Future of Software",
+                     tag=t.div)
+            st_write(bs.subtitle,
+                     "Development with Generative AI", tag=t.div)
+            st_space("v", 0.5)
+            st_write(bs.info,
+                     "Session 1 — DLH Luxembourg")
+
+    show_and_run(_demo)
     st_space("v", 1)
 
     show_details("""\

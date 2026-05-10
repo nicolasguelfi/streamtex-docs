@@ -111,7 +111,6 @@ def build():
     st_write(bs.sub, "Extended capabilities", toc_lvl="+1")
     st_space("v", 1)
 
-    st_space("v", 1)
     st_write(s.large,
              "Beyond the sequential pipeline, CE provides ",
              (s.bold, "ad-hoc task execution"),

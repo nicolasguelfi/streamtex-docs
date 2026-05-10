@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "source": "../../../../streamtex-patterns",
+  "source_commit": "080af9bdf3492505ca844243fd29e048233e4e10",
+  "preset": "docs",
+  "mode": "copy",
+  "installed_at": "2026-05-10T00:00:00Z",
+  "patterns": [
+    {
+      "name": "slide_heading",
+      "from": "core/slide_heading.md",
+      "sha": "30836e01b73c6befbc86138d2e04da62889f62eaeb1a728140943ac6280b4f25",
+      "installed_sha": "30836e01b73c6befbc86138d2e04da62889f62eaeb1a728140943ac6280b4f25"
+    },
+    {
+      "name": "cite",
+      "from": "core/cite.md",
+      "sha": "bfffe32d22422aeacc617c057e91a9fd9278f396b23627e4f9c032fb307f4e48",
+      "installed_sha": "bfffe32d22422aeacc617c057e91a9fd9278f396b23627e4f9c032fb307f4e48"
+    },
+    {
+      "name": "inline_emphasis",
+      "from": "core/inline_emphasis.md",
+      "sha": "6ead3ad21b9172136dd2563bf01b89d3f0bc94355b1837392662ab5f1fe7c5c2",
+      "installed_sha": "6ead3ad21b9172136dd2563bf01b89d3f0bc94355b1837392662ab5f1fe7c5c2"
+    },
+    {
+      "name": "callout",
+      "from": "core/callout.md",
+      "sha": "19444a472dd27f38188c3634f3e672af548e83c46ac6ffc752ff5d9194a0030e",
+      "installed_sha": "19444a472dd27f38188c3634f3e672af548e83c46ac6ffc752ff5d9194a0030e"
+    },
+    {
+      "name": "card_grid",
+      "from": "core/card_grid.md",
+      "sha": "9adf4bdec97a8edb8ffb5426063ee04ab0cc803f6cc87a1665efb6918e7edd02",
+      "installed_sha": "9adf4bdec97a8edb8ffb5426063ee04ab0cc803f6cc87a1665efb6918e7edd02"
+    },
+    {
+      "name": "comparison_table",
+      "from": "core/comparison_table.md",
+      "sha": "1d765fbd65b7134397c03da9be428a5fd9a90162b078f6779c6e1a05fa7f2330",
+      "installed_sha": "1d765fbd65b7134397c03da9be428a5fd9a90162b078f6779c6e1a05fa7f2330"
+    },
+    {
+      "name": "takeaways",
+      "from": "core/takeaways.md",
+      "sha": "9bfbd15c1c1a0f5cad86bea504f603861bb654b232675758b488514e19a2e5e7",
+      "installed_sha": "9bfbd15c1c1a0f5cad86bea504f603861bb654b232675758b488514e19a2e5e7"
+    },
+    {
+      "name": "manual_section",
+      "from": "docs/manual_section.md",
+      "sha": "445e6e5f9a7a479488e6b1eb970d4fe7ea215ab4b84dd53b4626c62577418f59",
+      "installed_sha": "445e6e5f9a7a479488e6b1eb970d4fe7ea215ab4b84dd53b4626c62577418f59"
+    },
+    {
+      "name": "feature_walkthrough",
+      "from": "docs/feature_walkthrough.md",
+      "sha": "fe8f0ae7b3f65f5f92e422e84f8b405d1b1d786acb5fe50efd47fb55f8e3a423",
+      "installed_sha": "fe8f0ae7b3f65f5f92e422e84f8b405d1b1d786acb5fe50efd47fb55f8e3a423"
+    },
+    {
+      "name": "api_reference_card",
+      "from": "docs/api_reference_card.md",
+      "sha": "2f330a8290e7e14fa00a15af23511393643b12e722034313d7f7a27a6fe5b9b2",
+      "installed_sha": "2f330a8290e7e14fa00a15af23511393643b12e722034313d7f7a27a6fe5b9b2"
+    },
+    {
+      "name": "composite_block",
+      "from": "docs/composite_block.md",
+      "sha": "1b0a504077eab6a5d14173e3ab512b84fe22e4b0077da8391a8ec789ebbdd5dc",
+      "installed_sha": "1b0a504077eab6a5d14173e3ab512b84fe22e4b0077da8391a8ec789ebbdd5dc"
+    }
+  ]
+}

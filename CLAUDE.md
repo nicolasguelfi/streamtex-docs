@@ -158,3 +158,41 @@ Projects can adopt a design guideline for consistent visual design:
 - **Block annotation**: `# @guideline: <name>` in block files (most specific wins)
 - **Combination**: `# @guideline: A + B` — A has priority, B complements
 - **Built-in**: `maximize-viewport`, `minimalist-visual`, `academic-structured`, `dense-informative`
+
+## StreamTeX Patterns (graphic design patterns)
+
+This `streamtex-docs` project uses the **`docs`** preset of the central
+`streamtex-patterns` repo (= `core` + `docs` scopes). Patterns are
+installed locally under `.claude/custom/streamtex-patterns/` and define
+reusable graphic design primitives (manual sections, API reference
+cards, walkthroughs, callouts, card grids, slide headings, …) that the
+user can invoke by name when creating or editing manual blocks.
+
+**Mandatory rules**:
+1. **Before generating or modifying any StreamTeX block**, read
+   `.claude/custom/streamtex-patterns/_pattern_library.md` to know which
+   patterns are available.
+2. When the user names a pattern in any prompt (e.g. *"use
+   manual_section"*, *"like api_reference_card"*), read the full
+   `.claude/custom/streamtex-patterns/<name>.md` file **before**
+   generating code.
+3. Strictly respect each pattern's `INVARIANTS` section. Adjust only
+   within `PARAMS`. Refuse anything matching `INTERDITS` and propose a
+   new pattern instead.
+4. The pattern's code skeleton is a **starting point** — adapt it to
+   the project's `custom/styles.py` and the manual's tone (code +
+   live-demo via `show_code()` / `show_explanation()` / `show_details()`).
+5. If the user describes something that matches no existing pattern but
+   is reusable across manuals, suggest `/stx-pattern:new` to capture it.
+
+**Difference with blueprints**:
+- A **blueprint** = a complete block type (`title`, `conclusion`,
+  `exercise`).
+- A **pattern** = a reusable composition primitive used inside a block
+  (`manual_section`, `api_reference_card`, `callout_critical`).
+
+A block can combine: 1 blueprint × N patterns × style conventions.
+
+**Commands**: `/stx-pattern:list` `/stx-pattern:show <name>`
+`/stx-pattern:new` `/stx-pattern:reindex` `/stx-pattern:validate`.
+See the `pattern-library` skill for the full mechanism.

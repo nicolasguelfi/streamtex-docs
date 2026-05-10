@@ -22,7 +22,7 @@ def build():
         with st_list(l_style=bs.body + s.center_txt, li_style=bs.body) as l:
             with l.item(): st_write(bs.body, "Create blocks/bck_topic.py")
             with l.item(): st_write(bs.body, "Add to the list in book.py")
-            with l.item(): st_write(bs.body_accent, "Use /stx-designer:update to add content with AI")
+            with l.item(): st_write(bs.body_accent, "Use /stx-block:update to add content with AI")
         st_space("v", 3)
         st_write(bs.caption, "Built with StreamTeX")
         st_space("v", 3)

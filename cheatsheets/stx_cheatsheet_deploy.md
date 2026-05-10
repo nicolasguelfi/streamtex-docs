@@ -540,44 +540,41 @@ envVars:
 
 ## 9. Claude-Assisted Deployment
 
-### /stx-developer:deploy slash command
+### /stx-deploy:* slash commands
 
-The deploy slash command (defined in `streamtex-claude/profiles/library/commands/stx-developer/deploy.md`) guides Claude through the deployment process.
+The `stx-deploy/` command group (defined in `streamtex-claude/shared/commands/stx-deploy/`) drives the full Hetzner/Coolify deployment pipeline through Claude. The legacy `/stx-developer:deploy` command was unified into this group on 2026-03-10.
 
-**Arguments**: target (`docker`, `huggingface`, or `gcp`)
+**Subcommands** (run `/stx-deploy:<name>`):
+- `preflight` — verify prerequisites (Dockerfile, pyproject.toml, tests pass, git clean).
+- `provision` — create a Hetzner cax21 ARM server.
+- `setup` / `setup-loadbalancer` — local environment / multi-server setup.
+- `secure`, `install-coolify`, `configure-domain` — server hardening + Coolify install + DNS/SSL.
+- `deploy` / `deploy-batch` / `update` — deploy one project, batch up to 4, or update existing services.
+- `scale`, `status`, `go` — scaling, status dashboard, full zero-to-live in one command.
 
-**Pre-deployment checks** (all targets):
+**Pre-deployment checks** (`/stx-deploy:preflight`):
 1. Reads `Dockerfile`, `pyproject.toml`, `.streamlit/config.toml`.
 2. Runs `uv run pytest tests/ -v` and aborts on failure.
 3. Verifies `streamlit>=1.54.0` in dependencies, `enableStaticServing = true`, and image assets exist.
 4. Checks git status for uncommitted changes.
 
-**Docker target**:
+**Local Docker check** (`/stx-deploy:deploy --target docker`):
 ```bash
 docker build --build-arg FOLDER=<project_path> -t streamtex-app .
 docker run -p 8501:8501 streamtex-app
 ```
 
-**HuggingFace target**:
-1. Verifies Dockerfile is HF-compatible (EXPOSE 8501, health check, streamlit run entrypoint).
-2. Instructs: create Space (Docker SDK), add `hf` remote, push.
-
-**GCP target**:
-1. Checks for Ansible inventory (`inventory.ini`) and playbook (`deploy.yml`).
-2. Verifies SSH key configuration.
-3. Runs: `ansible-playbook -i inventory.ini deploy.yml`.
-
 ### Workflow: Claude runs preflight, builds Docker, deploys
 
 Typical Claude interaction:
 ```
-User: /stx-developer:deploy docker
+User: /stx-deploy:deploy
 Claude:
   1. Reads project configuration files
   2. Runs uv run pytest tests/ -v
   3. Verifies requirements
   4. Checks git status
-  5. Builds Docker image
+  5. Builds Docker image (or triggers Coolify deploy via API)
   6. Reports status and URL
 ```
 

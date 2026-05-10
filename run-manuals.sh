@@ -5,7 +5,7 @@
 # Usage: ./run-manuals.sh [OPTIONS]
 # Options:
 #   --help               Affiche cette aide
-#   --all                Lance les 6 manuels (défaut)
+#   --all                Lance les 8 manuels (défaut)
 #   --collection         Lance que le hub collection (port 8501)
 #   --intro              Lance que le manuel intro (port 8502)
 #   --advanced           Lance que le manuel advanced (port 8503)
@@ -13,13 +13,16 @@
 #   --developer          Lance que le manuel développeur (port 8505)
 #   --ai                 Lance que le manuel AI (port 8506)
 #   --ce                 Lance que le manuel CE (port 8507)
-#   --ports P1,P2,P3,P4,P5,P6,P7  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506,8507)
+#   --patterns           Lance que le manuel patterns (port 8508)
+#   --ports P1,P2,P3,P4,P5,P6,P7,P8  Ports personnalisés (défaut: 8501..8508)
 #   --no-intro           Exclut le manuel intro
 #   --no-advanced        Exclut le manuel advanced
 #   --no-collection      Exclut la collection
 #   --no-deployment      Exclut le guide de déploiement
 #   --no-developer       Exclut le manuel développeur
 #   --no-ai              Exclut le manuel AI
+#   --no-ce              Exclut le manuel CE
+#   --no-patterns        Exclut le manuel patterns
 #   --kill               Tue tous les processus Streamlit lancés
 #   --watch              Lance et regarde les logs
 
@@ -33,6 +36,7 @@ DEPLOYMENT_PROJECT="$SCRIPT_DIR/manuals/stx_manual_deploy"
 DEVELOPER_PROJECT="$SCRIPT_DIR/manuals/stx_manual_developer"
 AI_PROJECT="$SCRIPT_DIR/manuals/stx_manual_ai"
 CE_PROJECT="$SCRIPT_DIR/manuals/stx_manual_ce"
+PATTERNS_PROJECT="$SCRIPT_DIR/manuals/stx_manual_patterns"
 
 # Ports par défaut
 COLLECTION_PORT=8501
@@ -42,6 +46,7 @@ DEPLOYMENT_PORT=8504
 DEVELOPER_PORT=8505
 AI_PORT=8506
 CE_PORT=8507
+PATTERNS_PORT=8508
 
 # Flags pour les manuels à lancer
 LAUNCH_COLLECTION=true
@@ -51,6 +56,7 @@ LAUNCH_DEPLOYMENT=true
 LAUNCH_DEVELOPER=true
 LAUNCH_AI=true
 LAUNCH_CE=true
+LAUNCH_PATTERNS=true
 
 WATCH_MODE=false
 
@@ -65,7 +71,7 @@ USAGE:
   ./run-manuals.sh [OPTIONS]
 
 OPTIONS:
-  --all              Lance les 7 manuels (défaut)
+  --all              Lance les 8 manuels (défaut)
   --collection       Lance que le hub collection (port 8501)
   --intro            Lance que le manuel intro (port 8502)
   --advanced         Lance que le manuel advanced (port 8503)
@@ -73,6 +79,7 @@ OPTIONS:
   --developer        Lance que le manuel développeur (port 8505)
   --ai               Lance que le manuel AI (port 8506)
   --ce               Lance que le manuel CE (port 8507)
+  --patterns         Lance que le manuel patterns (port 8508)
 
   --no-intro         Exclut le manuel intro
   --no-advanced      Exclut le manuel advanced
@@ -81,8 +88,9 @@ OPTIONS:
   --no-developer     Exclut le manuel développeur
   --no-ai            Exclut le manuel AI
   --no-ce            Exclut le manuel CE
+  --no-patterns      Exclut le manuel patterns
 
-  --ports P1,P2,P3,P4,P5,P6,P7  Ports personnalisés (défaut: 8501,8502,8503,8504,8505,8506,8507)
+  --ports P1,P2,P3,P4,P5,P6,P7,P8  Ports personnalisés (défaut: 8501..8508)
   --kill             Tue tous les processus Streamlit lancés
   --watch            Lance et regarde les logs (Ctrl+C pour quitter)
   --help             Affiche cette aide
@@ -117,6 +125,7 @@ URLs:
   Developer:  http://localhost:8505
   AI:         http://localhost:8506
   CE:         http://localhost:8507
+  Patterns:   http://localhost:8508
 EOF
             exit 0
             ;;
@@ -128,6 +137,7 @@ EOF
             LAUNCH_DEVELOPER=true
             LAUNCH_AI=true
             LAUNCH_CE=true
+            LAUNCH_PATTERNS=true
             shift
             ;;
         --collection)
@@ -138,6 +148,7 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --intro)
@@ -148,6 +159,7 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --advanced)
@@ -158,6 +170,7 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --deployment)
@@ -168,6 +181,7 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --developer)
@@ -178,6 +192,7 @@ EOF
             LAUNCH_DEVELOPER=true
             LAUNCH_AI=false
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --ai)
@@ -188,6 +203,7 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=true
             LAUNCH_CE=false
+            LAUNCH_PATTERNS=false
             shift
             ;;
         --ce)
@@ -198,6 +214,18 @@ EOF
             LAUNCH_DEVELOPER=false
             LAUNCH_AI=false
             LAUNCH_CE=true
+            LAUNCH_PATTERNS=false
+            shift
+            ;;
+        --patterns)
+            LAUNCH_COLLECTION=false
+            LAUNCH_INTRO=false
+            LAUNCH_ADVANCED=false
+            LAUNCH_DEPLOYMENT=false
+            LAUNCH_DEVELOPER=false
+            LAUNCH_AI=false
+            LAUNCH_CE=false
+            LAUNCH_PATTERNS=true
             shift
             ;;
         --no-intro)
@@ -228,8 +256,12 @@ EOF
             LAUNCH_CE=false
             shift
             ;;
+        --no-patterns)
+            LAUNCH_PATTERNS=false
+            shift
+            ;;
         --ports)
-            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT AI_PORT CE_PORT <<< "$2"
+            IFS=',' read -r COLLECTION_PORT INTRO_PORT ADVANCED_PORT DEPLOYMENT_PORT DEVELOPER_PORT AI_PORT CE_PORT PATTERNS_PORT <<< "$2"
             # Remplacer '_' par le port par défaut
             [ "$COLLECTION_PORT" = "_" ] && COLLECTION_PORT=8501
             [ "$INTRO_PORT" = "_" ] && INTRO_PORT=8502
@@ -238,6 +270,7 @@ EOF
             [ "$DEVELOPER_PORT" = "_" ] && DEVELOPER_PORT=8505
             [ "$AI_PORT" = "_" ] || [ -z "$AI_PORT" ] && AI_PORT=8506
             [ "$CE_PORT" = "_" ] || [ -z "$CE_PORT" ] && CE_PORT=8507
+            [ "$PATTERNS_PORT" = "_" ] || [ -z "$PATTERNS_PORT" ] && PATTERNS_PORT=8508
             shift 2
             ;;
         --kill)
@@ -280,6 +313,7 @@ check_project() {
 [ "$LAUNCH_DEVELOPER" = true ] && check_project "$DEVELOPER_PROJECT" "developer"
 [ "$LAUNCH_AI" = true ] && check_project "$AI_PROJECT" "ai"
 [ "$LAUNCH_CE" = true ] && check_project "$CE_PROJECT" "ce"
+[ "$LAUNCH_PATTERNS" = true ] && check_project "$PATTERNS_PROJECT" "patterns"
 
 # Logs
 LOG_DIR="/tmp/streamtex-manuals"
@@ -291,6 +325,7 @@ DEPLOYMENT_LOG="$LOG_DIR/deployment.log"
 DEVELOPER_LOG="$LOG_DIR/developer.log"
 AI_LOG="$LOG_DIR/ai.log"
 CE_LOG="$LOG_DIR/ce.log"
+PATTERNS_LOG="$LOG_DIR/patterns.log"
 
 # Fonction pour afficher les PID
 print_pids() {
@@ -305,6 +340,7 @@ print_pids() {
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT (PID: $(pgrep -f "stx_manual_deploy" | head -1 || echo '—'))"
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT (PID: $(pgrep -f "stx_manual_developer" | head -1 || echo '—'))"
     [ "$LAUNCH_CE" = true ] && echo "  CE:          http://localhost:$CE_PORT (PID: $(pgrep -f "stx_manual_ce" | head -1 || echo '—'))"
+    [ "$LAUNCH_PATTERNS" = true ] && echo "  Patterns:    http://localhost:$PATTERNS_PORT (PID: $(pgrep -f "stx_manual_patterns" | head -1 || echo '—'))"
     echo ""
     echo "Logs: $LOG_DIR"
     [ "$WATCH_MODE" = false ] && echo "Utilisez --kill pour arrêter tous les processus"
@@ -358,8 +394,8 @@ launch_project() {
 cleanup() {
     echo ""
     echo "Arrêt des manuels..."
-    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer\|stx_manual_ai\|stx_manual_ce" || true
-    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer\|streamlit run.*stx_manual_ai\|streamlit run.*stx_manual_ce" || true
+    pkill -f "stx_manuals_collection\|stx_manual_intro\|stx_manual_advanced\|stx_manual_deploy\|stx_manual_developer\|stx_manual_ai\|stx_manual_ce\|stx_manual_patterns" || true
+    pkill -f "streamlit run.*stx_manuals_collection\|streamlit run.*stx_manual_intro\|streamlit run.*stx_manual_advanced\|streamlit run.*stx_manual_deploy\|streamlit run.*stx_manual_developer\|streamlit run.*stx_manual_ai\|streamlit run.*stx_manual_ce\|streamlit run.*stx_manual_patterns" || true
     sleep 1
     echo "Tous les manuels ont été arrêtés"
 }
@@ -400,6 +436,10 @@ if [ "$LAUNCH_CE" = true ]; then
     launch_project "$CE_PROJECT" "CE" "$CE_PORT" "$CE_LOG"
 fi
 
+if [ "$LAUNCH_PATTERNS" = true ]; then
+    launch_project "$PATTERNS_PROJECT" "Patterns" "$PATTERNS_PORT" "$PATTERNS_LOG"
+fi
+
 print_pids
 
 # Attendre si en watch mode
@@ -438,6 +478,10 @@ if [ "$WATCH_MODE" = true ]; then
             echo "CE est arrêté. Redémarrage..."
             launch_project "$CE_PROJECT" "CE" "$CE_PORT" "$CE_LOG"
         fi
+        if [ "$LAUNCH_PATTERNS" = true ] && ! pgrep -f "streamlit run.*stx_manual_patterns" > /dev/null 2>&1; then
+            echo "Patterns est arrêté. Redémarrage..."
+            launch_project "$PATTERNS_PROJECT" "Patterns" "$PATTERNS_PORT" "$PATTERNS_LOG"
+        fi
     done
 else
     # Attendre un peu puis ouvrir dans Chrome
@@ -451,7 +495,8 @@ else
     [ "$LAUNCH_ADVANCED" = true ] && echo "  Advanced:    http://localhost:$ADVANCED_PORT" && open -a "Google Chrome" "http://localhost:$ADVANCED_PORT" && sleep 0.5
     [ "$LAUNCH_DEPLOYMENT" = true ] && echo "  Deployment:  http://localhost:$DEPLOYMENT_PORT" && open -a "Google Chrome" "http://localhost:$DEPLOYMENT_PORT" && sleep 0.5
     [ "$LAUNCH_DEVELOPER" = true ] && echo "  Developer:   http://localhost:$DEVELOPER_PORT" && open -a "Google Chrome" "http://localhost:$DEVELOPER_PORT" && sleep 0.5
-    [ "$LAUNCH_CE" = true ] && echo "  CE:          http://localhost:$CE_PORT" && open -a "Google Chrome" "http://localhost:$CE_PORT"
+    [ "$LAUNCH_CE" = true ] && echo "  CE:          http://localhost:$CE_PORT" && open -a "Google Chrome" "http://localhost:$CE_PORT" && sleep 0.5
+    [ "$LAUNCH_PATTERNS" = true ] && echo "  Patterns:    http://localhost:$PATTERNS_PORT" && open -a "Google Chrome" "http://localhost:$PATTERNS_PORT"
     echo ""
     echo "Utilisez './run-manuals.sh --kill' pour arrêter tous les manuels"
     echo ""

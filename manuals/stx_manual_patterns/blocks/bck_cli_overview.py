@@ -65,55 +65,55 @@ def build():
         # ---- Subcommands ----
         st_write(bs.sub, "Subcommands", toc_lvl="+1")
         st_space("v", 0.5)
-        with st_grid(cols="1fr 2fr 3fr", gap="8px") as g:
-            with g.cell(bs.cell):
+        with st_grid(cols="1fr 2fr 3fr", gap="8px", cell_styles=bs.cell) as g:
+            with g.cell():
                 st_write(bs.body, (bs.keyword, "name"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.accent, "options"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (s.bold, "description"))
             for name, opts, doc in SUBCOMMANDS:
-                with g.cell(bs.cell):
+                with g.cell():
                     st_write(bs.body, (bs.keyword, name))
-                with g.cell(bs.cell):
+                with g.cell():
                     st_write(bs.body, (bs.accent, opts))
-                with g.cell(bs.cell):
+                with g.cell():
                     st_write(bs.body, doc)
         st_space("v", 2)
 
         # ---- Common flags ----
         st_write(bs.sub, "Common flags", toc_lvl="+1")
         st_space("v", 0.5)
-        with st_grid(cols="1fr 1fr 3fr", gap="8px") as g:
-            with g.cell(bs.cell):
+        with st_grid(cols="1fr 1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
+            with g.cell():
                 st_write(bs.body, (bs.keyword, "--source"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.accent, "PATH"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body,
                          "Override the pattern source path (top of "
                          "the resolution cascade).")
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.keyword, "--mode"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.accent, "copy | symlink"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body,
                          "Install mode. `symlink` is for pattern authors "
                          "iterating live; `copy` (default) is for "
                          "consumer projects.")
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.keyword, "--force"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.accent, "(flag)"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body,
                          "Override drift refusals. Use with caution.")
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.keyword, "--dry-run"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body, (bs.accent, "(flag)"))
-            with g.cell(bs.cell):
+            with g.cell():
                 st_write(bs.body,
                          "Print actions without writing files. Useful "
                          "before an update on a busy project.")

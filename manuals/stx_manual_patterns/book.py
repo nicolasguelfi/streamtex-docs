@@ -51,6 +51,19 @@ st_book(
         blocks.bck_extrapolation,
         blocks.bck_cli_overview,
         blocks.bck_authoring,
+        # Compact galleries — one block per pattern family
+        blocks.bck_gallery_atoms,
+        blocks.bck_gallery_callouts,
+        blocks.bck_gallery_lists,
+        blocks.bck_gallery_docs,
+        # Dedicated demos — one block per rich template
+        blocks.bck_demo_slide_heading,
+        blocks.bck_demo_stat_hero,
+        blocks.bck_demo_title_slide,
+        blocks.bck_demo_evidence_insight,
+        blocks.bck_demo_exercise_flow,
+        blocks.bck_demo_categorized_grid,
+        # Closing
         blocks.bck_blueprints_vs_patterns,
     ],
     toc_config=toc,

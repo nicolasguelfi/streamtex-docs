@@ -62,62 +62,62 @@ def build():
     """)
     st_space("v", 1)
 
-    with st_grid(cols="2fr 3fr 3fr", gap="8px") as g:
-        with g.cell(bs.cell):
+    with st_grid(cols="2fr 3fr 3fr", gap="8px", cell_styles=bs.cell) as g:
+        with g.cell():
             st_write(bs.body, (s.bold, "Aspect"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (bs.head_cell, "Pattern"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (bs.head_cell, "Blueprint"))
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Granularity"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "One visual primitive (atom or molecule).")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Entire project skeleton.")
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Format"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Single markdown file (Format A2).")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Directory tree with code, "
                               "config, assets.")
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Consumer"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Claude Code, at block-generation time.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "`stx project init`, at project-creation "
                               "time.")
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Lifetime"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Lives forever in the catalog; updated "
                               "via `stx patterns update`.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Spawned once into a project; the project "
                               "evolves independently.")
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Drift handling"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Drift detection per pattern; explicit "
                               "promote-back path.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "No drift detection — once spawned, "
                               "you own it.")
 
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Composition"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Patterns combine inside one block "
                               "(e.g. `evidence_insight` uses "
                               "`stat_hero` + `takeaways`).")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "A blueprint may *embed* patterns by "
                               "calling `stx patterns install --preset` "
                               "in its bootstrap.")

@@ -76,26 +76,26 @@ preset = "ai4se6d"
     """)
     st_space("v", 1)
 
-    with st_grid(cols="1fr 3fr", gap="8px") as g:
-        with g.cell(bs.cell):
+    with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
+        with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "core/"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Universal atoms (callout, card_grid, "
                               "comparison_table, takeaways) — safe in any project.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "slides/"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Visually dramatic templates (stat_hero, "
                               "evidence_insight) — use only in presentations.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "docs/"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Code+demo recipes (manual_section, "
                               "feature_walkthrough, api_reference_card) — "
                               "use only in manuals.")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "projects/<X>/"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "Ultra-specific to one project — never "
                               "promoted to core.")
     st_space("v", 2)
@@ -162,36 +162,36 @@ extends = "core"
 }""", language="json")
     st_space("v", 1)
 
-    with st_grid(cols="1fr 1fr 2fr", gap="8px") as g:
-        with g.cell(bs.cell):
+    with st_grid(cols="1fr 1fr 2fr", gap="8px", cell_styles=bs.cell) as g:
+        with g.cell():
             st_write(bs.body, (s.bold, "Local"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Source"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, (s.bold, "Action"))
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "unchanged")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "unchanged")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "skip")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "unchanged")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "changed")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "update silently")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "changed")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "unchanged")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "skip + info (local edit preserved)")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "changed")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "changed")
-        with g.cell(bs.cell):
+        with g.cell():
             st_write(bs.body, "refuse + suggest "
                               "`diff` / `promote` / `--force`")
     st_space("v", 2)

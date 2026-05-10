@@ -1,0 +1,194 @@
+"""Gallery — list-shaped patterns: card_grid, comparison_table, takeaways.
+
+# @pattern: manual_section
+"""
+
+from streamtex import *
+from streamtex.enums import Tags as t
+from custom.styles import Styles as s
+from blocks.helpers import show_code, show_explanation
+
+
+class BlockStyles:
+    """List patterns gallery styles."""
+    heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
+    body = s.large
+    body_c = s.large + s.center_txt
+    keyword = s.bold + s.project.colors.primary_violet
+    accent = s.bold + s.project.colors.accent_teal
+    highlight = s.bold + s.project.colors.highlight_amber
+    label = s.bold + s.project.colors.primary_violet
+    cell = (
+        s.container.borders.solid_border
+        + s.container.paddings.small_padding
+        + s.center_txt
+        + s.container.layouts.vertical_center_layout
+    )
+
+
+bs = BlockStyles
+
+
+CARDS = [
+    ("AgileGen", "Gherkin + memory pool"),
+    ("SE 3.0", "intent-centric"),
+    ("MAISTRO", "7-phase agile"),
+]
+
+TABLE_ROWS = [
+    ("Day 1", "GenAI fundamentals", "Vibecoding clinic"),
+    ("Day 2", "GenSEM methods", "GSE-One workshop"),
+    ("Day 3", "Compound Engineering", "Capstone & wrap-up"),
+]
+
+TAKEAWAYS = [
+    ("Gains are real but variable",
+     "depends on experience, context, task complexity"),
+    ("The methodology is the multiplier",
+     "10% with tools -> 25-30% with process"),
+    ("Senior expertise + structured process",
+     "= where the real value is captured"),
+]
+
+
+def build():
+    """Compact gallery of list-shaped patterns."""
+    with st_block(s.center_txt):
+        st_write(bs.heading, "List Patterns — card_grid, comparison_table, takeaways",
+                 tag=t.div, toc_lvl="1")
+        st_space("v", 2)
+
+    show_explanation("""\
+        Three patterns that organise lists of items: independent
+        cards, comparable rows across attributes, and numbered key
+        insights. Each shines in a different rhetorical situation.
+    """)
+    st_space("v", 2)
+
+    # ---- card_grid ----
+    st_write(bs.sub, "card_grid — responsive equal-weight cards", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Responsive grid (`auto-fit, minmax(280px, 1fr)`) of equal
+        cards, each with a bolded keyword title and an optional body
+        fragment. Used for taxonomies, inventories of risks, tools,
+        principles.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+with st_grid(cols="repeat(auto-fit, minmax(280px, 1fr))",
+             gap="12px", cell_styles=_cell) as g:
+    for title, body in CARDS:
+        with g.cell():
+            st_write(bs.body_c,
+                     (bs.keyword, title),
+                     (bs.body, f" -- {body}"))""")
+    st_space("v", 1)
+
+    # Live demo
+    with st_grid(cols="repeat(auto-fit, minmax(220px, 1fr))",
+                 gap="12px", cell_styles=bs.cell) as g:
+        for title, body in CARDS:
+            with g.cell():
+                st_write(bs.body_c,
+                         (bs.keyword, title),
+                         (bs.body, f" — {body}"))
+    st_space("v", 1)
+
+    st_write(bs.body, (bs.accent, "See "),
+             (bs.keyword, "core/card_grid.md"),
+             (bs.accent, " for cell tints (primary / accent / active) and limits."))
+    st_space("v", 2)
+
+    # ---- comparison_table ----
+    st_write(bs.sub, "comparison_table — header row + aligned rows", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Multiple rows that share the same `cols=` template so columns
+        align vertically. The header row uses a distinct cell style;
+        an "active" row may be highlighted to draw the eye. Used for
+        course schedules, tool comparisons, paradigm spectrums.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+def _row(cells, cell_style=_normal_cell, label_style=None):
+    cols = " ".join(["1fr"] * len(cells))
+    with st_grid(cols=cols, gap="12px", cell_styles=cell_style) as g:
+        for i, txt in enumerate(cells):
+            with g.cell():
+                st_write(label_style if i == 0 else bs.body, txt)
+
+_row(["Day", "Morning", "Afternoon"],
+     cell_style=_hdr_cell, label_style=bs.table_hdr)
+for day, am, pm in DATA_ROWS:
+    _row([day, am, pm])""")
+    st_space("v", 1)
+
+    # Live demo — header row + 3 rows
+    with st_grid(cols="1fr 2fr 2fr", gap="8px", cell_styles=bs.cell) as g:
+        with g.cell():
+            st_write(bs.body_c, (bs.label, "Day"))
+        with g.cell():
+            st_write(bs.body_c, (bs.label, "Morning"))
+        with g.cell():
+            st_write(bs.body_c, (bs.label, "Afternoon"))
+        for day, am, pm in TABLE_ROWS:
+            with g.cell():
+                st_write(bs.body_c, (bs.keyword, day))
+            with g.cell():
+                st_write(bs.body_c, am)
+            with g.cell():
+                st_write(bs.body_c, pm)
+    st_space("v", 1)
+
+    st_write(bs.body, (bs.accent, "See "),
+             (bs.keyword, "core/comparison_table.md"),
+             (bs.accent, " for active-row variants and column ratios."))
+    st_space("v", 2)
+
+    # ---- takeaways ----
+    st_write(bs.sub, "takeaways — 3 to 5 numbered key insights", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Numbered list of 3 to 5 items, each with a bolded lead and a
+        short explanation. Optionally closes with a one-line punch.
+        The numbering is part of the rhetoric ("here are the 3 things
+        to remember").
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+with st_zoom(110):
+    with st_list(li_style=bs.body) as l:
+        for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
+            with l.item():
+                st_write(bs.body,
+                         (bs.label, f"{i}. {lead} "),
+                         (bs.body, f"-- {body}"))
+st_space("v", 2)
+st_write(bs.highlight, PUNCH_LINE)""")
+    st_space("v", 1)
+
+    # Live demo
+    with st_block(s.project.containers.result_box):
+        with st_list(li_style=bs.body) as l:
+            for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
+                with l.item():
+                    st_write(bs.body,
+                             (bs.label, f"{i}. {lead} "),
+                             (bs.body, f"— {body}"))
+        st_space("v", 1)
+        st_write(bs.highlight + s.center_txt,
+                 "This is why we need a methodology, not just tools.")
+    st_space("v", 1)
+
+    st_write(bs.body, (bs.accent, "See "),
+             (bs.keyword, "core/takeaways.md"),
+             (bs.accent, " for the punch-line and cite composition."))
+    st_space("v", 1)

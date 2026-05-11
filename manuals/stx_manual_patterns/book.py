@@ -64,6 +64,8 @@ st_book(
         blocks.bck_demo_exercise_flow,
         blocks.bck_demo_categorized_grid,
         blocks.bck_demo_narrative_transition,
+        # Consolidated style bundles — visual catalog
+        blocks.bck_styles_consolidated,
         # Closing
         blocks.bck_blueprints_vs_patterns,
     ],

@@ -31,6 +31,7 @@ frontmatter.
 | ptn_manual_section | Documentation section — heading + sub + explanation + code snippet + live demo | docs, manual, demo, code | ✓ |
 | ptn_slide_heading | Two-cell heading row (title + tooltip icon) at the top of a slide | atom, heading, layout | ✓ |
 | ptn_takeaways | Numbered list of 3–5 key takeaways with bold lead and explanation | list, summary, conclusion | ✓ |
+| ptn_term_definition_list | Vertical list of `term — definition` rows for glossaries, notations, abbreviation tables | list, glossary, reference, definitions | ✓ |
 <!-- END AUTO -->
 
 ## Application rules (manual)

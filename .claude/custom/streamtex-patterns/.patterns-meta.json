@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "source": "../../../../streamtex-patterns",
-  "source_commit": "080af9bdf3492505ca844243fd29e048233e4e10",
+  "source_commit": "2dcad3775ab93207221e1d8edaa5eda6ccee6e7a",
   "preset": "docs",
   "mode": "copy",
-  "installed_at": "2026-05-10T00:00:00Z",
+  "installed_at": "2026-05-11T00:00:00Z",
   "patterns": [
     {
       "name": "ptn_slide_heading",
       "from": "core/ptn_slide_heading.md",
-      "sha": "6f6ed6266c7bc3fcf45bb885a4d2e055bd03a6dafa3dad18dd39172f4b50a7a1",
-      "installed_sha": "6f6ed6266c7bc3fcf45bb885a4d2e055bd03a6dafa3dad18dd39172f4b50a7a1"
+      "sha": "1c6fa34631600f292fdd4e7ea9e1771e01c30efec4d5323c07583dee124a2e2e",
+      "installed_sha": "1c6fa34631600f292fdd4e7ea9e1771e01c30efec4d5323c07583dee124a2e2e"
     },
     {
       "name": "ptn_cite",
@@ -45,8 +45,14 @@
     {
       "name": "ptn_takeaways",
       "from": "core/ptn_takeaways.md",
-      "sha": "2b58db8a96e85b0e25b5f1eec6f7ef7e066a57c2a85a2d0dd8fbe841c6835b98",
-      "installed_sha": "2b58db8a96e85b0e25b5f1eec6f7ef7e066a57c2a85a2d0dd8fbe841c6835b98"
+      "sha": "335fceea55f411c41cfdad877a48a03f62bc2fd0ee5c5e5225a183dccc9d0bf9",
+      "installed_sha": "335fceea55f411c41cfdad877a48a03f62bc2fd0ee5c5e5225a183dccc9d0bf9"
+    },
+    {
+      "name": "ptn_term_definition_list",
+      "from": "core/ptn_term_definition_list.md",
+      "sha": "ac1bd3e61f556e90d0dbb425a259d02205d85ccb188a5ccf73e4534bd39f63a0",
+      "installed_sha": "ac1bd3e61f556e90d0dbb425a259d02205d85ccb188a5ccf73e4534bd39f63a0"
     },
     {
       "name": "ptn_manual_section",

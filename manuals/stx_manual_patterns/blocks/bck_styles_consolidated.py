@@ -87,9 +87,10 @@ class BlockStyles:
 
 bs = BlockStyles
 
-# Per-variant 2-column grid: fixed-width label column + flexible value column.
-# Wide value column ensures long monospace strings have room before wrapping.
-_VARIANT_COLS = "200px 1fr"
+# Per-variant 2-column grid: label column = 33% of viewport width,
+# value column gets the remaining flexible space. Wide value column
+# ensures long monospace strings have room before wrapping.
+_VARIANT_COLS = "33vw 1fr"
 _GAP = "0px"
 
 

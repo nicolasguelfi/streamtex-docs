@@ -47,26 +47,32 @@ class BlockStyles:
     body = s.large
     body_c = s.large + s.center_txt
 
-    # Showcase grid styles
-    table_hdr = (
+    # Per-variant block styles (2 cols × 3 rows)
+    row_label_style = (
         s.large
         + s.bold
         + s.project.colors.primary_violet
         + s.center_txt
     )
     name_style = s.large + s.bold + s.text.fonts.font_monospace
-    expr_style = s.medium + s.text.fonts.font_monospace + s.project.colors.neutral_gray
+    expr_style = (
+        s.medium
+        + s.text.fonts.font_monospace
+        + s.project.colors.neutral_gray
+    )
 
-    cell_row = (
+    # Cell style applied uniformly to all 6 cells of a variant block.
+    # `word-break: break-word` + `overflow-wrap: anywhere` are MANDATORY
+    # here: long monospace identifiers like `st_grid(cols, gap,
+    # cell_styles)` rendered at Large size do NOT wrap by default and
+    # bleed across cell boundaries (visual bug fixed).
+    variant_cell = (
         s.container.borders.solid_border
         + s.container.paddings.small_padding
         + s.container.layouts.vertical_center_layout
-    )
-    cell_hdr = (
-        cell_row
         + Style(
-            "background-color: rgba(167, 139, 250, 0.08);",
-            "showcase_hdr_bg",
+            "word-break: break-word; overflow-wrap: anywhere;",
+            "showcase_wrap_break",
         )
     )
     sample_box = (
@@ -81,45 +87,50 @@ class BlockStyles:
 
 bs = BlockStyles
 
-# 3-column responsive showcase grid: name | composition | live render
-_COLS = "1fr 2fr 2fr"
-_GAP = "8px"
+# Per-variant 2-column grid: fixed-width label column + flexible value column.
+# Wide value column ensures long monospace strings have room before wrapping.
+_VARIANT_COLS = "200px 1fr"
+_GAP = "0px"
 
 
 # ----------------------------------------------------------------------------
-# Helper: render one variant row (3 cells) inside an open `st_grid`
+# Helper: render one variant as a 2-col × 3-row block
 # ----------------------------------------------------------------------------
 
 
-def _row(g, name: str, expr: str, render_fn):
-    """Emit 3 grid cells: name (mono), composition (mono small), live render."""
-    with g.cell():
-        st_write(bs.name_style, name, tag=t.div)
-    with g.cell():
-        st_write(bs.expr_style, expr, tag=t.div)
-    with g.cell():
-        render_fn()
+def _showcase(items):
+    """Render each variant as a self-contained `2 cols × 3 rows` block.
 
+    Layout per variant:
+        ┌──────────────┬──────────────────────────────────────┐
+        │ Name         │ <canonical attribute path>           │
+        ├──────────────┼──────────────────────────────────────┤
+        │ Composition  │ <formula>                            │
+        ├──────────────┼──────────────────────────────────────┤
+        │ Live render  │ <style applied to sample content>    │
+        └──────────────┴──────────────────────────────────────┘
 
-def _header_row(g):
-    """Emit the column-header row of a showcase grid."""
-    for label in ("Name", "Composition", "Live render"):
-        with g.cell():
-            st_write(bs.table_hdr, label, tag=t.div)
-
-
-def _showcase(items, *, header: bool = True):
-    """Render a showcase grid from `[(name, expr, render_fn), …]`.
-
-    Header row uses `cell_hdr`; data rows use `cell_row`. The grid is
-    responsive: cells reflow to the next row if the viewport shrinks.
+    Variants are separated by `st_space("v", 1.5)` for visual rhythm.
     """
-    with st_grid(cols=_COLS, gap=_GAP, cell_styles=bs.cell_hdr) as g:
-        if header:
-            _header_row(g)
     for name, expr, render_fn in items:
-        with st_grid(cols=_COLS, gap=_GAP, cell_styles=bs.cell_row) as g:
-            _row(g, name, expr, render_fn)
+        with st_grid(cols=_VARIANT_COLS, gap=_GAP,
+                     cell_styles=bs.variant_cell) as g:
+            # Row 1: Name
+            with g.cell():
+                st_write(bs.row_label_style, "Name", tag=t.div)
+            with g.cell():
+                st_write(bs.name_style, name, tag=t.div)
+            # Row 2: Composition
+            with g.cell():
+                st_write(bs.row_label_style, "Composition", tag=t.div)
+            with g.cell():
+                st_write(bs.expr_style, expr, tag=t.div)
+            # Row 3: Live render
+            with g.cell():
+                st_write(bs.row_label_style, "Live render", tag=t.div)
+            with g.cell():
+                render_fn()
+        st_space("v", 1.5)
 
 
 # ============================================================================

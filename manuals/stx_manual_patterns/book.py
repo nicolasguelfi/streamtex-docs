@@ -63,6 +63,7 @@ st_book(
         blocks.bck_demo_evidence_insight,
         blocks.bck_demo_exercise_flow,
         blocks.bck_demo_categorized_grid,
+        blocks.bck_demo_narrative_transition,
         # Closing
         blocks.bck_blueprints_vs_patterns,
     ],

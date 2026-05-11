@@ -1,4 +1,5 @@
-"""Gallery — list-shaped patterns: card_grid, comparison_table, takeaways.
+"""Gallery — list-shaped patterns: card_grid, comparison_table,
+takeaways, term_definition_list.
 
 # @pattern: ptn_manual_section
 """
@@ -19,6 +20,13 @@ class BlockStyles:
     accent = s.bold + s.project.colors.accent_teal
     highlight = s.bold + s.project.colors.highlight_amber
     label = s.bold + s.project.colors.primary_violet
+    term = s.large + s.bold + s.project.colors.primary_violet
+    definition = s.large
+    separator = s.large + s.project.colors.neutral_gray
+    sub_recap = s.large + s.bold + s.project.colors.accent_teal + s.center_txt
+    key_msg = (
+        s.huge + s.bold + s.project.colors.highlight_amber + s.center_txt
+    )
     cell = (
         s.container.borders.solid_border
         + s.container.paddings.small_padding
@@ -50,6 +58,31 @@ TAKEAWAYS = [
     ("Senior expertise + structured process",
      "= where the real value is captured"),
 ]
+
+GLOSSARY = [
+    ("ACI", "Agent-Computer Interface — structured protocols for AI "
+            "agents to interact with tools."),
+    ("CHOP", "Chat-Oriented Programming — multi-turn conversational "
+             "interaction with LLMs."),
+    ("MCP", "Model Context Protocol — open protocol connecting AI "
+            "agents to external tools and data sources."),
+    ("RAG", "Retrieval-Augmented Generation — combining LLMs with "
+            "external knowledge retrieval."),
+    ("TDD", "Test-Driven Development — write tests before "
+            "implementation (Red-Green-Refactor)."),
+]
+
+RECAP_SECTIONS = [
+    ("Why GenSEM matters",
+     [("Evidence", "AI alone produces variable gains."),
+      ("Method", "A discipline turns variable gains into reliable ones."),
+      ("Shift", "Software engineering is being re-grounded around AI.")]),
+    ("What GSE-One adds",
+     [("Lifecycle", "8 phases keyed to AI-assisted work."),
+      ("Guardrails", "Hard + soft + emergency rules per phase."),
+      ("Capitalization", "Every cycle compounds prior learnings.")]),
+]
+RECAP_KEY_MESSAGE = "Methodology is the multiplier."
 
 
 def build():
@@ -167,4 +200,79 @@ def build():
     st_write(bs.body, (bs.accent, "See "),
              (bs.keyword, "core/ptn_takeaways.md"),
              (bs.accent, " for the punch-line and cite composition."))
+    st_space("v", 2)
+
+    # ---- takeaways · multi-slide recap variant ----
+    st_write(bs.sub,
+             "takeaways · multi-slide recap variant",
+             toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        When a whole section needs to be recapped at the end, the
+        pattern is paginated: one sub-recap per slide via
+        `st_slide_break(...)`, ending with a single-line "key
+        message" slide. Below the three slides are rendered
+        side-by-side as compact previews — real usage inserts a slide
+        break between each.
+    """)
+    st_space("v", 1)
+
+    def _demo_multi_slide_recap():
+        with st_grid(cols="1fr 1fr 1fr", gap="16px",
+                     cell_styles=bs.cell) as g:
+            for sub_title, items in RECAP_SECTIONS:
+                with g.cell():
+                    st_write(bs.sub_recap, sub_title, tag=t.div)
+                    st_space("v", 0.5)
+                    with st_list(li_style=bs.body) as l:
+                        for i, (lead, body) in enumerate(items, start=1):
+                            with l.item():
+                                st_write(bs.body,
+                                         (bs.label, f"{i}. {lead} "),
+                                         (bs.body, f"— {body}"))
+            with g.cell():
+                st_write(bs.key_msg, RECAP_KEY_MESSAGE, tag=t.div)
+
+    show_and_run(_demo_multi_slide_recap)
+    st_space("v", 1)
+
+    st_write(bs.body, (bs.accent, "See "),
+             (bs.keyword, "core/ptn_takeaways.md · ## Variants"),
+             (bs.accent, " for the full multi-slide recap rules."))
+    st_space("v", 2)
+
+    # ---- term_definition_list ----
+    st_write(bs.sub,
+             "term_definition_list — glossary rows",
+             toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Vertical list of `term — definition` rows for glossaries,
+        notation tables, and abbreviation references. Each row uses a
+        single tuple-style `st_write` so the term and definition wrap
+        together as one line.
+    """)
+    st_space("v", 1)
+
+    def _demo_term_definition_list():
+        with st_block(s.project.containers.result_box):
+            with st_zoom(120):
+                for term, definition in GLOSSARY:
+                    st_write(
+                        bs.definition,
+                        (bs.term, term),
+                        (bs.separator, " — "),
+                        (bs.definition, definition),
+                    )
+                    st_space("v", 0.5)
+
+    show_and_run(_demo_term_definition_list)
+    st_space("v", 1)
+
+    st_write(bs.body, (bs.accent, "See "),
+             (bs.keyword, "core/ptn_term_definition_list.md"),
+             (bs.accent,
+              " for full INVARIANTS (em-dash separator, muted color)."))
     st_space("v", 1)

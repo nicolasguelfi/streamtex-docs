@@ -2085,6 +2085,9 @@ requires-dist = [
     { name = "click", marker = "extra == 'cli'", specifier = ">=8.0" },
     { name = "fal-client", marker = "extra == 'ai'", specifier = ">=0.5" },
     { name = "fal-client", marker = "extra == 'ai-fal'", specifier = ">=0.5" },
+    { name = "google-api-python-client", marker = "extra == 'gsheet'", specifier = ">=2.100" },
+    { name = "google-auth", marker = "extra == 'gsheet'", specifier = ">=2.30" },
+    { name = "google-auth-oauthlib", marker = "extra == 'gsheet'", specifier = ">=1.2" },
     { name = "google-genai", marker = "extra == 'ai'", specifier = ">=1.0" },
     { name = "google-genai", marker = "extra == 'ai-google'", specifier = ">=1.0" },
     { name = "graphviz", specifier = ">=0.21" },
@@ -2105,7 +2108,7 @@ requires-dist = [
     { name = "streamlit-mermaid", specifier = ">=0.3.0" },
     { name = "watchdog" },
 ]
-provides-extras = ["inspector", "cli", "pdf", "ai", "ai-openai", "ai-google", "ai-fal"]
+provides-extras = ["inspector", "cli", "pdf", "ai", "ai-openai", "ai-google", "ai-fal", "gsheet"]
 
 [package.metadata.requires-dev]
 dev = [

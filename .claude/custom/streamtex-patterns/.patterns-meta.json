@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "../../../../streamtex-patterns",
-  "source_commit": "2dcad3775ab93207221e1d8edaa5eda6ccee6e7a",
+  "source_commit": "0c4f3353686328e42312ec6dccb01ddbdf496478",
   "preset": "docs",
   "mode": "copy",
   "installed_at": "2026-05-11T00:00:00Z",
@@ -45,14 +45,14 @@
     {
       "name": "ptn_takeaways",
       "from": "core/ptn_takeaways.md",
-      "sha": "335fceea55f411c41cfdad877a48a03f62bc2fd0ee5c5e5225a183dccc9d0bf9",
-      "installed_sha": "335fceea55f411c41cfdad877a48a03f62bc2fd0ee5c5e5225a183dccc9d0bf9"
+      "sha": "91d611473b4d568aa4a54fe0e627af813eb958b821b7656a2133544a9b10f175",
+      "installed_sha": "91d611473b4d568aa4a54fe0e627af813eb958b821b7656a2133544a9b10f175"
     },
     {
       "name": "ptn_term_definition_list",
       "from": "core/ptn_term_definition_list.md",
-      "sha": "ac1bd3e61f556e90d0dbb425a259d02205d85ccb188a5ccf73e4534bd39f63a0",
-      "installed_sha": "ac1bd3e61f556e90d0dbb425a259d02205d85ccb188a5ccf73e4534bd39f63a0"
+      "sha": "34c8b3883487eb4ef0bb8b403b646c93464eac12059a6cf7aaa4e7f043f5f294",
+      "installed_sha": "34c8b3883487eb4ef0bb8b403b646c93464eac12059a6cf7aaa4e7f043f5f294"
     },
     {
       "name": "ptn_manual_section",

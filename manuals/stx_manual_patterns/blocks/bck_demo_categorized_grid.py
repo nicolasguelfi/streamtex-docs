@@ -133,4 +133,58 @@ def build():
         identifies the grouping); responsive `auto-fit, minmax(220px,
         1fr)` is preserved from the underlying `card_grid`.
     """)
+    st_space("v", 2)
+
+    # ---- Sequence / timeline variant ----
+    st_write(bs.sub, "Sequence / timeline variant", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        When the categories represent **temporal phases** (Day 1 /
+        Day 2 / Day 3, Phase 1 / Phase 2, …) rather than qualitative
+        groupings, the inner grid switches from `auto-fit` to a fixed
+        column count (e.g. `1fr 1fr` for Morning / Afternoon) so the
+        eye can align phases vertically. The "current" phase uses the
+        `active` tint to indicate "you are here".
+    """)
+    st_space("v", 1)
+
+    def _demo_timeline():
+        timeline = [
+            ("Day 1 — GenAI fundamentals", "primary",
+             ("Vibecoding clinic", "GenAI basics workshop")),
+            ("Day 2 — GenSEM methods", "active",
+             ("GSE-One workshop", "Compound Engineering live")),
+            ("Day 3 — Capstone", "accent",
+             ("CalcApp project", "Wrap-up + Q&A")),
+        ]
+        _tint_map = {
+            "primary": bs.cell_primary,
+            "accent": bs.cell_accent,
+            "active": bs.cell_active,
+        }
+        for label, tint, (am, pm) in timeline:
+            st_write(bs.cat_label, label)
+            st_space("v", 0.5)
+            cell_style = _tint_map[tint]
+            with st_grid(cols="1fr 1fr", gap="12px",
+                         cell_styles=cell_style) as g:
+                with g.cell():
+                    st_write(bs.body_c, (bs.keyword, "Morning"),
+                             (bs.body, f" — {am}"))
+                with g.cell():
+                    st_write(bs.body_c, (bs.keyword, "Afternoon"),
+                             (bs.body, f" — {pm}"))
+            st_space("v", 1)
+
+    show_and_run(_demo_timeline)
+    st_space("v", 1)
+
+    show_details("""\
+        **Difference with the default variant**: the inner grid is a
+        fixed column count (here `"1fr 1fr"`), not `auto-fit`, because
+        temporal alignment depends on a stable number of columns. The
+        "current" phase is highlighted via the `active` tint. All
+        other INVARIANTS still apply.
+    """)
     st_space("v", 1)

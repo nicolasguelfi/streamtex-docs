@@ -80,18 +80,18 @@ preset = "ai4se6d"
         with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "core/"))
         with g.cell():
-            st_write(bs.body, "Universal atoms (callout, card_grid, "
-                              "comparison_table, takeaways) — safe in any project.")
+            st_write(bs.body, "Universal atoms (ptn_callout, ptn_card_grid, "
+                              "ptn_comparison_table, ptn_takeaways) — safe in any project.")
         with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "slides/"))
         with g.cell():
-            st_write(bs.body, "Visually dramatic templates (stat_hero, "
-                              "evidence_insight) — use only in presentations.")
+            st_write(bs.body, "Visually dramatic templates (ptn_stat_hero, "
+                              "ptn_evidence_insight) — use only in presentations.")
         with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "docs/"))
         with g.cell():
-            st_write(bs.body, "Code+demo recipes (manual_section, "
-                              "feature_walkthrough, api_reference_card) — "
+            st_write(bs.body, "Code+demo recipes (ptn_manual_section, "
+                              "ptn_feature_walkthrough, ptn_api_reference_card) — "
                               "use only in manuals.")
         with g.cell():
             st_write(bs.body, (s.bold + s.project.colors.accent_teal, "projects/<X>/"))
@@ -119,10 +119,10 @@ description = "StreamTeX-docs-style manuals (extends core)"
 
 [patterns]
 include = [
-  "docs/manual_section.md",
-  "docs/feature_walkthrough.md",
-  "docs/api_reference_card.md",
-  "docs/composite_block.md",
+  "docs/ptn_manual_section.md",
+  "docs/ptn_feature_walkthrough.md",
+  "docs/ptn_api_reference_card.md",
+  "docs/ptn_composite_block.md",
 ]
 exclude = []
 
@@ -148,13 +148,13 @@ extends = "core"
 # .patterns-meta.json (excerpt)
 {
   "patterns": {
-    "callout": {
-      "source": "core/callout.md",
+    "ptn_callout": {
+      "source": "core/ptn_callout.md",
       "sha": "ab12cd34...",
       "installed_at": "2026-05-10T08:42:11Z"
     },
-    "manual_section": {
-      "source": "docs/manual_section.md",
+    "ptn_manual_section": {
+      "source": "docs/ptn_manual_section.md",
       "sha": "ef56gh78...",
       "installed_at": "2026-05-10T08:42:11Z"
     }

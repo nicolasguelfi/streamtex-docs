@@ -146,8 +146,8 @@ stx patterns status
 # Refresh against upstream
 stx patterns update
 
-# I edited callout.md locally and want to share it
-stx patterns promote callout
+# I edited ptn_callout.md locally and want to share it
+stx patterns promote ptn_callout
 """, language="bash")
         st_space("v", 2)
 

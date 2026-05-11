@@ -50,9 +50,9 @@ def build():
 
     show_explanation("""\
         Properties of the pattern that, if violated, break the
-        identity of the pattern itself. Examples: a `manual_section`
+        identity of the pattern itself. Examples: a `ptn_manual_section`
         always has the **explanation → code → demo** triad in that
-        order; a `feature_walkthrough` always has **numbered** steps.
+        order; a `ptn_feature_walkthrough` always has **numbered** steps.
     """)
     st_space("v", 1)
 
@@ -131,8 +131,8 @@ def build():
   the reader.
 - Do not duplicate `show_code` snippets for the same demo (DRY at the
   reader level — one snippet, one demo).
-- Do not use slide-presentation patterns (`stat_hero`,
-  `evidence_insight`) in a manual section.""", language="markdown")
+- Do not use slide-presentation patterns (`ptn_stat_hero`,
+  `ptn_evidence_insight`) in a manual section.""", language="markdown")
     st_space("v", 1)
 
     with st_block(s.project.containers.bad_callout):
@@ -153,7 +153,7 @@ def build():
 
         1. Reads `_pattern_library.md` to discover available patterns.
         2. If the user references a pattern by name (or a slash command
-           like `/stx-pattern:apply manual_section`), reads the full
+           like `/stx-pattern:apply ptn_manual_section`), reads the full
            markdown of that pattern.
         3. Uses **Code skeleton** as a starting point.
         4. Applies **PARAMS** to the project's palette and content.
@@ -166,8 +166,8 @@ def build():
     st_space("v", 1)
 
     show_details("""\
-        For ambiguity (e.g. a project where `manual_section` and
-        `feature_walkthrough` could both fit), the AI defaults to the
+        For ambiguity (e.g. a project where `ptn_manual_section` and
+        `ptn_feature_walkthrough` could both fit), the AI defaults to the
         pattern most explicitly named by the user, falling back to the
         one whose **When to use** section best matches the request.
     """)

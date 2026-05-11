@@ -1,4 +1,4 @@
-"""Gallery — atomic patterns: slide_heading, cite, inline_emphasis.
+"""Gallery — atomic patterns: slide_heading, ptn_cite, inline_emphasis.
 
 # @pattern: ptn_manual_section
 """
@@ -40,7 +40,7 @@ def build():
     """Compact gallery of three atomic patterns."""
     with st_block(s.center_txt):
         st_write(bs.heading,
-                 "Atoms Gallery — slide_heading, cite, inline_emphasis",
+                 "Atoms Gallery — ptn_slide_heading, ptn_cite, ptn_inline_emphasis",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -52,8 +52,8 @@ def build():
     """)
     st_space("v", 2)
 
-    # ---- slide_heading ----
-    st_write(bs.sub, "slide_heading — title row + tooltip", toc_lvl="+1")
+    # ---- ptn_slide_heading ----
+    st_write(bs.sub, "ptn_slide_heading — title row + tooltip", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -81,8 +81,8 @@ def build():
              (bs.accent, " for full details."))
     st_space("v", 2)
 
-    # ---- cite ----
-    st_write(bs.sub, "cite — source attribution footer", toc_lvl="+1")
+    # ---- ptn_cite ----
+    st_write(bs.sub, "ptn_cite — source attribution footer", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -109,9 +109,9 @@ def build():
              (bs.accent, " for full details."))
     st_space("v", 2)
 
-    # ---- inline_emphasis ----
+    # ---- ptn_inline_emphasis ----
     st_write(bs.sub,
-             "inline_emphasis — keyword / accent / highlight",
+             "ptn_inline_emphasis — keyword / accent / highlight",
              toc_lvl="+1")
     st_space("v", 1)
 

@@ -1,4 +1,4 @@
-"""Demo — stat_hero slide template.
+"""Demo — ptn_stat_hero slide template.
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for stat_hero."""
+    """Demo styles for ptn_stat_hero."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -32,9 +32,9 @@ bs = BlockStyles
 
 
 def build():
-    """Dedicated demo for the stat_hero slide template."""
+    """Dedicated demo for the ptn_stat_hero slide template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — stat_hero",
+        st_write(bs.heading, "Demo — ptn_stat_hero",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -50,9 +50,9 @@ def build():
 
         **When to use** — slides whose purpose is to drive home a
         single quantitative insight. **When NOT to use** — multi-stat
-        comparisons (use `comparison_table`), syntheses of several
-        findings (use `evidence_insight`), qualitative claims (use
-        `callout`).
+        comparisons (use `ptn_comparison_table`), syntheses of several
+        findings (use `ptn_evidence_insight`), qualitative claims (use
+        `ptn_callout`).
     """)
     st_space("v", 2)
 
@@ -86,6 +86,6 @@ def build():
         style for the number (e.g. `s.project.titles.stat_hero`), and
         a mandatory citation at the bottom. Variants (b) image + stat
         and (c) stat + tooltip add a 2-column grid or a
-        `slide_heading` wrapper but never split the focal point.
+        `ptn_slide_heading` wrapper but never split the focal point.
     """)
     st_space("v", 1)

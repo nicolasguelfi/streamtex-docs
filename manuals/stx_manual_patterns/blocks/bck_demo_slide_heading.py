@@ -1,4 +1,4 @@
-"""Demo — slide_heading atom.
+"""Demo — ptn_slide_heading atom.
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for slide_heading."""
+    """Demo styles for ptn_slide_heading."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -32,9 +32,9 @@ bs = BlockStyles
 
 
 def build():
-    """Dedicated demo for the slide_heading atom."""
+    """Dedicated demo for the ptn_slide_heading atom."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — slide_heading",
+        st_write(bs.heading, "Demo — ptn_slide_heading",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -50,7 +50,7 @@ def build():
 
         **When to use** — every content slide that has a title and
         may need presenter notes. **When NOT to use** — true title
-        slides (use `title_slide`), slide breaks (no title),
+        slides (use `ptn_title_slide`), slide breaks (no title),
         slides where the title spans an image.
     """)
     st_space("v", 2)

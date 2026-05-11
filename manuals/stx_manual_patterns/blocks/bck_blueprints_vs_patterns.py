@@ -39,7 +39,7 @@ def build():
     show_explanation("""\
         StreamTeX projects reuse content at two levels:
 
-        - **Patterns** — small visual primitives (a callout, a stat
+        - **Patterns** — small visual primitives (a ptn_callout, a stat
           hero, a manual section). One markdown file, one
           recipe. Lives in `streamtex-patterns/`.
         - **Blueprints** — entire project skeletons (a presentation
@@ -115,8 +115,8 @@ def build():
             st_write(bs.body, (s.bold, "Composition"))
         with g.cell():
             st_write(bs.body, "Patterns combine inside one block "
-                              "(e.g. `evidence_insight` uses "
-                              "`stat_hero` + `takeaways`).")
+                              "(e.g. `ptn_evidence_insight` uses "
+                              "`ptn_stat_hero` + `ptn_takeaways`).")
         with g.cell():
             st_write(bs.body, "A blueprint may *embed* patterns by "
                               "calling `stx patterns install --preset` "

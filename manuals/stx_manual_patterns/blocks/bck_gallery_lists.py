@@ -1,5 +1,5 @@
-"""Gallery — list-shaped patterns: card_grid, comparison_table,
-takeaways, term_definition_list.
+"""Gallery — list-shaped patterns: ptn_card_grid, ptn_comparison_table,
+ptn_takeaways, ptn_term_definition_list.
 
 # @pattern: ptn_manual_section
 """
@@ -89,7 +89,7 @@ def build():
     """Compact gallery of list-shaped patterns."""
     with st_block(s.center_txt):
         st_write(bs.heading,
-                 "List Patterns — card_grid, comparison_table, takeaways",
+                 "List Patterns — card_grid, ptn_comparison_table, ptn_takeaways",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -100,8 +100,8 @@ def build():
     """)
     st_space("v", 2)
 
-    # ---- card_grid ----
-    st_write(bs.sub, "card_grid — responsive equal-weight cards",
+    # ---- ptn_card_grid ----
+    st_write(bs.sub, "ptn_card_grid — responsive equal-weight cards",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -131,8 +131,8 @@ def build():
               " for cell tints (primary / accent / active) and limits."))
     st_space("v", 2)
 
-    # ---- comparison_table ----
-    st_write(bs.sub, "comparison_table — header row + aligned rows",
+    # ---- ptn_comparison_table ----
+    st_write(bs.sub, "ptn_comparison_table — header row + aligned rows",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -169,8 +169,8 @@ def build():
              (bs.accent, " for active-row variants and column ratios."))
     st_space("v", 2)
 
-    # ---- takeaways ----
-    st_write(bs.sub, "takeaways — 3 to 5 numbered key insights",
+    # ---- ptn_takeaways ----
+    st_write(bs.sub, "ptn_takeaways — 3 to 5 numbered key insights",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -202,9 +202,9 @@ def build():
              (bs.accent, " for the punch-line and cite composition."))
     st_space("v", 2)
 
-    # ---- takeaways · multi-slide recap variant ----
+    # ---- ptn_takeaways · multi-slide recap variant ----
     st_write(bs.sub,
-             "takeaways · multi-slide recap variant",
+             "ptn_takeaways · multi-slide recap variant",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -242,9 +242,9 @@ def build():
              (bs.accent, " for the full multi-slide recap rules."))
     st_space("v", 2)
 
-    # ---- term_definition_list ----
+    # ---- ptn_term_definition_list ----
     st_write(bs.sub,
-             "term_definition_list — glossary rows",
+             "ptn_term_definition_list — glossary rows",
              toc_lvl="+1")
     st_space("v", 1)
 

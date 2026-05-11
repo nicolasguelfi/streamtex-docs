@@ -1,4 +1,4 @@
-"""Demo — evidence_insight composite slide template.
+"""Demo — ptn_evidence_insight composite slide template.
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for evidence_insight."""
+    """Demo styles for ptn_evidence_insight."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -45,9 +45,9 @@ TAKEAWAYS = [
 
 
 def build():
-    """Dedicated demo for the evidence_insight composite template."""
+    """Dedicated demo for the ptn_evidence_insight composite template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — evidence_insight",
+        st_write(bs.heading, "Demo — ptn_evidence_insight",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -57,14 +57,14 @@ def build():
 
     show_explanation("""\
         A composite template that fixes the order of four atomic
-        patterns: **slide_heading -> stat_hero (or body) ->
-        takeaways -> cite**. The reader's eye travels top-to-bottom
+        patterns: **ptn_slide_heading -> ptn_stat_hero (or body) ->
+        ptn_takeaways -> cite**. The reader's eye travels top-to-bottom
         through "headline + finding + what to remember + source".
 
         **When to use** — synthesis slides at the end of an
         evidence-heavy section. **When NOT to use** — single-stat
-        slides without takeaways (use `stat_hero` alone),
-        multi-source comparisons (use `comparison_table`).
+        slides without takeaways (use `ptn_stat_hero` alone),
+        multi-source comparisons (use `ptn_comparison_table`).
     """)
     st_space("v", 2)
 
@@ -74,7 +74,7 @@ def build():
 
     def _demo():
         with st_block(s.project.containers.tip_callout + s.center_txt):
-            # 1. slide_heading proxy
+            # 1. ptn_slide_heading proxy
             st_write(bs.slide_title, "Evidence Synthesis", tag=t.div)
             st_space("v", 2)
 
@@ -87,7 +87,7 @@ def build():
                      "Lost per team member weekly to AI inefficiencies.")
             st_space("v", 2)
 
-            # 4. takeaways
+            # 4. ptn_takeaways
             with st_list(li_style=bs.body) as l:
                 for i, (lead, body) in enumerate(TAKEAWAYS, start=1):
                     with l.item():
@@ -107,7 +107,7 @@ def build():
 
     show_details("""\
         **INVARIANTS**: composition order is fixed
-        (heading -> stat/body -> takeaways -> cite); the slide
+        (heading -> stat/body -> ptn_takeaways -> cite); the slide
         presents **one** piece of evidence; citation is mandatory;
         the highlight punch line ends the slide and sets up the
         transition to the next concept.

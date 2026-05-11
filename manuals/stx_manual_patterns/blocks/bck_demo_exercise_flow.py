@@ -1,4 +1,4 @@
-"""Demo — exercise_flow multi-slide template (briefing / action / debrief).
+"""Demo — ptn_exercise_flow multi-slide template (briefing / action / debrief).
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for exercise_flow."""
+    """Demo styles for ptn_exercise_flow."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -45,9 +45,9 @@ bs = BlockStyles
 
 
 def build():
-    """Dedicated demo for the exercise_flow multi-slide template."""
+    """Dedicated demo for the ptn_exercise_flow multi-slide template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — exercise_flow",
+        st_write(bs.heading, "Demo — ptn_exercise_flow",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -66,7 +66,7 @@ def build():
           line and a big timer; intentionally near-empty so the
           audience focuses on doing.
         - **Debrief** — a question (callout) plus typical
-          observations, optional takeaways.
+          observations, optional ptn_takeaways.
 
         Typically used for `practice_pN` series in workshop modules.
     """)

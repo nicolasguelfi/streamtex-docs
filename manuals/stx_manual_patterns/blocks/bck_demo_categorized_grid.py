@@ -1,4 +1,4 @@
-"""Demo — categorized_grid template (named groups with tinted cells).
+"""Demo — ptn_categorized_grid template (named groups with tinted cells).
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for categorized_grid."""
+    """Demo styles for ptn_categorized_grid."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -66,9 +66,9 @@ CATEGORIES = [
 
 
 def build():
-    """Dedicated demo for the categorized_grid slide template."""
+    """Dedicated demo for the ptn_categorized_grid slide template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — categorized_grid",
+        st_write(bs.heading, "Demo — ptn_categorized_grid",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -77,7 +77,7 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        A vertical sequence of `card_grid` instances, each preceded
+        A vertical sequence of `ptn_card_grid` instances, each preceded
         by a **category header**, where each category uses a different
         cell tint (`primary` / `accent` / `active`). Used for
         taxonomies that have named groups: "Adaptations / AI-Native /
@@ -85,8 +85,8 @@ def build():
 
         **When to use** — multi-tier taxonomies, decision spectrums,
         "old way / new way / our way" workshop content. **When NOT
-        to use** — flat enumerations (use `card_grid`), comparison
-        across attributes (use `comparison_table`).
+        to use** — flat enumerations (use `ptn_card_grid`), comparison
+        across attributes (use `ptn_comparison_table`).
     """)
     st_space("v", 2)
 
@@ -131,7 +131,7 @@ def build():
         cards within a single category share the same cell tint;
         different categories use different tints (that's how the eye
         identifies the grouping); responsive `auto-fit, minmax(220px,
-        1fr)` is preserved from the underlying `card_grid`.
+        1fr)` is preserved from the underlying `ptn_card_grid`.
     """)
     st_space("v", 2)
 

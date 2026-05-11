@@ -1,5 +1,5 @@
-"""Gallery — documentation patterns: manual_section, feature_walkthrough,
-api_reference_card, composite_block.
+"""Gallery — documentation patterns: ptn_manual_section,
+ptn_feature_walkthrough, ptn_api_reference_card, ptn_composite_block.
 
 # @pattern: ptn_manual_section
 """
@@ -50,8 +50,8 @@ def build():
     """)
     st_space("v", 2)
 
-    # ---- manual_section ----
-    st_write(bs.sub, "manual_section — explanation + code + demo triad",
+    # ---- ptn_manual_section ----
+    st_write(bs.sub, "ptn_manual_section — explanation + code + demo triad",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -59,7 +59,7 @@ def build():
         The canonical "feature explanation" pattern. A section
         heading, a sub-heading, then for each sub-topic the triad
         **explanation -> code -> live demo**. The current page (and
-        almost every other in this manual) is a manual_section. Below:
+        almost every other in this manual) is a ptn_manual_section. Below:
         a tiny self-similar instance.
     """)
     st_space("v", 1)
@@ -72,9 +72,9 @@ def build():
                 Short paragraph that introduces the feature, in
                 neutral prose. 2–4 lines is typical.
             """)
-            show_code('st_write(s.center_txt, "Hello, manual_section!")')
+            show_code('st_write(s.center_txt, "Hello, ptn_manual_section!")')
             st_space("v", 0.5)
-            st_write(s.center_txt, "Hello, manual_section!")
+            st_write(s.center_txt, "Hello, ptn_manual_section!")
 
     show_and_run(_demo_manual_section)
     st_space("v", 1)
@@ -84,8 +84,8 @@ def build():
              (bs.accent, " for the full INVARIANTS / PARAMS / INTERDITS."))
     st_space("v", 2)
 
-    # ---- feature_walkthrough ----
-    st_write(bs.sub, "feature_walkthrough — numbered tutorial",
+    # ---- ptn_feature_walkthrough ----
+    st_write(bs.sub, "ptn_feature_walkthrough — numbered tutorial",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -126,8 +126,8 @@ def build():
              (bs.accent, " for the contract."))
     st_space("v", 2)
 
-    # ---- api_reference_card ----
-    st_write(bs.sub, "api_reference_card — one symbol per page",
+    # ---- ptn_api_reference_card ----
+    st_write(bs.sub, "ptn_api_reference_card — one symbol per page",
              toc_lvl="+1")
     st_space("v", 1)
 
@@ -169,8 +169,8 @@ def build():
              (bs.accent, " for the full grammar."))
     st_space("v", 2)
 
-    # ---- composite_block ----
-    st_write(bs.sub, "composite_block — orchestrate atomic sub-blocks",
+    # ---- ptn_composite_block ----
+    st_write(bs.sub, "ptn_composite_block — orchestrate atomic sub-blocks",
              toc_lvl="+1")
     st_space("v", 1)
 

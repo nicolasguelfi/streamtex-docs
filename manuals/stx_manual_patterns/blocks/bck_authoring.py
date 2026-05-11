@@ -65,7 +65,7 @@ streamtex-patterns/
         / INTERDITS), When to use, When NOT to use.
 
         Use an existing pattern as a starting point — copying
-        `core/callout.md` or `docs/manual_section.md` is a good
+        `core/ptn_callout.md` or `docs/ptn_manual_section.md` is a good
         habit.
     """)
     st_space("v", 1)
@@ -143,10 +143,10 @@ uv run python scripts/validate.py --all
 # presets/docs.toml — append the new pattern
 [patterns]
 include = [
-  "docs/manual_section.md",
-  "docs/feature_walkthrough.md",
-  "docs/api_reference_card.md",
-  "docs/composite_block.md",
+  "docs/ptn_manual_section.md",
+  "docs/ptn_feature_walkthrough.md",
+  "docs/ptn_api_reference_card.md",
+  "docs/ptn_composite_block.md",
   "docs/my_new_pattern.md",   # <-- new
 ]
 """, language="toml")

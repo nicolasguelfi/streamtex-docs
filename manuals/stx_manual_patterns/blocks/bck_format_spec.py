@@ -41,7 +41,7 @@ def build():
 
     show_code("""\
 ---
-name: manual_section
+name: ptn_manual_section
 type: pattern
 description: Documentation section — heading + sub + explanation + code snippet + live demo
 tags: [docs, manual, demo, code]
@@ -162,7 +162,7 @@ def build():
 - Throwaway examples.
 
 ## When NOT to use
-- Production content (use `callout`).""", language="markdown")
+- Production content (use `ptn_callout`).""", language="markdown")
     st_space("v", 2)
 
     # ---- Why "A2" ----

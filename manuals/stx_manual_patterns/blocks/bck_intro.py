@@ -68,16 +68,16 @@ streamtex-patterns/
 ├── manifest.toml
 ├── _pattern_library.md      # global index
 ├── core/                    # universal atoms
-│   ├── callout.md
-│   ├── card_grid.md
+│   ├── ptn_callout.md
+│   ├── ptn_card_grid.md
 │   └── ...
 ├── slides/                  # presentation-only
-│   ├── stat_hero.md
+│   ├── ptn_stat_hero.md
 │   └── ...
 ├── docs/                    # manual-only
-│   ├── manual_section.md
-│   ├── feature_walkthrough.md
-│   └── api_reference_card.md
+│   ├── ptn_manual_section.md
+│   ├── ptn_feature_walkthrough.md
+│   └── ptn_api_reference_card.md
 └── presets/
     ├── core.toml
     ├── slides.toml
@@ -90,10 +90,10 @@ streamtex-patterns/
 
     show_explanation("""\
         Without a catalog, every project re-invents the same recipes
-        (a callout, a stat hero, a manual section) — and they drift.
+        (a ptn_callout, a stat hero, a manual section) — and they drift.
 
         A pattern catalog gives the ecosystem a **shared vocabulary**:
-        when you say "use a `manual_section`", any contributor — human
+        when you say "use a `ptn_manual_section`", any contributor — human
         or AI — knows exactly what to produce.
     """)
     st_space("v", 1)

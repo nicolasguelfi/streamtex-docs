@@ -1,4 +1,4 @@
-"""Demo — narrative_transition slide template.
+"""Demo — ptn_narrative_transition slide template.
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for narrative_transition."""
+    """Demo styles for ptn_narrative_transition."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -41,9 +41,9 @@ bs = BlockStyles
 
 
 def build():
-    """Dedicated demo for the narrative_transition slide template."""
+    """Dedicated demo for the ptn_narrative_transition slide template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — narrative_transition",
+        st_write(bs.heading, "Demo — ptn_narrative_transition",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 

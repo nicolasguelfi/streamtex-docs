@@ -1,4 +1,4 @@
-"""Demo — title_slide template (image-dominant cover slide).
+"""Demo — ptn_title_slide template (image-dominant cover slide).
 
 # @pattern: ptn_manual_section
 """
@@ -12,7 +12,7 @@ from blocks.helpers import (
 
 
 class BlockStyles:
-    """Demo styles for title_slide."""
+    """Demo styles for ptn_title_slide."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
@@ -35,9 +35,9 @@ bs = BlockStyles
 
 
 def build():
-    """Dedicated demo for the title_slide template."""
+    """Dedicated demo for the ptn_title_slide template."""
     with st_block(s.center_txt):
-        st_write(bs.heading, "Demo — title_slide",
+        st_write(bs.heading, "Demo — ptn_title_slide",
                  tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
@@ -53,8 +53,8 @@ def build():
 
         **When to use** — the very first slide of a presentation, or
         major chapter dividers. **When NOT to use** — sub-section
-        dividers (use `slide_heading`), pure data slides (use
-        `stat_hero`), conclusion slides (use `takeaways`).
+        dividers (use `ptn_slide_heading`), pure data slides (use
+        `ptn_stat_hero`), conclusion slides (use `ptn_takeaways`).
     """)
     st_space("v", 2)
 

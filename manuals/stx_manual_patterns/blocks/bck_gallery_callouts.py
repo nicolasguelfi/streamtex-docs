@@ -1,4 +1,4 @@
-"""Gallery — callout pattern variants (info / warning / critical / success).
+"""Gallery — ptn_callout pattern variants (info / warning / critical / success).
 
 # @pattern: ptn_manual_section
 """
@@ -26,7 +26,7 @@ bs = BlockStyles
 
 
 def build():
-    """Render the four callout variants with live demos."""
+    """Render the four ptn_callout variants with live demos."""
     with st_block(s.center_txt):
         st_write(bs.heading,
                  "Callouts Gallery — info / warning / critical / success",
@@ -34,7 +34,7 @@ def build():
         st_space("v", 2)
 
     show_explanation("""\
-        The `callout` pattern is a small framed container that lifts
+        The `ptn_callout` pattern is a small framed container that lifts
         a piece of content out of the surrounding flow. The variant
         is encoded by the **inline label color**, never by a custom
         container — this keeps visual rhythm uniform across slides.
@@ -81,7 +81,7 @@ def build():
             st_write(bs.critical, "Do not skip the source")
             st_space("v", 0.5)
             st_write(bs.body_c,
-                     "An evidence_insight slide without a citation undermines "
+                     "An ptn_evidence_insight slide without a citation undermines "
                      "credibility and breaks the pattern's contract.")
 
     show_and_run(_demo_critical)

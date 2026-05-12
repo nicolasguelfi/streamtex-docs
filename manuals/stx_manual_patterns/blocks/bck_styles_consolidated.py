@@ -21,18 +21,33 @@ from blocks.helpers import show_explanation, show_details
 # ----------------------------------------------------------------------------
 
 _THIS = Path(__file__).resolve()
-_CONSOLIDATED = (
-    _THIS.parents[4] / "streamtex-patterns" / "styles" / "styles_consolidated.py"
-)
+# Probe order:
+#   1. Sibling-repo dev mode: streamtex-dev/streamtex-patterns/styles/
+#      (parents[4] from blocks/bck_styles_consolidated.py).
+#   2. Vendored copy under the manual's own _vendored/ folder — what
+#      ships inside the Docker image (the streamtex-patterns repo is
+#      not part of the docs build context).
+_CANDIDATES = [
+    _THIS.parents[4] / "streamtex-patterns" / "styles" / "styles_consolidated.py",
+    _THIS.parents[1] / "_vendored" / "streamtex_patterns_styles_consolidated.py",
+]
+_CONSOLIDATED = next((p for p in _CANDIDATES if p.exists()), None)
 
 sc = None
 _import_error = ""
-try:
-    _spec = importlib.util.spec_from_file_location("sc_module", _CONSOLIDATED)
-    sc = importlib.util.module_from_spec(_spec)
-    _spec.loader.exec_module(sc)
-except Exception as e:
-    _import_error = f"{type(e).__name__}: {e}"
+if _CONSOLIDATED is None:
+    _import_error = (
+        "styles_consolidated.py not found in any of: "
+        + ", ".join(str(p) for p in _CANDIDATES)
+    )
+else:
+    try:
+        _spec = importlib.util.spec_from_file_location("sc_module", _CONSOLIDATED)
+        sc = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(sc)
+    except Exception as e:
+        _import_error = f"{type(e).__name__}: {e}"
+        sc = None
 
 
 # ----------------------------------------------------------------------------

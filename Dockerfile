@@ -46,6 +46,14 @@ sys.exit(1) if i < r else sys.exit(0)" || \
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 COPY manuals/ ./manuals/
 
+# Strip `[tool.uv.sources]` from every per-manual pyproject.toml — this
+# section is for local dev (path = "../../../streamtex") and breaks the
+# cache-warmup + static-HTML-export passes that run `uv run` inside each
+# manual directory.  Equivalent to the same sed pass applied earlier to
+# the root pyproject.toml (UV_NO_SOURCES discipline).
+RUN find manuals -mindepth 2 -maxdepth 2 -name pyproject.toml -exec \
+        sed -i '/^\[tool\.uv\.sources\]/,/^$/d' {} \;
+
 # Changelog (read by bck_changelog block in each manual)
 COPY CHANGELOG.md ./
 

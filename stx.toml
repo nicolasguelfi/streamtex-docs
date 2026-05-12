@@ -1,0 +1,19 @@
+# stx.toml — project-level StreamTeX config
+#
+# Declares this project's relationship to the StreamTeX ecosystem.
+# Currently used by `stx patterns` to resolve the source of patterns.
+
+[patterns]
+# Source of pattern files. Resolved relative to this file.
+# Order of precedence (most → least specific):
+#   1. --source CLI flag
+#   2. this [patterns].source                    ← current
+#   3. workspace stx.toml [patterns].source
+#   4. auto-discover <workspace>/streamtex-patterns/
+source = "/Volumes/Mac_Data/Win_data/data/backups/Dropbox-nicolas.guelfi@laposte.net/messir Dropbox/Nicolas Guelfi/users/NG/dev-dropbox/dvlpt/eclipse/git/github/streamtex-dev/streamtex-patterns"
+
+# Default preset for `stx patterns install` (and `update`).
+preset = "docs"
+
+# Install mode: "copy" (recommended, portable) or "symlink" (for pattern authors).
+mode = "copy"

@@ -231,7 +231,7 @@ def build():
     with st_block(s.project.containers.explanation_box):
         st_write(
             s.medium,
-            "The following APIs are deprecated in v0.3. They continue "
+            "The following APIs are deprecated. They continue "
             "to work for backward compatibility but will be removed in "
             "a future release. Update your code as described above.",
         )
@@ -249,7 +249,7 @@ def build():
     st_space("v", 1)
 
     show_details("""\
-        Both deprecated parameters still work in v0.3 and emit
+        Both deprecated parameters still work today and emit
         a deprecation warning at runtime. They will be removed
         in a future release. Plan your migration accordingly.
     """)

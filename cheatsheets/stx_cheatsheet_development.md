@@ -41,23 +41,23 @@ stx run                                   # Launch the app
 ### Slash Commands (in Claude Code)
 
 ```
-# stx-designer — Project lifecycle (5 commands)
-/stx-designer:init [--template] <desc>                Create project from description
+# stx-block — Project lifecycle (5 commands)
+/stx-block:init [--template] <desc>                Create project from description
                                                       Templates: project, presentation,
                                                       collection, course
-/stx-designer:update [--upgrade|--migrate|--export] <desc>  Add/modify content, migrate,
+/stx-block:update [--upgrade|--migrate|--export] <desc>  Add/modify content, migrate,
                                                             export, upgrade structure
-/stx-designer:audit [--all|--target <name>] <desc>    Check quality (structure, styles,
+/stx-block:audit [--all|--target <name>] <desc>    Check quality (structure, styles,
                                                       design, presentation compliance)
-/stx-designer:fix [--all|--target <name>] <desc>      Auto-fix issues found by audit
-/stx-designer:tool <tool-name> <desc>                 Specialized tools (survey-convert)
+/stx-block:fix [--all|--target <name>] <desc>      Auto-fix issues found by audit
+/stx-block:tool <tool-name> <desc>                 Specialized tools (survey-convert)
 
 # Lifecycle: init → update → audit → fix → update → ...
 # All commands accept --help for the full cheatsheet.
 
 # Developer
-/stx-developer:test-run             Run test suite
-/stx-developer:lint                 Run linter with auto-fix
+/stx-block:test             Run test suite
+/stx-block:lint                 Run linter with auto-fix
 
 # Global (available everywhere)
 /stx-guide                      Ecosystem navigation guide (16 topics)
@@ -78,7 +78,7 @@ StreamTeX provides 4 AI profiles, each tailored to a specific audience. Profiles
 | **library** | Library contributors | 3 | -- | 2 | Test, lint, deploy the StreamTeX library |
 | **documentation** | Manual authors | 10 | 2 | 3 | Multi-manual coordination, course generation |
 
-The **presentation** profile extends **project** -- it includes everything from project plus presentation-specific audit/fix rules (auto-detected by `/stx-designer:audit` and `/stx-designer:fix`), 1 additional agent (Presentation Designer), and 2 additional skills (presentation design rules, survey chart conversion).
+The **presentation** profile extends **project** -- it includes everything from project plus presentation-specific audit/fix rules (auto-detected by `/stx-block:audit` and `/stx-block:fix`), 1 additional agent (Presentation Designer), and 2 additional skills (presentation design rules, survey chart conversion).
 
 ### Installation
 
@@ -114,8 +114,8 @@ your-project/
     ├── .stx-profile           # Profile type marker
     ├── commands/
     │   ├── stx-guide.md       # Global ecosystem guide
-    │   ├── stx-designer/      # /stx-designer:* commands (init, update, audit, fix, tool)
-    │   └── stx-developer/     # /stx-developer:* commands
+    │   ├── stx-block/         # /stx-block:* commands (init, update, audit, fix, tool, ...)
+    │   └── stx-ce/            # /stx-ce:* commands (compound document engineering)
     ├── references/
     │   ├── coding_standards.md
     │   └── streamtex_cheatsheet_en.md (or presentation_cheatsheet_en.md)
@@ -141,12 +141,12 @@ Shared files (`references/` and `commands/`) are set read-only (0o444) to indica
 
 ---
 
-## 2. /stx-designer:init -- Create a New Project
+## 2. /stx-block:init -- Create a New Project
 
 ```
-/stx-designer:init "Docker course for beginners, 8 slides, dark presentation style"
-/stx-designer:init "technical REST API documentation, 12 sections, with code examples"
-/stx-designer:init --collection "my_course_library"
+/stx-block:init "Docker course for beginners, 8 slides, dark presentation style"
+/stx-block:init "technical REST API documentation, 12 sections, with code examples"
+/stx-block:init --collection "my_course_library"
 ```
 
 **Trigger**: Natural language description of the desired project.
@@ -181,16 +181,16 @@ Shared files (`references/` and `commands/`) are set read-only (0o444) to indica
 
 ---
 
-## 3. /stx-designer:update -- Add, Modify, Migrate, Export
+## 3. /stx-block:update -- Add, Modify, Migrate, Export
 
 The `update` command covers all content modification operations: adding blocks/slides, customizing themes, upgrading structure, migrating HTML, exporting, and generating course books.
 
 ### Adding content
 
 ```
-/stx-designer:update add block bck_intro_welcome - Welcome screen with title and subtitle
-/stx-designer:update add block comparison VM vs Containers, 2-column grid
-/stx-designer:update add slide bck_19_zoom - Zoom controls demo
+/stx-block:update add block bck_intro_welcome - Welcome screen with title and subtitle
+/stx-block:update add block comparison VM vs Containers, 2-column grid
+/stx-block:update add slide bck_19_zoom - Zoom controls demo
 ```
 
 **Block creation with blueprint matching**: Consults `block-blueprints.md` and matches the description to one of 12 blueprints. Common matches:
@@ -209,9 +209,9 @@ The `update` command covers all content modification operations: adding blocks/s
 ### Customizing an existing project
 
 ```
-/stx-designer:update change to light theme with green palette
-/stx-designer:update add TOC sidebar with numbering, enable pagination
-/stx-designer:update adapt for auditorium projection (large text)
+/stx-block:update change to light theme with green palette
+/stx-block:update add TOC sidebar with numbering, enable pagination
+/stx-block:update adapt for auditorium projection (large text)
 ```
 
 **Customization domains**:
@@ -225,7 +225,7 @@ Always reads current configuration, proposes a diff, and asks for confirmation b
 ### Upgrading structure (`--upgrade`)
 
 ```
-/stx-designer:update --upgrade
+/stx-block:update --upgrade
 ```
 
 Compares project boilerplate files (`blocks/__init__.py`, `blocks/helpers.py`, `setup.py`, `.streamlit/config.toml`) against the template and applies safe updates. Does NOT modify `custom/styles.py`, `custom/themes.py`, or block content files.
@@ -233,8 +233,8 @@ Compares project boilerplate files (`blocks/__init__.py`, `blocks/helpers.py`, `
 ### Generating course book.py (`course`)
 
 ```
-/stx-designer:update course gai4as
-/stx-designer:update course --all
+/stx-block:update course gai4as
+/stx-block:update course --all
 ```
 
 Reads `blocks.csv` in the course directory, runs the book generator tool, and produces a wired `book.py`.
@@ -242,8 +242,8 @@ Reads `blocks.csv` in the course directory, runs the book generator tool, and pr
 ### Migrating HTML to StreamTeX (`--migrate`)
 
 ```
-/stx-designer:update --migrate bck_overview
-/stx-designer:update --migrate --all
+/stx-block:update --migrate bck_overview
+/stx-block:update --migrate --all
 ```
 
 The most comprehensive migration operation. Accepts raw HTML (from Google Docs export) inline or as a file path.
@@ -261,8 +261,8 @@ The most comprehensive migration operation. Accepts raw HTML (from Google Docs e
 ### Configuring HTML export (`--export`)
 
 ```
-/stx-designer:update --export
-/stx-designer:update --export projects/my-project
+/stx-block:update --export
+/stx-block:update --export projects/my-project
 ```
 
 Verifies export readiness (`export=True` in `st_book()`), audits all blocks for export-aware widget usage (bare `st.*` calls that should be `stx.*`), checks image assets, and guides the user through the export process. Key reminders:
@@ -273,13 +273,13 @@ Verifies export readiness (`export=True` in `st_book()`), audits all blocks for 
 
 ---
 
-## 4. /stx-designer:audit -- Check Quality
+## 4. /stx-block:audit -- Check Quality
 
 ```
-/stx-designer:audit --target bck_04_text_styles
-/stx-designer:audit --target styles
-/stx-designer:audit --all
-/stx-designer:audit presentation
+/stx-block:audit --target bck_04_text_styles
+/stx-block:audit --target styles
+/stx-block:audit --all
+/stx-block:audit presentation
 ```
 
 ### Block/slide audit (`--target <block>`)
@@ -308,8 +308,8 @@ Output: PASS/ERROR/WARNING per rule with suggested fixes.
 ### Style audit (`--target styles`)
 
 ```
-/stx-designer:audit --target styles
-/stx-designer:audit --target styles blocks/bck_example.py
+/stx-block:audit --target styles
+/stx-block:audit --target styles blocks/bck_example.py
 ```
 
 **Critical issues**: raw HTML/CSS strings, hardcoded black/white, multiple `st_write` for inline text, missing font size on links.
@@ -321,7 +321,7 @@ Output: PASS/ERROR/WARNING per rule with suggested fixes.
 ### Migration audit
 
 ```
-/stx-designer:audit migration bck_ethics_overview
+/stx-block:audit migration bck_ethics_overview
 ```
 
 Reads original HTML and converted block side-by-side, runs validation tool, checks: color fidelity, no raw HTML/CSS, images referenced via registry, inline mixed-style uses ONE `st_write()`, links include font-size, tables use `st_grid()`, lists use `st_list()`, correct family (pres/doc), `BlockStyles` has color-mapping summary and dropped-colors log.
@@ -343,12 +343,12 @@ When the **presentation** profile is active, audit automatically includes live p
 
 ---
 
-## 5. /stx-designer:fix -- Auto-Fix Issues
+## 5. /stx-block:fix -- Auto-Fix Issues
 
 ```
-/stx-designer:fix --target bck_04_text_styles
-/stx-designer:fix --target styles
-/stx-designer:fix --all
+/stx-block:fix --target bck_04_text_styles
+/stx-block:fix --target styles
+/stx-block:fix --all
 ```
 
 ### Block/slide fix (`--target <block>`)
@@ -365,7 +365,7 @@ Only modifies what violates the rules; preserves existing content and structure.
 ### Style fix (`--target styles`)
 
 ```
-/stx-designer:fix --target styles blocks/bck_example.py
+/stx-block:fix --target styles blocks/bck_example.py
 ```
 
 Identifies repeated style patterns, extracts them to `BlockStyles` or `custom/styles.py`, checks style naming conventions (English-only, generic, descriptive), applies refactoring, and runs tests to verify.
@@ -385,16 +385,16 @@ When the **presentation** profile is active, fix automatically includes live pro
 
 ---
 
-## 6. /stx-designer:tool -- Specialized Tools
+## 6. /stx-block:tool -- Specialized Tools
 
 ### survey-convert
 
 ```
-/stx-designer:tool survey-convert                           # Interactive (list temp/ images)
-/stx-designer:tool survey-convert --all                     # Batch convert all in temp/
-/stx-designer:tool survey-convert --list                    # List images without converting
-/stx-designer:tool survey-convert path/to/screenshot.png    # Convert specific image
-/stx-designer:tool survey-convert --all /path/to/folder     # Batch from custom folder
+/stx-block:tool survey-convert                           # Interactive (list temp/ images)
+/stx-block:tool survey-convert --all                     # Batch convert all in temp/
+/stx-block:tool survey-convert --list                    # List images without converting
+/stx-block:tool survey-convert path/to/screenshot.png    # Convert specific image
+/stx-block:tool survey-convert --all /path/to/folder     # Batch from custom folder
 ```
 
 Converts Stack Overflow Developer Survey screenshots into code-generated StreamTeX blocks. The screenshot is the source reference only -- the output is pure Python code that reproduces the chart (zero static image dependency).
@@ -405,20 +405,20 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 ## 7. Developer Commands
 
-### /stx-developer:test-run
+### /stx-block:test
 
 ```
-/stx-developer:test-run
+/stx-block:test
 ```
 
 1. Runs `uv run pytest tests/ -v` from the project root
 2. Analyzes failures and suggests fixes
 3. Reports total passed/failed count
 
-### /stx-developer:lint
+### /stx-block:lint
 
 ```
-/stx-developer:lint
+/stx-block:lint
 ```
 
 1. Runs `uv run ruff check` from the project root (targets `streamtex/` for library, `.` for projects)
@@ -433,7 +433,7 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 ### Project Architect
 
-**Profile**: project | **Invoked by**: `/stx-designer:init` (implicit) or direct invocation
+**Profile**: project | **Invoked by**: `/stx-block:init` (implicit) or direct invocation
 
 **Role**: Designs the structure of StreamTeX projects -- determines block count, content, order, and features (pagination, TOC, banner, export).
 
@@ -880,14 +880,14 @@ cd projects/stx-my-course
 claude
 
 # 4. Use Claude to generate the full project
-> /stx-designer:init "Introduction to Python, 10 slides, dark theme, for students"
+> /stx-block:init "Introduction to Python, 10 slides, dark theme, for students"
 # Claude proposes structure with blueprints, you approve, files are generated
 
 # 5. Preview
 > stx run
 
 # 6. Refine individual slides
-> /stx-designer:fix --target bck_03_variables
+> /stx-block:fix --target bck_03_variables
 ```
 
 ### Add blocks to an existing project
@@ -896,11 +896,11 @@ claude
 # In Claude Code, from the project directory:
 
 # Create a new block using blueprint matching
-> /stx-designer:update add block comparison Python vs Java, 2-column grid with pros/cons
+> /stx-block:update add block comparison Python vs Java, 2-column grid with pros/cons
 # Claude matches Blueprint 4, creates the file, shows wiring instructions
 
 # Or create a slide with full design rules
-> /stx-designer:update add slide bck_08_demo - Live code demo with input/output
+> /stx-block:update add slide bck_08_demo - Live code demo with input/output
 
 # Wire it into book.py manually:
 # import blocks
@@ -913,23 +913,23 @@ claude
 # In Claude Code:
 
 # 1. Check style consistency across all blocks
-> /stx-designer:audit --target styles
+> /stx-block:audit --target styles
 
 # 2. Validate design rules on a specific block
-> /stx-designer:audit --target bck_05_architecture
+> /stx-block:audit --target bck_05_architecture
 
 # 3. Auto-fix violations
-> /stx-designer:fix --target bck_05_architecture
+> /stx-block:fix --target bck_05_architecture
 
 # 4. Refactor repeated styles
-> /stx-designer:fix --target styles blocks/bck_05_architecture.py
+> /stx-block:fix --target styles blocks/bck_05_architecture.py
 
 # 5. Validate structure and assets
-> /stx-designer:audit --target bck_05_architecture
+> /stx-block:audit --target bck_05_architecture
 
 # For presentation projects (presentation profile -- auto-detected):
-> /stx-designer:audit --target bck_05_architecture
-> /stx-designer:fix --target bck_05_architecture
+> /stx-block:audit --target bck_05_architecture
+> /stx-block:fix --target bck_05_architecture
 ```
 
 ### Maintain and update profiles
@@ -960,23 +960,23 @@ stx claude update . --force       # Override everything
 # In Claude Code, from the project directory:
 
 # 1. Single block migration (provide HTML inline or as file path)
-> /stx-designer:update --migrate bck_overview
+> /stx-block:update --migrate bck_overview
 # Claude reads HTML, extracts colors/formatting, generates StreamTeX block
 
 # 2. Batch conversion (for large-scale migrations)
-> /stx-designer:update --migrate --all
+> /stx-block:update --migrate --all
 # Converts all HTML files in exports/html/, validates results
 
 # 3. Audit conversion quality
-> /stx-designer:audit migration bck_overview
+> /stx-block:audit migration bck_overview
 # Compares original HTML with converted block, checks fidelity
 
 # 4. Configure HTML export for the project
-> /stx-designer:update --export
+> /stx-block:update --export
 # Checks export readiness, audits widgets, guides through export
 
 # 5. Generate book.py from CSV block list (after batch conversion)
-> /stx-designer:update course --all
+> /stx-block:update course --all
 ```
 
 ### Deploy a project

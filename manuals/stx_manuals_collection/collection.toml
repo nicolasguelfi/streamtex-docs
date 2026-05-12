@@ -53,3 +53,11 @@ emoji = "🔧"
 button_label = "Open Guide"
 project_url = "http://localhost:8505"
 order = 6
+
+[projects.test-patterns]
+title = "StreamTeX Patterns"
+description = "Reusable graphic design patterns: layout primitives, manual sections, callouts, card grids, slide headings — invoke by name from any block"
+emoji = "🧩"
+button_label = "Open Manual"
+project_url = "http://localhost:8508"
+order = 7

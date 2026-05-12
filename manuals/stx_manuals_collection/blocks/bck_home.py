@@ -98,13 +98,25 @@ def _render_card(project: dict) -> None:
         st_space("v", 1)
         st_write(bs.card_description + "text-align:center;", project["description"])
         st_space("v", 2)
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.link_button(
-                f"{project['emoji']} {project['button_label']}",
-                project["url"],
-                use_container_width=True,
-            )
+        # Styled full-width anchor — gradient background matching the
+        # header.  We bypass st.link_button (its theming is hard to
+        # override and inside Streamlit columns it cannot span 100% of
+        # the card width because of the column padding).
+        _button_css = (
+            "display:block;width:100%;box-sizing:border-box;"
+            "padding:14px 24px;"
+            "background:linear-gradient(135deg,#f46b45 0%,#eea849 100%);"
+            "color:white;text-align:center;"
+            "border-radius:8px;text-decoration:none;"
+            "font-weight:600;font-size:15px;letter-spacing:0.3px;"
+            "box-shadow:0 2px 8px rgba(244,107,69,0.25);"
+            "transition:transform 0.15s,box-shadow 0.15s;"
+        )
+        st.html(
+            f'<a href="{project["url"]}" target="_blank" rel="noopener" '
+            f'style="{_button_css}">'
+            f'{project["emoji"]} {project["button_label"]}</a>'
+        )
         st_space("v", 1)
 
 

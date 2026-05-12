@@ -5,6 +5,69 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.25] — 2026-05-12
+
+### Added
+- **New patterns manual** (`stx_manual_patterns`): documentation manual on the
+  StreamTeX graphic-design patterns mechanism — `_pattern_library.md`,
+  `_pattern_dictionary.md`, the `/stx-pattern:*` command family, and the
+  `ptn_*` blueprints (`ptn_manual_section`, `ptn_api_reference_card`,
+  `ptn_term_definition_list`, `ptn_narrative_transition`, etc.).
+  Deployed at `https://docs-patterns.streamtex.org` once the Coolify
+  service is registered.
+
+### Changed
+- **Chrome recommendation banner: off by default in `st_book`** (library
+  0.6.25). The marker-runtime migration eliminated the Chrome-specific
+  `:has()` cold-load freeze AND restored Firefox compatibility, so the
+  banner no longer reflects reality. The `st_chrome_banner()` helper
+  remains exported for users who want to opt back in explicitly.
+
+## [0.6.24] — 2026-05-12
+
+### Changed
+- **Library upgrade**: bumped streamtex dependency from 0.6.10 to 0.6.24.
+  The 0.6.21 → 0.6.24 patch chain delivers all the layout regression
+  fixes required by Streamlit 1.56+:
+  - 0.6.21 — Observer migrated from `streamlit.components.v1.html`
+    (deprecated, removed after 2026-06-01) to
+    `st.components.v2.component(isolate_styles=False)`. CSS adapted to
+    Streamlit 1.56+ DOM structure (`stElementContainer`, `stLayoutWrapper`).
+  - 0.6.22 — Layout-critical styles now written inline with `!important`
+    by the observer JS, bypassing the CSS cascade.
+  - 0.6.23 — Marker cell hidden inline (`display: none !important`); the
+    one-shot `data-stx-processed` gate dropped so the observer can
+    re-apply when Streamlit reconciles the parent.
+  - 0.6.24 — Observer now watches `attribute` mutations in addition to
+    `childList`; `applyMarker` is fully idempotent. Recovers from
+    sidebar-slider reruns that previously wiped per-instance backgrounds
+    and borders.
+- **No content change** in any deployed manual — purely infrastructure.
+
+### Added
+- **Playwright e2e regression suite** (library): `tests/e2e/` with a
+  direct attribute-strip recovery test that catches the kind of
+  regression that motivated 0.6.21 → 0.6.24. Run with
+  `uv run pytest -m e2e`.
+
+## [0.6.16] — 2026-05-11
+
+### Changed
+- **Library upgrade**: marker-runtime architectural migration complete
+  (library Phase 0 → 5, versions 0.6.11 → 0.6.16). Replaces the legacy
+  CSS `:has()` selector pattern with a JavaScript MutationObserver that
+  watches `<span class="stx-marker" data-stx-kind="…">` sentinels and
+  applies layout classes on the parent `[data-testid="stVerticalBlock"]`.
+  - Eliminates the 3–4 s Chrome cold-load freeze on long manuals
+    (~1 054 `<style>` elements + ~958 `:has()` selectors → < 50
+    elements + 0 `:has()` selectors).
+  - Restores Firefox compatibility (`:has()` was unsupported in Firefox
+    until v121, December 2023).
+- **No user-facing API change** — every existing block module continues
+  to work without modification.
+- See the upstream streamtex CHANGELOG for per-version detail of the
+  migration phases.
+
 ## [0.6.10] — 2026-04-15
 
 ### Changed

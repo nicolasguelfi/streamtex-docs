@@ -190,6 +190,55 @@ jobs:
           echo "Summary: $deployed deployed, $failed failed (in $total_batches batch(es))"
           [ "$failed" -eq 0 ] || exit 1
 
+      - name: Wait for last batch to finish building
+        if: steps.changed.outputs.deploy_all == 'true' || steps.changed.outputs.uuids != ''
+        run: |
+          # The deploy step above QUEUES Coolify builds in batches and sleeps
+          # 300 s between batches but exits as soon as the last batch is
+          # queued.  The actual build of that last batch then runs on the
+          # server for ~3-5 min more.  Wait long enough that every freshly
+          # produced image is past its first minute (so we never prune the
+          # one we just deployed) but tight enough that the cleanup step
+          # doesn't double the perceived deploy duration.
+          echo "Waiting 5 min for last batch builds to settle…"
+          sleep 300
+
+      - name: Post-deploy docker cleanup on Hetzner
+        if: steps.changed.outputs.deploy_all == 'true' || steps.changed.outputs.uuids != ''
+        env:
+          HETZNER_HOST: 138.199.148.59
+          HETZNER_SSH_KEY: ${{ secrets.HETZNER_SSH_KEY }}
+        run: |
+          # Removes every Docker image not referenced by a running container
+          # and older than 30 min, plus all unused build-cache layers.  The
+          # 30-min window protects the images we just built (they are < 5
+          # min old at this point) and reclaims the previous deploy's
+          # images (typically hours old), so disk does not grow unbounded
+          # across releases.  Server-side logic lives in
+          # /usr/local/bin/docker-cleanup ('post-deploy' mode) — installed
+          # out-of-band; the script is also the cron entry that runs every
+          # 2 h with the more conservative threshold-based rules.
+          if [ -z "$HETZNER_SSH_KEY" ]; then
+            echo "::warning::HETZNER_SSH_KEY is not set — skipping cleanup. Configure it in repo secrets to enable post-deploy disk reclaim."
+            exit 0
+          fi
+
+          KEY_FILE=$(mktemp)
+          # ssh refuses files with broad permissions; write the key with 0600
+          printf '%s\n' "$HETZNER_SSH_KEY" > "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$HETZNER_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          ssh -i "$KEY_FILE" \
+              -o StrictHostKeyChecking=accept-new \
+              -o ConnectTimeout=15 \
+              "root@$HETZNER_HOST" \
+              "/usr/local/bin/docker-cleanup post-deploy && tail -10 /var/log/docker-cleanup.log && echo '---' && df -h / | tail -1"
+
+          rm -f "$KEY_FILE"
+
       - name: No deploy needed
         if: steps.changed.outputs.deploy_all != 'true' && steps.changed.outputs.uuids == ''
         run: echo "No services affected by this push — skipping deploy."

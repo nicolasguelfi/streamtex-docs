@@ -10,8 +10,17 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl nginx-light \
-        texlive-latex-base texlive-fonts-recommended dvisvgm ghostscript \
+        texlive-latex-base texlive-latex-extra texlive-pictures \
+        texlive-fonts-recommended texlive-science \
+        dvisvgm ghostscript \
     && rm -rf /var/lib/apt/lists/*
+# texlive-pictures: provides the tikz/pgf packages (\usepackage{tikz}).
+# texlive-latex-extra: xcolor, geometry, fancyhdr, etc. — commonly used
+#   by TikZ examples in the advanced manual.
+# texlive-science: math symbols / commutative diagrams used by some
+#   manual examples.
+# texlive-latex-base alone is insufficient — \usepackage{tikz} fails
+#   with "File 'tikz.sty' not found" without texlive-pictures.
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/

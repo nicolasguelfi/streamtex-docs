@@ -61,12 +61,14 @@ st_book([
     blocks.bck_ce_parcours,
     blocks.bck_ce_quickstart,
 
-    # Part 2: The Cycle (7 phases)
+    # Part 2: The Cycle (8 phases)
+    blocks.bck_ce_master_plan,
     blocks.bck_ce_collect,
     blocks.bck_ce_assess,
     blocks.bck_ce_plan,
     blocks.bck_ce_plan_interactive,
     blocks.bck_ce_plan_versioning,
+    blocks.bck_ce_prototype,
     blocks.bck_ce_produce,
     blocks.bck_ce_review,
     blocks.bck_ce_fix,

@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """/stx-ce:go autonomous workflow: 11 steps, 3 gates, flags."""
+    """/stx-ce:go orchestrated workflow: 9 phases, 4 fundamental gates, contextual scope dialogue."""
 
     st_space("v", 1)
     st_write(bs.heading, "/stx-ce:go — The Autonomous Pipeline",

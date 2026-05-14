@@ -138,15 +138,19 @@ def build():
     ### Full Pipeline Diagram
 
     ```
-    [COLLECT] -> [ASSESS] -> [PLAN] -> [PRODUCE] -> [REVIEW] -> [FIX] -> [COMPOUND]
-        |            |          |           |            |          |          |
-      scan       pathway     skeleton    execute     5 agents    apply    capitalize
-      classify   dialogue    sequence    per-type    severity    verify   feedback
-      report     R1-R18      milestones  validate    report      loop     governance
-        |            |          |           |            |          |          |
-      Gate 1       auto/     Gate 2      resume      read-     Gate 3    commit
-      validate   interactive  approve    on fail     only       quality   merge
+    [COLLECT] -> [ASSESS] -> [PLAN] -> [PROTOTYPE] -> [PRODUCE] -> [REVIEW] -> [FIX] -> [COMPOUND] -> [INTEGRATE]
+        |            |          |           |            |             |          |          |             |
+      scan       pathway     skeleton    pilot         execute     5 agents    apply    capitalize    route +
+      classify   dialogue    +           block(s),     per-type    parallel    fixes    4 axes        promote
+      report     R1-R18,     master      patterns     +            +           +        +              patterns
+                 master      plan        captured     patterns     objective   re-      master         to shared
+                 plan init               or reused    applied      monitor     apply    plan upkeep    catalog
+        |            |          |           |            |             |          |          |             |
+                              Gate 1     (QCM-driven, skipped if no                 Gate 2     Gate 3      Gate 4
+                              approve    new visual territory)                      lance fix  next       integrate
     ```
+
+    Gates 1-4 are the four **fundamental** QCM checkpoints (post-PLAN, post-REVIEW, post-FIX, post-INTEGRATE). PROTOTYPE is QCM-driven and may be skipped when the increment continues an already-validated visual territory.
     """)
 
     st_space("v", 1)
@@ -192,7 +196,7 @@ def build():
 
     | Situation | Command | Why |
     |-----------|---------|-----|
-    | Start a new project or full production cycle | `/stx-ce:go` | Runs all 7 phases with gates |
+    | Start a new project or full production cycle | `/stx-ce:go` | Runs all 9 phases with 4 fundamental gates (PROTOTYPE is QCM-driven) |
     | Do a specific punctual task (compare, review, add block) | `/stx-ce:task "..."` | Targeted execution with lifecycle reconciliation |
     | Return after a break, unsure where you left off | `/stx-ce:continue` | Briefing + drift detection + proposals |
     | Run a specific phase directly | `/stx-ce:collect`, `:review`, etc. | Direct control, no orchestration |

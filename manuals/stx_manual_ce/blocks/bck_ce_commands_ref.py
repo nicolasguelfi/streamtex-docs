@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference table of all 12 CE commands (11 here + go in its own block) with options and examples."""
+    """Reference table of all 14 CE commands (13 here + go in its own block) with options and examples."""
 
     st_space("v", 1)
     st_write(bs.heading, "Commands Reference",
@@ -28,7 +28,7 @@ def build():
     st_space("v", 2)
 
     st_write(s.large,
-             "Compound Document Engineering provides ", (s.bold, "12 commands"),
+             "Compound Document Engineering provides ", (s.bold, "14 commands"),
              " that map directly to the CE ",
              (s.project.titles.phase_kw, "phases"),
              ". Each command activates the ",
@@ -43,16 +43,18 @@ def build():
     | Command | Phase | Purpose |
     |---------|-------|---------|
     | `/stx-ce:collect` | COLLECT | Scan sources, build inventory |
-    | `/stx-ce:assess` | ASSESS | Analyze content, identify gaps or angles |
-    | `/stx-ce:plan` | PLAN | Design structure, sequence tasks |
-    | `/stx-ce:produce` | PRODUCE | Generate or convert blocks |
-    | `/stx-ce:review` | REVIEW | Quality check from 5 perspectives |
-    | `/stx-ce:fix` | FIX | Apply review recommendations |
-    | `/stx-ce:compound` | COMPOUND | Extract and package learnings |
-    | `/stx-ce:status` | (any) | Show current cycle state and progress |
+    | `/stx-ce:assess` | ASSESS | Analyze content, identify gaps or angles, initialize master plan (1st iteration) or enrich it |
+    | `/stx-ce:plan` | PLAN | Design the increment plan in coherence with the master plan; 1st iteration also produces the global TOC skeleton |
+    | `/stx-ce:prototype` | PROTOTYPE | Validate styles by example via pilot block(s); capture/reuse patterns into the local catalog. QCM-driven, skipped when the increment continues a validated visual territory |
+    | `/stx-ce:produce` | PRODUCE | Generate or convert blocks; apply patterns mapped in the master plan |
+    | `/stx-ce:review` | REVIEW | Quality check from 5 perspectives (objective-monitor consulted in sequence) |
+    | `/stx-ce:fix` | FIX | Apply review recommendations; may propose re-applying new patterns to earlier blocks |
+    | `/stx-ce:compound` | COMPOUND | Extract and package learnings across 4 axes (production, ecosystem feedback, dev governance, master plan maintenance) |
+    | `/stx-ce:integrate` | INTEGRATE | Route solutions; promote local patterns to the shared catalog when eligible |
+    | `/stx-ce:status` | (any) | Show current cycle state and master plan dashboard |
     | `/stx-ce:task` | (any) | Execute an ad-hoc task with lifecycle reconciliation |
-    | `/stx-ce:pause` | (any) | Save session checkpoint before pausing work |
-    | `/stx-ce:continue` | (any) | Resume work after a session break |
+    | `/stx-ce:pause` | (any) | Save session checkpoint before pausing work (snapshots the master plan if state changed) |
+    | `/stx-ce:continue` | (any) | Resume work after a session break (runs plan-reconciler and objective-monitor) |
     """)
 
     st_space("v", 1)

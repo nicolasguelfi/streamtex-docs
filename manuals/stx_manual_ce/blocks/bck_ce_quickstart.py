@@ -36,17 +36,19 @@ def build():
     st_space("v", 1)
 
     # Pattern 1: Full cycle
-    st_write(s.large + s.bold, "1. Full cycle — all 7 phases")
+    st_write(s.large + s.bold, "1. Full cycle — all 9 phases")
     st_space("v", 0.5)
     show_code("""\
         /stx-ce:go "Create a training manual about Docker deployment"
     """, language="bash", line_numbers=False)
     st_space("v", 0.5)
     show_explanation("""\
-        Runs all phases: COLLECT, ASSESS, PLAN, PRODUCE, REVIEW, FIX,
-        COMPOUND. Three validation gates pause for your approval
-        (after ASSESS, after PLAN, after REVIEW). Best for new projects
-        where you want full control.
+        Runs all phases: COLLECT, ASSESS, PLAN, PROTOTYPE (QCM-driven),
+        PRODUCE, REVIEW, FIX, COMPOUND, INTEGRATE. Four fundamental QCM
+        gates pause for your approval (post-PLAN, post-REVIEW, post-FIX,
+        post-INTEGRATE). The scope (full document or increment) is
+        determined by contextual dialogue at the start. Best for new
+        projects where you want full control.
     """)
     st_space("v", 1)
 

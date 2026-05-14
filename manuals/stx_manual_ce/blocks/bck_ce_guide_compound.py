@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Guide: Capitalize effectively — the three axes in practice."""
+    """Guide: Capitalize effectively — the four axes in practice."""
 
     st_space("v", 1)
     st_write(bs.heading, "Guide: Capitalize Effectively",

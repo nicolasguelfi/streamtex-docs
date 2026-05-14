@@ -1,4 +1,4 @@
-"""CE Manual — Part 3: Overview of All 18 Agents and Command-Driven PRODUCE."""
+"""CE Manual — Part 3: Overview of All 21 Agents and Command-Driven PRODUCE."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Overview of all 18 agents: table listing by phase, role, and collaboration."""
+    """Overview of all 21 agents: table listing by phase, role, and collaboration."""
 
     st_space("v", 1)
     st_write(bs.heading, "Agents Overview",
@@ -29,8 +29,9 @@ def build():
 
     st_write(s.large,
              "Compound Document Engineering orchestrates ",
-              (s.bold, "18 specialized agents"),
-              " across the five CE phases. Each agent has a focused responsibility "
+              (s.bold, "21 specialized agents"),
+              " across the nine CE phases (with PROTOTYPE auto-triggered between PLAN and PRODUCE). "
+              "Each agent has a focused responsibility "
               "and communicates through structured artifacts — templates, checklists, "
               "and reports — that flow from one phase to the next.")
     st_space("v", 1)
@@ -43,7 +44,7 @@ def build():
     1. **Single Responsibility** — each agent handles exactly one concern
        (e.g., scanning sources, evaluating pedagogy, detecting feedback).
     2. **Template-Driven Output** — agents produce structured documents using
-       the 16 CE templates, ensuring consistency across projects.
+       the 19 CE templates, ensuring consistency across projects.
     3. **Phase Boundaries** — agents only activate during their designated phase,
        reading inputs from prior phases and writing outputs for subsequent ones.
 
@@ -68,15 +69,18 @@ def build():
     | 8 | PLAN | **structure-architect** | Designs document skeleton: parts, blocks, navigation flow |
     | 9 | PLAN | **domain-researcher** | Gathers domain knowledge, best practices, technical references |
     | 10 | PLAN | **learnings-researcher** | Mines past project experience, surfaces reusable patterns |
-    | 11 | PRODUCE | *(command-driven)* | Delegates to `/stx-block:*`, `/stx-import:*`, `/stx-export:*`, `/stx-deploy:*` |
-    | 12 | REVIEW | **audience-advocate** | Reviews from the reader's perspective: clarity, accessibility |
-    | 13 | REVIEW | **pedagogy-analyst** | Checks learning flow, progression, and explanation quality |
-    | 14 | REVIEW | **visual-reviewer** | Evaluates layout, spacing, visual hierarchy, and responsiveness |
-    | 15 | REVIEW | **style-consistency-checker** | Verifies adherence to project style guide and conventions |
-    | 16 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
-    | 17 | COMPOUND | **feedback-detector** | Detects ecosystem issues from review findings |
-    | 18 | COMPOUND | **dev-governance** | Enforces development discipline across the cycle |
-    | 19 | TASK | **ad-hoc-reviewer** | Executes custom-criteria reviews on scoped blocks |
+    | 11 | PLAN (continue/fix) | **plan-reconciler** | Detects divergences between `book.py` and the master plan; proposes block-by-block reconciliation |
+    | 12 | PROTOTYPE | **prototype-designer** | Selects pilot block(s), proposes pattern strategy (reuse / adapt / create) |
+    | 13 | PRODUCE | *(command-driven)* | Delegates to `/stx-block:*`, `/stx-import:*`, `/stx-export:*`, `/stx-deploy:*` |
+    | 14 | REVIEW | **audience-advocate** | Reviews from the reader's perspective: clarity, accessibility |
+    | 15 | REVIEW | **pedagogy-analyst** | Checks learning flow, progression, and explanation quality |
+    | 16 | REVIEW | **visual-reviewer** | Evaluates layout, spacing, visual hierarchy, and responsiveness |
+    | 17 | REVIEW | **style-consistency-checker** | Verifies adherence to project style guide and conventions |
+    | 18 | REVIEW | **content-editor** | Proofreads text, checks accuracy, suggests rewording |
+    | 19 | REVIEW / CONTINUE | **objective-monitor** | Judges whether the iteration's objectives are met; produces a textual judgment, not metrics |
+    | 20 | COMPOUND | **feedback-detector** | Detects ecosystem issues from review findings |
+    | 21 | COMPOUND | **dev-governance** | Enforces development discipline across the cycle |
+    | 22 | TASK | **ad-hoc-reviewer** | Executes custom-criteria reviews on scoped blocks |
 
     **Extended modes** (activated by `/stx-ce:task`):
     - **gap-analyst**: bidirectional comparison (source→blocks + blocks→source)
@@ -91,14 +95,15 @@ def build():
     Agents do not communicate directly. Instead, they follow a **relay pattern**:
 
     - **COLLECT** agents produce a **source inventory** and **complexity report**.
-    - **ASSESS** agents read those reports and produce an **assessment brief**.
-    - **PLAN** agents consume the brief and emit a **structured plan**.
-    - **PRODUCE** is command-driven — it executes the plan via `/stx-block:*` and `/stx-import:*` commands.
-    - **REVIEW** agents evaluate the output against the assessment criteria.
+    - **ASSESS** agents read those reports and produce an **assessment brief**; in the first iteration they also initialise the **master plan**.
+    - **PLAN** agents consume the brief and emit a **structured plan**; on subsequent CE sessions, **plan-reconciler** checks alignment with `book.py` and surfaces divergences for user decision.
+    - **PROTOTYPE** is led by **prototype-designer** — it selects pilot block(s) and either reuses or extracts patterns into the local catalog.
+    - **PRODUCE** is command-driven — it executes the plan via `/stx-block:*` and `/stx-import:*` commands, applying the patterns mapped in the master plan.
+    - **REVIEW** agents evaluate the output against the assessment criteria; **objective-monitor** consults the master plan's objectives and produces a textual judgment of whether they were met by the iteration.
 
     Two **COMPOUND** agents — **feedback-detector** and **dev-governance** — operate
     outside this linear flow. They harvest insights from any phase and channel them
-    into the three capitalization axes: solutions, profiles, and ecosystem feedback.
+    into the four capitalization axes: document production (including pattern catalog enrichment), ecosystem feedback, development governance, and master plan maintenance.
     """)
 
     st_space("v", 1)
@@ -118,8 +123,11 @@ def build():
     | structure-architect | PLAN | Yes | Yes | Yes |
     | domain-researcher | PLAN | Yes | Yes | Yes |
     | learnings-researcher | PLAN | Yes | Yes | Yes |
+    | plan-reconciler | PLAN (continue/fix) | Yes | Yes | Yes |
+    | prototype-designer | PROTOTYPE | Yes | Yes | Yes |
     | *(commands)* | PRODUCE | Yes | Yes | Yes |
     | Review agents (5) | REVIEW | Yes | Yes | Yes |
+    | objective-monitor | REVIEW / CONTINUE | Yes | Yes | Yes |
     | Compound agents (2) | COMPOUND | Yes | Yes | Yes |
     """)
 

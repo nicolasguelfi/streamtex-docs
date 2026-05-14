@@ -152,11 +152,24 @@ def build():
     ## Task Configuration
     - task_gate: <always|write-only|never> (confirmation gate for /stx-ce:task)
     - task_history: <true|false> (append task summaries to profile)
+
+    ## Dialog Configuration
+    - dialog_level: <minimal|guided|exhaustive> (modulates QCM frequency, never the format)
     ```
 
     The profile is optional but strongly recommended. A project without
     a profile gets default agent behavior; a project with a detailed
     profile gets tailored recommendations.
+
+    **`dialog_level` semantics** (default: `guided`):
+
+    | Level | Behavior |
+    |-------|----------|
+    | `minimal` | QCM only at the 4 fundamental gates (post-PLAN, post-REVIEW, post-FIX, post-INTEGRATE). Sub-decisions silently apply the recommended default. A synthesis is shown at the end of each phase. |
+    | `guided` | QCM at all structuring decisions (scope, pathway, design choices, PROTOTYPE confirmation, pattern promotion). Sub-decisions follow the recommended default unless they meaningfully diverge. |
+    | `exhaustive` | QCM on every choice, even minor (block naming, blueprint selection, style options). |
+
+    The QCM **format** is identical across all levels: 1 option `(Recommandé)` + alternatives + `Discutons-en` + auto-injected `Autre`.
     """)
 
     st_space("v", 1)

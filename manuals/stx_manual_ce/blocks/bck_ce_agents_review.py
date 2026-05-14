@@ -106,7 +106,7 @@ def build():
     ### COMPOUND Agents
 
     The COMPOUND phase operates two agents that work outside the linear
-    COLLECT-ASSESS-PLAN-PRODUCE-REVIEW pipeline.
+    COLLECT-ASSESS-PLAN-PROTOTYPE-PRODUCE-REVIEW-FIX-INTEGRATE pipeline.
 
     **feedback-detector** — Scans all artifacts produced during the cycle
     (inventory, assessment, plan, blocks, reviews) looking for insights

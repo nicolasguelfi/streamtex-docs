@@ -30,9 +30,10 @@ def build():
     st_write(s.large,
              "The ",
              (s.project.titles.phase_kw, "COMPOUND"),
-             " phase closes the CE cycle by extracting value from the "
-             "production process itself. It operates along three axes: production "
-             "capitalization, ecosystem feedback, and development governance.")
+             " phase closes the iteration by extracting value from the "
+             "production process itself. It operates along four axes: production "
+             "capitalization (including pattern catalog enrichment), ecosystem feedback, "
+             "development governance, and master plan maintenance (including partial purge of snapshots).")
     st_space("v", 1)
 
     st_write(s.large,
@@ -134,6 +135,34 @@ def build():
     ce(cycle-001): FIX bck_start_install [CRITICAL] add BlockStyles
     ce(cycle-001): COMPOUND cycle complete (24 blocks, 3 iterations)
     ```
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""\
+    ### Axis 4: Master Plan Maintenance
+
+    The fourth axis updates the **master plan** to reflect what was produced
+    and learned during the iteration, so subsequent iterations resume from
+    an accurate snapshot.
+
+    **What happens in Axis 4:**
+
+    1. **Iteration outcome** — append an entry under `master-plan.yaml -> iterations[<current>]`
+       summarising the scope, the blocks produced, the patterns captured/promoted, and the
+       reviewer findings synthesis.
+    2. **Objectives status** — the `objective-monitor` agent updates the `status` of each
+       objective in `master-plan.yaml -> objectives[*]` based on the iteration outcome
+       (free-text judgment, not metrics).
+    3. **Pattern catalog promotion** — patterns captured at the local level during PROTOTYPE
+       or PRODUCE that have been validated in real blocks are confirmed in
+       `master-plan.yaml -> patterns.applied` with `level: local`.
+    4. **Snapshot housekeeping** — the master plan paired snapshot policy keeps every
+       snapshot by default. COMPOUND surfaces a QCM proposing a partial purge if the
+       number of snapshots exceeds a useful threshold (typically > 20). User decision
+       via the universal QCM.
+
+    All Axis-4 changes are captured as new entries in `master-plan.yaml -> decisions_log`.
     """)
 
     st_space("v", 1)

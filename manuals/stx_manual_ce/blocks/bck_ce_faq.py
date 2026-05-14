@@ -272,6 +272,128 @@ def build():
 
     st_space("v", 1)
 
+    show_explanation("""
+    ### What is the master plan?
+
+    The **master plan** is the living reference for the document being
+    produced, stored as **two paired files** in the project's `docs/`
+    directory:
+
+    - `docs/master-plan.yaml` — orchestration metadata: identity, objectives
+      (free-text criteria), TOC with per-block statuses, transverse design
+      decisions, applied patterns mapping, iterations history, decisions log,
+      and coherence debt entries.
+    - `docs/master-plan.md` — content plan: TOC with `Intention`,
+      `Sources`, `Notes de conception`, and raw content drafts per node.
+
+    Paired snapshots are taken automatically in
+    `docs/master-plan/archive/YYYY-MM-DD-NNN.{yaml,md}` whenever the
+    plan differs from the last snapshot.
+
+    The master plan is **independent of git history** — snapshots never
+    reference commit hashes. It is the single source of truth that lets
+    multiple iterations (potentially weeks apart) resume coherently and
+    catches drift between `book.py` and the planned structure.
+
+    The master plan is initialised by `/stx-ce:assess` on the first
+    iteration and enriched on subsequent ones.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### When is the PROTOTYPE phase skipped?
+
+    PROTOTYPE sits between PLAN and PRODUCE and is **QCM-driven** —
+    the orchestrator surfaces a contextual question before deciding
+    whether to run it.
+
+    **PROTOTYPE is recommended (default `Oui`)** when:
+
+    - This is the **first iteration** on the document and no pattern has
+      yet been validated.
+    - The current increment introduces a **new visual territory**
+      (a part or section whose archetypes differ from anything produced
+      before).
+
+    **PROTOTYPE is skipped (default `Non`)** when:
+
+    - The current increment continues an already-validated visual
+      territory and all candidate patterns are already mapped in
+      `master-plan.yaml -> patterns.applied`.
+    - You explicitly answer `Non, produire directement` at the
+      PROTOTYPE QCM.
+
+    In both cases the QCM is shown — the recommended default is
+    inferred by the LLM from the current state. PROTOTYPE produces one
+    or more pilot blocks and captures patterns at the **local** level
+    (`level: local`) in `.claude/custom/streamtex-patterns/<name>.md`,
+    ready for promotion to the shared catalog at INTEGRATE time.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### What is `dialog_level` for?
+
+    `dialog_level` is a field of `docs/solutions/producer-profile.md`
+    that modulates the **frequency** of QCMs surfaced by CE skills —
+    never their **format**.
+
+    **Three values**:
+
+    - `minimal` — QCM only at the **four fundamental gates** (post-PLAN,
+      post-REVIEW, post-FIX, post-INTEGRATE). Every sub-decision
+      silently applies the recommended default. A synthesis is shown at
+      the end of each phase.
+    - `guided` *(default)* — QCM at all structuring decisions: scope,
+      pathway, design choices, PROTOTYPE confirmation, pattern promotion.
+      Sub-decisions follow the recommended default unless they
+      meaningfully diverge.
+    - `exhaustive` — QCM on every choice, even minor ones (block
+      naming, blueprint selection, style options).
+
+    Whatever the level, every QCM follows the same universal format:
+    1 option `(Recommandé)` + alternatives + `Discutons-en` +
+    auto-injected `Autre`. The format is documented as the canonical
+    reference in the `ce-conventions` skill that every CE skill reads
+    before surfacing any question.
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### How does reconciliation between `book.py` and the master plan work?
+
+    Between CE sessions, you might edit `book.py` directly — adding a
+    new block, renaming an existing one, reordering the sequence. CE
+    detects these manual edits at the start of the next session via
+    the `plan-reconciler` agent.
+
+    **`plan-reconciler` flow**:
+
+    1. Flatten the master plan TOC into the expected ordered list of
+       block names (traversing parts → sections → blocks).
+    2. Diff against the actual `bck_*` order in `book.py`.
+    3. If aligned, pass silently.
+    4. If diverged, classify each difference (added / removed / renamed
+       / reordered) and produce a **global reconciliation proposal**.
+    5. Surface a QCM: `Appliquer la proposition globale (Recommandé)`
+       / `Voir le détail bloc par bloc` / `Discutons-en` /
+       (auto-injected `Autre`).
+
+    The user can pick the global proposal in one click, walk through
+    block by block to override specific cases, or open dialogue.
+    Refused divergences are written to
+    `master-plan.yaml -> coherence_debt` with the affected blocks,
+    so they are tracked but not silently buried.
+
+    Reconciliation also runs in FIX when new patterns have been
+    captured and earlier blocks could benefit from re-application.
+    """)
+
+    st_space("v", 1)
+
     show_details("""
     ### Quick Answers
 

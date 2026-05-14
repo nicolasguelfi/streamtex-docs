@@ -20,7 +20,7 @@ bs = BlockStyles
 
 
 def build():
-    """Reference of all 17 CE templates: structure, usage, and frontmatter."""
+    """Reference of all 19 CE templates: structure, usage, and frontmatter."""
 
     st_space("v", 1)
     st_write(bs.heading, "Templates Reference",
@@ -29,7 +29,7 @@ def build():
 
     st_write(s.large,
              "CE ", (s.project.titles.concept_kw, "agents"),
-             " communicate through ", (s.bold, "17 structured templates"),
+             " communicate through ", (s.bold, "19 structured templates"),
              ". Each ", (s.project.titles.concept_kw, "template"),
              " defines a document format with required sections, optional "
              "sections, and frontmatter metadata. ",
@@ -61,6 +61,8 @@ def build():
     | 15 | `tpl_task_analysis` | TASK | Structured source document analysis |
     | 16 | `tpl_task_report` | TASK | Task execution summary with cycle impact |
     | 17 | `tpl_checkpoint` | PAUSE | Session checkpoint for pause/resume |
+    | 18 | `tpl_master_plan` | ASSESS+ | Schema reference for `docs/master-plan.yaml` (pilotage) and `docs/master-plan.md` (content). Read by all CE skills; never copied as-is |
+    | 19 | `tpl_prototype_report` | PROTOTYPE | Pilot block(s) produced, patterns extracted/reused, user validations |
     """)
 
     st_space("v", 1)

@@ -21,7 +21,7 @@ bs = BlockStyles
 
 def build():
     """PLAN agents: structure-architect, domain-researcher,
-    learnings-researcher."""
+    learnings-researcher, plan-reconciler, objective-monitor."""
 
     st_space("v", 1)
     st_write(bs.heading, "PLAN Phase Agents",
@@ -34,12 +34,16 @@ def build():
               "skeleton. One main agent — the ",
               (s.project.titles.concept_kw, "structure-architect"),
               " — designs the skeleton, supported by two agents that feed it "
-              "domain expertise and past learnings. "
+              "domain expertise and past learnings. Two additional agents — ",
+              (s.project.titles.concept_kw, "plan-reconciler"),
+              " and ",
+              (s.project.titles.concept_kw, "objective-monitor"),
+              " — engage on subsequent CE sessions to keep `book.py` and the master plan aligned, and to track whether the iteration's objectives have been met. "
               "The phase operates in two modes: ",
               (s.bold, "auto"),
               " (fully autonomous) and ",
               (s.bold, "interactive"),
-              " (4-step collaborative iteration with the user)."))
+              " (4-step collaborative iteration with the user). On the first iteration, structure-architect also produces the global TOC skeleton of the master plan; on subsequent iterations, it produces only the detailed plan for the current increment in coherence with the existing master plan."))
     st_space("v", 1)
 
     show_explanation("""
@@ -139,12 +143,62 @@ def build():
     **Output:** learnings research report with scored and annotated insights.
     """)
 
+    st_space("v", 1)
+
+    show_explanation("""
+    ### Agent: plan-reconciler (cross-iteration)
+
+    The **plan-reconciler** detects divergences between `book.py` (the live
+    document structure executed by Streamlit) and the master plan TOC
+    (`docs/master-plan.yaml -> toc` + `docs/master-plan.md` narrative TOC).
+    It runs at the start of every CE session after the first, and also
+    in FIX when patterns have been re-mapped.
+
+    **Responsibilities:**
+
+    - **Diff `book.py` vs master plan TOC** — detects additions, removals,
+      renames, and reordering of blocks.
+    - **Propose a global reconciliation** — one consolidated suggestion to
+      align both, with an opt-out for a block-by-block walkthrough.
+    - **Capture refusals as debt** — refused divergences are written to
+      `master-plan.yaml -> coherence_debt` with the affected blocks.
+
+    **Output:** reconciliation report surfaced through the universal QCM
+    (recommended action + `Voir le détail bloc par bloc` + `Discutons-en`).
+    """)
+
+    st_space("v", 1)
+
+    show_explanation("""
+    ### Agent: objective-monitor (cross-iteration)
+
+    The **objective-monitor** reads the master plan's free-text objectives
+    (`master-plan.yaml -> objectives[*].criteria`) and the produced content
+    of the current iteration, then judges — in plain text — whether each
+    objective has been met. It does **not** compute metrics.
+
+    **Responsibilities:**
+
+    - **Read objectives + current state** — pulls free-text criteria and
+      the iteration's content from blocks, reviews, and decisions log.
+    - **Produce textual judgment** — per objective, a status (met / partial
+      / not met) with rationale.
+    - **Feed COMPOUND** — its output is consumed by Axis 4 of COMPOUND to
+      update `master-plan.yaml -> objectives[*].status` and to flag
+      unresolved objectives for the next iteration's PLAN.
+
+    **Output:** objectives report integrated into the REVIEW synthesis and
+    the COMPOUND master-plan-maintenance axis.
+    """)
+
     show_details("""
     ### PLAN Agent Activation Summary
 
     | Agent | Role | Runs In | Input From | Output To |
     |-------|------|---------|------------|-----------|
-    | structure-architect | Main | Auto + Interactive | Assessment brief, all supporting outputs | Document structure plan |
+    | structure-architect | Main | Auto + Interactive | Assessment brief, all supporting outputs | Document structure plan; master plan TOC (1st iteration only) |
     | domain-researcher | Supporting | Auto + Interactive | Assessment brief, document plan | Domain research report |
-    | learnings-researcher | Supporting | Auto + Interactive | `docs/solutions/` | Learnings research report |
+    | learnings-researcher | Supporting | Auto + Interactive | `docs/solutions/`, local + shared patterns catalog | Learnings research report |
+    | plan-reconciler | Cross-iteration | CONTINUE, FIX | `book.py`, `master-plan.{yaml,md}` | Reconciliation proposal (QCM) |
+    | objective-monitor | Cross-iteration | REVIEW, CONTINUE, COMPOUND | `master-plan.yaml -> objectives`, produced content | Textual judgment per objective |
     """)

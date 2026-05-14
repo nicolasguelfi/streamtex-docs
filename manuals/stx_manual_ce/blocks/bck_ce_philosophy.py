@@ -42,21 +42,32 @@ def build():
     """)
     st_space("v", 2)
 
-    # ── Principle 2: Iterative ────────────────────────────────────
-    st_write(bs.sub, "Iterative: cycles, not waterfall", toc_lvl="+1")
+    # ── Principle 2: Iterative + Incremental ──────────────────────
+    st_write(bs.sub, "Iterative and incremental: cycles + scope, not waterfall", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
         A single CE cycle takes your material from raw to refined.
-        But one cycle is rarely enough for a complex document.
+        But one cycle is rarely enough for a complex document, and the
+        scope of each cycle does not have to be the whole document.
 
-        CE is designed for **multiple passes**: a first cycle produces
-        a rough draft, a second cycle improves structure and style,
-        a third polishes for the target audience.
+        CE supports two orthogonal axes of progress:
 
-        Each cycle is short (minutes to hours, not days) because
-        the AI handles the mechanical work while you make decisions
-        at the validation gates.
+        - **Iterative**: a first cycle produces a rough draft, a second
+          improves structure and style, a third polishes for the target
+          audience. Each cycle leaves the document in a coherent state.
+        - **Incremental**: a cycle can cover the **full document** or just
+          an **increment** — a part, a section, a single block. The scope
+          is determined by contextual dialogue at the start of each cycle,
+          not by flags. Increments accumulate into the **master plan**, a
+          git-independent living reference paired across
+          `docs/master-plan.yaml` (orchestration) and
+          `docs/master-plan.md` (content).
+
+        Each cycle is short (minutes to hours, not days) because the AI
+        handles the mechanical work while you make decisions at the four
+        fundamental validation gates (post-PLAN, post-REVIEW, post-FIX,
+        post-INTEGRATE).
     """)
     st_space("v", 2)
 
@@ -112,6 +123,38 @@ def build():
           structure and generating content).
 
         You can override the detected pathway with explicit flags
-        like `--import`, `--improve`, or `--create`.
+        like `--import`, `--improve`, or `--create`. Each pathway
+        is compatible with both full-document and incremental scopes.
+    """)
+    st_space("v", 2)
+
+    # ── Principle 5: Universal QCM with escape hatches ────────────
+    st_write(bs.sub, "Universal QCM with two escape hatches", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Every user-facing decision in CE goes through a single QCM
+        contract — no free-text prompts, no hidden flag combinations.
+
+        - **Option 1** is suffixed `(Recommandé)` and reflects the LLM's
+          contextual reasoning about the best default for your project.
+        - **0 to 2 business alternatives** follow.
+        - **`Discutons-en`** opens a free dialogue if the proposed
+          choices do not fit.
+        - **`Autre`** is auto-injected by the QCM tool and accepts
+          arbitrary user input.
+
+        This format never changes. Only its **frequency** is tunable,
+        via the `dialog_level` field of `docs/solutions/producer-profile.md`:
+
+        - `minimal` — QCM only at the 4 fundamental gates.
+        - `guided` — QCM at all structuring decisions (default).
+        - `exhaustive` — QCM on every choice, even minor.
+
+        The contract is documented as the canonical reference in the
+        `ce-conventions` skill that every CE skill reads before
+        surfacing any question. The principle is **anti-sur-engineering**:
+        the LLM uses the context, the user always retains two escape
+        hatches, and process overhead never accumulates.
     """)
     st_space("v", 1)

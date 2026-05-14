@@ -82,7 +82,7 @@ def build():
         st_space("v", 0.5)
         st_write(
             s.Large + s.text.weights.bold_weight,
-            "The 7-Phase Cycle for Document Engineering",
+            "The 9-Phase Iterative/Incremental Cycle for Document Engineering",
         )
         st_space("v", 1)
         st_write(
@@ -106,6 +106,8 @@ def build():
                     " → ",
                     (s.project.colors.accent_teal, "PLAN"),
                     " → ",
+                    (s.project.colors.accent_teal, "PROTOTYPE"),
+                    " → ",
                     (s.project.colors.accent_teal, "PRODUCE"),
                     " → ",
                     (s.project.colors.accent_teal, "REVIEW"),
@@ -113,6 +115,8 @@ def build():
                     (s.project.colors.accent_teal, "FIX"),
                     " → ",
                     (s.project.colors.accent_teal, "COMPOUND"),
+                    " → ",
+                    (s.project.colors.accent_teal, "INTEGRATE"),
                 )
             with l.item():
                 st_write(

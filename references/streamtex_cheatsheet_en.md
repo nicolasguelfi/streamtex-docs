@@ -116,6 +116,7 @@ st_write(
     toc_lvl=None,                   # TOC level: "1", "+1", "-1"
     label="",                       # Custom TOC entry label
     marker=None,                    # Per-heading marker control (True/False/None=auto)
+    spacing=None,                   # Optional Spacing override (only effective with toc_lvl + auto_marker_on_toc)
 )
 
 # Inline mixed styles — ONE st_write with tuples (multiple calls stack vertically!)
@@ -230,6 +231,67 @@ models = get_available_models("google")   # e.g. ["imagen-3.0-generate-002"]
 models = get_available_models("fal")      # e.g. ["sd-v3.5"]
 ```
 
+### Model Capabilities (Dynamic Validation)
+
+StreamTeX validates image parameters against model capabilities before API calls.
+Invalid sizes or quality levels are auto-corrected with a warning.
+
+**Query capabilities programmatically:**
+```python
+from streamtex.ai.providers.registry import get_model_capabilities
+
+caps = get_model_capabilities("openai", "gpt-image-1")
+print(caps.sizes)       # ['1024x1024', '1536x1024', '1024x1536', 'auto']
+print(caps.qualities)   # ['low', 'medium', 'high', 'auto']
+print(caps.default_size)  # '1024x1024'
+```
+
+**Available models and sizes:**
+
+| Provider | Model | Sizes | Qualities |
+|----------|-------|-------|-----------|
+| openai | gpt-image-1 | 1024x1024, 1536x1024, 1024x1536, auto | low, medium, high, auto |
+| openai | dall-e-3 | 1024x1024, 1792x1024, 1024x1792 | standard, hd |
+| google | imagen-4.0 | auto (API-determined) | standard |
+| fal | sd-v3.5-large | 512x512 to 1536x1024 | standard |
+
+**Auto-correction:** If you pass an invalid size (e.g., `1792x1024` to `gpt-image-1`),
+StreamTeX auto-corrects to the closest valid size (`1536x1024`) with a warning.
+
+**Image editor UI:** The "Edit Image" panel dynamically shows only valid sizes
+and qualities for the selected provider and model.
+
+**Programmatic access:**
+```python
+from streamtex.ai.providers.registry import get_model_capabilities
+
+caps = get_model_capabilities("openai", "gpt-image-1")
+caps.sizes          # ["1024x1024", "1024x1536", "1536x1024"]
+caps.qualities      # ["auto", "low", "medium", "high"]
+caps.default_size   # "1536x1024"
+caps.default_quality  # "auto"
+```
+
+### AI Image — Editable Image Editor
+
+```python
+# st_image with editable=True opens a 4-tab editor panel:
+st_image(s.none, width="80%",
+         editable=True,        # Enable editor panel
+         name="hero_intro",    # Semantic name (required for editing)
+         prompt="...",         # AI generation prompt
+         provider="openai",
+         ai_size="1536x1024")
+
+# Editor tabs:
+# - Source:      Rename image, replace from local path or URL
+# - AI Generate: Provider/model selection, size/quality (dynamic from ModelCapabilities), prompt editing, img2img
+# - History:     Version tracking, rollback to previous versions
+# - Display:     Zoom slider (10-200%), manual width/height (CSS units), keep-ratio toggle
+#
+# Display settings are persisted in the image metadata JSON and applied automatically on render.
+```
+
 ### AI Image — History & Versioning
 
 ```python
@@ -279,6 +341,10 @@ new_path = rename_image("hero_intro", "hero_welcome")
 | `quality` | `str \| None` | AI generation quality |
 | `base_image` | `str \| None` | Base image path for img2img |
 | `revised_prompt` | `str \| None` | Provider-revised prompt |
+| `display_zoom` | `int \| None` | Proportional zoom percentage (10-200) |
+| `display_width` | `str \| None` | Manual width override (CSS value, e.g. `"80%"`, `"400px"`) |
+| `display_height` | `str \| None` | Manual height override (CSS value) |
+| `display_keep_ratio` | `bool` | Keep aspect ratio when resizing (default `True`) |
 
 ### st_grid — Full Signature
 
@@ -455,6 +521,17 @@ s.small     # 8pt      s.tiny      # 4pt
 s.text.sizes.size(20, "custom_20pt")   # Factory method
 ```
 
+### Text Wrapping
+
+```python
+s.text.wrap.wrap       # text-wrap: wrap (default browser behavior)
+s.text.wrap.nowrap     # text-wrap: nowrap (prevent line breaks)
+s.text.wrap.preline    # white-space: pre-line (preserves \n as line breaks)
+s.text.wrap.hyphens    # hyphens: auto; overflow-wrap: break-word
+                       # Enables automatic hyphenation at line breaks
+                       # Useful for large fonts in narrow containers (e.g. grid cells)
+```
+
 ### Alignment and Layout
 
 ```python
@@ -607,6 +684,19 @@ st_book(blocks, view_modes=[ViewMode.CONTINUOUS])
 When a single mode is given, the View radio is hidden and the document is locked to that mode.
 Useful for deployed documents where switching modes should be disabled.
 
+#### Version display (MANDATORY)
+
+```python
+import tomllib
+from pathlib import Path
+
+_doc_version = tomllib.loads(
+    (Path(__file__).parent.parent / "pyproject.toml").read_text()
+).get("project", {}).get("version", "?")
+
+st_book(blocks, doc_version=_doc_version)  # shows "docs X.Y.Z · lib X.Y.Z" in sidebar + HTML export
+```
+
 ```python
 from streamtex import (
     PresentationProfile, PageLayout, ViewMode,
@@ -646,10 +736,12 @@ st_book([...], presentation_profiles=PresentationProfile.presentation_preset())
 
 | Type | Fields | Description |
 |------|--------|-------------|
-| `PresentationProfile` | name, mode, layout, wrap, breaks | Top-level profile |
+| `PresentationProfile` | name, mode, layout, wrap, breaks, spacing | Top-level profile |
 | `PageLayout` | width, zoom | Page dimensions (no range limits) |
 | `ViewMode` | PAGINATED, CONTINUOUS | View mode enum |
 | `SlideBreakDisplayConfig` | enabled, mode, space | Slide break settings |
+| `SpacingConfig` | block, section | Spacing configuration (block + section) |
+| `Spacing` | top, bottom, left, right, width | Margin box (value object) |
 
 **JSON save/load** (`ProfileConfig`):
 
@@ -1257,6 +1349,18 @@ stx.add_zoom_options(container=st.sidebar)              # Render controls in spe
 stx.inject_zoom_logic(100, 100)      # Width 100%, Zoom 100%
 stx.inject_zoom_logic(80, 150)       # Width 80%, Zoom 150%
 stx.inject_zoom_logic(120, 50)       # Width 120%, Zoom 50%
+
+# Block-scoped zoom (context manager) — applies CSS zoom to enclosed content
+# only, via :has() selector (same pattern as st_block).  Composes with the
+# global page zoom and any section-level zoom.
+with stx.st_zoom(75):                 # 75% zoom for this block only
+    stx.st_write(s.body, "Dense content rendered at 75%")
+    stx.st_image(s.img, "diagram.png")
+
+# Imperative variants (no automatic cleanup; reset by st_slide_break or end of build()):
+stx.set_zoom(150)                     # Zoom 150% from now on
+stx.st_write(s.body, "Big text")
+stx.reset_zoom()                      # Restore inherited section zoom
 ```
 
 ## Bibliography
@@ -1279,9 +1383,9 @@ bib_sources = ["references.bib"]
 st_book([...], bib_sources=bib_sources, bib_config=bib_config)
 
 # In-text citations (inside blocks)
-from streamtex.bib import cite, st_cite, st_bibliography
+from streamtex.bib import ptn_cite, st_cite, st_bibliography
 st_cite("author2024key")           # Inline citation widget
-cite("key1", "key2")               # Multi-key inline citation string
+ptn_cite("key1", "key2")               # Multi-key inline citation string
 st_bibliography()                   # Render full bibliography
 ```
 
@@ -1344,7 +1448,7 @@ reset_bib_registry()
 registry = get_bib_registry()
 registry.register(entry)             # Register a single BibEntry
 registry.register_many(entries)      # Register a list of BibEntry objects
-registry.cite("key")                 # Mark key as cited, returns 1-based number
+registry.ptn_cite("key")                 # Mark key as cited, returns 1-based number
 cited = registry.get_cited_entries()  # List of cited BibEntry in citation order
 all_entries = registry.get_all_entries()  # All registered entries
 registry.reset()                     # Clear all entries and citations
@@ -1403,13 +1507,13 @@ with open("output.bib", "w") as f:
 ```python
 from streamtex import st_refs, BibRefs, generate_bib_stubs
 
-# st_refs — global BibRefs proxy; attribute access calls cite()
+# st_refs — global BibRefs proxy; attribute access calls ptn_cite()
 st_write(s.big, "According to ", st_refs.vaswani2017, " transformers...")
-# Equivalent to: st_write(s.big, "According to ", cite("vaswani2017"), "...")
+# Equivalent to: st_write(s.big, "According to ", ptn_cite("vaswani2017"), "...")
 
-# BibRefs — proxy class mapping attribute access to cite() calls
+# BibRefs — proxy class mapping attribute access to ptn_cite() calls
 refs = BibRefs()
-html_citation = refs.some_key          # Returns cite("some_key") HTML string
+html_citation = refs.some_key          # Returns ptn_cite("some_key") HTML string
 
 # generate_bib_stubs(*paths, output_path) — generate typed Python module for IDE completion
 content = generate_bib_stubs("refs.bib", output_path="custom/bib_refs.py")
@@ -1604,7 +1708,7 @@ registry = get_bib_registry()
 registry.register(entry)             # Register a BibEntry (overwrites if key exists)
 registry.register_many(entries)      # Register multiple entries
 entry = registry.get("key")          # Retrieve by key (None if not found)
-num = registry.cite("key")           # Mark as cited, returns 1-based citation number
+num = registry.ptn_cite("key")           # Mark as cited, returns 1-based citation number
 cited = registry.get_cited_entries()  # Cited entries in citation order
 all_e = registry.get_all_entries()   # All registered entries
 keys = registry.list_keys()          # Sorted list of all keys
@@ -1815,12 +1919,80 @@ st_br()                     # Line break
 st_br(count=3)              # 3 line breaks
 ```
 
+### Section Spacing — Configurable Margins
+
+Section spacing controls margins around blocks (in `st_book`) and between sections
+within a block (between `st_slide_break` calls or title markers).
+
+**Two types**: `Spacing` (value object) + `SpacingConfig` (bundles block + section).
+
+**5-level override hierarchy**: Built-in → Book (global) → Profile → Block → Call-site.
+
+```python
+from streamtex import Spacing, SpacingConfig, set_spacing, get_spacing, set_block_spacing, get_block_spacing
+
+# ── Book-level (book.py) — applies to all blocks and sections ──
+set_spacing(SpacingConfig(
+    block=Spacing(top=2, bottom=0),       # margins between blocks
+    section=Spacing(top=2),               # margins between sections within blocks
+))
+
+# ── Profile-level — mode-specific spacing ──
+PresentationProfile(
+    name="Handout",
+    mode=ViewMode.CONTINUOUS,
+    spacing=SpacingConfig(
+        block=Spacing(top="70px"),
+        section=Spacing(top=1, left="5%", right="5%"),
+    ),
+)
+
+# ── Block-level (inside build()) — overrides section spacing for this block ──
+def build():
+    set_block_spacing(Spacing(top=0, left="10%", right="10%"))
+    # ... all sections in this block use these margins
+    # reset automatically by st_book after build()
+
+# ── Call-site — per slide_break or per st_write title ──
+st_slide_break("Section 2", spacing=Spacing(top="100px", left="15%", right="15%"))
+st_write(bs.heading, "Title", toc_lvl="1", spacing=Spacing(top=0))
+
+# ── Read current config ──
+cfg = get_spacing()              # Returns current global SpacingConfig
+blk = get_block_spacing()        # Returns current block-level Spacing override (or None)
+```
+
+**Getter functions**:
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `get_spacing()` | `SpacingConfig` | Current global spacing config set by `set_spacing()` |
+| `get_block_spacing()` | `Spacing \| None` | Current block-level spacing override set by `set_block_spacing()`, or `None` |
+
+**Spacing fields**:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `top` | `int \| str \| None` | Vertical space before. `int` = st_space units, `str` = CSS (`"70px"`, `"5vh"`) |
+| `bottom` | `int \| str \| None` | Vertical space after. Same conventions as `top` |
+| `left` | `str \| None` | Left margin, CSS value (`"5%"`, `"2em"`, `"40px"`) |
+| `right` | `str \| None` | Right margin, CSS value |
+| `width` | `int \| None` | Content width as % (block-level only, overrides `PageLayout.width`) |
+
+> **Default**: Without any `SpacingConfig`, the built-in `block.bottom="70px"` preserves the
+> existing inter-block gap. Section spacing defaults to no spacing (current behavior).
+
+> **Double-spacing prevention**: `block.top` and `section.top` never stack at the start of a
+> block. The first break point in each block is covered by `block.top`; subsequent breaks use
+> `section.top`.
+
 ### st_slide_break — Full Signature
 
 ```python
 st_slide_break(
     marker_label="",           # Custom label for the hidden marker (default: auto)
     config=None,               # Optional SlideBreakConfig override
+    spacing=None,              # Optional Spacing override for this break
 )
 ```
 
@@ -2042,6 +2214,95 @@ with st_span(s.bold + s.text.colors.red):
     st_write("Inline bold red")
 ```
 
+## CLI Commands
+
+### Workspace Management
+
+```bash
+stx install [--preset basic|user|standard|power|developer] [--project NAME]
+stx update  [--skip-sync] [--skip-profiles] [--dry-run] [--repair]
+stx status
+```
+
+### Project Management
+
+```bash
+stx project new NAME [--template project|collection|slides]
+stx run                             # launch Streamlit (shortcut for uv run streamlit run book.py)
+stx test [-v] [EXTRA_ARGS]         # run pytest
+stx lint [EXTRA_ARGS]              # run ruff check
+```
+
+### Deployment — Hetzner/Coolify (recommended for production)
+
+```bash
+# Full setup from zero
+stx deploy setup                    # interactive: install hcloud, SSH key, API tokens, domain
+stx deploy provision                # create Hetzner server (cax21 ARM, ~4.5 EUR/month)
+stx deploy secure                   # harden server (UFW, fail2ban, SSH hardening)
+stx deploy install-coolify          # install Coolify open-source PaaS
+stx deploy configure-domain         # DNS records + SSL (auto with Cloudflare API token)
+
+# Deploy a project
+stx deploy preflight [PATH]        # pre-deploy checks (book.py, Dockerfile, git, tests, lint)
+stx deploy hetzner [PATH]          # deploy project to Hetzner via Coolify API
+stx deploy hetzner [PATH] --serve-mode dual  # deploy with Nginx + Streamlit (static fallback)
+stx deploy update [TARGET]         # rebuild service + all replicas (default) or --quick restart
+stx deploy update [TARGET] --serve-mode static-only  # switch to static HTML only
+stx deploy scale TARGET --replicas N  # scale service to N containers (load-balanced)
+stx deploy status coolify|render|huggingface [NAME]  # check health, replicas, serve mode
+
+# Export
+stx export html [PATH]             # export project to static HTML (for dual/static-only mode)
+stx export html -o /app/static-html/ .  # custom output directory
+stx export html --asset-mode embedded .  # inline base64 assets (single file)
+stx export html --title "My Doc" .      # custom HTML title
+```
+
+### Deployment — Other platforms
+
+```bash
+stx deploy docker [PATH]           # build and run locally with Docker
+stx deploy render [PATH]           # generate render.yaml (legacy, Hetzner preferred)
+stx deploy huggingface [PATH]      # deploy to HuggingFace Spaces
+stx deploy env-sync                # sync env vars from render.yaml to Render services
+```
+
+### Claude / AI Profiles
+
+```bash
+stx claude install [PROFILE]       # install Claude profiles into project
+stx claude update --all            # sync profiles from streamtex-claude repo
+stx claude check                   # verify profile installation
+stx claude diff .                  # show differences between installed and source
+stx claude list                    # list available profiles
+```
+
+### Development Links
+
+```bash
+# Register source repos on this machine (once)
+stx dev register streamtex /path/to/streamtex
+stx dev register streamtex-claude /path/to/streamtex-claude
+stx dev register streamtex-docs /path/to/streamtex-docs
+stx dev unregister streamtex       # remove registration
+
+# Link/unlink current project to dev repos
+stx dev link streamtex             # editable install from source
+stx dev link all                   # link all registered repos
+stx dev unlink streamtex           # revert to PyPI version
+stx dev unlink all                 # unlink all
+
+# Check status
+stx dev status                     # show registrations + project links
+```
+
+### Bibliography
+
+```bash
+stx bib stubs SOURCES              # generate Python stubs from .bib/.ris/.json files
+```
+
 ## Project Structure
 
 ```
@@ -2079,12 +2340,12 @@ class TextStylesCustom:
     )
 
 class ContainerStylesCustom:
-    callout = Style.create(
+    ptn_callout = Style.create(
         BackgroundsCustom.callout_bg
         + Container.borders.solid_border
         + Style("border-color: #4A90D9; border-width: 0 0 0 4px;", "callout_border")
         + Container.paddings.medium_padding,
-        "callout"
+        "ptn_callout"
     )
 
 class Custom:
@@ -2107,6 +2368,70 @@ dark = {
     "callout_bg": "background-color: rgba(74, 144, 217, 0.20);",
 }
 ```
+
+## Compound Document Engineering (stx-ce)
+
+StreamTeX includes a structured document production methodology. Full reference: `ce_cheatsheet_en.md`.
+
+```
+COLLECT → ASSESS → PLAN → PROTOTYPE → PRODUCE → REVIEW → FIX → COMPOUND → INTEGRATE
+```
+
+| Command | Description |
+|---------|-------------|
+| `/stx-ce:collect <path>` | Inventory and classify sources |
+| `/stx-ce:assess` | Evaluate material, define objectives, initialize the master plan |
+| `/stx-ce:plan` | Plan the next increment (auto or `--interactive`); first iteration also produces the global TOC |
+| `/stx-ce:prototype` | Validate styles by example; capture/reuse patterns into the local catalog |
+| `/stx-ce:produce` | Execute the increment plan; apply mapped patterns |
+| `/stx-ce:review` | Scope-aware review across multiple perspectives |
+| `/stx-ce:fix` | Fix findings with verification; may re-apply new patterns to earlier blocks |
+| `/stx-ce:compound` | Capitalize (4 axes: production, feedback, governance, master plan) |
+| `/stx-ce:integrate` | Route solutions; promote local patterns to the shared catalog when eligible |
+| `/stx-ce:go "description"` | Orchestrated cycle with contextual scope dialogue (4 fundamental gates) |
+| `/stx-ce:continue` | Resume session with reconciliation |
+| `/stx-ce:status` | Master plan dashboard |
+| `/stx-ce:task <id>` | Sub-task within an increment |
+| `/stx-ce:pause` | Snapshot before stopping |
+
+3 pathways: **A** (import external), **B** (improve existing), **C** (create new).
+
+## Patterns
+
+Reusable graphic design patterns. Read by Claude at block-generation
+time. Catalog : `.claude/custom/streamtex-patterns/`.
+
+### CLI
+
+```
+stx patterns list                # list patterns available
+stx patterns presets             # list presets
+stx patterns install --preset slides    # install a preset
+stx patterns install --pattern ptn_callout  # install one pattern
+stx patterns update              # refresh from source (drift detection)
+stx patterns sync                # idempotent install + update
+stx patterns status              # show drift state
+stx patterns diff <name>         # diff installed vs source
+stx patterns validate [--all]    # check format A2 compliance
+stx patterns promote <name>      # push local edit to source repo
+stx patterns remove <name>       # uninstall
+```
+
+### Slash commands (Claude)
+
+`/stx-pattern:list` `/stx-pattern:show <name>` `/stx-pattern:new`
+`/stx-pattern:reindex` `/stx-pattern:validate`
+
+### Format
+
+Pattern files = YAML frontmatter + structured markdown sections
+(Visual / Structure / Styling rules / Code skeleton / Extrapolation
+rules / When to use / When NOT to use). Spec A2.
+
+### Naming
+
+`snake_case` everywhere (filename, frontmatter `name`, code annotations
+`# @pattern: <name>`).
 
 ## Tips and Best Practices
 

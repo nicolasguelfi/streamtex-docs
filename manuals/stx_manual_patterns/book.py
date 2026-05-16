@@ -50,6 +50,7 @@ st_book(
         blocks.bck_scan_rule,
         blocks.bck_extrapolation,
         blocks.bck_cli_overview,
+        blocks.bck_install_flow,
         blocks.bck_authoring,
         # Compact galleries — one block per pattern family
         blocks.bck_gallery_atoms,

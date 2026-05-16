@@ -31,23 +31,80 @@ class BlockStyles:
 bs = BlockStyles
 
 
-# Subcommands of `stx patterns`
-SUBCOMMANDS = [
-    ("install",  "--preset NAME | --pattern A,B,...",
-     "Copy patterns from the source catalog into the project."),
-    ("update",   "(no args)",
-     "Refresh installed patterns; uses drift detection."),
+# Subcommands of `stx patterns`, grouped by intent.
+LIFECYCLE_CMDS = [
+    ("install",  "(no args, TTY) | --preset N (repeatable) | --pattern A,B | --all | --exclude X,Y",
+     "Pick patterns to install. No args + a terminal → menu-driven "
+     "composite picker (multi-preset + add-individual + remove). Flags are "
+     "fully composable: --preset can be repeated, --pattern adds extras on "
+     "top, --exclude subtracts (also from --all). --all is exclusive with "
+     "--preset/--pattern. Non-TTY without flags is refused."),
+    ("sync",     "(no args)",
+     "Idempotent: honours the recorded intent in stx.toml "
+     "[patterns.selection] (or .patterns-meta.json) to install missing + "
+     "update existing. Perfect after `git clone`."),
+    ("update",   "(no args) | <name>...",
+     "Refresh installed patterns from the source; drift-aware."),
     ("status",   "(no args)",
      "List installed patterns with their SHA + drift state."),
-    ("promote",  "<pattern>",
-     "Push a locally-edited pattern back to the source catalog."),
-    ("reindex",  "(no args)",
-     "Regenerate `_pattern_library.md` and per-project indexes."),
     ("diff",     "<pattern>",
      "Show local-vs-source diff for a single pattern."),
+    ("remove",   "<pattern>",
+     "Uninstall a pattern (file + meta entry)."),
 ]
 
-RELATED = ["stx claude update", "stx project init", "stx project upgrade"]
+SOURCE_CMDS = [
+    ("source show",  "(no args)",
+     "Print the R4 resolution chain — what was tried, what matched, "
+     "what was skipped — and the resolved source path if any."),
+    ("source clone", "[--url U] [--branch B] [--target D] [--force]",
+     "Git-clone the patterns repo into <workspace>/streamtex-patterns. "
+     "URL defaults to [repos.streamtex-patterns].url in stx.toml, else the "
+     "official repo."),
+    ("source link",  "<path> [--force]",
+     "Symlink <workspace>/streamtex-patterns to an existing local clone — "
+     "share one checkout across workspaces, or iterate on pattern files live."),
+    ("source set",   "<path> [--scope project|workspace] [--allow-missing]",
+     "Record [patterns].source = <path> in stx.toml (or pyproject.toml's "
+     "[tool.patterns]) without cloning anything. Preserves comments."),
+]
+
+CATALOG_CMDS = [
+    ("list",     "[--remote|--local] [--preset N] [--tag T] [--format ...]",
+     "Show patterns available remotely (in the source) or locally (installed)."),
+    ("presets",  "[--format table|json|names]",
+     "List the named presets declared by the source repo."),
+    ("validate", "[<name>] [--all] [--remote] [--verbose]",
+     "Validate pattern files against the A2 spec (CI also runs this)."),
+]
+
+AUTHORING_CMDS = [
+    ("init",     "<name> --scope core|slides|docs|projects/<id>",
+     "Scaffold a new pattern file in the source repo (A2 template)."),
+    ("promote",  "<pattern> [--message M] [--no-commit] [--allow-dirty]",
+     "Push a locally-edited pattern back to the source repo (+ commit)."),
+]
+
+RELATED = ["stx install --project (opt-in patterns prompt)",
+           "stx claude update", "stx project new"]
+
+
+def _render_cmd_grid(commands):
+    """Render a `(name, options, description)` list as a 3-column grid."""
+    with st_grid(cols="1fr 2fr 3fr", gap="8px", cell_styles=bs.cell) as g:
+        with g.cell():
+            st_write(bs.body, (bs.keyword, "name"))
+        with g.cell():
+            st_write(bs.body, (bs.accent, "options"))
+        with g.cell():
+            st_write(bs.body, (s.bold, "description"))
+        for name, opts, doc in commands:
+            with g.cell():
+                st_write(bs.body, (bs.keyword, name))
+            with g.cell():
+                st_write(bs.body, (bs.accent, opts))
+            with g.cell():
+                st_write(bs.body, doc)
 
 
 def build():
@@ -58,27 +115,33 @@ def build():
                  tag=t.div, toc_lvl="1")
         st_space("v", 1)
         st_write(bs.lead,
-                 "Manage the StreamTeX pattern catalog inside a project "
-                 "(install, update, status, promote).")
+                 "Manage the StreamTeX pattern catalog inside a project — "
+                 "interactive picker, declarative flags, drift-aware sync.")
         st_space("v", 2)
 
-        # ---- Subcommands ----
-        st_write(bs.sub, "Subcommands", toc_lvl="+1")
+        # ---- Lifecycle ----
+        st_write(bs.sub, "Lifecycle (day-to-day)", toc_lvl="+1")
         st_space("v", 0.5)
-        with st_grid(cols="1fr 2fr 3fr", gap="8px", cell_styles=bs.cell) as g:
-            with g.cell():
-                st_write(bs.body, (bs.keyword, "name"))
-            with g.cell():
-                st_write(bs.body, (bs.accent, "options"))
-            with g.cell():
-                st_write(bs.body, (s.bold, "description"))
-            for name, opts, doc in SUBCOMMANDS:
-                with g.cell():
-                    st_write(bs.body, (bs.keyword, name))
-                with g.cell():
-                    st_write(bs.body, (bs.accent, opts))
-                with g.cell():
-                    st_write(bs.body, doc)
+        _render_cmd_grid(LIFECYCLE_CMDS)
+        st_space("v", 2)
+
+        # ---- Source management ----
+        st_write(bs.sub, "Source management (where do patterns come from?)",
+                 toc_lvl="+1")
+        st_space("v", 0.5)
+        _render_cmd_grid(SOURCE_CMDS)
+        st_space("v", 2)
+
+        # ---- Catalog inspection ----
+        st_write(bs.sub, "Catalog inspection", toc_lvl="+1")
+        st_space("v", 0.5)
+        _render_cmd_grid(CATALOG_CMDS)
+        st_space("v", 2)
+
+        # ---- Authoring ----
+        st_write(bs.sub, "Authoring (contributors)", toc_lvl="+1")
+        st_space("v", 0.5)
+        _render_cmd_grid(AUTHORING_CMDS)
         st_space("v", 2)
 
         # ---- Common flags ----
@@ -132,21 +195,35 @@ def build():
         st_write(bs.sub, "Examples", toc_lvl="+1")
         st_space("v", 0.5)
         show_explanation("""\
-            Typical session — install the docs preset, audit, then
-            update later.
+            Fresh project: bring the catalog in, then pick interactively.
         """)
         st_space("v", 0.5)
         show_code("""\
-# Install patterns for a manual project
+# 1. Make sure a patterns source is reachable for this workspace
+stx patterns source show          # see what R4 resolves
+stx patterns source clone         # one-time clone if nothing matched
+
+# 2. Pick patterns to install (interactive composite picker)
+stx patterns install              # menu: add presets, add individuals,
+                                  # remove, toggle all, summary, done
+stx patterns install --tag slide  # flat picker narrowed by tag
+
+# 3. Declarative composite (CI, scripts, or reproducibility) — all
+#    selectors are composable except --all (which is exclusive with
+#    --preset/--pattern but still accepts --exclude).
 stx patterns install --preset docs
+stx patterns install --preset slides --preset docs       # multi-preset
+stx patterns install --preset slides --exclude ptn_takeaways
+stx patterns install --preset slides --pattern ptn_inline_emphasis
+stx patterns install --all --exclude ptn_takeaways
+stx patterns install --pattern ptn_callout,ptn_stat_hero
 
-# See what's installed and whether anything drifted
+# 4. Day-to-day: check drift, refresh, reapply intent on a fresh clone
 stx patterns status
-
-# Refresh against upstream
 stx patterns update
+stx patterns sync                 # rebuilds from stx.toml [patterns.selection]
 
-# I edited ptn_callout.md locally and want to share it
+# 5. Pattern authors: edit locally, share back
 stx patterns promote ptn_callout
 """, language="bash")
         st_space("v", 2)

@@ -125,7 +125,7 @@ def build():
     | `local` | `.claude/custom/streamtex-patterns/` | draft | QCM in PROTOTYPE or COMPOUND |
     | `shared` | `streamtex-patterns` repo (PR via `gh`) | local | QCM in INTEGRATE |
 
-    Patterns capture by name (`grid_boston`, `ptn_evidence_card`, ...) become
+    Patterns capture by name (`grid_boston`, `ptn_evidence_insight`, ...) become
     reusable across blocks and across projects.
     """)
     st_space("v", 1)

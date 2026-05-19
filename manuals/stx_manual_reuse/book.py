@@ -41,17 +41,20 @@ marker_config = MarkerConfig(
 
 st_book(
     [
-        # Phase 6.2 ported in Wave 2 (5 representative blocks):
+        # Concepts (5 blocks ported in Wave 2):
         blocks.bck_reuse_welcome,
         blocks.bck_reuse_vocabulary,
         blocks.bck_reuse_layers,
         blocks.bck_component_format,
         blocks.bck_reference_card,
-        # Remaining 16 blocks (PLAN §19.2 #4-#20) are ported in Wave 3:
-        #   bck_component_authoring, bck_design_system_format, bck_kit_format,
-        #   bck_cli_template_format, bck_pack_authoring, bck_pack_distribution,
-        #   bck_pack_consumption, bck_ce_capture, bck_ce_promote, bck_validation,
-        #   bck_gallery_components, bck_gallery_design_systems,
+        # Self-demonstration (Wave 4 follow-up) — the manual consumes
+        # streamtex-design and renders every component for real:
+        blocks.bck_gallery_components,
+        blocks.bck_gallery_design_systems,
+        # Remaining blocks deferred from PLAN §19.2 (#5-7, #9-14, #17-20):
+        #   bck_component_authoring, bck_kit_format, bck_cli_template_format,
+        #   bck_pack_authoring, bck_pack_distribution, bck_pack_consumption,
+        #   bck_ce_capture, bck_ce_promote, bck_validation,
         #   bck_troubleshooting, bck_migration_from_patterns,
         #   bck_custom_import_mapping, bck_faq.
     ],

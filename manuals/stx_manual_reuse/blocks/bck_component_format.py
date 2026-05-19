@@ -92,11 +92,17 @@ __component_meta__: ComponentMeta = {
 }
 
 
-def callout(*, kind: str, title: str, body: str) -> None:
-    border = get_bundle_attr(__ds__.callouts, kind, "callout")
-    with st_block(border):
-        st_write((title, __ds__.callouts.title))
-        st_write(body, __ds__.body.paragraph)
+def callout(*, design_system, title: str = "", body: str = "", variant: str = "info") -> None:
+    """Render a callout box. `variant` ∈ {info, warn, error, success}."""
+    container = get_bundle_attr(design_system.callouts, variant, "callout")
+    title_style = design_system.callouts.title
+    body_style = design_system.callouts.body
+    with st_block(container):
+        if title:
+            st_write(title_style, title)
+            st_space("v", 0.5)
+        if body:
+            st_write(body_style, body)
 '''
 
 

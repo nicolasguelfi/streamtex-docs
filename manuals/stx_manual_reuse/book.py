@@ -60,6 +60,10 @@ st_book(
         # ── Part 5: CE flows ─────────────────────────────────────
         blocks.bck_ce_capture,
         blocks.bck_ce_promote,
+        # ── Part 5bis: Pack Engineering (orchestrated lifecycle) ─
+        blocks.bck_pack_engineering_overview,
+        blocks.bck_pack_engineering_bootstrap,
+        blocks.bck_pack_engineering_refine,
         # ── Part 6: Quality & migration ──────────────────────────
         blocks.bck_validation,
         blocks.bck_troubleshooting,

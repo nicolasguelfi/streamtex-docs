@@ -112,20 +112,21 @@ def build():
     ```
 
     The phase generates a report in `docs/prototypes/YYYY-MM-DD-NNN-<scope>-prototype.md`.
-    Captured patterns are written into `.claude/custom/streamtex-patterns/` at level `local`.
+    Captured components are written into the project's **primary local pack**
+    (`./mypack/components/` by default — cf. PLAN §8.1, streamtex 0.7.x).
     """)
     st_space("v", 1)
 
     show_explanation("""\
-    ### Three-level pattern catalog
+    ### Three-level component catalog
 
     | Level | Location | Captured from | Promoted via |
     |---|---|---|---|
-    | `draft` | `docs/solutions/style/patterns/` | extraction in PROTOTYPE or COMPOUND | automatic |
-    | `local` | `.claude/custom/streamtex-patterns/` | draft | QCM in PROTOTYPE or COMPOUND |
-    | `shared` | `streamtex-patterns` repo (PR via `gh`) | local | QCM in INTEGRATE |
+    | `draft` | `docs/solutions/style/components/` | extraction in PROTOTYPE or COMPOUND | automatic |
+    | `local` | `./mypack/components/` (primary local pack) | draft | QCM in PROTOTYPE or COMPOUND |
+    | `shared` | a `git` or `pypi` pack declared in `stx.toml` | local | `stx component promote <name> --to=<pack>` (QCM in INTEGRATE) |
 
-    Patterns capture by name (`grid_boston`, `ptn_evidence_insight`, ...) become
-    reusable across blocks and across projects.
+    Components capture by name (`callout`, `evidence_insight`, ...) become
+    reusable across blocks and across projects via the reuse architecture.
     """)
     st_space("v", 1)

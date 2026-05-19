@@ -1,0 +1,15 @@
+[project]
+name = "stx-manual-reuse"
+version = "0.1.0"
+description = "StreamTeX Reuse Architecture Manual — packs, components, design systems, kits (streamtex 0.7.x)"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+    "streamtex[ai,cli,inspector,pdf]>=0.6.43",
+]
+
+[tool.uv.sources]
+streamtex = { path = "../../../streamtex", editable = true }
+
+[tool.ruff.lint]
+ignore = ["F403", "F405", "E701", "E741"]

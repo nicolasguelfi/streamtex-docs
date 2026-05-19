@@ -326,9 +326,10 @@ def build():
 
     In both cases the QCM is shown — the recommended default is
     inferred by the LLM from the current state. PROTOTYPE produces one
-    or more pilot blocks and captures patterns at the **local** level
-    (`level: local`) in `.claude/custom/streamtex-patterns/<name>.md`,
-    ready for promotion to the shared catalog at INTEGRATE time.
+    or more pilot blocks and captures **components** at the **local**
+    level into the project's primary local pack (`./mypack/components/`
+    by default, streamtex 0.7.x), ready for promotion to a shared pack
+    at INTEGRATE time via `stx component promote --to=<pack>`.
     """)
 
     st_space("v", 1)

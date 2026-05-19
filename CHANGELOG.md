@@ -5,7 +5,42 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — 2026-05-19 (Wave 2 Phase 6.1-6.3 — partial stx_manual_reuse)
+## [Unreleased] — 2026-05-19 (Wave 3 Phase 6.4-6.5 + Phase 7)
+
+### Removed
+- `.claude/custom/streamtex-patterns/` — 14 files (12 patterns + index +
+  manifest + .patterns-meta.json). The 4 docs-only patterns
+  (`api_reference_card`, `composite_block`, `feature_walkthrough`,
+  `manual_section`) were already migrated into the `streamtex-design`
+  pack in Wave 1 Phase 2a; removing the local consumer copy completes
+  Phase 7 / PLAN §23.5.
+
+### Changed (Phase 6.4 — archive legacy manual)
+- `manuals/stx_manual_patterns/` → `manuals/_archive/stx_manual_patterns/`
+  (full move via `git mv`). The archived manual stays available in git
+  history; PLAN §21.2 "archive out-of-scope" rule applies to it from
+  now on.
+- `run-manuals.sh` — renamed every `patterns` reference to `reuse`
+  (variables `PATTERNS_PROJECT/PORT/LOG`, flags `--patterns/--no-patterns`,
+  log file, banner labels). 31 references migrated.
+- `.github/workflows/hetzner-deploy.yml` — service
+  `streamtex-docs-patterns` (uuid `ag0u87txr5ygfr11pfqv0a1j`, host
+  `docs-patterns.streamtex.org`) now serves `manuals/stx_manual_reuse`.
+- `manuals/stx_manual_ce/blocks/bck_ce_prototype.py` and `bck_ce_faq.py`
+  — vocabulary refresh: "captured patterns into
+  `.claude/custom/streamtex-patterns/`" → "captured components into the
+  project's primary local pack (`./mypack/components/`)"; promotion
+  table updated to reflect `stx component promote --to=<pack>`.
+
+### Phase 6.5 — Coolify deploy (PLAN v1.34 §19.6)
+- Coolify env vars `FOLDER` (runtime + preview) for app
+  `streamtex-docs-patterns` updated from `manuals/stx_manual_patterns`
+  to `manuals/stx_manual_reuse` via `PATCH /api/v1/applications/<uuid>/envs`
+  (uuids `v8oz1jp1bw8eb81y1efnibft` + `r13oubz7lxoc3iqsd8rz2cxu`).
+- Auto-deploy on merge to `main` will redeploy `docs-patterns.streamtex.org`
+  with the new `FOLDER` value; the existing Coolify slot is reused.
+
+## [Unreleased prior] — 2026-05-19 (Wave 2 Phase 6.1-6.3 — partial stx_manual_reuse)
 
 ### Added
 - **`manuals/stx_manual_reuse/`** — new manual for the streamtex 0.7.x

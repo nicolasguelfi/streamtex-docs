@@ -9,11 +9,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        curl nginx-light \
+        curl git nginx-light \
         texlive-latex-base texlive-latex-extra texlive-pictures \
         texlive-fonts-recommended texlive-science \
         dvisvgm ghostscript \
     && rm -rf /var/lib/apt/lists/*
+# git: needed by uv to resolve `streamtex-design @ git+https://...` declared
+#   in the root pyproject.toml (streamtex-design is not yet on PyPI).
 # texlive-pictures: provides the tikz/pgf packages (\usepackage{tikz}).
 # texlive-latex-extra: xcolor, geometry, fancyhdr, etc. — commonly used
 #   by TikZ examples in the advanced manual.

@@ -131,40 +131,29 @@ This command works for both installation AND upgrade. Do NOT use `uv tool upgrad
 
 ## Reuse architecture (packs, components, design systems, kits)
 
-Since streamtex 0.7.x, all reusable visual artefacts ship as Python packs
-(see the `reuse-architecture` skill for the full model). A pack exports
-`components/`, `design_systems/`, `kits/`, optionally `cli_templates/` and
-`blueprints/`. The reference pack is `streamtex-design`.
+The documentation profile uses the `streamtex-design` pack — declared in
+each manual's `stx.toml` — to expose components like `manual_section`,
+`api_reference_card`, `feature_walkthrough`, plus the universal primitives
+(callout, card_grid, slide_heading). See the `reuse-architecture` skill
+(loaded automatically) for the full mechanism.
 
-**Mandatory rules when generating or modifying a manual block**:
-1. **Before generating any block**, read the `reuse-architecture` skill and
-   run `stx component list` (or `stx pack list` to see what's installed).
-2. When the user names a component (e.g. *"use callout"*,
-   *"like card_grid"*), read its docstring contract via
-   `stx component show <name>` **before** generating code. The docstring
-   carries `INVARIANTS`, `PARAMS`, `INTERDITS`, `When to use`, `When NOT to
-   use`, and `Design system bundles required` — respect them strictly.
-3. To compose a block from existing components, import them directly from
-   the pack: `from streamtex_design.components import callout, card_grid`.
-4. If the user describes something not covered by any installed pack and
-   reusable across projects/manuals, run `stx component new <name>` to
-   scaffold a captured component into the project's primary local pack
-   (`./mypack/components/`), then promote it later with
-   `stx component promote`.
+**Mandatory rules** (cf. project-level CLAUDE.md):
+1. Run `stx component list` (or read the `reuse-architecture` skill) before
+   generating or modifying a block.
+2. Inspect specific components via `stx component show <name>` to read
+   their docstring (§4.1 sections) and `__component_meta__`.
+3. Strictly respect each component's `INVARIANTS`. Adjust only within
+   `PARAMS`. Refuse anything matching `INTERDITS` and capture a new
+   component (`stx component new`).
+4. The component code skeleton is a starting point — adapt it to the
+   manual's tone (code + live-demo via `show_code()` /
+   `show_explanation()` / `show_details()`).
+5. If the user describes a reusable element with no matching component,
+   suggest `stx component new <name>` to capture it into `mypack/`.
 
-**Component granularity** (a tag, not a constraint):
-- `primitive` — atomic visual element (callout, slide_heading, cite).
-- `composition` — multiple primitives + own layout (card_grid,
-  comparison_table, manual_section, term_definition_list).
-- `block` — full block-level template (title_slide, evidence_insight).
-
-**CLI surface**: `stx pack {list,add,info,sync}` · `stx component
-{list,new,show,validate,promote}` · `stx ds {list,switch,new}` · `stx kit
-{list,install,show,new}` · `stx validate [--strict]`.
-
-See the `reuse-architecture` and `pack-author` skills for the full
-mechanism. The legacy `streamtex-patterns` repo and the
-`.claude/custom/streamtex-patterns/` folder are removed in 0.7.x.
+**Commands**: `/stx-pack`, `/stx-component`, `/stx-ds`, `/stx-kit`,
+`/stx-validate`. The legacy `/stx-pattern:*` commands were removed in
+streamtex 0.7.x.
 
 ## Customization
 - `.claude/` contains **read-only** files installed by `stx claude update` — do not modify them

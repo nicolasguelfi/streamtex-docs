@@ -5,7 +5,7 @@ description = "StreamTeX Reuse Architecture Manual — packs, components, design
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "streamtex[ai,cli,inspector,pdf]>=0.6.43",
+    "streamtex[ai,cli,inspector,pdf]>=0.7.0",
 ]
 
 [tool.uv.sources]

@@ -5,6 +5,34 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — 2026-05-19 (Wave 2 Phase 6.1-6.3 — partial stx_manual_reuse)
+
+### Added
+- **`manuals/stx_manual_reuse/`** — new manual for the streamtex 0.7.x
+  reuse architecture (packs, components, design systems, kits). Skeleton
+  fully wired (book.py, blocks/, custom/{styles,themes}.py, README.md,
+  pyproject.toml with editable streamtex source). Five representative
+  blocks ported per PLAN §19.2:
+  1. `bck_reuse_welcome` — overview (source: `bck_intro.py`)
+  2. `bck_reuse_vocabulary` — 9 glossary terms (ex nihilo from PLAN §2)
+  3. `bck_reuse_layers` — 3-layer diagram (ex nihilo from PLAN §3)
+  4. `bck_component_format` — Python component anatomy (source:
+     `bck_format_spec.py` adapted)
+  5. `bck_reference_card` — CLI cheatsheet (ex nihilo from PLAN §7)
+- `manuals/stx_manuals_collection/collection.toml`: card `test-patterns`
+  renamed to `test-reuse` (title + description updated). Port 8508
+  unchanged — Wave 3 redeploys the Coolify slot to the new manual.
+
+### Notes (Wave 3 follow-up)
+- Remaining 16 blocks from PLAN §19.2 documented in the manual's
+  README.md with source + porting action. They land in Wave 3 alongside
+  Phase 6.4 (archive `stx_manual_patterns/`) and Phase 6.5 (update
+  Coolify env `FOLDER=manuals/stx_manual_reuse`).
+- `run-manuals.sh` and the Dockerfile still target `stx_manual_patterns`;
+  flipped in Wave 3 with the deployment.
+- `stx_manual_ce` / `stx_manual_intro` references refresh planned for
+  Wave 3 Phase 5 alongside the CE sweep.
+
 ## [0.6.25] — 2026-05-12
 
 ### Added

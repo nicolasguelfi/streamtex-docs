@@ -56,7 +56,7 @@ order = 6
 
 [projects.test-reuse]
 title = "StreamTeX Reuse Architecture"
-description = "Packs, components, design systems, kits — the streamtex 0.7.x reuse layer (replaces the legacy patterns manual). Same Coolify slot on docs-patterns.streamtex.org."
+description = "Packs, components, design systems, kits — the streamtex 0.7.x reuse layer (replaces the legacy patterns manual). Includes Pack Engineering: an orchestrated lifecycle (`/stx-pe`) for extracting, forking, refining, and publishing reuse packs across N projects. Same Coolify slot on docs-patterns.streamtex.org."
 emoji = "🧩"
 button_label = "Open Manual"
 project_url = "http://localhost:8508"

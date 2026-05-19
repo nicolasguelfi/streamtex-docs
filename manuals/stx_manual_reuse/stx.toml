@@ -1,6 +1,6 @@
 # Project configuration for the reuse-architecture manual.
-# This manual is itself a streamtex 0.7.x consumer of the streamtex-design
-# pack — it imports and renders the 18 components for live demonstration.
+# This manual consumes two packs: streamtex-design (universal components +
+# design systems) and streamtex-manuals (manual-specific overview components).
 
 [project]
 name = "stx-manual-reuse"
@@ -10,10 +10,16 @@ version = "0.2.0"
 type = "git"
 name = "streamtex-design"
 ref = "github.com/nicolasguelfi/streamtex-design"
+rev = "v0.2.1"
+
+[[packs]]
+type = "git"
+name = "streamtex-manuals"
+ref = "github.com/nicolasguelfi/streamtex-manuals"
 rev = "v0.1.0"
 
 [design_system]
 use = "default"
 
 [resolution]
-prefer = ["streamtex-design"]
+prefer = ["streamtex-design", "streamtex-manuals"]

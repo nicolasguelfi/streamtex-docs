@@ -2459,6 +2459,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "streamtex", extra = ["ai", "cli", "inspector", "pdf"] },
     { name = "streamtex-design" },
+    { name = "streamtex-manuals" },
 ]
 
 [package.dev-dependencies]
@@ -2473,6 +2474,7 @@ dev = [
 requires-dist = [
     { name = "streamtex", extras = ["ai", "cli", "inspector", "pdf"], editable = "../streamtex" },
     { name = "streamtex-design", editable = "../streamtex-design" },
+    { name = "streamtex-manuals", editable = "../streamtex-manuals" },
 ]
 
 [package.metadata.requires-dev]
@@ -2481,6 +2483,28 @@ dev = [
     { name = "pre-commit", specifier = ">=3.0" },
     { name = "pytest", specifier = ">=7.0" },
     { name = "ruff", specifier = ">=0.4.0" },
+]
+
+[[package]]
+name = "streamtex-manuals"
+version = "0.1.0"
+source = { editable = "../streamtex-manuals" }
+dependencies = [
+    { name = "streamtex" },
+    { name = "streamtex-design" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "streamtex", editable = "../streamtex" },
+    { name = "streamtex-design", editable = "../streamtex-design" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "ruff", specifier = ">=0.5" },
+    { name = "streamtex", extras = ["cli"], editable = "../streamtex" },
 ]
 
 [[package]]

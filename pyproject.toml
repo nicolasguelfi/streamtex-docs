@@ -7,6 +7,7 @@ license = {text = "MIT"}
 dependencies = [
     "streamtex[ai,cli,inspector,pdf]>=0.7.3,<0.8",
     "streamtex-design @ git+https://github.com/nicolasguelfi/streamtex-design.git@v0.1.0",
+    "streamtex-manuals",
 ]
 
 [dependency-groups]
@@ -20,10 +21,11 @@ dev = [
 [tool.uv]
 default-groups = ["dev"]
 
-# Override for local dev — points to adjacent library repo
+# Override for local dev — points to adjacent library repos
 [tool.uv.sources]
 streamtex = { path = "../streamtex", editable = true }
 streamtex-design = { path = "../streamtex-design", editable = true }
+streamtex-manuals = { path = "../streamtex-manuals", editable = true }
 
 [tool.ruff.lint]
 ignore = ["F403", "F405", "E701", "E741"]

@@ -1,18 +1,26 @@
-"""Welcome — introduce the reuse architecture and its four artefacts."""
+"""Welcome — introduce the reuse architecture and its four artefacts.
 
-from streamtex import *
+Uses three components from the streamtex-manuals pack to render an
+attractive overview: a pitch_hero opening, then a column_features
+grid that contrasts "Reusable artefacts" with "Distribution model".
+"""
+
+from streamtex import st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_manuals.components.column_features import column_features
+from streamtex_manuals.components.pitch_hero import pitch_hero
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
-    grid_cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-        + s.container.layouts.vertical_center_layout
-    )
+    cta = s.bold + s.large + s.center_txt
 
 
 bs = BlockStyles
@@ -20,53 +28,63 @@ bs = BlockStyles
 
 def build():
     """Introduce the reuse architecture (packs, components, design systems, kits)."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "StreamTeX — Reuse Architecture"), toc_lvl="1")
-        st_write(
-            (bs.sub, "Packs, components, design systems, kits"),
-        )
-        st_space(20)
+    st_write(
+        (bs.heading, "StreamTeX — Reuse Architecture"),
+        toc_lvl="1", tag=t.div,
+    )
+    st_write(
+        (bs.sub + s.center_txt, "Packs, components, design systems, kits"),
+        tag=t.div,
+    )
+    st_space(15)
 
-        st_write(
-            bs.body,
-            "The reuse layer of the library ships every reusable artefact "
-            "(component, design system, CLI template, project blueprint, "
-            "kit) as part of a Python package — a pack — discovered at "
-            "runtime via the streamtex.packs entry point (PEP 621).",
-        )
-        st_space(15)
-        st_write(
-            bs.body,
-            "The official reference pack is streamtex-design. A project "
-            "declares its packs in stx.toml, picks an active design system, "
-            "and uses kits to bootstrap a coherent starter (e.g. "
-            "slides-modern-dark, project-default, manual-default).",
-        )
-        st_space(15)
-        st_write(
-            bs.body + s.bold,
-            "What changed at a glance:",
-        )
-        with st_grid(2, gap=10):
-            with st_block(bs.grid_cell):
-                st_write((s.bold, "Reusable artefacts"))
-                st_write(
-                    "- Components — Python modules with a docstring contract "
+    pitch_hero(
+        design_system=DS,
+        lead="Every reusable visual artefact ships as part of a Python pack.",
+        body=(
+            "Components, design systems, CLI templates, project "
+            "blueprints, and kits are discovered at runtime via the "
+            "streamtex.packs entry point (PEP 621). A project declares "
+            "its packs in stx.toml, picks an active design system, and "
+            "uses kits to bootstrap a coherent starter."
+        ),
+        gradient_start_rgba=(46, 204, 113),
+        gradient_end_rgba=(46, 196, 182),
+    )
+
+    st_space(20)
+    st_write(bs.cta, "What changed at a glance", toc_lvl="+1", tag=t.div)
+    st_space(10)
+
+    column_features(
+        design_system=DS,
+        columns=[
+            (
+                "Reusable artefacts",
+                "success",
+                [
+                    "Components — Python modules with a docstring contract "
                     "(Visual / Structure / Styling / INVARIANTS / PARAMS / "
-                    "INTERDITS / When to use / NOT to use).\n"
-                    "- Design systems — Python classes implementing "
-                    "DesignSystemProtocol.\n"
-                    "- Kits — TOML manifests bundling a DS + a curated "
-                    "component subset.\n"
-                    "- CLI templates + project blueprints — optional scaffolds.",
-                )
-            with st_block(bs.grid_cell):
-                st_write((s.bold, "Distribution model"))
-                st_write(
-                    "- Multi-pack: declare one or many packs in stx.toml.\n"
-                    "- Three sources, one command: stx pack add "
-                    "git:<url>[@rev] / local:<path> / pypi:<name>[@spec].\n"
-                    "- Editable dev: stx pack add <path> --dev.\n"
-                    "- Local mypack is created by stx project new — default "
+                    "INTERDITS / When to use / NOT to use).",
+                    "Design systems — Python classes implementing "
+                    "DesignSystemProtocol.",
+                    "Kits — TOML manifests bundling a DS + a curated "
+                    "component subset.",
+                    "CLI templates + project blueprints — optional scaffolds.",
+                ],
+            ),
+            (
+                "Distribution model",
+                "info",
+                [
+                    "Multi-pack: declare one or many packs in stx.toml.",
+                    "Three sources, one command: stx pack add "
+                    "git:<url>[@rev] / local:<path> / pypi:<name>[@spec].",
+                    "Editable dev: stx pack add <path> --dev.",
+                    "Local mypack is created by stx project new — default "
                     "capture destination for stx component new.",
-                )
+                ],
+            ),
+        ],
+        min_col_width="320px",
+    )

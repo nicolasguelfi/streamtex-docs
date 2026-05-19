@@ -160,8 +160,8 @@ def build():
     )
     _reason(
         10, "One-command deployment",
-        "Pre-configured Docker and Render setup. From local prototype "
-        "to online document in minutes.",
+        "Pre-configured Docker and Hetzner/Coolify setup. From local "
+        "prototype to online document in minutes.",
     )
 
     st_space("v", 2)
@@ -241,7 +241,7 @@ def build():
             with st_list(list_type="ul", li_style=bs.body) as l:
                 with l.item(): st_write("Self-contained HTML export (single file)")
                 with l.item(): st_write("PDF export via Playwright")
-                with l.item(): st_write("Cloud deployment (Docker, Render)")
+                with l.item(): st_write("Cloud deployment (Docker, Hetzner/Coolify)")
                 with l.item(): st_write("Instant sharing, works everywhere")
 
     st_space("v", 1)

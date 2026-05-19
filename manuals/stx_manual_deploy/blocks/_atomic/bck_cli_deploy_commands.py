@@ -62,22 +62,6 @@ def build():
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
-        # --- stx deploy render ---
-        st_write(bs.sub, "stx deploy render", toc_lvl="+1")
-        st_space("v", 1)
-
-        show_explanation("""\
-            Deploy your project to Render.com. Generates the
-            render.yaml blueprint and triggers the deployment
-            pipeline.
-        """)
-        st_space("v", 1)
-
-        show_code("""\
-            stx deploy render
-        """, language="bash", line_numbers=False)
-        st_space("v", 2)
-
         # --- stx deploy huggingface ---
         st_write(bs.sub, "stx deploy huggingface", toc_lvl="+1")
         st_space("v", 1)
@@ -100,14 +84,13 @@ def build():
 
         show_explanation("""\
             Check deployment status for a specific platform.
-            Supports coolify (Hetzner), render, and huggingface.
+            Supports coolify (Hetzner) and huggingface.
         """)
         st_space("v", 1)
 
         show_code("""\
             stx deploy status coolify              # Hetzner/Coolify services
             stx deploy status coolify docs-intro   # specific service
-            stx deploy status render               # Render services
             stx deploy status huggingface          # HuggingFace Spaces
         """, language="bash", line_numbers=False)
         st_space("v", 2)
@@ -290,8 +273,7 @@ def build():
 
         show_explanation("""\
             Sync environment variables to deployed services.
-            Reads from .stx-deploy.env and pushes to Coolify
-            (or Render for legacy deployments).
+            Reads from .stx-deploy.env and pushes to Coolify.
         """)
         st_space("v", 1)
 

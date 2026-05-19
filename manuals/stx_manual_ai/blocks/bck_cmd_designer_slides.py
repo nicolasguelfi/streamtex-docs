@@ -40,9 +40,9 @@ def build():
         st_space("v", 1)
         st_write(
             s.large,
-            "Describe the content you need. The AI selects the best ",
-            (s.bold, "blueprint "),
-            "(layout template), generates a fully styled block file, and ",
+            "Describe the content you need. The AI picks the best ",
+            (s.bold, "component "),
+            "from the installed packs (layout template), generates a fully styled block file, and ",
             "places it in your blocks/ directory.",
         )
     st_space("v", 1)

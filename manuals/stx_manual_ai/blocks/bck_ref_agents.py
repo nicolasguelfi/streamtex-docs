@@ -54,7 +54,7 @@ def build():
 
                 st_write(bs.label, "Auto-reads:")
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item(): st_write(s.large, "reuse-architecture.md")
                     with l.item(): st_write(s.large, "visual-design-rules.md")
                     with l.item(): st_write(s.large, "coding_standards.md")
                 st_space("v", 0.5)
@@ -83,7 +83,7 @@ def build():
 
                 st_write(bs.label, "Auto-reads:")
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item(): st_write(s.large, "reuse-architecture.md")
                     with l.item(): st_write(s.large, "visual-design-rules.md")
                     with l.item(): st_write(s.large, "style-conventions.md")
                 st_space("v", 0.5)
@@ -95,7 +95,7 @@ def build():
                                  "Enforces formatting and anti-pattern rules")
                     with l.item():
                         st_write(s.large,
-                                 "Uses blueprint templates for consistency")
+                                 "Reuses pack components for consistency")
                     with l.item():
                         st_write(s.large,
                                  "Validates structure before completion")
@@ -160,7 +160,7 @@ def build():
                 st_write(bs.label, "Auto-reads:")
                 with st_list(list_type="ul") as l:
                     with l.item(): st_write(s.large, "visual-design-rules.md")
-                    with l.item(): st_write(s.large, "block-blueprints.md")
+                    with l.item(): st_write(s.large, "reuse-architecture.md")
                     with l.item():
                         st_write(s.large,
                                  "streamtex-quick-reference.md")

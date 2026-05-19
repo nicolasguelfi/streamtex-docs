@@ -57,7 +57,6 @@ def build():
 
     # ── Badges row ────────────────────────────────────────────────
     # Totals across ALL profiles (library + documentation + project + presentation overlay)
-    # Blueprints = skills (11) + templates (4) + tools (1) across all profiles
     with st_grid(cols=4, cell_styles=bs.badge) as g:
         with g.cell():
             st_write(bs.badge_number, "55", tag=t.div)
@@ -67,7 +66,7 @@ def build():
             st_write(bs.badge_label, "Agents", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "16", tag=t.div)
-            st_write(bs.badge_label, "Blueprints", tag=t.div)
+            st_write(bs.badge_label, "Skills & tools", tag=t.div)
         with g.cell():
             st_write(bs.badge_number, "4", tag=t.div)
             st_write(bs.badge_label, "Profiles", tag=t.div)
@@ -80,7 +79,7 @@ def build():
         hand, you describe what you want and an AI agent generates
         production-ready StreamTeX code — styled, documented, and
         ready to deploy. This manual covers every command, agent,
-        blueprint, and workflow you need to go from idea to published
+        skill, and workflow you need to go from idea to published
         document in minutes.
     """)
     st_space("v", 1)

@@ -56,10 +56,12 @@ def build():
     with st_grid(cols=2, cell_styles=s.container.paddings.small_padding) as g:
         with g.cell():
             _render_skill(
-                "block-blueprints.md",
-                "Contains 10 block templates covering common slide "
-                "patterns: title, content, comparison, code demo, "
-                "exercise, summary, and more.",
+                "reuse-architecture.md",
+                "Documents the pack/component/DS/kit model the AI "
+                "agent uses to compose blocks: how to discover "
+                "components from installed packs, how to invoke "
+                "stx component show/find/new, and how to compose "
+                "common block templates from primitives.",
                 "Slide Designer, Project Architect",
                 "all profiles",
             )

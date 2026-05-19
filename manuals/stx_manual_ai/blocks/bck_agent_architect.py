@@ -35,8 +35,9 @@ def build():
 
     show_explanation("""\
         The Project Architect designs a complete project structure
-        from a natural language description. It reads block blueprints
-        and design rules, then produces a ready-to-implement plan.
+        from a natural language description. It reads the components
+        available in the installed packs and the project design rules,
+        then produces a ready-to-implement plan.
     """)
     st_space("v", 2)
 
@@ -48,7 +49,7 @@ def build():
         with st_list(list_type="ol") as l:
             with l.item():
                 st_write(
-                    bs.step_text, "Reads block blueprints and design rules",
+                    bs.step_text, "Reads installed components (via stx component list) and design rules",
                 )
             with l.item():
                 st_write(

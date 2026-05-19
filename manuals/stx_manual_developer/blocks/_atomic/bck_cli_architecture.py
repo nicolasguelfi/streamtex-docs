@@ -89,7 +89,7 @@ stx                          # Root CLI group
  |-- deploy                  # deploy_cmd.py
  |    |-- preflight          #   Pre-deployment checks
  |    |-- docker             #   Build Docker image
- |    |-- render             #   Deploy to Render
+ |    |-- hetzner            #   Deploy to Hetzner via Coolify API
  |    |-- huggingface        #   Deploy to HuggingFace
  |    +-- status             #   Check deployment status
  |

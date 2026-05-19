@@ -1,4 +1,4 @@
-"""Part 5 — Block Blueprints: visual catalog of the 10 template patterns."""
+"""Part 5 — Block composition templates: visual catalog of 10 template patterns."""
 
 from streamtex import st_write, st_space, st_block, st_grid
 from streamtex.enums import Tags as t
@@ -8,11 +8,11 @@ from blocks.helpers import show_code, show_explanation, show_details
 
 
 class BlockStyles:
-    """Blueprints catalog block styles."""
+    """Template catalog block styles."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 
-    # Blueprint card
+    # Template card
     bp_card = Style(
         "background: rgba(139, 92, 246, 0.06); "
         "border: 1px solid rgba(139, 92, 246, 0.20); "
@@ -28,23 +28,25 @@ bs = BlockStyles
 
 
 def build():
-    """Render the Block Blueprints catalog section."""
+    """Render the block composition template catalog section."""
     st_space("v", 1)
-    st_write(bs.heading, "Block Blueprints",
+    st_write(bs.heading, "Block composition templates",
              tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     show_explanation("""\
-        The block-blueprints.md skill contains 10 reusable
-        template patterns. Each blueprint defines a proven
-        layout for a specific type of content. Agents select
-        the best blueprint based on your description and
-        generate a standards-compliant block.
+        StreamTeX projects compose every block from a small set of
+        recurring layouts — title, section header, content + bullets,
+        comparison, image + text, code demo, timeline, quote, gallery,
+        conclusion. The AI agent selects the best template based on
+        your description and generates a standards-compliant block.
+        Reusable components (in installed packs) plug into these
+        layouts; see the reuse-architecture skill for the catalog.
     """)
     st_space("v", 2)
 
-    # ── Blueprints 1-4 ────────────────────────────────────────────
-    st_write(bs.sub, "Blueprints 1 — 4", toc_lvl="+1")
+    # ── Templates 1-4 ────────────────────────────────────────────
+    st_write(bs.sub, "Templates 1 — 4", toc_lvl="+1")
     st_space("v", 1)
 
     with st_grid(cols=2,
@@ -76,7 +78,7 @@ def build():
                 st_space("v", 0.5)
                 st_write(bs.bp_use, """\
                     Title plus bullet points. The most
-                    common blueprint — used for teaching
+                    common template — used for teaching
                     concepts, listing features, or explaining
                     ideas.
                 """)
@@ -92,8 +94,8 @@ def build():
                 """)
     st_space("v", 1)
 
-    # ── Blueprints 5-8 ────────────────────────────────────────────
-    st_write(bs.sub, "Blueprints 5 — 8", toc_lvl="+1")
+    # ── Templates 5-8 ────────────────────────────────────────────
+    st_write(bs.sub, "Templates 5 — 8", toc_lvl="+1")
     st_space("v", 1)
 
     with st_grid(cols=2,
@@ -140,8 +142,8 @@ def build():
                 """)
     st_space("v", 1)
 
-    # ── Blueprints 9-10 ──────────────────────────────────────────
-    st_write(bs.sub, "Blueprints 9 — 10", toc_lvl="+1")
+    # ── Templates 9-10 ──────────────────────────────────────────
+    st_write(bs.sub, "Templates 9 — 10", toc_lvl="+1")
     st_space("v", 1)
 
     with st_grid(cols=2,
@@ -168,7 +170,7 @@ def build():
                 """)
     st_space("v", 2)
 
-    # ── How blueprints are used ──────────────────────────────────
+    # ── How templates are used ──────────────────────────────────
     st_write(bs.sub, "From Description to Block",
              toc_lvl="+1")
     st_space("v", 1)
@@ -176,7 +178,7 @@ def build():
     st_write(
         s.large,
         "Describe what you want in plain English. "
-        "The AI picks the best blueprint and generates "
+        "The AI picks the best template and generates "
         "a complete, standards-compliant block:",
     )
     st_space("v", 1)
@@ -186,7 +188,7 @@ def build():
         "Create a block comparing Python vs JavaScript
         for data science."
 
-        # AI selects: Blueprint 4 — Comparison
+        # AI selects: Template 4 — Comparison
         # Generates: bck_07_python_vs_js.py
         #   - Two-column grid layout
         #   - Left column: Python strengths
@@ -200,25 +202,28 @@ def build():
     with st_block(s.project.containers.tip_callout):
         st_write(
             s.project.titles.tip_label,
-            "Blueprints are composable",
+            "Templates are composable",
         )
         st_space("v", 1)
         st_write(s.large, """\
-            You can combine multiple blueprint patterns in
-            a single block. For example, a Content blueprint
-            followed by a Code Demo section, ending with a
-            Quote callout. The AI understands these
-            combinations and will merge patterns naturally
-            when your description calls for it.
+            You can combine multiple templates in a single
+            block. For example, a Content template followed
+            by a Code Demo section, ending with a Quote
+            callout. The AI understands these combinations
+            and merges them naturally when your description
+            calls for it. To pull reusable components from
+            an installed pack (callouts, cards, headings,
+            etc.), invoke `stx component list` and pass the
+            component name to the AI.
         """)
     st_space("v", 1)
 
     show_details("""\
-        Blueprints are guidelines, not rigid templates.
-        The AI adapts each pattern to your specific content
-        — adjusting column counts, adding or removing
-        sections, and choosing appropriate styles. Think
-        of them as starting points that ensure structural
-        consistency across your project.
+        Templates are guidelines, not rigid skeletons. The
+        AI adapts each pattern to your specific content —
+        adjusting column counts, adding or removing sections,
+        and choosing appropriate styles. Think of them as
+        starting points that ensure structural consistency
+        across your project.
     """)
     st_space("v", 1)

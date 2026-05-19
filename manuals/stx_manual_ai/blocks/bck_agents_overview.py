@@ -184,8 +184,8 @@ def build():
     show_details("""\
         Agents auto-load their context before acting. This means
         they read the relevant skills, coding standards, and
-        blueprints defined in the profile so that every generated
-        block is standards-compliant from the start. You never
-        need to manually paste rules into the conversation.
+        component contracts defined in the active packs so that
+        every generated block is standards-compliant from the start.
+        You never need to manually paste rules into the conversation.
     """)
     st_space("v", 1)

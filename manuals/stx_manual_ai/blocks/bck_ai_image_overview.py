@@ -1,7 +1,7 @@
 """AI Image Generation — Overview and configuration of external AI providers.
 
-Part 8: Advanced — Introduces the st_ai_image() / st_ai_image_widget()
-functions and how to configure AI providers (OpenAI, Google Imagen, fal.ai).
+Part 8: Advanced — Introduces `st_image(prompt=..., editable=True)`
+and how to configure AI providers (OpenAI, Google Imagen, fal.ai).
 """
 
 from streamtex import st_write, st_space, st_block, st_grid, st_image
@@ -30,12 +30,11 @@ def build():
 
     show_explanation("""\
         StreamTeX integrates with external AI providers to generate
-        images directly from text prompts. The recommended approach
-        is the unified st_image() with editable=True, which covers
-        local, URL, and AI-generated images with a built-in editor
-        panel, version history, and img2img support. The legacy
-        st_ai_image() and st_ai_image_widget() functions remain
-        available for backward compatibility.
+        images directly from text prompts. The unified st_image()
+        with editable=True covers local, URL, and AI-generated images
+        with a built-in editor panel, version history, and img2img
+        support — one API for every image source. For programmatic
+        generation without rendering, use generate_image().
     """)
     st_space("v", 2)
 
@@ -147,7 +146,7 @@ def build():
         "API keys are resolved from environment variables. Add them ",
         "to your ",
         (s.bold, ".env"),
-        " file (local) or Render env vars (deployed):",
+        " file (local) or Coolify env vars (deployed):",
     )
     st_space("v", 1)
 

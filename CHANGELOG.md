@@ -5,6 +5,209 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3] — 2026-05-19 (L5 callers migration — TOCConfig.numerate_titles removed upstream)
+
+The library deprecated and now removed the `TOCConfig.numerate_titles`
+field. Every doc/skill caller is migrated to
+`numbering=NumberingMode.X`.
+
+### Changed
+- `cheatsheets/stx_cheatsheet_python.md` — full-featured book example
+  and `TOCConfig` dataclass reference no longer mention
+  `numerate_titles`; the field disappears from both places.
+- `manuals/stx_manual_intro/blocks/bck_tags_enum.py` —
+  `TOCConfig(numerate_titles=True, ...)` →
+  `TOCConfig(numbering=NumberingMode.BOTH, ...)`.
+- `manuals/stx_manual_intro/blocks/_atomic/bck_toc.py` — Field table
+  row 1 retitled from `numerate_titles` (bool true/false) to
+  `numbering` (NumberingMode value: BOTH / SIDEBAR_ONLY /
+  MAIN_ONLY / NONE).
+- `.claude/designer/skills/streamtex-quick-reference.md` will
+  auto-refresh on the next `stx claude update` (the source file in
+  `streamtex-claude/profiles/project/designer/skills/` is already
+  updated).
+
+## [0.7.2] — 2026-05-19 (Q10 follow-up + Q19 last bloc)
+
+After the library cut deprecated AI-image functions in `streamtex
+0.7.2`, every doc reference is rewritten on the modern API
+(`st_image(prompt=..., editable=True, name=...)`). The last deferred
+reuse-manual block (`bck_custom_import_mapping`) is now written —
+the PLAN.md §18.9 + §19.2 (Q19/D19) provided the source spec that
+was missing during Phase 2.
+
+### Added (Q19 — last deferred bloc grounded on PLAN.md)
+- `manuals/stx_manual_reuse/blocks/bck_custom_import_mapping.py` —
+  documents the strict-separation doctrine (D19) between the
+  pack-agnostic shared `/stx-import:*` commands and the user-prepared
+  custom artefacts (`.claude/custom/skills/import-<pack>-mapping.md`
+  + `.claude/custom/commands/refactor-<pack>/run.md`) that refactor
+  imported code towards a pack's components. 5 sections:
+  (1) why pack-agnostic in the shared profile, (2) custom skill
+  template, (3) custom command template, (4) concrete example for
+  `streamtex-design`, (5) storage and conservation strategies.
+- Wired into `stx_manual_reuse/book.py`. The manual now ships all
+  12 planned blocs (21 total).
+
+### Changed
+- `references/streamtex_cheatsheet_en.md` — AI Image Generation
+  section: the `from streamtex import st_ai_image,
+  st_ai_image_widget, generate_image` import + the two example
+  blocks (declarative + widget) are replaced by `st_image(prompt=...,
+  editable=True, name=...)` examples (same call covers both modes).
+- `references/coding_standards.md` — sx-vs-st guidance: `st_ai_image,
+  st_ai_image_widget, generate_image` → `st_image(prompt=...,
+  editable=True), generate_image`.
+- `manuals/stx_manual_ce/blocks/bck_ce_produce.py` +
+  `bck_ce_faq.py` — `st_ai_image(prompt)` references refreshed
+  to `st_image(prompt=..., editable=True, name=...)`.
+- `manuals/stx_manual_ai/blocks/bck_ai_image_overview.py` — module
+  docstring + `show_explanation` no longer mention the deprecated
+  functions; the unified `st_image()` is presented as the single
+  entry point.
+- `manuals/stx_manual_ai/blocks/bck_ai_image_usage.py` — rewritten:
+  the "Declarative Mode" section now teaches `st_image(prompt=...,
+  editable=True, name=...)`; the "Interactive Widget" section is
+  replaced by "Interactive editing — same call, editor panel"
+  explaining that `editable=True` opens the Prompt / AI / Edit /
+  History tabs on click; the Parameters Reference grid is rewritten
+  to document `st_image()`'s AI params (left card) + common params
+  (right card); the deprecation block becomes a "Upgrading from
+  < 0.7" migration note explaining the removal.
+- `manuals/stx_manual_ai/blocks/bck_profile_install.py` —
+  AI-extras explanation references the unified API.
+
+## [0.7.1] — 2026-05-19 (Autonomous doc legacy cleanup — Phases 1-5)
+
+### Phase 1 — Foundation files (Claude instructions + cheatsheet)
+- `streamtex-docs/CLAUDE.md` and `streamtex/CLAUDE.md`: the legacy
+  `## StreamTeX Patterns` section (referencing the removed
+  `streamtex-patterns` repo, `.claude/custom/streamtex-patterns/`
+  folder, and `/stx-pattern:*` command family) is replaced by a
+  modern `## Reuse architecture` section pointing to the
+  `reuse-architecture` skill, `stx pack/component/ds/kit/validate`
+  CLI, and the docstring-contract model.
+- `references/streamtex_cheatsheet_en.md`: the `## Patterns` section
+  (~17 obsolete `stx patterns *` commands and a docs/slides/core
+  preset model) is replaced by a `## Reuse architecture` section
+  documenting every active command (`stx pack {list,add,remove,
+  info,new,set-primary,validate,sync}`, `stx component {list,show,
+  find,validate,new,promote}`, `stx ds {list,show,switch,new,
+  validate}`, `stx kit {list,show,install,new,validate}`,
+  `stx validate [--strict]`) — each verified against the real CLI
+  surface in `streamtex/cli/`.
+- `manuals/stx_manual_reuse/blocks/bck_reuse_welcome.py`:
+  vocabulary refresh — "Before patterns flow / After reuse
+  architecture" before/after grid replaced by "Reusable artefacts /
+  Distribution model" that documents the new state directly.
+
+### Phase 2 — `stx_manual_reuse` — 11 new blocks (G9)
+Each block grounded on a specific source file (cited in its module
+docstring) to avoid drift. The 12th planned block,
+`bck_custom_import_mapping`, is deferred — the concept is not yet
+implemented in code (no source to ground from).
+- `bck_pack_authoring` — pack scaffold, layout, manifest, entry-point.
+- `bck_component_authoring` — scaffold, docstring contract, validate.
+- `bck_kit_format` — kit TOML schema + required/optional fields + CLI.
+- `bck_cli_template_format` — template directory layout + placeholders
+  + kit wiring + authoring tips.
+- `bck_pack_distribution` — three channels (local / git / pypi) with
+  comparison table + release flows.
+- `bck_ce_capture` — capture workflow (spot → scaffold → docstring →
+  use → validate).
+- `bck_ce_promote` — Q12 4-branch routing
+  (primary_local / secondary_local_with_git / git_remote / pypi).
+- `bck_validation` — code families (PR/PV/CV/DV/KV/BV), exit codes,
+  severities, CI usage.
+- `bck_troubleshooting` — recipe table for the most common error
+  codes + a general debugging workflow.
+- `bck_migration_from_patterns` — vocabulary mapping + CLI mapping +
+  step-by-step migration recipe for 0.6.x projects.
+- `bck_faq` — 10 recurring questions from the 0.7.x rollout.
+- `book.py` reorganised into 8 logical parts.
+
+### Phase 3 — Render purge (Q12 follow-up)
+The CLI surface lost `stx deploy render` / `env-sync` in Q12.
+Documentation now reflects that:
+- `manuals/stx_manual_deploy/blocks/bck_render.py` deleted.
+- `manuals/stx_manual_developer/blocks/_atomic/bck_render_deployment.py` deleted.
+- `manuals/stx_manual_developer/blocks/bck_dev_ci_cd.py` and the
+  deploy `book.py` updated to remove the Render entries.
+- `bck_welcome.py` and `bck_level_badge.py` (deploy) cleaned of
+  Render rows.
+- `bck_cli_deploy_commands.py` — the `stx deploy render` section
+  removed and `stx deploy status` updated.
+- `bck_cli_architecture.py` (developer) — CLI tree replaces
+  `render` with `hetzner`.
+- `references/streamtex_cheatsheet_en.md` — Other-platforms section
+  no longer lists `stx deploy render` / `env-sync`; `stx deploy status`
+  no longer offers a `render` argument.
+- Intro / advanced / collection-hub copy: `Render.com` mentions
+  replaced by `Hetzner/Coolify`.
+
+### Phase 4 — Vocabulary sweep (surgical, G10-G12)
+Replaced unambiguous legacy strings; generic uses of "pattern"
+(design pattern, atomic blocks pattern, testing patterns) kept in
+place. Final state across `manuals/` + `references/`:
+- `stx patterns <verb>` : 0 occurrences (was 17).
+- `/stx-pattern:*` : 0 occurrences.
+- `_pattern_library.md` : 0 occurrences.
+- `block-blueprints.md` : 0 occurrences — every reference now points
+  to `reuse-architecture.md` (7 places in `stx_manual_ai/`).
+- `streamtex-patterns` repo/path : only legitimate mentions remain
+  (`bck_pack_source_resolution`, `bck_migration_from_patterns`,
+  `bck_faq` — all quoting the legacy term for context).
+
+### Phase 5 — Housekeeping
+- 5 orphan `*.bak` files removed (intro/advanced manuals).
+- All 8 manuals (`intro/advanced/deploy/developer/ai/ce/reuse/
+  collection`) compile and import all blocks: 178 blocks total.
+- Repo-wide `ruff check .` passes.
+
+### Volontairement hors scope (documenté pour la suite)
+- Q10 — streamtex lib L1-L7 legacy API removal (code, not docs).
+- F2 — ambiguous vocabulary judgment calls ("blueprint" case by
+  case, generic "pattern" uses).
+- `bck_custom_import_mapping` — concept not implemented in code yet.
+
+## [0.7.0] — 2026-05-19 (Q13 — legacy purge)
+
+### Changed (Q13a)
+- `pyproject.toml` (root): `version = "0.7.0"` (was `0.6.0`,
+  aligned with `.stx-version`); streamtex dependency bumped from
+  `>=0.3.0` to `>=0.7.0`.
+- `templates/template_project/pyproject.toml`,
+  `templates/template_collection/pyproject.toml`,
+  `templates/template_slides/pyproject.toml`: streamtex dependency
+  bumped from `>=0.3.0` to `>=0.7.0`.
+- `manuals/stx_manual_ai/blocks/bck_blueprints.py` renamed to
+  `bck_block_templates.py` (title "Block Blueprints" → "Block
+  composition templates"; legacy `block-blueprints.md` skill
+  reference removed; block now points to the reuse-architecture
+  skill + `stx component list`).
+
+### Added (Q13b — equivalence ports before archive deletion)
+- `manuals/stx_manual_reuse/blocks/bck_pack_source_resolution.py`
+  — modern equivalent of the legacy `bck_scan_rule`: 3 pack
+  locations / PEP 621 entry-point discovery / 5 lifecycle states
+  with `PR0xx` codes / `_pack_manifest.toml` format / component
+  granularity tags / `stx pack sync` + editable dev links.
+- `manuals/stx_manual_reuse/blocks/bck_pack_consumption.py` —
+  modern equivalent of the legacy `bck_install_flow`: end-to-end
+  walkthrough from `stx project new` to capture + Q12 4-branch
+  promote routing, with the 3-file persistence model.
+
+### Removed (Q13a + Q13c)
+- `manuals/_archive/stx_manual_patterns/.venv/` (Q13a — 555 MB
+  build artifact, regeneratable).
+- `manuals/_archive/stx_manual_patterns/` (Q13c) — full legacy
+  manual; every block with no equivalent in `stx_manual_reuse`
+  was ported in Q13b. Remaining archive blocks were either
+  superseded by the live-rendered Wave 4 galleries or deferred to
+  future authoring blocks per PLAN §19.2. Git history retains the
+  archive.
+- `manuals/_archive/` — empty parent directory removed.
+
 ## [Unreleased] — 2026-05-19 (Wave 3 Phase 6.4-6.5 + Phase 7)
 
 ### Removed

@@ -171,7 +171,7 @@ def build():
         "Export and deploy",
         "Generate a PDF of this document and deploy it online",
         "The AI configures PdfConfig, runs the export, and "
-        "sets up Docker/Render deployment.",
+        "sets up Docker / Hetzner / Coolify deployment.",
     )
     _ai_task(
         "Audit and fix",

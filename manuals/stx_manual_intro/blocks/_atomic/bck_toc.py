@@ -45,12 +45,13 @@ toc = TOCConfig(
             # row 1
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,
-                         "numerate_titles")
+                         "numbering")
             with g.cell():
                 st_write(s.large,
-                         "True = numbered (1.1, 1.2...),")
+                         "NumberingMode value: BOTH (sidebar + main, default),")
                 st_br()
-                st_write(s.large, "False = plain text")
+                st_write(s.large,
+                         "SIDEBAR_ONLY, MAIN_ONLY, or NONE.")
             # row 2
             with g.cell():
                 st_write(s.project.colors.neutral_gray + s.large,

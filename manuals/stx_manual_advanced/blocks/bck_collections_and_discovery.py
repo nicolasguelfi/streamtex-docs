@@ -146,7 +146,7 @@ order = 2
 
 [projects.deploy]
 title = "Deployment Guide"
-description = "Deploy: Docker, Streamlit Cloud, Render.com, GCP, CI/CD"
+description = "Deploy: Docker, Streamlit Cloud, Hetzner/Coolify, GCP, CI/CD"
 project_url = "http://localhost:8504"
 order = 3
     """, language="toml")
@@ -260,7 +260,7 @@ def build():
 # Pattern: STX_URL_<PROJECT_KEY_UPPER>
 # For [projects.test-intro], the env var is STX_URL_TEST_INTRO
 
-# Example: set in Render.com, Docker, or .env
+# Example: set in Coolify env vars, Docker, or .env
 STX_URL_TEST_INTRO=https://docs-intro.streamtex.org
 STX_URL_TEST_ADVANCED=https://docs-advanced.streamtex.org
     """, language="bash")

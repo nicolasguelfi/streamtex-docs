@@ -68,7 +68,7 @@ import blocks
 
 ## 5. sx vs st — When to Use What
 - **ALL layout and content** -> `stx.*`: st_write, st_image, st_grid, st_list, st_block, st_span, st_space, st_br, st_overlay, st_html
-- **AI image generation** -> `stx.*`: st_ai_image, st_ai_image_widget, generate_image (requires `streamtex[ai]`)
+- **AI image generation** -> `stx.*`: st_image(prompt=..., editable=True), generate_image (requires `streamtex[ai]`)
 - **Presentation mode** -> `stx.*`: st_presentation_footer, add_presentation_options
 - **Data visualization (export-aware)** -> `stx.*`: st_dataframe, st_table, st_metric, st_json, st_graphviz, st_line_chart, st_bar_chart, st_area_chart, st_scatter_chart, st_audio, st_video
 - **ONLY interactivity** -> `st.*`: buttons, inputs, sliders, forms, selectbox, checkbox
@@ -760,7 +760,7 @@ Explicit values always override auto defaults.
 ### Architecture
 
 - `banner.py` — BannerMode enum, BannerConfig dataclass, _render_banner()
-- `book.py` — Resolves banner config (banner > monties_color > banner_color),
+- `book.py` — Resolves banner config (banner > banner_color),
   passes BannerConfig to _paginated_book(), calls _render_banner() for top/bottom banners.
 
 ## 18. Presentation Profiles

@@ -24,7 +24,7 @@ order = 2
 
 [projects.test-ai]
 title = "AI-Powered Workflows"
-description = "22 commands, 4 agents, 10 blueprints, 4 profiles: create content with AI assistants"
+description = "22 commands, 4 agents, pack components, 4 profiles: create content with AI assistants"
 emoji = "🤖"
 button_label = "Open Manual"
 project_url = "http://localhost:8506"
@@ -40,7 +40,7 @@ order = 4
 
 [projects.test-deploy]
 title = "Deployment Guide"
-description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, Render.com, GCP, CI/CD"
+description = "Deploy StreamTeX projects: Docker, Streamlit Cloud, Hetzner/Coolify, HuggingFace, GCP, CI/CD"
 emoji = "🚀"
 button_label = "Open Course"
 project_url = "http://localhost:8504"

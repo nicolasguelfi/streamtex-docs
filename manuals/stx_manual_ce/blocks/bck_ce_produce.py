@@ -82,7 +82,7 @@ def build():
 
     **AI image integration** — When the plan includes AI-generated visuals:
     1. Configure `set_ai_image_config()` with provider, model, and cache strategy
-    2. Insert `st_ai_image(prompt)` calls where visuals are needed
+    2. Insert `st_image(prompt=..., editable=True, name=...)` calls where visuals are needed
     3. Review generated images during quality gates
 
     **Reference traceability** — For every factual claim, statistic, or

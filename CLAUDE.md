@@ -52,11 +52,10 @@ See `.claude/references/coding_standards.md` for the full reference. Key rules:
 - Style composition: `Style + Style`, `Style + string`, `Style - string`
 
 ### Media & Visual
-- `st_image(style, uri=)` — Image handling with base64 encoding
-- `st_ai_image(prompt, ...)` — AI image generation + display (requires `streamtex[ai]`)
-- `st_image(style, uri=, editable=True, name=, prompt=)` — Unified image with editing panel (replaces st_ai_image for new code)
+- `st_image(style, uri=)` — Local / URL image handling with base64 encoding
+- `st_image(style, prompt=, editable=True, name=, provider=, ai_size=)` — AI image generation + editor panel (Prompt / AI / Edit / History tabs); requires `streamtex[ai]`
+- `generate_image(prompt, provider=...)` — Programmatic generation without rendering
 - `get_available_models(provider)` — List available AI models per provider
-- `st_ai_image_widget(...)` — Interactive AI image generation widget
 - `st_code(style, code=, language=)` — Code blocks with Pygments
 - `st_space(dir, amount)`, `st_br()` — Spacing
 - `st_slide_break()` — Presentation section break (styled rule + viewport spacer + hidden marker)
@@ -130,42 +129,42 @@ Multiple `st_write` calls stack vertically. For inline text with different style
 Always use `uv tool install "streamtex[cli]" -U` in docs and user instructions.
 This command works for both installation AND upgrade. Do NOT use `uv tool upgrade` (fails if not already installed).
 
-## StreamTeX Patterns (graphic design patterns)
+## Reuse architecture (packs, components, design systems, kits)
 
-The documentation profile is wired to the **`docs`** preset of the central
-`streamtex-patterns` repo (= `core` + `docs` scopes). Patterns are installed
-locally under `.claude/custom/streamtex-patterns/` and define reusable graphic
-design primitives (manual sections, API reference cards, walkthroughs,
-callouts, card grids, slide headings, …) that the user can invoke by name
-when creating or editing manual blocks.
+Since streamtex 0.7.x, all reusable visual artefacts ship as Python packs
+(see the `reuse-architecture` skill for the full model). A pack exports
+`components/`, `design_systems/`, `kits/`, optionally `cli_templates/` and
+`blueprints/`. The reference pack is `streamtex-design`.
 
-**Mandatory rules**:
-1. **Before generating or modifying any StreamTeX block**, read
-   `.claude/custom/streamtex-patterns/_pattern_library.md` to know which
-   patterns are available.
-2. When the user names a pattern in any prompt (e.g. *"use manual_section"*,
-   *"like api_reference_card"*), read the full
-   `.claude/custom/streamtex-patterns/<name>.md` file **before** generating
-   code.
-3. Strictly respect each pattern's `INVARIANTS` section. Adjust only within
-   `PARAMS`. Refuse anything matching `INTERDITS` and propose a new pattern
-   instead.
-4. The pattern's code skeleton is a **starting point** — adapt it to the
-   manual's `custom/styles.py` and tone (code + live-demo via `show_code()` /
-   `show_explanation()` / `show_details()`).
-5. If the user describes something that matches no existing pattern but is
-   reusable across manuals, suggest `/stx-pattern:new` to capture it.
+**Mandatory rules when generating or modifying a manual block**:
+1. **Before generating any block**, read the `reuse-architecture` skill and
+   run `stx component list` (or `stx pack list` to see what's installed).
+2. When the user names a component (e.g. *"use callout"*,
+   *"like card_grid"*), read its docstring contract via
+   `stx component show <name>` **before** generating code. The docstring
+   carries `INVARIANTS`, `PARAMS`, `INTERDITS`, `When to use`, `When NOT to
+   use`, and `Design system bundles required` — respect them strictly.
+3. To compose a block from existing components, import them directly from
+   the pack: `from streamtex_design.components import callout, card_grid`.
+4. If the user describes something not covered by any installed pack and
+   reusable across projects/manuals, run `stx component new <name>` to
+   scaffold a captured component into the project's primary local pack
+   (`./mypack/components/`), then promote it later with
+   `stx component promote`.
 
-**Difference with blueprints**:
-- A **blueprint** = a complete block type (`title`, `conclusion`, `exercise`).
-- A **pattern** = a reusable composition primitive used inside a block
-  (`ptn_manual_section`, `ptn_api_reference_card`, `callout_critical`).
+**Component granularity** (a tag, not a constraint):
+- `primitive` — atomic visual element (callout, slide_heading, cite).
+- `composition` — multiple primitives + own layout (card_grid,
+  comparison_table, manual_section, term_definition_list).
+- `block` — full block-level template (title_slide, evidence_insight).
 
-A block can combine: 1 blueprint × N patterns × style conventions.
+**CLI surface**: `stx pack {list,add,info,sync}` · `stx component
+{list,new,show,validate,promote}` · `stx ds {list,switch,new}` · `stx kit
+{list,install,show,new}` · `stx validate [--strict]`.
 
-**Commands**: `/stx-pattern:list` `/stx-pattern:show <name>`
-`/stx-pattern:new` `/stx-pattern:reindex` `/stx-pattern:validate`.
-See the `pattern-library` skill for the full mechanism.
+See the `reuse-architecture` and `pack-author` skills for the full
+mechanism. The legacy `streamtex-patterns` repo and the
+`.claude/custom/streamtex-patterns/` folder are removed in 0.7.x.
 
 ## Customization
 - `.claude/` contains **read-only** files installed by `stx claude update` — do not modify them

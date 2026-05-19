@@ -51,21 +51,24 @@ def build():
         )
         with st_grid(2, gap=10):
             with st_block(bs.grid_cell):
-                st_write(("Before — patterns flow", s.bold))
+                st_write(("Reusable artefacts", s.bold))
                 st_write(
-                    "- Markdown catalogue in a sibling repo "
-                    "(streamtex-patterns).\n"
-                    "- Manual install / sync into "
-                    ".claude/custom/streamtex-patterns/.\n"
-                    "- AI agent reads .md files to generate blocks.\n"
-                    "- One central repo, no composition.",
+                    "- Components — Python modules with a docstring contract "
+                    "(Visual / Structure / Styling / INVARIANTS / PARAMS / "
+                    "INTERDITS / When to use / NOT to use).\n"
+                    "- Design systems — Python classes implementing "
+                    "DesignSystemProtocol.\n"
+                    "- Kits — TOML manifests bundling a DS + a curated "
+                    "component subset.\n"
+                    "- CLI templates + project blueprints — optional scaffolds.",
                 )
             with st_block(bs.grid_cell):
-                st_write(("After — reuse architecture", s.bold))
+                st_write(("Distribution model", s.bold))
                 st_write(
-                    "- Python packs with entry points; multi-pack natively.\n"
-                    "- stx pack add ... — same UX for git / local / pypi.\n"
-                    "- Components are real Python modules — importable, "
-                    "diffable, testable.\n"
-                    "- Local 'mypack' is the default capture destination.",
+                    "- Multi-pack: declare one or many packs in stx.toml.\n"
+                    "- Three sources, one command: stx pack add "
+                    "git:<url>[@rev] / local:<path> / pypi:<name>[@spec].\n"
+                    "- Editable dev: stx pack add <path> --dev.\n"
+                    "- Local mypack is created by stx project new — default "
+                    "capture destination for stx component new.",
                 )

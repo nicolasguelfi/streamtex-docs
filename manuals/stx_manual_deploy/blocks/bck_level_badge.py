@@ -85,6 +85,6 @@ def build():
             with l.item(): st_write(s.medium, "Local: Docker build and compose for testing")
             with l.item(): st_write(s.medium, "Cloud: Streamlit Cloud, HuggingFace Spaces")
             with l.item(): st_write(s.medium + s.bold, "Production: Hetzner + Coolify (recommended)")
-            with l.item(): st_write(s.medium, "Legacy: Render.com, GCP VM + Ansible")
+            with l.item(): st_write(s.medium, "Self-hosted: GCP VM + Ansible")
 
     st_space("v", 2)

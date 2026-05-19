@@ -184,7 +184,7 @@ def build():
     3. In your PLAN, include `AIImageConfig` with your preferred provider,
        default image size, and quality settings.
 
-    **During PRODUCE:** Use `st_ai_image(prompt)` in your blocks. Images
+    **During PRODUCE:** Use `st_image(prompt=..., editable=True, name=...)` in your blocks. Images
     are cached by a deterministic hash of the prompt, provider, size,
     quality, and seed, so regeneration only happens when parameters change.
 

@@ -465,7 +465,7 @@ st_image(s.none, uri="static/images/managed/hero.png",
          provider="openai", model="gpt-image-1")
 ```
 
-**Example — AI generation without existing image (replaces st_ai_image):**
+**Example — pure AI generation (no existing image):**
 ```python
 st_image(s.none, editable=True, name="hero_intro",
          prompt="A futuristic classroom",
@@ -921,7 +921,6 @@ st_book([blocks.bck_intro, blocks.bck_content])
 st_book(
     [blocks.bck_intro, blocks.bck_ch1, blocks.bck_ch2],
     toc_config=TOCConfig(
-        numerate_titles=True,
         numbering=NumberingMode.BOTH,
         search=True,
     ),
@@ -960,9 +959,8 @@ st_include(blocks.bck_content, some_param="value")
 ```python
 @dataclass
 class TOCConfig:
-    numerate_titles: bool = True
-    numbering: str | None = None  # NumberingMode value
-    toc_position: int = -1        # -1=end, 0=start, None=no TOC
+    numbering: str = NumberingMode.BOTH  # sidebar/main/both/none
+    toc_position: int = -1               # -1=end, 0=start, None=no TOC
     title_style: Style = ...
     content_style: Style = ...
     search: bool = False
@@ -1475,67 +1473,52 @@ except GSheetError as e:
 
 ## 10. AI Image Generation
 
-### st_ai_image
+Since streamtex 0.7.2, AI image generation goes through the unified
+`st_image()` function with `prompt=` + `editable=True`. The standalone
+`st_ai_image()` / `st_ai_image_widget()` functions are removed.
 
-> **Note:** `st_ai_image()` is now a thin wrapper around `st_image(editable=True, prompt=...)`.
-> New code should use `st_image()` directly.
+### st_image with AI parameters
 
 ```python
-def st_ai_image(
-    prompt: str,
+def st_image(
     style: Style = StxStyles.none,
+    *,
+    uri: str = "",                     # local path or URL (omit for pure-AI)
+    prompt: str = "",                  # triggers AI mode when set
+    editable: bool = False,            # opens editor panel on click
+    name: str = "",                    # cache + version-history key
     width: str = "100%",
     height: str = "auto",
-    *,
-    provider: Optional[str] = None,   # "openai" | "google" | "fal"
-    size: Optional[str] = None,       # e.g. "1024x1024"
-    quality: str = "standard",        # "standard" | "hd"
-    api_key: Optional[str] = None,
+    provider: Optional[str] = None,    # "openai" | "google" | "fal"
     model: Optional[str] = None,
+    ai_size: Optional[str] = None,     # e.g. "1024x1024"
+    quality: str = "standard",         # "standard" | "hd"
+    base_image: Optional[bytes] = None, # img2img base
     alt: str = "",
     link: str = "",
     hover: bool = True,
     light_bg: bool = False,
     config: Optional[AIImageConfig] = None,
-    **kwargs,
 ) -> Optional[str]  # Returns path to image file, or None
 ```
 
-**Manual mode (default):** shows placeholder with "Generate" button if not cached.
-**Auto mode:** generates immediately if not cached.
+**Manual mode (`editable=True`, the default for AI):** the user clicks
+the image to open the editor panel (Prompt / AI / Edit / History tabs).
+**Auto mode:** set `AIImageConfig(auto_generate=True)` to generate
+immediately if not cached.
 
 ```python
-st_ai_image("A sunset over mountains in watercolor style")
-st_ai_image("Logo design", provider="google", size="1024x1024", quality="hd")
-```
+# Declarative AI image
+st_image(prompt="A sunset over mountains in watercolor style",
+         editable=True, name="sunset_hero")
 
-### st_ai_image_widget
+# AI image with provider override
+st_image(prompt="Logo design", editable=True, name="logo",
+         provider="google", ai_size="1024x1024", quality="hd")
 
-```python
-def st_ai_image_widget(
-    style: Style = StxStyles.none,
-    width: str = "100%",
-    height: str = "auto",
-    *,
-    provider: Optional[str] = None,
-    default_prompt: str = "",
-    size: Optional[str] = None,
-    quality: str = "standard",
-    api_key: Optional[str] = None,
-    model: Optional[str] = None,
-    alt: str = "",
-    light_bg: bool = False,
-    config: Optional[AIImageConfig] = None,
-    key: str = "stx_ai_widget",
-    show_save: bool = True,
-    **kwargs,
-) -> Optional[str]
-```
-
-Interactive widget with prompt editor, provider selector, generate button, and optional save.
-
-```python
-st_ai_image_widget(default_prompt="A cat in space")
+# Interactive editing — same call, clicking the image opens the editor
+# (Prompt / AI / Edit / History tabs, with save action).
+st_image(prompt="A cat in space", editable=True, name="cat_space")
 ```
 
 ### AIImageConfig
@@ -2035,7 +2018,7 @@ All symbols exported by `from streamtex import *`:
 | **Widgets** | `st_dataframe`, `st_table`, `st_metric`, `st_json`, `st_line_chart`, `st_bar_chart`, `st_area_chart`, `st_scatter_chart`, `st_audio`, `st_video` |
 | **Bib** | `BibEntry`, `BibConfig`, `BibFormat`, `CitationStyle`, `BibRegistry`, `load_bib`, `load_bibtex`, `load_bib_json`, `load_bib_ris`, `load_bib_csl_json`, `cite`, `st_cite`, `st_bibliography`, `export_bibtex`, `st_refs`, `BibRefs`, `generate_bib_stubs`, `set_bib_config`, `get_bib_config`, `register_bib_parser`, `parse_bibtex_string`, `parse_ris_string`, `format_entry` |
 | **GSheet** | `GSheetConfig`, `GSheetSource`, `GSheetError`, `AuthMode`, `set_gsheet_config`, `get_gsheet_config`, `load_gsheet`, `load_gsheet_df` |
-| **AI** | `AIImageConfig`, `AIImageError`, `AIImageResult`, `set_ai_image_config`, `get_ai_image_config`, `generate_image`, `is_cached`, `list_providers`, `st_ai_image`, `st_ai_image_widget`, `get_available_models`, `save_image_version`, `get_current_image`, `list_image_versions`, `rollback_image`, `rename_image`, `ImageMetadata` |
+| **AI** | `AIImageConfig`, `AIImageError`, `AIImageResult`, `set_ai_image_config`, `get_ai_image_config`, `generate_image`, `is_cached`, `list_providers`, `get_available_models`, `save_image_version`, `get_current_image`, `list_image_versions`, `rollback_image`, `rename_image`, `ImageMetadata` |
 | **Blocks** | `LazyBlockRegistry`, `ProjectBlockRegistry`, `BlockNotFoundError`, `BlockImportError`, `load_atomic_block`, `set_static_sources`, `get_static_sources`, `resolve_static` |
 | **Helpers** | `BlockHelperConfig`, `BlockHelper`, `show_code`, `show_code_inline`, `show_explanation`, `show_details`, `set_block_helper_config`, `get_block_helper_config` |
 | **Collection** | `st_collection`, `CollectionConfig`, `ProjectMeta` |

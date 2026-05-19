@@ -38,7 +38,7 @@ def build():
         Skills are Markdown files that agents load as
         context before performing any action. They contain
         design rules, coding patterns, syntax references,
-        and template blueprints. Each skill is a focused
+        and reusable templates. Each skill is a focused
         knowledge base that keeps the AI aligned with
         project conventions.
     """)
@@ -60,7 +60,7 @@ def build():
         .claude/
           designer/
             skills/
-              block-blueprints.md
+              reuse-architecture.md
               visual-design-rules.md
               style-conventions.md
               streamtex-quick-reference.md
@@ -79,14 +79,15 @@ def build():
             with st_block(bs.skill_card):
                 st_write(
                     bs.skill_name,
-                    "block-blueprints.md",
+                    "reuse-architecture.md",
                     tag=t.div,
                 )
                 st_space("v", 0.5)
                 st_write(bs.skill_desc, """\
-                    10 template patterns for block creation.
-                    Each blueprint defines a reusable layout
-                    (title, content, comparison, gallery, etc.)
+                    Pack/component/DS/kit model. Tells the AI
+                    agent how to discover components in installed
+                    packs and compose blocks from them via
+                    stx component show/find/new.
                 """)
         with g.cell():
             with st_block(bs.skill_card):
@@ -174,7 +175,7 @@ def build():
     show_code("""\
         ## Context Loading
         Read the following files before proceeding:
-        - block-blueprints.md
+        - reuse-architecture.md
         - visual-design-rules.md
         - style-conventions.md
         - coding_standards.md
@@ -203,7 +204,7 @@ def build():
         st_write(s.large, """\
             All agents and commands ultimately defer to
             coding_standards.md for definitive rules. Other
-            skills (blueprints, design rules, cheatsheet) are
+            skills (templates, design rules, cheatsheet) are
             specialized extracts that help agents focus on
             specific tasks — but when in doubt, the coding
             standards document wins.

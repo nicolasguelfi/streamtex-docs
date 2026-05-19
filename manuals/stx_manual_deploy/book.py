@@ -58,9 +58,8 @@ marker_config = MarkerConfig(
 #   4. Streamlit Cloud (simplest cloud, no Docker)
 #   5. HuggingFace Spaces (free cloud with Docker)
 #   6. Hetzner + Coolify (recommended production)
-#   7. Render.com (legacy, supported)
-#   8. GCP VM + Ansible (full control)
-#   9. CI/CD (ties everything together)
+#   7. GCP VM + Ansible (full control)
+#   8. CI/CD (ties everything together)
 st_book([
     blocks.bck_level_badge,
     blocks.bck_welcome,
@@ -69,7 +68,6 @@ st_book([
     blocks.bck_streamlit_cloud,
     blocks.bck_huggingface,
     blocks.bck_hetzner,
-    blocks.bck_render,
     blocks.bck_gcp_ansible,
     blocks.bck_ci_cd,
 

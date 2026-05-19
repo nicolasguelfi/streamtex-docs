@@ -173,7 +173,7 @@ from streamtex import st_write, TOCConfig, st_toc
 from streamtex.enums import Tags as t
 
 # Configure TOC
-toc_config = TOCConfig(numerate_titles=True, sidebar_max_level=2)
+toc_config = TOCConfig(numbering=NumberingMode.BOTH, sidebar_max_level=2)
 
 # Your content with tags and toc_lvl
 st_write(s.title, "Chapter 1", tag=t.h1, toc_lvl="1")

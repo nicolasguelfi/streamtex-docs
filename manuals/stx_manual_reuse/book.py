@@ -41,22 +41,38 @@ marker_config = MarkerConfig(
 
 st_book(
     [
-        # Concepts (5 blocks ported in Wave 2):
+        # ── Part 1: Concepts ─────────────────────────────────────
         blocks.bck_reuse_welcome,
         blocks.bck_reuse_vocabulary,
         blocks.bck_reuse_layers,
         blocks.bck_component_format,
         blocks.bck_reference_card,
-        # Self-demonstration (Wave 4 follow-up) — the manual consumes
-        # streamtex-design and renders every component for real:
+        # ── Part 2: Pack lifecycle ───────────────────────────────
+        blocks.bck_pack_source_resolution,
+        blocks.bck_pack_consumption,
+        # ── Part 3: Authoring ────────────────────────────────────
+        blocks.bck_pack_authoring,
+        blocks.bck_component_authoring,
+        blocks.bck_kit_format,
+        blocks.bck_cli_template_format,
+        # ── Part 4: Distribution ─────────────────────────────────
+        blocks.bck_pack_distribution,
+        # ── Part 5: CE flows ─────────────────────────────────────
+        blocks.bck_ce_capture,
+        blocks.bck_ce_promote,
+        # ── Part 6: Quality & migration ──────────────────────────
+        blocks.bck_validation,
+        blocks.bck_troubleshooting,
+        blocks.bck_migration_from_patterns,
+        # ── Part 7: Self-demonstration ───────────────────────────
+        # Manual consumes streamtex-design and renders every
+        # component for real:
         blocks.bck_gallery_components,
         blocks.bck_gallery_design_systems,
-        # Remaining blocks deferred from PLAN §19.2 (#5-7, #9-14, #17-20):
-        #   bck_component_authoring, bck_kit_format, bck_cli_template_format,
-        #   bck_pack_authoring, bck_pack_distribution, bck_pack_consumption,
-        #   bck_ce_capture, bck_ce_promote, bck_validation,
-        #   bck_troubleshooting, bck_migration_from_patterns,
-        #   bck_custom_import_mapping, bck_faq.
+        # ── Part 8: Advanced (custom artefacts) ──────────────────
+        blocks.bck_custom_import_mapping,
+        # ── Part 9: FAQ ──────────────────────────────────────────
+        blocks.bck_faq,
     ],
     toc_config=toc,
     marker_config=marker_config,

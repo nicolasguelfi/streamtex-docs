@@ -475,7 +475,7 @@ Workflow: read image -> extract chart data (labels + percentages) -> extract met
 
 **Image strategy**:
 - User provides images: use in L2 image cell
-- AI generation configured: use `st_ai_image(prompt)` directly
+- AI generation configured: use `st_image(prompt=..., editable=True, name=...)` directly
 - No image, no AI config: insert placeholder + generation prompt + filename suggestion
 - Batch generation: use `generate_image(prompt)` then reference file with `st_image(uri=path)`
 
@@ -525,8 +525,8 @@ Blueprints define the **structure** (which `stx.*` calls, in which order), not t
 | 8 | **Quote / Highlight** | Key message, intermediate conclusion | `st_block` quote box + attribution |
 | 9 | **Image Gallery** | Portfolio, screenshots | Heading + `st_grid(repeat(auto-fit, minmax(200px,...)))` |
 | 10 | **Conclusion** | Last slide, key takeaways | Heading + bullet list + next steps |
-| 11 | **AI Image + Text** | Illustration without image file | Like Blueprint 5 but uses `st_ai_image(prompt)` instead of `st_image()` |
-| 12 | **Interactive Image Lab** | Workshop, hands-on demo | `st_ai_image_widget()` with default prompt and controls |
+| 11 | **AI Image + Text** | Illustration without image file | Like Blueprint 5 but uses `st_image(prompt=..., editable=True, name=...)` for AI generation |
+| 12 | **Interactive Image Lab** | Workshop, hands-on demo | `st_image(prompt=..., editable=True, name=...)` — clicking opens the editor panel |
 
 **Quick matching guide**:
 
@@ -622,7 +622,7 @@ st.set_page_config(page_title="...", layout="wide", initial_sidebar_state="expan
 | Use | API | Examples |
 |-----|-----|---------|
 | ALL layout and content | `stx.*` | `st_write`, `st_image`, `st_grid`, `st_list`, `st_block`, `st_span`, `st_space`, `st_br`, `st_overlay`, `st_html` |
-| AI image generation | `stx.*` | `st_ai_image`, `st_ai_image_widget`, `generate_image` |
+| AI image generation | `stx.*` | `st_image(prompt=..., editable=True)`, `generate_image` |
 | Data visualization (export-aware) | `stx.*` | `st_dataframe`, `st_table`, `st_metric`, `st_json`, `st_graphviz`, `st_line_chart`, `st_bar_chart` |
 | ONLY interactivity | `st.*` | `st.button`, `st.slider`, `st.selectbox`, `st.checkbox`, `st.text_input` |
 
@@ -683,16 +683,19 @@ s.project.*      -- project-specific custom styles (colors, titles, containers)
 s.visibility.*   -- hidden, visible, invisible
 ```
 
-### Image Editing (new in 0.5)
+### Image Editing (unified API since 0.7.x)
 
-Use `st_image(editable=True)` for all editable images. `st_ai_image()` is deprecated — use `st_image(prompt=..., editable=True)` instead.
+Use `st_image(prompt=..., editable=True, name=...)` for all AI-generated
+images. The same call covers local / URL / AI sources. The standalone
+`st_ai_image()` / `st_ai_image_widget()` functions were removed in 0.7.2.
 
 ```python
-# Old (deprecated)
-st_ai_image("A sunset", provider="openai")
+# AI image with editor panel on click
+st_image(s.none, editable=True, name="hero",
+         prompt="A sunset", provider="openai", ai_size="1024x1024")
 
-# New (recommended)
-st_image(s.none, uri="path.png", editable=True, name="hero", prompt="A sunset", provider="openai")
+# Local image with same editor panel (Prompt / AI / Edit / History tabs)
+st_image(s.none, uri="path.png", editable=True, name="hero")
 ```
 
 ### Common Gotchas
@@ -988,10 +991,10 @@ stx deploy preflight .
 # Docker (local)
 stx deploy docker . --port 8501
 
-# Render (generate config)
-stx deploy render . --name my-service --branch main
-# Then: git push, connect repo on Render dashboard
+# Hetzner / Coolify (production deploy)
+stx deploy hetzner .
+# Auto-deploy is also wired via GitHub Actions on push to main.
 
 # HuggingFace Spaces
-stx deploy huggingface . --space https://huggingface.co/spaces/user/repo
+stx deploy huggingface .
 ```

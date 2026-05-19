@@ -16,46 +16,48 @@ bs = BlockStyles
 
 COMMANDS = """\
 # ---- packs ----
-stx pack add <ref> [--rev <tag>] [--dev <path-or-url>]
+# REF formats: git:<url>[@rev] | local:<path> | pypi:<name>[@spec] | <plain-path>
+stx pack add <ref> [--dev]
 stx pack remove <name>
 stx pack list [--trace]
 stx pack sync
 stx pack info <name>
-stx pack validate <name>
-stx pack new <name>
+stx pack validate [<name>]
+stx pack new <name> [--path <path>]
 stx pack set-primary <name>
 
 # ---- components ----
-stx component list [--granularity primitive|composition|block] [--pack <p>]
+stx component list [--pack <p>]
 stx component show <name>
-stx component new <name>
-stx component validate [<name> | --all]
-stx component find <description>
-stx component promote <name> [--to=<pack>] [--message <msg>] [--no-commit]
+stx component find <query>
+stx component new <name> [--pack <p>] [--granularity primitive|composition|block]
+stx component validate [<name>]      # no arg = validate every component
+stx component promote <name> --to <pack> [--no-commit]
 
 # ---- design systems ----
 stx ds list
-stx ds show <name>
-stx ds switch <name>
-stx ds new <name> [--to <pack>]
-stx ds validate [<name>]
+stx ds show <ref>
+stx ds switch <ref>
+stx ds new <name> [--pack <p>]
+stx ds validate [<ref>]
 
 # ---- kits ----
 stx kit list
-stx kit show <name>
-stx kit install <pack>:<kit_name>
-stx kit new <name> [--to <pack>]
-stx kit validate [<name>]
+stx kit show <ref>
+stx kit install <ref>                # ref = <pack>:<kit_name>
+stx kit new <name> [--pack <p>] [--design-system <ds>]
+stx kit validate [<ref>]
 
 # ---- aggregate ----
 stx validate [--strict]              # exit 0=ok, 1=warnings, 2=errors
 
 # ---- project ----
 stx project new <name>
+       [--profile <p>] [--collection]
        [--kit <pack>:<kit_name>] [--pack <ref>]
        [--pack-name <name>] [--no-mypack]
-       [--collection] [--no-git] [--no-sync] [--no-claude]
-stx project validate [<path>]        # 14 checks (1-10 base + 11-14 reuse)
+       [--no-git] [--no-sync] [--no-claude]
+stx project validate [<path>]        # default path = "."
 """
 
 

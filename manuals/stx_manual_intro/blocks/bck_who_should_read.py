@@ -123,7 +123,7 @@ def build():
     )
     _manual(
         "Deploy Manual",
-        "Docker, Render, Streamlit Cloud, Hugging Face Spaces — "
+        "Docker, Hetzner/Coolify, Streamlit Cloud, Hugging Face Spaces — "
         "deploy your documents to the web.",
     )
     _manual(

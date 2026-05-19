@@ -183,7 +183,7 @@ st_image(uri="ai/concept.png", editable=True, name="concept",
 
 ```python
 from streamtex import set_ai_image_config, AIImageConfig
-from streamtex import st_ai_image, st_ai_image_widget, generate_image
+from streamtex import st_image, generate_image
 
 # Configure in book.py (once)
 set_ai_image_config(AIImageConfig(
@@ -193,17 +193,16 @@ set_ai_image_config(AIImageConfig(
     auto_generate=False,           # Manual mode (button) by default
 ))
 
-# Declarative — in block code
-st_ai_image("a minimalist neural network diagram, flat design, dark bg",
-            width="100%", provider="openai", size="1024x1024",
-            api_key=None)  # Per-call API key override (bypasses config/env)
+# Declarative — in block code (unified API since 0.7.x)
+st_image(prompt="a minimalist neural network diagram, flat design, dark bg",
+         editable=True, name="neural_net",
+         width="100%", provider="openai", ai_size="1024x1024")
 
-# Interactive — widget with prompt input + generate button
-st_ai_image_widget(default_prompt="a serene landscape", key="my_gen",
-                   show_save=True, api_key=None,
-                   style=s.ai_image, width="100%", height="auto",
-                   size="1024x1024", quality="standard", model=None,
-                   alt="", light_bg=False, config=None)
+# Interactive — same call with editable=True opens the editor panel
+# (Prompt / AI tab / regenerate / save) when the user clicks the image.
+st_image(prompt="a serene landscape", editable=True, name="landscape",
+         width="100%", provider="openai", ai_size="1024x1024",
+         quality="standard")
 
 # Programmatic — generate without displaying (e.g. Claude workflow)
 path = generate_image("a futuristic city", provider="openai",
@@ -211,7 +210,7 @@ path = generate_image("a futuristic city", provider="openai",
 st_image(uri=path, width="100%")
 ```
 
-**API keys** via environment variables (`.env` or Render):
+**API keys** via environment variables (`.env` or Coolify env vars):
 ```bash
 STX_OPENAI_API_KEY=sk-...
 STX_GOOGLE_AI_KEY=AIza...
@@ -655,8 +654,7 @@ st_book(
     chrome_banner=True,             # Show browser recommendation banner (Chrome/Edge)
     doc_version=None,               # str | None — version string shown in sidebar
     loading=True,                   # Show loading overlay with progress (default True)
-    banner_color="rgba(211,47,47,0.8)",  # Legacy — use banner=BannerConfig(...) instead
-    monties_color=None,             # Legacy — use banner=BannerConfig(...) instead
+    banner_color="rgba(211,47,47,0.8)",  # Shorthand — prefer banner=BannerConfig(...)
 )
 ```
 
@@ -2250,7 +2248,7 @@ stx deploy hetzner [PATH] --serve-mode dual  # deploy with Nginx + Streamlit (st
 stx deploy update [TARGET]         # rebuild service + all replicas (default) or --quick restart
 stx deploy update [TARGET] --serve-mode static-only  # switch to static HTML only
 stx deploy scale TARGET --replicas N  # scale service to N containers (load-balanced)
-stx deploy status coolify|render|huggingface [NAME]  # check health, replicas, serve mode
+stx deploy status coolify|huggingface [NAME]  # check health, replicas, serve mode
 
 # Export
 stx export html [PATH]             # export project to static HTML (for dual/static-only mode)
@@ -2263,9 +2261,7 @@ stx export html --title "My Doc" .      # custom HTML title
 
 ```bash
 stx deploy docker [PATH]           # build and run locally with Docker
-stx deploy render [PATH]           # generate render.yaml (legacy, Hetzner preferred)
 stx deploy huggingface [PATH]      # deploy to HuggingFace Spaces
-stx deploy env-sync                # sync env vars from render.yaml to Render services
 ```
 
 ### Claude / AI Profiles
@@ -2396,42 +2392,95 @@ COLLECT → ASSESS → PLAN → PROTOTYPE → PRODUCE → REVIEW → FIX → COM
 
 3 pathways: **A** (import external), **B** (improve existing), **C** (create new).
 
-## Patterns
+## Reuse architecture (packs, components, design systems, kits)
 
-Reusable graphic design patterns. Read by Claude at block-generation
-time. Catalog : `.claude/custom/streamtex-patterns/`.
+Since streamtex 0.7.x, reusable visual artefacts ship as **Python packs**.
+A pack exports `components/`, `design_systems/`, `kits/`, optionally
+`cli_templates/` and `blueprints/`. The reference pack is `streamtex-design`.
 
-### CLI
+### Packs
 
 ```
-stx patterns list                # list patterns available
-stx patterns presets             # list presets
-stx patterns install --preset slides    # install a preset
-stx patterns install --pattern ptn_callout  # install one pattern
-stx patterns update              # refresh from source (drift detection)
-stx patterns sync                # idempotent install + update
-stx patterns status              # show drift state
-stx patterns diff <name>         # diff installed vs source
-stx patterns validate [--all]    # check format A2 compliance
-stx patterns promote <name>      # push local edit to source repo
-stx patterns remove <name>       # uninstall
+stx pack list [--trace]                          # list declared packs + lifecycle state
+stx pack add <ref> [--dev]                       # add a pack to stx.toml
+stx pack remove <name>                           # remove a pack from stx.toml
+stx pack info <name>                             # full manifest details
+stx pack new <name> [--path]                     # scaffold a new local pack
+stx pack set-primary <name>                      # mark a local pack as primary
+stx pack validate [<name>]                       # validate one or every pack
+stx pack sync                                    # uv sync after re-reading stx.toml
 ```
 
-### Slash commands (Claude)
+The `<ref>` accepts three forms:
 
-`/stx-pattern:list` `/stx-pattern:show <name>` `/stx-pattern:new`
-`/stx-pattern:reindex` `/stx-pattern:validate`
+```
+stx pack add git:github.com/org/pack@v0.2.0      # git source
+stx pack add local:./mypack                      # local source
+stx pack add pypi:streamtex-academic@>=1.0,<2.0  # PyPI release
+stx pack add --dev /Users/me/dev/my-fork         # editable install
+```
 
-### Format
+### Components
 
-Pattern files = YAML frontmatter + structured markdown sections
-(Visual / Structure / Styling rules / Code skeleton / Extrapolation
-rules / When to use / When NOT to use). Spec A2.
+```
+stx component list [--pack <name>]               # list every component (optionally filtered)
+stx component show <name>                        # print docstring contract
+stx component find <query>                       # substring search across names + tags
+stx component validate [<name>]                  # validate one or every component
+stx component new <name> [--pack <name>] [--granularity primitive|composition|block]
+stx component promote <name> --to=<pack> [--no-commit]
+```
+
+### Design systems
+
+```
+stx ds list                                      # list design systems across packs
+stx ds show <ref>                                # show a design system (pack:name)
+stx ds switch <ref>                              # set active DS in stx.toml
+stx ds new <name> [--pack <name>]                # scaffold a new DS in a pack
+stx ds validate [<ref>]                          # validate one or every DS
+```
+
+### Kits
+
+```
+stx kit list                                     # list kits across packs
+stx kit show <ref>                               # inspect a kit's content
+stx kit install <ref>                            # apply (records DS + kit reference)
+stx kit new <name> [--pack <name>] [--design-system <ref>]
+stx kit validate [<ref>]                         # validate one or every kit
+```
+
+### Aggregate validation
+
+```
+stx validate                                     # exit 0 OK · 1 warnings · 2 errors
+stx validate --strict                            # promote warnings → errors
+```
+
+### Component anatomy
+
+A component is a **Python module** with a structured docstring contract
+(`Visual` / `Structure` / `Styling rules` / `INVARIANTS` / `PARAMS` /
+`INTERDITS` / `When to use` / `When NOT to use` / `Design system bundles
+required`) plus a `__component_meta__` TypedDict. Components are
+importable directly:
+
+```python
+from streamtex_design.components import callout, card_grid
+```
+
+### Granularity (a tag, not a constraint)
+
+- `primitive` — atomic visual element (callout, slide_heading, cite).
+- `composition` — multiple primitives + own layout (card_grid,
+  comparison_table, manual_section).
+- `block` — full block-level template (title_slide, evidence_insight).
 
 ### Naming
 
-`snake_case` everywhere (filename, frontmatter `name`, code annotations
-`# @pattern: <name>`).
+`snake_case` everywhere (component filename, module-level function,
+`__component_meta__["name"]`).
 
 ## Tips and Best Practices
 

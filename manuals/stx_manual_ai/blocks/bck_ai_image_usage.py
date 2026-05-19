@@ -1,7 +1,7 @@
 """AI Image Generation — Usage patterns (declarative + interactive).
 
-Part 8: Advanced — Shows how to use st_ai_image() in blocks and
-st_ai_image_widget() for interactive generation.
+Part 8: Advanced — Shows how to use st_image(prompt=..., editable=True)
+in blocks for both declarative rendering and end-user-driven editing.
 """
 
 from streamtex import st_write, st_space, st_block, st_grid, st_image, st_list
@@ -28,20 +28,21 @@ def build():
     st_space("v", 2)
 
     # ── Declarative Mode ───────────────────────────────────────
-    st_write(bs.sub, "Declarative Mode — st_ai_image()", tag=t.div, toc_lvl="2")
+    st_write(bs.sub, "Declarative Mode — st_image(prompt=..., editable=True)", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     show_explanation("""\
-        Use st_ai_image() directly in your block code. The image is
-        generated once, saved to static/images/ai/, and reused on
-        subsequent reruns. It delegates display to st_image(), so the
-        export pipeline (HTML/PDF) works automatically.
+        Use st_image(prompt=..., editable=True, name=...) directly in
+        your block code. The image is generated once, saved to
+        static/images/ai/, and reused on subsequent reruns. The same
+        call covers static / URL / AI-generated images — one unified
+        API — and the export pipeline (HTML/PDF) works automatically.
     """)
     st_space("v", 1)
 
     show_code("""\
         # blocks/bck_hero.py — AI image in a block
-        from streamtex import st_ai_image, st_write, st_space, st_grid
+        from streamtex import st_image, st_write, st_space, st_grid
         from custom.styles import Styles as s
 
         class BlockStyles:
@@ -57,13 +58,17 @@ def build():
             with st_grid(cols="repeat(auto-fit, minmax(350px, 1fr))", gap="24px") as g:
                 with g.cell():
                     # AI-generated image — cached on disk after first generation
-                    st_ai_image(
-                        "A minimalist flat-design diagram of a deep neural "
-                        "network with 3 hidden layers, dark background, "
-                        "blue and violet nodes, clean vector style",
+                    st_image(
+                        prompt=(
+                            "A minimalist flat-design diagram of a deep neural "
+                            "network with 3 hidden layers, dark background, "
+                            "blue and violet nodes, clean vector style"
+                        ),
+                        editable=True,
+                        name="neural_net",
                         width="100%",
                         provider="openai",
-                        size="1024x1024",
+                        ai_size="1024x1024",
                     )
                 with g.cell():
                     st_write(bs.body, "The architecture features ...")""", language="python")
@@ -105,20 +110,23 @@ def build():
         language="python")
     st_space("v", 2)
 
-    # ── Interactive Widget ─────────────────────────────────────
-    st_write(bs.sub, "Interactive Mode — st_ai_image_widget()", tag=t.div, toc_lvl="2")
+    # ── Interactive editing ────────────────────────────────────
+    st_write(bs.sub, "Interactive editing — same call, editor panel", tag=t.div, toc_lvl="2")
     st_space("v", 1)
 
     show_explanation("""\
-        For dynamic blocks where the end-user enters a prompt,
-        use st_ai_image_widget(). It provides a text area, provider
-        selector, generate button, and a save-to-project button.
+        When the user clicks an image rendered with editable=True, an
+        editor panel opens with: a Prompt tab (rephrase + regenerate),
+        an AI tab (switch provider / model / size), an Edit tab
+        (img2img with a base image), a History tab (browse / restore
+        previous versions), and a Save action. The same `st_image()`
+        call powers both the declarative and the interactive paths.
     """)
     st_space("v", 1)
 
     show_code("""\
-        # blocks/bck_image_lab.py — interactive image generation
-        from streamtex import st_ai_image_widget, st_write, st_space
+        # blocks/bck_image_lab.py — editable image with full editor panel
+        from streamtex import st_image, st_write, st_space
         from custom.styles import Styles as s
 
         class BlockStyles:
@@ -130,12 +138,13 @@ def build():
             st_write(bs.heading, "Image Lab", tag=t.div, toc_lvl="2")
             st_space("v", 2)
 
-            # Interactive widget — user types prompt + clicks Generate
-            st_ai_image_widget(
-                default_prompt="A serene mountain landscape at dawn",
+            # Editable image — clicking it opens the editor panel
+            st_image(
+                prompt="A serene mountain landscape at dawn",
+                editable=True,
+                name="landscape",
                 provider="openai",
-                key="image_lab",
-                show_save=True,   # Adds "Save to static/images/" button
+                ai_size="1024x1024",
             )""", language="python")
     st_space("v", 2)
 
@@ -146,26 +155,26 @@ def build():
     with st_grid(cols="repeat(auto-fit, minmax(350px, 1fr))", gap="16px") as g:
         with g.cell():
             with st_block(s.project.containers.explanation_box):
-                st_write(s.bold + s.large, "st_ai_image()", tag=t.div)
+                st_write(s.bold + s.large, "st_image() — AI params", tag=t.div)
                 st_space("v", 1)
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(bs.body, (s.bold, "prompt"), " — text description")
-                    with l.item(): st_write(bs.body, (s.bold, "style"), " — StreamTeX Style object")
+                    with l.item(): st_write(bs.body, (s.bold, "prompt"), " — text description (triggers AI mode)")
+                    with l.item(): st_write(bs.body, (s.bold, "editable"), " — True opens the editor panel on click")
+                    with l.item(): st_write(bs.body, (s.bold, "name"), " — semantic name (used for caching and history)")
                     with l.item(): st_write(bs.body, (s.bold, "provider"), " — override default provider")
-                    with l.item(): st_write(bs.body, (s.bold, "size"), " — e.g. '1024x1024'")
+                    with l.item(): st_write(bs.body, (s.bold, "ai_size"), " — e.g. '1024x1024'")
                     with l.item(): st_write(bs.body, (s.bold, "quality"), " — 'standard' or 'hd'")
                     with l.item(): st_write(bs.body, (s.bold, "model"), " — model override")
-                    with l.item(): st_write(bs.body, (s.bold, "alt, link, hover, light_bg"), " — same as st_image")
         with g.cell():
             with st_block(s.project.containers.details_box):
-                st_write(s.bold + s.large, "st_ai_image_widget()", tag=t.div)
+                st_write(s.bold + s.large, "st_image() — common params", tag=t.div)
                 st_space("v", 1)
                 with st_list(list_type="ul") as l:
-                    with l.item(): st_write(bs.body, (s.bold, "default_prompt"), " — pre-filled prompt")
-                    with l.item(): st_write(bs.body, (s.bold, "provider"), " — default provider")
-                    with l.item(): st_write(bs.body, (s.bold, "key"), " — Streamlit widget key")
-                    with l.item(): st_write(bs.body, (s.bold, "show_save"), " — Save button visible")
-                    with l.item(): st_write(bs.body, (s.bold, "style, width, height"), " — display styles")
+                    with l.item(): st_write(bs.body, (s.bold, "uri"), " — local path or URL (when no prompt)")
+                    with l.item(): st_write(bs.body, (s.bold, "style"), " — StreamTeX Style object")
+                    with l.item(): st_write(bs.body, (s.bold, "width, height"), " — CSS dimensions")
+                    with l.item(): st_write(bs.body, (s.bold, "alt, link, hover, light_bg"), " — display options")
+                    with l.item(): st_write(bs.body, (s.bold, "base_image"), " — img2img base path")
                     with l.item(): st_write(bs.body, (s.bold, "config"), " — AIImageConfig override")
     st_space("v", 2)
 
@@ -244,7 +253,7 @@ def build():
             bs.body,
             "The unified ",
             (s.bold, "st_image(editable=True)"),
-            " replaces separate st_ai_image() calls. It works with ",
+            " is the single API for every image source. It works with ",
             (s.bold, "any image"),
             " — local, URL, or AI-generated — and adds an editor "
             "panel with AI generation, img2img, and version history.",
@@ -330,19 +339,20 @@ def build():
         rename_image("hero_banner", "main_hero")""", language="python")
     st_space("v", 2)
 
-    # ── Deprecation Note ──────────────────────────────────────
+    # ── Migration Note ────────────────────────────────────────
     with st_block(s.project.containers.note_callout):
-        st_write(s.project.titles.warning_label, "Migration Note", tag=t.div)
+        st_write(s.project.titles.warning_label, "Upgrading from < 0.7", tag=t.div)
         st_space("v", 1)
         st_write(
             bs.body,
+            "The standalone ",
             (s.bold, "st_ai_image()"),
             " and ",
             (s.bold, "st_ai_image_widget()"),
-            " still work but are deprecated in favor of ",
-            (s.bold, "st_image(editable=True, prompt=...)"),
-            ". Existing code continues to function — st_ai_image() "
-            "now internally passes editable=True to st_image().",
+            " functions are removed in 0.7.2. Replace every call with ",
+            (s.bold, "st_image(prompt=..., editable=True, name=...)"),
+            ". The `name` argument is mandatory in the new API — it "
+            "drives caching and the version-history index.",
         )
     st_space("v", 2)
 

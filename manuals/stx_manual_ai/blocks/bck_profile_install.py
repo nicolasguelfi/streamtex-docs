@@ -178,9 +178,10 @@ def build():
     st_space("v", 2)
 
     show_explanation("""\
-        With these presets, AI image generation (st_ai_image,
-        st_ai_image_widget) and related providers are available
-        without manually adding optional dependencies.
+        With these presets, AI image generation
+        (st_image(prompt=..., editable=True), generate_image) and
+        related providers are available without manually adding
+        optional dependencies.
     """)
     st_space("v", 2)
 

@@ -111,11 +111,11 @@ def build():
         - CI fix: UV_NO_SOURCES=1 as env var
         - Docker fix: uv sync --no-sources
 
-        ### Render Services
-        | Name | ID | Port |
-        |------|----|------|
-        | streamtex-intro | srv-abc123 | 8502 |
-        | streamtex-advanced | srv-def456 | 8503 |
+        ### Coolify Services
+        | Name | URL | FOLDER |
+        |------|-----|--------|
+        | docs-intro | https://docs-intro.streamtex.org | manuals/stx_manual_intro |
+        | docs-advanced | https://docs-advanced.streamtex.org | manuals/stx_manual_advanced |
 
         ## Key Decisions
         - All manuals share one Dockerfile

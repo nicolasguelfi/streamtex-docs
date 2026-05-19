@@ -339,7 +339,7 @@ def build():
         _card(
             "Deploy Anywhere",
             "render.sh / preflight.sh",
-            "Docker, Streamlit Cloud, Render.com, Hugging Face Spaces, "
+            "Docker, Streamlit Cloud, Hetzner/Coolify, Hugging Face Spaces, "
             "GCP — with preflight checks and deployment scripts.",
         )
 

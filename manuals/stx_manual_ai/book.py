@@ -83,7 +83,7 @@ st_book([
 
     # ── Part 5: Skills ────────────────────────────────────────
     blocks.bck_skills_overview,
-    blocks.bck_blueprints,
+    blocks.bck_block_templates,
     blocks.bck_design_rules,
 
     # ── Part 6: Best Practices ────────────────────────────────

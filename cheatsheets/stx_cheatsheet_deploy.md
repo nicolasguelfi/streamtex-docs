@@ -12,17 +12,21 @@ stx deploy docker .
 stx deploy docker . --port 8502 --tag my-project
 stx deploy docker . --build-only
 
-# Render — generate render.yaml
-stx deploy render .
-stx deploy render . --name my-service --branch main --plan free
-stx deploy render . --multi                    # one service per manual
-stx deploy render . --env STX_PASSWORD=secret
+# Hetzner / Coolify (production target)
+stx deploy hetzner .
+stx deploy hetzner . --subdomain my-app
+stx deploy hetzner . --serve-mode dual         # Streamlit + Nginx static fallback
+stx deploy update [TARGET]                     # rebuild service + replicas
+stx deploy update [TARGET] --quick             # restart only
+stx deploy scale TARGET --replicas 3           # load-balanced
+stx deploy status coolify                      # health of all services
+stx deploy status coolify docs-intro           # specific service
 
-# Render — status and env sync
-stx deploy status render
-stx deploy status render streamtex-intro
-stx deploy env-sync --path .
-stx deploy env-sync --dry-run
+# Hetzner / Coolify (server bootstrap, one-off)
+stx deploy setup                               # create+secure server, install Coolify
+stx deploy provision                           # create server only
+stx deploy secure                              # SSH-key + UFW + fail2ban
+stx deploy install-coolify
 
 # HuggingFace Spaces
 stx deploy huggingface . --space https://huggingface.co/spaces/user/repo
@@ -138,97 +142,78 @@ docker run -p 8501:8501 \
 
 ---
 
-## 3. Render.com Deployment
+## 3. Hetzner / Coolify Deployment (production target)
 
-### stx deploy render — generate render.yaml
+### stx deploy hetzner — deploy via Coolify API
 
 ```bash
-stx deploy render PATH [--name NAME] [--branch BRANCH] [--plan PLAN]
-                       [--env KEY=VALUE ...] [--multi]
+stx deploy hetzner PATH [--subdomain NAME] [--uuid UUID]
+                        [--serve-mode streamlit|dual|static-only]
+                        [--yes]
 ```
 
-**Single service mode** (default):
+**Default**:
 ```bash
-stx deploy render . --name my-app
+stx deploy hetzner .
 ```
 
-**Multi-service mode** (one service per manual in `manuals/`):
+**With a chosen subdomain on `streamtex.org`**:
 ```bash
-stx deploy render . --multi
+stx deploy hetzner . --subdomain my-app
+# → deploys to https://my-app.streamtex.org
+```
+
+**With dual serve-mode (Streamlit + Nginx static fallback)**:
+```bash
+stx deploy hetzner . --serve-mode dual
 ```
 
 What it does:
-1. Detects the git remote origin URL (SSH is auto-converted to HTTPS).
-2. Generates a `Dockerfile` if missing.
-3. Discovers `manuals/stx_manual_*` and `manuals/stx_manuals_*` directories (in `--multi` mode).
-4. Derives service names: `manuals/stx_manual_intro` becomes `streamtex-intro`.
-5. Writes `render.yaml` with service definitions.
-6. Adds `STX_PASSWORD=changeme` if not specified via `--env`.
+1. Runs `stx deploy preflight` first (book.py, Dockerfile, git, tests, lint).
+2. Discovers or creates a Coolify application UUID (state in `.stx-deploy.json`).
+3. Pushes git, triggers a Coolify deploy via API, waits for the rebuild.
+4. For multi-replica projects, deploys all replicas (batched ≤ 4 to avoid server hang).
+5. Updates `.stx-deploy.json` with the new state.
 
-### Service creation via Render API
-
-**render.yaml is declarative only** -- it does NOT create services on Render. To create a service:
+### stx deploy update — rebuild or restart service
 
 ```bash
-# Use the Render API directly (POST /v1/services)
-curl -X POST "https://api.render.com/v1/services" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "type": "web_service",
-    "name": "my-service",
-    "ownerId": "tea-d2adlm49c44c738ob46g",
-    "repo": "https://github.com/user/repo",
-    "branch": "main",
-    "plan": "free",
-    "runtime": "docker",
-    "dockerfilePath": "./Dockerfile",
-    "dockerContext": ".",
-    "healthCheckPath": "/_stcore/health"
-  }'
+stx deploy update                              # rebuild ALL services + replicas
+stx deploy update docs-intro                   # rebuild one service
+stx deploy update docs-intro --quick           # restart only (no rebuild)
+stx deploy update docs-intro --serve-mode static-only
 ```
 
-**Render CLI v2 cannot create services** -- you must use the API directly.
-
-### Environment variables on Render
-
-Env vars MUST be set separately via the API. The service creation endpoint ignores them.
+### stx deploy scale — horizontal scaling
 
 ```bash
-# Set env vars (PUT replaces ALL env vars for the service)
-curl -X PUT "https://api.render.com/v1/services/SERVICE_ID/env-vars" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '[
-    {"key": "FOLDER", "value": "manuals/stx_manual_intro"},
-    {"key": "STX_PASSWORD", "value": ""}
-  ]'
+stx deploy scale docs-intro --replicas 3       # 3 load-balanced containers
 ```
 
-### API key location
+### Coolify state file (`.stx-deploy.json`)
 
-The Render API key is read from `~/.render/cli.yaml`:
+Stored at the workspace root. Tracks service UUIDs, hostnames,
+serve modes. Versioned with the repo (no secrets).
 
-```yaml
-api-key: rnd_xxxxxxxxxxxxx
-owner-id: tea-d2adlm49c44c738ob46g
+### API tokens
+
+In `streamtex/.env` (gitignored):
+
+```bash
+COOLIFY_API_TOKEN=...    # Coolify management API
+HETZNER_API_TOKEN=...    # Hetzner Cloud (server lifecycle)
 ```
 
-The `stx deploy env-sync` command reads this file automatically. The `$RENDER_API_KEY` environment variable is used by CI workflows (GitHub secret).
-
-### Owner ID
-
-```
-tea-d2adlm49c44c738ob46g
-```
+For GitHub Actions auto-deploy: secret `COOLIFY_API_TOKEN` configured
+in the repo settings.
 
 ### stx deploy status — health monitoring
 
 ```bash
-stx deploy status render                      # probe all services from render.yaml
-stx deploy status render streamtex-intro      # probe a specific service
-stx deploy status huggingface                 # probe HF Space from 'hf' git remote
-stx deploy status huggingface user/repo       # probe a specific HF Space
+stx deploy status coolify                      # probe all Coolify services
+stx deploy status coolify docs-intro           # probe a specific service
+stx deploy status huggingface                  # probe HF Space from 'hf' git remote
+stx deploy status huggingface user/repo        # probe a specific HF Space
 ```
 
 Probes the service URL with HTTP HEAD. Returns one of:
@@ -239,22 +224,27 @@ Probes the service URL with HTTP HEAD. Returns one of:
 
 For HuggingFace, uses the HF API (`/api/spaces/owner/repo`) and maps runtime stage (RUNNING, SLEEPING, PAUSED, BUILDING) to status.
 
-### stx deploy env-sync — sync env vars to Render
+### Coolify env vars
 
-```bash
-stx deploy env-sync --path .                  # sync all services
-stx deploy env-sync --path . --service streamtex-intro  # sync one service
-stx deploy env-sync --path . --dry-run        # preview changes only
+Env vars are managed in the Coolify dashboard per application
+(see https://coolify.streamtex.org). The runtime variable `FOLDER`
+selects which manual the shared Dockerfile serves.
+
+Example for `docs-intro.streamtex.org`:
+
+```
+FOLDER=manuals/stx_manual_intro
+SOURCE_COMMIT=<sha>       # cache-bust ARG, set by deploy
 ```
 
-What it does:
-1. Parses `render.yaml` to extract desired env vars per service.
-2. Reads API key from `~/.render/cli.yaml`.
-3. Resolves service names to Render service IDs via `GET /services`.
-4. Fetches current env vars from `GET /services/{id}/env-vars`.
-5. Computes a diff and displays a change table.
-6. Applies changes via `PUT /services/{id}/env-vars` (unless `--dry-run`).
-7. Optionally triggers a redeploy for updated services.
+### Server bootstrap (one-off, when starting from scratch)
+
+```bash
+stx deploy setup            # provision + secure + install Coolify (all-in-one)
+stx deploy provision        # create Hetzner Cloud server only
+stx deploy secure           # SSH-key login + UFW + fail2ban
+stx deploy install-coolify  # install Coolify on the provisioned server
+```
 
 ---
 
@@ -378,9 +368,11 @@ The `.env` file is only read if `UV_PUBLISH_TOKEN` is not already set.
 
 ## 6. Deploy Discipline (CRITICAL)
 
-### ALWAYS publish to PyPI BEFORE deploying to Render
+### ALWAYS publish to PyPI BEFORE deploying to Hetzner
 
-Render installs `streamtex` from PyPI, not from your local machine. If your docs use features from a new library version, that version MUST be published on PyPI first.
+The Docker build on Hetzner/Coolify installs `streamtex` from PyPI,
+not from your local machine. If your docs use features from a new
+library version, that version MUST be published on PyPI first.
 
 ### Correct deployment sequence
 
@@ -390,15 +382,16 @@ Render installs `streamtex` from PyPI, not from your local machine. If your docs
 3. Run tests: uv run pytest tests/ -v
 4. Publish to PyPI: stx publish pypi .
 5. Wait for PyPI to process (usually < 1 minute)
-6. Push docs changes to GitHub
-7. Trigger Render deploy (manual or auto)
+6. Bump streamtex-docs/.stx-version (used by deploy guard)
+7. Push docs changes to GitHub
+8. Trigger Hetzner deploy (`stx deploy update` or auto via GitHub Action)
 ```
 
 ### What stx claude update --all does (and does NOT do)
 
 `stx claude update --all` syncs Claude AI profiles only. It does NOT:
 - Publish to PyPI
-- Deploy to Render
+- Deploy to Hetzner/Coolify
 - Trigger any CI/CD
 
 Related profile commands:
@@ -479,40 +472,48 @@ steps:
 | Docker (single project) | Yes | No `[tool.uv.sources]` in project |
 | Docker (streamtex-docs) | No, use `--no-sources` | Must ignore local path references |
 
-### Render deploy workflow
+### Hetzner deploy workflow
 
-File: `streamtex-docs/.github/workflows/render-deploy.yml`
+File: `streamtex-docs/.github/workflows/hetzner-deploy.yml`
 
-The `push` trigger is **disabled** (free tier limits). Deploys are manual only:
+Auto-deploys on push to `main` (configured per service via Coolify
+webhooks). Manual trigger:
 
 ```bash
-gh workflow run render-deploy.yml -R nicolasguelfi/streamtex-docs
+gh workflow run hetzner-deploy.yml -R nicolasguelfi/streamtex-docs
 ```
 
 The workflow:
-1. Extracts the `{service_name: folder}` mapping from `render.yaml`.
-2. Detects which files changed (if push trigger, compares `before..after`).
+1. Reads service UUIDs from `.stx-deploy.json`.
+2. Detects which files changed (compares `before..after`).
 3. Shared file changes (Dockerfile, pyproject.toml, shared-blocks) trigger ALL services.
 4. Manual folder changes trigger only the affected service.
 5. `workflow_dispatch` (manual trigger) always deploys ALL services.
-6. Resolves service IDs via Render API and triggers deploys via `POST /services/{id}/deploys`.
+6. Hits the Coolify API to rebuild each affected application.
 
-Required secret: `RENDER_API_KEY` (set in GitHub repo settings).
+Required secret: `COOLIFY_API_TOKEN` (set in GitHub repo settings).
+
+Critical: batch size capped at **4 services** per run — server
+hangs above that (memory rule `feedback_deploy_batch_size`).
 
 ---
 
-## 8. Render Services Reference
+## 8. Hetzner Services Reference
 
-### Current services (6 total)
+### Current services (Coolify applications on `streamtex.org`)
 
-| Name | ID | URL | FOLDER |
-|------|----|-----|--------|
-| streamtex | srv-d6f23uhaae7s73c14di0 | https://docs.streamtex.org | manuals/stx_manuals_collection |
-| streamtex-intro | srv-d6f2bmhaae7s73c18qng | https://docs-intro.streamtex.org | manuals/stx_manual_intro |
-| streamtex-advanced | srv-d6f2bmhaae7s73c18qn0 | https://docs-advanced.streamtex.org | manuals/stx_manual_advanced |
-| streamtex-deploy | srv-d6f2bmhaae7s73c18qo0 | https://docs-deploy.streamtex.org | manuals/stx_manual_deploy |
-| streamtex-developer | srv-d6j8gkhdrdic73dum3u0 | https://docs-developer.streamtex.org | manuals/stx_manual_developer |
-| streamtex-ai | srv-d6mndltm5p6s73fuijt0 | https://docs-ai.streamtex.org | manuals/stx_manual_ai |
+See `.stx-deploy.json` at the workspace root for the authoritative
+state (UUIDs, hostnames, serve modes). Live snapshot:
+
+| Service | URL | FOLDER |
+|---|---|---|
+| docs | https://docs.streamtex.org | manuals/stx_manuals_collection |
+| docs-intro | https://docs-intro.streamtex.org | manuals/stx_manual_intro |
+| docs-advanced | https://docs-advanced.streamtex.org | manuals/stx_manual_advanced |
+| docs-deploy | https://docs-deploy.streamtex.org | manuals/stx_manual_deploy |
+| docs-developer | https://docs-developer.streamtex.org | manuals/stx_manual_developer |
+| docs-ai | https://docs-ai.streamtex.org | manuals/stx_manual_ai |
+| docs-ce | https://docs-ce.streamtex.org | manuals/stx_manual_ce |
 
 ### Collection hub env vars
 
@@ -658,7 +659,7 @@ RUN uv sync --no-sources --no-dev && \
 # Copy all manuals
 COPY manuals/ ./manuals/
 
-# Default folder (overridden by Render envVars)
+# Default folder (overridden by Coolify env vars per application)
 ENV FOLDER="manuals/stx_manual_intro"
 
 # Pre-warm cache for every manual
@@ -677,12 +678,12 @@ ENTRYPOINT ["/bin/sh", "-c", \
 
 ### FOLDER env var selection
 
-Each Render service sets a different `FOLDER`:
+Each Coolify application sets a different `FOLDER`:
 
 ```
-streamtex         -> FOLDER=manuals/stx_manuals_collection
-streamtex-intro   -> FOLDER=manuals/stx_manual_intro
-streamtex-ai      -> FOLDER=manuals/stx_manual_ai
+docs           -> FOLDER=manuals/stx_manuals_collection
+docs-intro     -> FOLDER=manuals/stx_manual_intro
+docs-ai        -> FOLDER=manuals/stx_manual_ai
 ```
 
 ### UV_NO_SOURCES handling in Docker
@@ -750,44 +751,34 @@ RUN uv sync --no-sources --no-dev && \
 
 **Do NOT use `--frozen`** in streamtex-docs CI or Docker -- the lock file encodes the local path.
 
-### Render service creation fails
+### Coolify deploy fails — application not found
 
-**Symptom**: `render.yaml` is pushed but no services appear on Render.
+**Symptom**: `stx deploy hetzner` reports a missing application UUID.
 
-**Cause**: `render.yaml` is declarative only. It describes services but does not create them.
+**Cause**: The application was not yet registered in `.stx-deploy.json`,
+or the UUID was rotated in the Coolify dashboard.
 
-**Fix**: Create services via the Render API:
-```bash
-curl -X POST "https://api.render.com/v1/services" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{ "type": "web_service", "name": "...", "ownerId": "tea-d2adlm49c44c738ob46g", ... }'
-```
+**Fix**: re-register via `stx deploy hetzner . --subdomain <name>` —
+the command creates the Coolify application on first run and stores
+the UUID in `.stx-deploy.json`.
 
-Render CLI v2 does not support service creation.
+### Env vars not applied on Coolify
 
-### Env vars not applied on Render
+**Symptom**: Service is rebuilt but env vars (`FOLDER`, `STX_PASSWORD`, etc.)
+are missing or wrong.
 
-**Symptom**: Service is created but environment variables are missing or wrong.
+**Cause**: Env vars are managed per application in the Coolify dashboard,
+not in any committed file.
 
-**Cause**: The Render service creation API ignores `envVars` in the request body.
-
-**Fix**: Set env vars separately after service creation:
-```bash
-curl -X PUT "https://api.render.com/v1/services/SERVICE_ID/env-vars" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '[{"key": "FOLDER", "value": "manuals/stx_manual_intro"}]'
-```
-
-Or use the CLI command:
-```bash
-stx deploy env-sync --path .
-```
+**Fix**: open the Coolify dashboard
+(https://coolify.streamtex.org), select the application, edit env
+vars manually. The deploy command does NOT push them — that is by
+design (avoids leaking secrets through git).
 
 ### Health check failures
 
-**Symptom**: Render shows the service as unhealthy or failing health checks.
+**Symptom**: Coolify shows the service as unhealthy or failing
+health checks.
 
 **Possible causes**:
 1. Streamlit is not running on port 8501.
@@ -801,27 +792,29 @@ stx deploy env-sync --path .
 docker run -p 8501:8501 my-image
 curl http://localhost:8501/_stcore/health
 
-# Check Render status
-stx deploy status render
-stx deploy status render streamtex-intro
+# Check Coolify status
+stx deploy status coolify
+stx deploy status coolify docs-intro
 ```
 
-### PyPI version mismatch with Render
+### PyPI version mismatch with Hetzner
 
-**Symptom**: Render deployment uses an old version of streamtex; new features are missing.
+**Symptom**: Hetzner deployment uses an old version of streamtex;
+new features are missing.
 
-**Cause**: Library changes were deployed to Render before being published to PyPI.
+**Cause**: Library changes were deployed before being published to PyPI.
 
 **Fix**: Always follow the deployment sequence:
 1. Publish library to PyPI first: `stx publish pypi .`
 2. Wait for PyPI to process.
-3. Then deploy to Render.
+3. Bump `streamtex-docs/.stx-version`.
+4. Then `stx deploy update`.
 
 **Verify**:
 ```bash
-# Check what version PyPI has
-pip index versions streamtex
+# Check what version PyPI has (use the JSON API — never `pip index versions`)
+curl -s https://pypi.org/pypi/streamtex/json | jq -r '.info.version'
 
-# Check what version Render installed (in deploy logs)
-# Look for: "Installing streamtex X.Y.Z" in the Render build output
+# Check what version Coolify installed (in build logs)
+# Look for: "Installing streamtex X.Y.Z" in the Coolify build output
 ```

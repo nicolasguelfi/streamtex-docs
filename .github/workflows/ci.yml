@@ -35,6 +35,56 @@ jobs:
       - name: Verify streamtex import
         run: uv run python -c "import streamtex; print(f'streamtex {streamtex.__version__}')"
 
+      # --- 1b. Verify .stx-version matches installed streamtex ---
+      # Catches drift: bumping pyproject.toml dependency without updating .stx-version
+      # (or vice-versa). .stx-version is the source of truth for Docker/Coolify deploy.
+      - name: Verify .stx-version sync
+        run: |
+          uv run python <<'PY'
+          import sys
+          from pathlib import Path
+          import streamtex
+
+          stx_ver_path = Path('.stx-version')
+          if not stx_ver_path.is_file():
+              print('FAIL — .stx-version file is missing at repo root')
+              sys.exit(1)
+          pinned = stx_ver_path.read_text(encoding='utf-8').strip()
+          installed = streamtex.__version__
+          if pinned != installed:
+              print(f'FAIL — .stx-version ({pinned}) != installed streamtex ({installed})')
+              print('       Bump .stx-version to match the streamtex version pulled by uv.')
+              sys.exit(1)
+          print(f'OK — .stx-version == installed streamtex == {installed}')
+          PY
+
+      # --- 1c. Legacy-token grep guard ---
+      # Prevents reintroduction of removed APIs / deployment vocabulary.
+      # Patterns target *usage* (function calls, attribute access, file refs),
+      # not removal-note prose — the cheatsheets legitimately reference removed
+      # APIs to explain migration paths.
+      # Allowed locations: CHANGELOG.md, _archive/, documentation/maintenance/, .git/, .venv/.
+      - name: Legacy-token grep guard
+        run: |
+          set -e
+          # \(\s*[^)] catches non-empty function calls only (so `st_ai_image_widget()`
+          # in removal-note prose is allowed); = and . catch attribute / kwarg refs.
+          PATTERNS='st_ai_image_widget\s*\(\s*[^)]|\.monties_color\b|monties_color\s*=|stx deploy render\b|^[^#]*render\.yaml'
+          HITS=$(grep -rnE "$PATTERNS" \
+            --include='*.py' --include='*.md' --include='*.toml' --include='*.yaml' --include='*.yml' --include='*.html' \
+            --exclude-dir='.git' --exclude-dir='.venv' --exclude-dir='node_modules' \
+            --exclude-dir='_archive' --exclude-dir='_ARCHIVED' --exclude-dir='_old' \
+            --exclude-dir='trash' --exclude-dir='deprecated' --exclude-dir='static-html' \
+            --exclude-dir='__pycache__' --exclude-dir='maintenance' --exclude-dir='audits' \
+            --exclude='CHANGELOG.md' --exclude='ci.yml' \
+            . || true)
+          if [ -n "$HITS" ]; then
+            echo 'FAIL — legacy tokens still present:'
+            echo "$HITS"
+            exit 1
+          fi
+          echo 'OK — no legacy tokens detected'
+
       # --- 2. Verify streamtex API compatibility ---
       # Catches cases where block code uses parameters not yet published on PyPI
       # Checks both st_*() function calls AND exported class constructors

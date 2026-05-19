@@ -60,13 +60,7 @@ def build():
                                     "Hetzner + Coolify (recommended)")
             with g.cell(): st_write(s.large, "~4 EUR/mo")
             with g.cell(): st_write(s.large, "Yes")
-            # Row 5 — Render (legacy)
-            with g.cell(): st_write(s.large, "Production + custom domain")
-            with g.cell(): st_write(s.project.colors.neutral_gray + s.large,
-                                    "Render.com (legacy, supported)")
-            with g.cell(): st_write(s.large, "$0-7/mo")
-            with g.cell(): st_write(s.large, "Yes")
-            # Row 6
+            # Row 5
             with g.cell(): st_write(s.large, "Full server control")
             with g.cell(): st_write(s.project.colors.accent_teal + s.large, "GCP VM + Ansible")
             with g.cell(): st_write(s.large, "~$5-25/mo")
@@ -107,12 +101,6 @@ def build():
             with g.cell(): st_write(s.project.colors.success_green + s.large, "Never")
             with g.cell(): st_write(s.project.colors.success_green + s.large, "Yes")
             with g.cell(): st_write(s.large, "Production (recommended)")
-            # Render (legacy)
-            with g.cell(): st_write(s.large, "Render.com")
-            with g.cell(): st_write(s.project.colors.success_green + s.large, "Yes")
-            with g.cell(): st_write(s.large, "15 min (free)")
-            with g.cell(): st_write(s.project.colors.success_green + s.large, "Yes")
-            with g.cell(): st_write(s.large, "Legacy (supported)")
             # GCP
             with g.cell(): st_write(s.large, "GCP VM")
             with g.cell(): st_write(s.project.colors.success_green + s.large, "Yes")

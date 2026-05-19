@@ -15,3 +15,8 @@ streamtex-design = { path = "../../../streamtex-design", editable = true }
 
 [tool.ruff.lint]
 ignore = ["F403", "F405", "E701", "E741"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.13",
+]

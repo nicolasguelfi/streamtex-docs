@@ -192,3 +192,36 @@ def build():
     """)
 
     st_space("v", 1)
+
+    show_explanation("""\
+    ### When CE captures grow beyond a single project: escalate to PE
+
+    The COMPOUND phase captures patterns into the project's **primary
+    local pack** (`./mypack/components/`). Over time, the same patterns
+    tend to re-emerge across multiple projects. When this happens, the
+    natural next step is **Pack Engineering (PE)** — the orchestrated
+    lifecycle that takes N projects and produces (or evolves) a shared
+    pack across all of them.
+
+    **When to escalate from CE to PE:**
+
+    - Three or more projects share the same captured pattern → run
+      `/stx-pe:bootstrap projects/*` to extract a shared pack.
+    - An existing upstream pack (e.g. `streamtex-design`) almost fits
+      but lacks your domain specifics → run `/stx-pe:specialize <upstream>
+      projects/*` to fork.
+    - One project's local pack has been used for a while and new idioms
+      have emerged in recent blocks → run `/stx-pe:refine` to capture
+      only the new patterns.
+
+    PE delegates to the single user-facing `pack-orchestrator` agent
+    and surfaces 4 validation gates (G1-G4). See the **Reuse Architecture
+    manual** (Part 5bis: Pack Engineering) for the full walkthrough, or
+    `.claude/references/pe_cheatsheet_en.md` for the command reference.
+
+    Indirect routing: `/stx-ce:task "extract a shared pack from
+    projects A B C"` auto-classifies into `PACK_BOOTSTRAP` and routes to
+    the orchestrator without needing to remember the `/stx-pe:*` namespace.
+    """)
+
+    st_space("v", 1)

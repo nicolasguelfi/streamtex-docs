@@ -92,3 +92,57 @@ def build():
             pre-release uploads to TestPyPI.
         """)
         st_space("v", 1)
+
+        # --- Publishing a reuse pack via Pack Engineering ---
+        st_write(bs.sub, "Publishing a reuse pack (via Pack Engineering)",
+                 toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            The stx publish commands above target generic Python
+            packages. For **reuse packs** (packs that ship
+            StreamTeX components, design systems, and kits — like
+            streamtex-design), there is a higher-level orchestrated
+            release flow available via the **Pack Engineering** module.
+
+            Run /stx-pe:publish <pack-path> instead of stx publish pypi
+            to get:
+
+            1. **Pre-release validation** — working tree clean check,
+               stx component validate on every component, manifest
+               validity (PV001-PV010).
+            2. **Computed semver bump** — from the pack-master-plan's
+               decisions_log (REMOVED -> major, CHANGED -> minor,
+               ADDED only -> patch). Pack semver is independent from
+               the streamtex library's "stay on 0.7.X" rule.
+            3. **CHANGELOG entry generation** — from the cycle's
+               decisions log since the last publish_decided entry.
+            4. **Atomic bump + commit + signed tag** in one step.
+            5. **PyPI publish QCM** — never auto-publishes, always
+               requires explicit user approval (even in autonomous
+               mode).
+            6. **Optional upstream PR** — for fork-packs with mature
+               components, propose a PR back to the upstream
+               (e.g. PRs from a streamtex-design fork back to
+               streamtex-design).
+
+            See the Reuse Architecture manual for the full Pack
+            Engineering walkthrough, or .claude/references/pe_cheatsheet_en.md
+            for the command reference.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            # Release a mature pack via PE
+            /stx-pe:publish ../streamtex-design
+
+            # Force a specific bump
+            /stx-pe:publish --bump minor ../streamtex-design
+
+            # Tag-only, skip PyPI upload
+            /stx-pe:publish --target tag ../streamtex-design
+
+            # Fork-pack: propose upstream PR for mature components
+            /stx-pe:publish --pr-upstream streamtex/streamtex-design ../design-edu
+        """, language="bash", line_numbers=False)
+        st_space("v", 1)

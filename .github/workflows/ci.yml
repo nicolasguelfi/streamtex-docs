@@ -102,12 +102,34 @@ jobs:
               if callable(obj) and not name.startswith('_'):
                   exported[name] = obj
 
+          def collect_shadowed_names(tree):
+              # Names that are re-bound by a non-streamtex 'from X import name'
+              # or 'from X import name as alias' — Python's resolution would
+              # bind the non-streamtex symbol even after 'from streamtex import *'.
+              shadowed = set()
+              for n in ast.walk(tree):
+                  if isinstance(n, ast.ImportFrom) and n.module:
+                      mod = n.module
+                      if mod == 'streamtex' or mod.startswith('streamtex.'):
+                          continue
+                      for alias in n.names:
+                          name = alias.asname or alias.name
+                          if name != '*':
+                              shadowed.add(name)
+                  elif isinstance(n, ast.Import):
+                      for alias in n.names:
+                          name = alias.asname or alias.name.split('.')[0]
+                          if not (name == 'streamtex' or name.startswith('streamtex.')):
+                              shadowed.add(name)
+              return shadowed
+
           errors = []
           checked = 0
           for f in sorted(glob.glob('manuals/**/blocks/**/*.py', recursive=True)):
               if '__pycache__' in f or '__init__' in f:
                   continue
               tree = ast.parse(open(f).read(), filename=f)
+              shadowed = collect_shadowed_names(tree)
               for node in ast.walk(tree):
                   if not isinstance(node, ast.Call):
                       continue
@@ -118,6 +140,9 @@ jobs:
                   elif isinstance(node.func, ast.Attribute):
                       func_name = node.func.attr
                   if not func_name or func_name not in exported:
+                      continue
+                  # Skip if shadowed by a non-streamtex import in this file
+                  if func_name in shadowed:
                       continue
                   func = exported[func_name]
                   try:

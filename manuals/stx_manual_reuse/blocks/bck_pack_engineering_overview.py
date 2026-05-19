@@ -24,39 +24,39 @@ bs = BlockStyles
 def build():
     """Introduce the Pack Engineering (PE) lifecycle and its six sub-modes."""
     with st_block(s.center_txt):
-        st_write(("Pack Engineering — overview", bs.heading))
+        st_write((bs.heading, "Pack Engineering — overview"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "When the project's library grows beyond manual capture, "
             "**Pack Engineering (PE)** is the orchestrated lifecycle "
             "that takes N existing projects and produces (or enriches) "
             "a shared pack — with full audit trail, validation gates, "
             "and automatic retrofit of the consumer projects.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Where PE fits ----
-    st_write(("Where PE fits", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Where PE fits"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "PE sits between **CE capture** (project-local, one component "
         "at a time) and **pack publication** (versioned release to "
         "PyPI). It is the bridge that turns a folder of authored "
         "blocks into a reusable, versioned design pack — and rewrites "
         "the source projects to consume it.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Six sub-modes ----
-    st_write(("Six sub-modes", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Six sub-modes"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "The same 7-step sequencer (DISCOVERY → DESIGN → IMPLEMENT → "
         "ADOPT → RETROFIT → AUDIT → PUBLISH) runs in six different "
         "ways depending on where you are in the lifecycle:",
-        bs.body,
     )
     st_space(10)
 
@@ -82,15 +82,16 @@ def build():
              "git tag, optional PyPI publish."),
         ]:
             with g.cell():
-                st_write(mode, bs.body + s.bold)
+                st_write(bs.body + s.bold, mode)
             with g.cell():
-                st_write(desc, bs.body)
+                st_write(bs.body, desc)
     st_space(15)
 
     # ---- The single user-facing agent ----
-    st_write(("One orchestrator, six specialists", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "One orchestrator, six specialists"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "**You only ever talk to one agent : `pack-orchestrator`.** It "
         "auto-detects the right sub-mode from your prompt + workspace "
         "state, surfaces 4 fundamental gates (G1-G4) at the critical "
@@ -98,12 +99,11 @@ def build():
         "— `pack-miner`, `pack-designer`, `pack-implementer`, "
         "`pack-retrofitter`, `pack-auditor`, `pack-publisher`. You "
         "never need to know they exist.",
-        bs.body,
     )
     st_space(15)
 
     # ---- The 4 gates ----
-    st_write(("Four fundamental gates", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Four fundamental gates"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 4fr", gap="8px", cell_styles=bs.cell) as g:
@@ -122,18 +122,18 @@ def build():
              "headless render of rewritten blocks fails."),
         ]:
             with g.cell():
-                st_write(gate, bs.body + s.bold)
+                st_write(bs.body + s.bold, gate)
             with g.cell():
-                st_write(desc, bs.body)
+                st_write(bs.body, desc)
     st_space(15)
 
     # ---- Invocation ----
-    st_write(("Invocation", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Invocation"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Auto-detect sub-mode from prompt + workspace state
 /stx-pe:go projects/manual-a projects/manual-b
 
@@ -153,7 +153,7 @@ def build():
     st_space(15)
 
     st_write(
+        bs.body,
         "The next blocks walk through the **bootstrap** flow end-to-"
         "end and the **refine** flow for incremental enrichment.",
-        bs.body,
     )

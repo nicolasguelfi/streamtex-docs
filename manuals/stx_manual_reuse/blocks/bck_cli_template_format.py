@@ -25,31 +25,31 @@ bs = BlockStyles
 def build():
     """Document the CLI template layout and the scaffolding flow."""
     with st_block(s.center_txt):
-        st_write(("CLI template format", bs.heading))
+        st_write((bs.heading, "CLI template format"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "A **CLI template** is a project scaffold packaged inside "
             "a pack at `<pack>/cli_templates/<name>/`. When a user "
             "runs `stx project new --kit <pack>:<kit>`, the kit's "
             "referenced template is copied into the new project "
             "directory, with placeholders (project name, pack list, "
             "DS reference) substituted at scaffold time.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Layout ----
-    st_write(("Template directory layout", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Template directory layout"), toc_lvl="+1")
     st_space(10)
     st_write(
-        "Minimum viable template — same shape as a working project:",
         bs.body,
+        "Minimum viable template — same shape as a working project:",
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 my-pack/cli_templates/project-default/
 ├── pyproject.toml            # uv-compatible Python project
 ├── stx.toml                  # pack declarations + DS + kit
@@ -68,14 +68,14 @@ my-pack/cli_templates/project-default/
     st_space(15)
 
     # ---- Placeholders ----
-    st_write(("Placeholders substituted at scaffold time", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Placeholders substituted at scaffold time"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("Placeholder", bs.cell_head))
+            st_write((bs.cell_head, "Placeholder"))
         with g.cell():
-            st_write(("Replaced by", bs.cell_head))
+            st_write((bs.cell_head, "Replaced by"))
 
         for ph, replaced in [
             ("{{project_name}}",
@@ -93,18 +93,18 @@ my-pack/cli_templates/project-default/
              "`streamtex_compat` manifest field."),
         ]:
             with g.cell():
-                st_write(ph, bs.body)
+                st_write(bs.body, ph)
             with g.cell():
-                st_write(replaced, bs.body)
+                st_write(bs.body, replaced)
     st_space(15)
 
     # ---- Wiring in the kit ----
-    st_write(("Wiring a CLI template to a kit", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Wiring a CLI template to a kit"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # my-pack/kits/project-default.toml
 
 name = "project-default"
@@ -124,9 +124,10 @@ ref = "project-default"        # → my-pack/cli_templates/project-default/
     st_space(15)
 
     # ---- Authoring tips ----
-    st_write(("Authoring tips", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Authoring tips"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "- Keep templates **small and opinionated** — one starter "
         "block, one ruff config, one CHANGELOG stub. Users add scope "
         "with `stx pack add` and `stx component new`.\n"
@@ -139,5 +140,4 @@ ref = "project-default"        # → my-pack/cli_templates/project-default/
         "`--pack` / `--kit` flags.\n"
         "- Templates can ship `_pack_manifest.toml` placeholders for "
         "the local `./mypack/` so it is a working pack from day one.",
-        bs.body,
     )

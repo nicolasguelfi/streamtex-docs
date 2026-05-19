@@ -9,16 +9,26 @@ code block. Grouped by `__component_meta__["granularity"]`.
 from streamtex import *
 from custom.styles import Styles as s
 from streamtex_design.design_systems.default import DesignSystem
-from streamtex_design.components import (
-    # primitives
-    callout, cite, inline_emphasis, slide_heading,
-    # compositions
-    api_reference_card, card_grid, categorized_grid, comparison_table,
-    composite_block, manual_section, takeaways, term_definition_list,
-    # blocks
-    evidence_insight, exercise_flow, feature_walkthrough,
-    narrative_transition, stat_hero, title_slide,
-)
+# streamtex_design's components __init__ is intentionally lean (no
+# re-exports), so each public function must be imported from its module.
+from streamtex_design.components.callout import callout
+from streamtex_design.components.cite import cite
+from streamtex_design.components.inline_emphasis import inline_emphasis
+from streamtex_design.components.slide_heading import slide_heading
+from streamtex_design.components.api_reference_card import api_reference_card
+from streamtex_design.components.card_grid import card_grid
+from streamtex_design.components.categorized_grid import categorized_grid
+from streamtex_design.components.comparison_table import comparison_table
+from streamtex_design.components.composite_block import composite_block
+from streamtex_design.components.manual_section import manual_section
+from streamtex_design.components.takeaways import takeaways
+from streamtex_design.components.term_definition_list import term_definition_list
+from streamtex_design.components.evidence_insight import evidence_insight
+from streamtex_design.components.exercise_flow import exercise_flow
+from streamtex_design.components.feature_walkthrough import feature_walkthrough
+from streamtex_design.components.narrative_transition import narrative_transition
+from streamtex_design.components.stat_hero import stat_hero
+from streamtex_design.components.title_slide import title_slide
 
 
 DS = DesignSystem()
@@ -41,7 +51,7 @@ bs = BlockStyles
 
 def _demo(label: str, render):
     """Render a labeled demo frame around a component call."""
-    st_write((label, bs.label))
+    st_write((bs.label, label))
     with st_block(bs.demo_frame):
         render()
     st_space(8)
@@ -50,18 +60,18 @@ def _demo(label: str, render):
 def build():
     """The 18-component live gallery, grouped by granularity."""
     with st_block(s.center_txt):
-        st_write(("Live gallery — `streamtex_design` v0.1.0", bs.heading))
+        st_write((bs.heading, "Live gallery — `streamtex_design` v0.1.0"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "Every section below is a real call to the component, with the "
             "`default` design system passed as the `design_system` kwarg. "
             "What you see is what the component renders — no screenshots.",
-            bs.body,
         )
 
     # === Primitives (4) ===
     st_space(20)
-    st_write(("Primitives (4)", bs.section))
+    st_write((bs.section, "Primitives (4)"))
     st_space(10)
 
     _demo(
@@ -108,7 +118,7 @@ def build():
 
     # === Compositions (8) ===
     st_space(20)
-    st_write(("Compositions (8)", bs.section))
+    st_write((bs.section, "Compositions (8)"))
     st_space(10)
 
     _demo(
@@ -159,12 +169,12 @@ def build():
         "takeaways(items=...)",
         lambda: takeaways(
             design_system=DS,
-            lead="Wave 4 acceptance summary",
+            lead="Reuse layer at a glance",
             items=[
-                "streamtex 0.7.0 published to PyPI.",
-                "streamtex-design v0.1.0 ships 18 components / 3 DS / 4 kits.",
-                "streamtex-claude v0.2.0 ships the reuse-architecture skill.",
-                "docs-patterns.streamtex.org serves the new manual.",
+                "streamtex publishes the lib + CLI on PyPI.",
+                "streamtex-design ships 18 components / 3 DS / 4 kits.",
+                "streamtex-claude exposes the reuse-architecture skill.",
+                "Every manual consumes the same pack via stx.toml.",
             ],
             numbered=True,
         ),
@@ -241,35 +251,35 @@ def build():
 
     # === Blocks (6) ===
     st_space(20)
-    st_write(("Blocks (6)", bs.section))
+    st_write((bs.section, "Blocks (6)"))
     st_space(10)
 
     _demo(
         "title_slide(title, subtitle, metadata)",
         lambda: title_slide(
             design_system=DS,
-            title="StreamTeX 0.7.0",
-            subtitle="Reuse architecture milestone",
-            metadata="2026-05-19 · Wave 4 of 4",
+            title="StreamTeX",
+            subtitle="Reuse architecture",
+            metadata="Packs · Components · Design systems · Kits",
         ),
     )
     _demo(
         "stat_hero(value, body)",
         lambda: stat_hero(
             design_system=DS,
-            value="−6 345",
-            body="lines removed by MIG-6 (legacy streamtex.patterns module + tests).",
+            value="18",
+            body="components shipped by streamtex-design — primitives, compositions, blocks.",
         ),
     )
     _demo(
         "narrative_transition(marker, framing, bridging)",
         lambda: narrative_transition(
             design_system=DS,
-            marker="From legacy to reuse",
-            framing="Markdown catalog → Python packs",
+            marker="From concept to project",
+            framing="Pack discovery → component import",
             bridging=(
-                "Same purpose (reusable design recipes), different mechanism "
-                "(import vs scan)."
+                "A pack ships components via Python packaging; a project "
+                "imports them through the standard module system."
             ),
         ),
     )
@@ -314,16 +324,16 @@ def build():
         lambda: evidence_insight(
             design_system=DS,
             value="2 113",
-            caption="streamtex tests passing on 0.7.0",
+            caption="streamtex tests passing on the current release",
             insights=[
-                "−112 tests deleted with the patterns module (MIG-6).",
-                "+10 tests added for stx project new modernisation (MIG-3).",
-                "+8 tests added for _add_default_design_pack (MIG-4).",
-                "+2 tests added for the multi-pack matrix (Phase 2b).",
+                "Pack discovery covered by the multi-pack matrix.",
+                "stx project new exercised end-to-end with kit resolution.",
+                "Component / DS / kit validators run on every pack.",
+                "Aggregate `stx validate --strict` gates CI.",
             ],
-            source="streamtex 0.7.0 CHANGELOG",
+            source="streamtex test suite",
         ),
     )
 
     st_space(20)
-    st_write(("End of gallery — 18/18 components rendered.", bs.section + s.center_txt))
+    st_write((bs.section + s.center_txt, "End of gallery — 18/18 components rendered."))

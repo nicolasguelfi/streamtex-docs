@@ -91,9 +91,10 @@ addition to the user before refactoring — do not invent mappings.
 def build():
     """Document the custom-import-mapping pattern (D19 strict separation)."""
     with st_block(s.center_txt):
-        st_write(("Custom import mapping", bs.heading))
+        st_write((bs.heading, "Custom import mapping"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "When importing HTML / Marp / LaTeX through the shared "
             "`/stx-import:*` commands and you want the resulting "
             "blocks to consume a pack's components, the StreamTeX "
@@ -101,22 +102,22 @@ def build():
             "stays pack-agnostic, and you prepare a tiny custom "
             "skill + command pair to handle the mapping for your "
             "active pack. Once prepared, reuse it on every re-import.",
-            bs.body,
         )
         st_space(15)
 
     # ---- 1) Why pack-agnostic in the shared profile ----
-    st_write(("1 — Why pack-agnostic in the shared profile", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "1 — Why pack-agnostic in the shared profile"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "The seven `/stx-import:*` commands (`html`, `html-audit`, "
         "`marp`, `marp-analyze`, `latex`, `latex-analyze`, `pdf`) "
         "produce **low-level StreamTeX code** with no knowledge of "
         "any pack. Two reasons:",
-        bs.body,
     )
     st_space(10)
     st_write(
+        bs.body,
         "- **Doctrine D19 (separation strict)** — import and reuse "
         "architecture are orthogonal. The shared profile must not "
         "couple itself to any pack's component vocabulary.\n"
@@ -124,48 +125,47 @@ def build():
         "would grow proportionally with the ecosystem (one mapping "
         "table per pack). The user's custom artefacts scale with "
         "the user's choices instead.",
-        bs.body,
     )
     st_space(15)
 
     # ---- 2) Custom skill template ----
-    st_write(("2 — Custom skill: `.claude/custom/skills/import-<pack>-mapping.md`",
-              bs.sub), toc_lvl="+1")
+    st_write((bs.sub,
+              "2 — Custom skill: `.claude/custom/skills/import-<pack>-mapping.md`"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "A markdown skill scoped to one pack, declaring the mapping "
         "table the AI agent consults during refactor:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
-        st_code(SKILL_TEMPLATE, language="markdown")
+        st_code(code=SKILL_TEMPLATE, language="markdown")
     st_space(15)
 
     # ---- 3) Custom command template ----
-    st_write(("3 — Custom command: `.claude/custom/commands/refactor-<pack>/run.md`",
-              bs.sub), toc_lvl="+1")
+    st_write((bs.sub,
+              "3 — Custom command: `.claude/custom/commands/refactor-<pack>/run.md`"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "A slash-command companion that reads the skill above and "
         "performs the refactor on a target block file:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
-        st_code(COMMAND_TEMPLATE, language="markdown")
+        st_code(code=COMMAND_TEMPLATE, language="markdown")
     st_space(15)
 
     # ---- 4) Concrete example ----
-    st_write(("4 — Concrete example: refactor towards `streamtex-design`",
-              bs.sub), toc_lvl="+1")
+    st_write((bs.sub,
+              "4 — Concrete example: refactor towards `streamtex-design`"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # 1) Import a slide deck via the pack-agnostic shared command
 /stx-import:marp slides/my-deck.md
 
@@ -186,44 +186,44 @@ stx validate --strict
     st_space(15)
 
     # ---- 5) Storage & conservation ----
-    st_write(("5 — Storage and conservation", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "5 — Storage and conservation"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Custom artefacts in `.claude/custom/` are owned by the "
         "user and are NOT overwritten by `stx claude update`. Two "
         "conservation strategies, both supported:",
-        bs.body,
     )
     st_space(10)
 
     with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("Version in the project", bs.body + s.bold))
+            st_write((bs.body + s.bold, "Version in the project"))
         with g.cell():
             st_write(
+                bs.body,
                 "Commit `.claude/custom/skills/import-<pack>-mapping.md` "
                 "and `.claude/custom/commands/refactor-<pack>/` into the "
                 "project's git repo. The mapping evolves alongside the "
                 "blocks and the pack version. Good default for single-"
                 "project work.",
-                bs.body,
             )
         with g.cell():
-            st_write(("Archive once, reuse across projects",
-                      bs.body + s.bold))
+            st_write((bs.body + s.bold,
+                      "Archive once, reuse across projects"))
         with g.cell():
             st_write(
+                bs.body,
                 "Keep a personal `.claude/custom/` snapshot in a side "
                 "repository or dotfiles. Copy it into each new project "
                 "after `stx project new`. Good for teams that import "
                 "from the same pipeline across many projects.",
-                bs.body,
             )
     st_space(15)
 
     st_write(
+        bs.body,
         "Either way: prepare once, reuse on every re-import. The "
         "shared `/stx-import:*` commands never need to know about "
         "your active pack.",
-        bs.body,
     )

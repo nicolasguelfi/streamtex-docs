@@ -25,32 +25,32 @@ bs = BlockStyles
 def build():
     """Walk through the bootstrap sub-mode : N projects -> new pack."""
     with st_block(s.center_txt):
-        st_write(("Bootstrap : N projects → new pack", bs.heading))
+        st_write((bs.heading, "Bootstrap : N projects → new pack"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "**Bootstrap** is the right sub-mode when you have ≥ 2 "
             "projects with overlapping visual idioms but no shared "
             "pack yet. The cycle extracts the recurring patterns, "
             "produces a brand-new pack, and rewrites the source "
             "projects to consume it.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Inputs ----
-    st_write(("Inputs", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Inputs"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Required : a list of project paths. Optional : a name for "
         "the new pack, a target path, the active design system. "
         "Defaults are sensible and inferred from the workspace.",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 /stx-pe:bootstrap projects/manual-a projects/manual-b projects/manual-c
 /stx-pe:bootstrap --pack-name design-corporate projects/*
 /stx-pe:bootstrap --target-path ../shared-design --min-projects 3 projects/*
@@ -60,7 +60,7 @@ def build():
     st_space(15)
 
     # ---- The 7 steps ----
-    st_write(("The 7 steps", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "The 7 steps"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 4fr", gap="8px", cell_styles=bs.cell) as g:
@@ -108,15 +108,16 @@ def build():
              "Opt-in only — QCM at the end of the cycle."),
         ]:
             with g.cell():
-                st_write(step, bs.body + s.bold)
+                st_write(bs.body + s.bold, step)
             with g.cell():
-                st_write(desc, bs.body)
+                st_write(bs.body, desc)
     st_space(15)
 
     # ---- Outputs ----
-    st_write(("What you get", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "What you get"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "At termination of a successful bootstrap cycle :\n\n"
         "- A new pack repo at `<target-path>` with components, "
         "design system, kit, and per-component commits.\n"
@@ -125,18 +126,17 @@ def build():
         "- Pilot project `docs/pack-engineering/` populated with the "
         "full audit trail (master plan + per-phase reports + "
         "decisions log).",
-        bs.body,
     )
     st_space(15)
 
     # ---- Recovery ----
-    st_write(("If something goes wrong", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "If something goes wrong"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "The cycle is **resumable**. If interrupted between phases "
         "(Ctrl-C, session ends), the next invocation reads "
         "`phases_completed[-1]` from the master plan and continues "
         "from the next phase. Retrofit defaults to `dry-run` ; you "
         "can review the plan before any block is modified.",
-        bs.body,
     )

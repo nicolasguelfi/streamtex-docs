@@ -1,7 +1,4 @@
-"""FAQ — the recurring questions about packs / components / DS / kits.
-
-Source: synthesised from Wave 4 follow-up + PLAN.md decision Qs.
-"""
+"""FAQ — the recurring questions about packs / components / DS / kits."""
 
 from streamtex import *
 from custom.styles import Styles as s
@@ -26,9 +23,8 @@ QA = [
      "components import callout` works the same way as any other "
      "import. `git diff` shows actual changes, pytest tests it, "
      "basedpyright covers it, ruff lints it. No separate scan-time "
-     "parser, no drift bookkeeping. The legacy markdown spec "
-     "(format A2) survives as the **docstring contract** inside "
-     "each component module."),
+     "parser, no drift bookkeeping. The structured-docstring contract "
+     "inside each component module replaces a markdown spec."),
     ("Can a project consume more than one pack?",
      "Yes. The reuse architecture is **multi-pack by default**. "
      "Declare each pack as a `[[packs]]` entry in `stx.toml`. "
@@ -47,24 +43,17 @@ QA = [
      "doesn't filter on it. The granularity is set at creation "
      "time (`stx component new my_widget --granularity composition`) "
      "and documents intent."),
-    ("What happens to the legacy `streamtex-patterns/` folder?",
-     "It's removed entirely in 0.7.x. Migration: install "
-     "`streamtex-design` (the official pack), install a kit "
-     "matching your legacy preset, delete the folder. See the "
-     "migration block for the full mapping."),
     ("Can I capture a component into a non-primary pack?",
      "Yes — `stx component new my_widget --pack <name>` accepts "
      "any local pack. Without `--pack`, the scaffold lands in the "
      "primary local pack (the one with `primary = true` in "
      "stx.toml). Capturing into a remote git or PyPI pack is "
      "refused — promotion goes through `stx component promote`."),
-    ("How is a kit different from a 'preset' from the legacy system?",
-     "A kit is **richer** — it bundles a DS, a curated component "
-     "list, optionally a CLI template and project blueprints. "
-     "The legacy preset only selected which patterns to install. "
-     "The vocabulary `preset` is now reserved for the workspace "
-     "preset (`stx install --preset standard|user|developer|…`) "
-     "which is unrelated."),
+    ("Is the `preset` vocabulary used elsewhere in the CLI?",
+     "Yes — `stx install --preset standard|user|developer|…` selects "
+     "the workspace preset (repos cloned, extras installed). That "
+     "`preset` is unrelated to kits — kits live inside packs and "
+     "bundle a DS with a curated component list."),
     ("Why do I see `extrapolable=True` in `__component_meta__`?",
      "It signals to the AI agent that the component accepts "
      "extrapolation within `PARAMS` (e.g. adapting `kind=` to a "
@@ -90,15 +79,16 @@ QA = [
 def build():
     """Render the FAQ list."""
     with st_block(s.center_txt):
-        st_write(("FAQ", bs.heading))
+        st_write((bs.heading, "FAQ"), toc_lvl="1")
         st_space(15)
         st_write(
-            "Recurring questions from the 0.7.x rollout.",
             bs.body,
+            "Recurring questions about packs, components, design "
+            "systems, and kits.",
         )
         st_space(15)
         for question, answer in QA:
             with st_block(bs.row):
-                st_write((question, bs.question))
-                st_write(answer, bs.body)
+                st_write((bs.question, question))
+                st_write(bs.body, answer)
             st_space(8)

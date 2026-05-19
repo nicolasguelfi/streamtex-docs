@@ -1473,9 +1473,8 @@ except GSheetError as e:
 
 ## 10. AI Image Generation
 
-Since streamtex 0.7.2, AI image generation goes through the unified
-`st_image()` function with `prompt=` + `editable=True`. The standalone
-`st_ai_image()` / `st_ai_image_widget()` functions are removed.
+AI image generation goes through the unified `st_image()` function
+with `prompt=` + `editable=True`.
 
 ### st_image with AI parameters
 

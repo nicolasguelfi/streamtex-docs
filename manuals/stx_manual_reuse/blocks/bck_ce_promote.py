@@ -25,25 +25,25 @@ bs = BlockStyles
 def build():
     """Document the four-branch promotion routing (Q12)."""
     with st_block(s.center_txt):
-        st_write(("CE promotion flow", bs.heading))
+        st_write((bs.heading, "CE promotion flow"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "Once a captured component proves reusable across "
             "projects, promote it to a shared pack with "
             "`stx component promote`. Routing depends on the "
             "destination pack's **type** (Q12) — four branches, "
             "one command:",
-            bs.body,
         )
         st_space(15)
 
     # ---- Step 1: CLI ----
-    st_write(("Step 1 — CLI surface", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 1 — CLI surface"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Promote `my_widget` to a pack declared in stx.toml
 stx component promote my_widget --to=shared_pack
 
@@ -55,16 +55,16 @@ stx component promote my_widget --to=streamtex-design --no-commit
     st_space(15)
 
     # ---- Step 2: routing ----
-    st_write(("Step 2 — Four-branch routing", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 2 — Four-branch routing"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("Destination type", bs.cell_head))
+            st_write((bs.cell_head, "Destination type"))
         with g.cell():
-            st_write(("Action", bs.cell_head))
+            st_write((bs.cell_head, "Action"))
         with g.cell():
-            st_write(("Effect", bs.cell_head))
+            st_write((bs.cell_head, "Effect"))
 
         for dest, action, effect in [
             ("primary_local",
@@ -92,17 +92,18 @@ stx component promote my_widget --to=streamtex-design --no-commit
              "PyPI release manually."),
         ]:
             with g.cell():
-                st_write(dest, bs.body + s.bold)
+                st_write(bs.body + s.bold, dest)
             with g.cell():
-                st_write(action, bs.body)
+                st_write(bs.body, action)
             with g.cell():
-                st_write(effect, bs.body)
+                st_write(bs.body, effect)
     st_space(15)
 
     # ---- Step 3: pre-flight checks ----
-    st_write(("Step 3 — Pre-flight checks", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 3 — Pre-flight checks"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Before any copy, `stx component promote` runs:\n\n"
         "1. **Component validation** — the component must pass "
         "`stx component validate` (no `CV0xx` errors).\n"
@@ -112,14 +113,14 @@ stx component promote my_widget --to=streamtex-design --no-commit
         "3. **Destination is writable** — refuses if the resolved "
         "destination is PyPI (`PR001`) or if the git remote is "
         "unreachable.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Step 4: after promotion ----
-    st_write(("Step 4 — After promotion", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 4 — After promotion"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Once the destination pack has the component, two cleanup "
         "actions are typical:\n\n"
         "- Remove the local copy from the project's primary pack "
@@ -129,5 +130,4 @@ stx component promote my_widget --to=streamtex-design --no-commit
         "- For `git_remote` branches: review the auto-opened PR, "
         "update CHANGELOG and version bump in the shared pack, "
         "merge.",
-        bs.body,
     )

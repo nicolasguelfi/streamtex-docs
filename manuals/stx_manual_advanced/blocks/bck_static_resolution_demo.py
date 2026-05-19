@@ -450,7 +450,7 @@ with open(result) as f:       # FileNotFoundError here!
     with st_block(bs.warning_box):
         st_write(
             s.medium,
-            (s.text.weights.bold_weight, "Legacy static serving: "),
+            (s.text.weights.bold_weight, "Streamlit static fallback: "),
             """\
 When st_image() cannot find a file via static resolution,
 it falls back to Streamlit's built-in static serving path:

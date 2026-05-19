@@ -378,7 +378,7 @@ def build():
 
             with g.cell(): st_write(s.large, "streamlit-only")
             with g.cell(): st_write(s.large, "Streamlit (:8501)")
-            with g.cell(): st_write(s.large, "Default, fully interactive, legacy behavior")
+            with g.cell(): st_write(s.large, "Default, fully interactive, no Nginx layer")
 
             with g.cell(): st_write(s.large, "dual")
             with g.cell(): st_write(s.large, "Nginx (:80) + Streamlit")

@@ -25,28 +25,28 @@ bs = BlockStyles
 def build():
     """Walk through the three distribution channels for a pack."""
     with st_block(s.center_txt):
-        st_write(("Pack distribution", bs.heading))
+        st_write((bs.heading, "Pack distribution"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "A pack travels through three channels — git, PyPI, "
             "local — each with its own audience and release "
             "cadence. The CLI handles all three symmetrically via "
             "`stx pack add`.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Comparison table ----
-    st_write(("Channels at a glance", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Channels at a glance"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 2fr 2fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("Channel", bs.cell_head))
+            st_write((bs.cell_head, "Channel"))
         with g.cell():
-            st_write(("Use it when", bs.cell_head))
+            st_write((bs.cell_head, "Use it when"))
         with g.cell():
-            st_write(("Add it with", bs.cell_head))
+            st_write((bs.cell_head, "Add it with"))
 
         for chan, when, how in [
             ("Local",
@@ -65,20 +65,20 @@ def build():
              "stx pack add pypi:streamtex-academic@>=1.0,<2.0"),
         ]:
             with g.cell():
-                st_write(chan, bs.body + s.bold)
+                st_write(bs.body + s.bold, chan)
             with g.cell():
-                st_write(when, bs.body)
+                st_write(bs.body, when)
             with g.cell():
-                st_write(how, bs.body)
+                st_write(bs.body, how)
     st_space(15)
 
     # ---- Git release flow ----
-    st_write(("Git release flow", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Git release flow"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Inside the pack repository
 # 1) Bump version in pyproject.toml + _pack_manifest.toml
 # 2) Update CHANGELOG.md
@@ -97,12 +97,12 @@ stx pack sync
     st_space(15)
 
     # ---- PyPI release flow ----
-    st_write(("PyPI release flow", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "PyPI release flow"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Build distributions
 uv build
 
@@ -118,55 +118,55 @@ stx pack sync
     st_space(15)
 
     st_write(
+        bs.body,
         "Promoting a captured component to a PyPI pack is "
         "**refused** by `stx component promote` (error `PR001`) — "
         "promote to the upstream **git** pack first, then bump the "
         "PyPI release manually. PyPI is treated as read-only by the "
         "automation.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Local (no release) ----
-    st_write(("Local — no release step", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Local — no release step"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Local packs (`type=\"local\"` in `stx.toml`) have no "
         "version concept — the working copy on disk is the truth. "
         "Two sub-cases:",
-        bs.body,
     )
     st_space(10)
 
     with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("primary_local", bs.body + s.bold))
+            st_write((bs.body + s.bold, "primary_local"))
         with g.cell():
             st_write(
+                bs.body,
                 "The `./mypack/` sub-folder created by "
                 "`stx project new` (unless `--no-mypack`). One "
                 "primary per project. Used as the default "
                 "destination for `stx component new`. Travels with "
                 "the project's git history.",
-                bs.body,
             )
         with g.cell():
-            st_write(("secondary_local_with_git", bs.body + s.bold))
+            st_write((bs.body + s.bold, "secondary_local_with_git"))
         with g.cell():
             st_write(
+                bs.body,
                 "A local pack with its own `.git/` directory (e.g. "
                 "`/Users/me/shared_pack/`). `stx component promote` "
                 "can copy a captured component into it AND commit "
                 "into the pack's own repo (`stx component promote "
                 "<name> --to=shared_pack`).",
-                bs.body,
             )
     st_space(15)
 
     st_write(
+        bs.body,
         "Editable install for active local iteration: "
         "`stx pack add <path> --dev` — writes `[tool.uv.sources]` "
         "in the project's `pyproject.toml` so edits in the pack are "
         "picked up immediately by `stx run`.",
-        bs.body,
     )

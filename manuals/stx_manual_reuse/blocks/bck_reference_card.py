@@ -77,17 +77,17 @@ ERROR_CODES = [
 def build():
     """Quick reference for the reuse architecture CLI + error codes."""
     with st_block(s.center_txt):
-        st_write(("Reference card", bs.heading))
+        st_write((bs.heading, "Reference card"), toc_lvl="1")
         st_space(15)
-        st_write(("CLI surface", bs.section))
+        st_write((bs.section, "CLI surface"))
         with st_block(bs.code):
-            st_code(COMMANDS, language="bash")
+            st_code(code=COMMANDS, language="bash")
 
         st_space(20)
-        st_write(("Error codes", bs.section))
+        st_write((bs.section, "Error codes"))
         for code, description in ERROR_CODES:
             st_write(
-                (code + " — ", s.bold),
+                (s.bold, code + " — "),
                 description,
                 bs.body,
             )

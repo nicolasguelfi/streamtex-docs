@@ -24,22 +24,23 @@ bs = BlockStyles
 def build():
     """Walk through the refine sub-mode : active pack + new blocks → enriched pack."""
     with st_block(s.center_txt):
-        st_write(("Refine : capture emerged patterns", bs.heading))
+        st_write((bs.heading, "Refine : capture emerged patterns"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "**Refine** is the incremental sibling of bootstrap. The "
             "current project already declares a pack ; you've kept "
             "writing blocks and new idioms have emerged. Refine "
             "captures only those NEW patterns into the existing pack "
             "— without re-doing the full analysis.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Triggers ----
-    st_write(("When to use refine", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "When to use refine"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Three signals warrant a refine cycle :\n\n"
         "- The current project's `stx.toml` declares a pack you "
         "control.\n"
@@ -48,17 +49,16 @@ def build():
         "- At least one of those new blocks contains a structure that "
         "feels like \"this should be a component\" — but isn't covered "
         "by the active pack.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Invocation ----
-    st_write(("Invocation", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Invocation"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Refine the active pack — defaults to "blocks modified since last
 # mining_validated"
 /stx-pe:refine
@@ -77,7 +77,7 @@ def build():
     st_space(15)
 
     # ---- What's different from bootstrap ----
-    st_write(("What's different from bootstrap", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "What's different from bootstrap"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 4fr", gap="8px", cell_styles=bs.cell) as g:
@@ -106,34 +106,34 @@ def build():
              "— refine adds but rarely changes."),
         ]:
             with g.cell():
-                st_write(diff, bs.body + s.bold)
+                st_write(bs.body + s.bold, diff)
             with g.cell():
-                st_write(desc, bs.body)
+                st_write(bs.body, desc)
     st_space(15)
 
     # ---- The patch-bump rationale ----
-    st_write(("Why refine usually means patch", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Why refine usually means patch"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Per the PE semver policy : REMOVED → major, CHANGED → minor, "
         "ADDED only → patch. Refine adds new components but does not "
         "modify or remove existing ones — so a patch bump is the "
         "default. If a refine cycle ends up modifying an existing "
         "component (rare, requires explicit decision), the publisher "
         "surfaces the bump computation and the user can override.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Typical session ----
-    st_write(("Typical session", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Typical session"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "A refine cycle on a single project typically takes 5-15 "
         "minutes : 1-2 min for discovery, 2-5 min for design + "
         "implement, 2-5 min for retrofit + smoke render. At the end, "
         "the pack contains the new components, the current project's "
         "matching blocks are rewritten, and a patch version bump is "
         "ready for publish.",
-        bs.body,
     )

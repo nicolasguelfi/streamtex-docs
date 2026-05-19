@@ -1,8 +1,4 @@
-"""Anatomy of a Python component (PLAN §4.1).
-
-Source: adapted from bck_format_spec.py — replaces the legacy A2 markdown
-spec with the Python module + docstring contract.
-"""
+"""Anatomy of a Python component — module shape + docstring contract."""
 
 from streamtex import *
 from custom.styles import Styles as s
@@ -109,36 +105,35 @@ def callout(*, design_system, title: str = "", body: str = "", variant: str = "i
 def build():
     """Detail the anatomy of a Python component."""
     with st_block(s.center_txt):
-        st_write(("Anatomy of a component", bs.heading))
+        st_write((bs.heading, "Anatomy of a component"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "A component is a Python module exposing a public kwargs-only "
             "function + a structured docstring + a __component_meta__ "
             "TypedDict. The docstring is canonical: it documents Visual, "
             "Structure, Styling rules, Extrapolation rules (INVARIANTS / "
             "PARAMS / INTERDITS), When to use, When NOT to use, and Design "
             "system bundles required.",
-            bs.body,
         )
         st_space(15)
-        st_write(("Example: streamtex_design.components.callout", bs.section))
+        st_write((bs.section, "Example: streamtex_design.components.callout"))
         with st_block(bs.code):
-            st_code(EXAMPLE_COMPONENT, language="python")
+            st_code(code=EXAMPLE_COMPONENT, language="python")
 
         st_space(15)
-        st_write(("Why a Python module?", bs.section))
+        st_write((bs.section, "Why a Python module?"))
         st_write(
+            bs.body,
             "The component is real, importable Python — so a block can do "
             "from streamtex_design.components import callout and call it "
             "directly. git diff works on it. Pytest tests it. Static "
             "analysis (basedpyright, ruff) covers it. There is no separate "
             "scan-time parser.",
-            bs.body,
         )
         st_write(
-            "INVARIANTS, PARAMS, INTERDITS are kept as natural-language "
-            "rules inside the docstring (decision D9 — the best idea from "
-            "the legacy A2 spec) so the AI agent that consumes the docstring "
-            "still gets the extrapolation contract.",
             bs.body,
+            "INVARIANTS, PARAMS, INTERDITS are kept as natural-language "
+            "rules inside the docstring so the AI agent that consumes the "
+            "docstring still gets the extrapolation contract.",
         )

@@ -1,4 +1,4 @@
-"""The 9 terms of the reuse architecture glossary (PLAN §2)."""
+"""The 9 terms of the reuse architecture glossary."""
 
 from streamtex import *
 from custom.styles import Styles as s
@@ -75,16 +75,16 @@ TERMS = [
 def build():
     """List the 9 glossary terms of the reuse architecture."""
     with st_block(s.center_txt):
-        st_write(("Vocabulary", bs.heading))
+        st_write((bs.heading, "Vocabulary"), toc_lvl="1")
         st_space(15)
         st_write(
-            "Nine terms cover the new architecture. Each artefact has a "
-            "narrow definition — overlap is intentionally minimal.",
             bs.body,
+            "Nine terms cover the reuse architecture. Each artefact has a "
+            "narrow definition — overlap is intentionally minimal.",
         )
         st_space(15)
         for term, definition in TERMS:
             with st_block(bs.row):
-                st_write((term, bs.term))
-                st_write(definition, bs.body)
+                st_write((bs.term, term))
+                st_write(bs.body, definition)
             st_space(8)

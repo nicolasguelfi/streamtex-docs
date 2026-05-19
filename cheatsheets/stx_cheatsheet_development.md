@@ -683,11 +683,10 @@ s.project.*      -- project-specific custom styles (colors, titles, containers)
 s.visibility.*   -- hidden, visible, invisible
 ```
 
-### Image Editing (unified API since 0.7.x)
+### Image Editing (unified API)
 
 Use `st_image(prompt=..., editable=True, name=...)` for all AI-generated
-images. The same call covers local / URL / AI sources. The standalone
-`st_ai_image()` / `st_ai_image_widget()` functions were removed in 0.7.2.
+images. The same call covers local / URL / AI sources.
 
 ```python
 # AI image with editor panel on click

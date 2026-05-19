@@ -1,4 +1,4 @@
-"""Welcome — why the reuse architecture replaces the legacy patterns flow."""
+"""Welcome — introduce the reuse architecture and its four artefacts."""
 
 from streamtex import *
 from custom.styles import Styles as s
@@ -21,37 +21,35 @@ bs = BlockStyles
 def build():
     """Introduce the reuse architecture (packs, components, design systems, kits)."""
     with st_block(s.center_txt):
-        st_write(("StreamTeX — Reuse Architecture", bs.heading))
+        st_write((bs.heading, "StreamTeX — Reuse Architecture"), toc_lvl="1")
         st_write(
-            ("Packs, components, design systems, kits", bs.sub),
+            (bs.sub, "Packs, components, design systems, kits"),
         )
         st_space(20)
 
         st_write(
-            "Since streamtex 0.7.x, the reuse layer of the library no longer "
-            "lives in markdown files inside a sibling repo. Instead, every "
-            "reusable artefact (component, design system, CLI template, "
-            "project blueprint, kit) is shipped as part of a Python package "
-            "— a pack — discovered at runtime via the streamtex.packs entry "
-            "point (PEP 621).",
             bs.body,
+            "The reuse layer of the library ships every reusable artefact "
+            "(component, design system, CLI template, project blueprint, "
+            "kit) as part of a Python package — a pack — discovered at "
+            "runtime via the streamtex.packs entry point (PEP 621).",
         )
         st_space(15)
         st_write(
+            bs.body,
             "The official reference pack is streamtex-design. A project "
             "declares its packs in stx.toml, picks an active design system, "
             "and uses kits to bootstrap a coherent starter (e.g. "
             "slides-modern-dark, project-default, manual-default).",
-            bs.body,
         )
         st_space(15)
         st_write(
-            "What changed at a glance:",
             bs.body + s.bold,
+            "What changed at a glance:",
         )
         with st_grid(2, gap=10):
             with st_block(bs.grid_cell):
-                st_write(("Reusable artefacts", s.bold))
+                st_write((s.bold, "Reusable artefacts"))
                 st_write(
                     "- Components — Python modules with a docstring contract "
                     "(Visual / Structure / Styling / INVARIANTS / PARAMS / "
@@ -63,7 +61,7 @@ def build():
                     "- CLI templates + project blueprints — optional scaffolds.",
                 )
             with st_block(bs.grid_cell):
-                st_write(("Distribution model", s.bold))
+                st_write((s.bold, "Distribution model"))
                 st_write(
                     "- Multi-pack: declare one or many packs in stx.toml.\n"
                     "- Three sources, one command: stx pack add "

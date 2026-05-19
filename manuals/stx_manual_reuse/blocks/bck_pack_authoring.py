@@ -24,25 +24,25 @@ bs = BlockStyles
 def build():
     """Walk through pack authoring from scaffold to entry-point registration."""
     with st_block(s.center_txt):
-        st_write(("Authoring a pack", bs.heading))
+        st_write((bs.heading, "Authoring a pack"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "A pack is just a Python package — same layout, same "
             "tooling — that registers itself under the "
             "`streamtex.packs` entry point. Four steps: scaffold, "
             "write the manifest, populate `components/` / "
             "`design_systems/` / `kits/`, register the entry point.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Step 1: scaffold ----
-    st_write(("Step 1 — Scaffold a local pack", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 1 — Scaffold a local pack"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Inside an existing project — scaffold ./mypack/
 stx pack new mypack
 
@@ -57,12 +57,12 @@ stx pack set-primary mypack
     st_space(15)
 
     # ---- Step 2: directory layout ----
-    st_write(("Step 2 — Directory layout", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 2 — Directory layout"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 mypack/
 ├── pyproject.toml                # Python package metadata + entry point
 ├── mypack/                       # importable package
@@ -81,19 +81,19 @@ mypack/
     st_space(15)
 
     # ---- Step 3: manifest ----
-    st_write(("Step 3 — Pack manifest", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 3 — Pack manifest"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "The manifest is the pack's identity. Format version is "
         "mouvant on the `0.x` track (Q16) — the validator accepts "
         "any `0.x.y` for now.",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # mypack/mypack/_pack_manifest.toml
 
 [manifest]
@@ -119,19 +119,19 @@ domain_x = "Domain-specific blocks"
     st_space(15)
 
     # ---- Step 4: entry point ----
-    st_write(("Step 4 — Register the entry point", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 4 — Register the entry point"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Discovery uses **Python entry points** (PEP 621). The pack "
         "must register its module under the `streamtex.packs` group "
         "in `pyproject.toml`:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # mypack/pyproject.toml
 
 [project]
@@ -152,21 +152,21 @@ build-backend = "setuptools.build_meta"
     st_space(15)
 
     st_write(
+        bs.body,
         "The key `mypack = \"mypack\"` reads as: *the pack named "
         "`mypack` is exported at module `mypack`*. The discoverer "
         "imports the module and reads `_pack_manifest.toml` from "
         "the package root.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Step 5: validate ----
-    st_write(("Step 5 — Validate the pack", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 5 — Validate the pack"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Validate this pack
 stx pack validate mypack
 
@@ -181,8 +181,8 @@ stx validate --strict
     st_space(15)
 
     st_write(
+        bs.body,
         "Pack-level issues use the `PV0xx` code family (see the "
         "validation block). The most common ones are `PV002` "
         "(missing entry point) and `PV003` (malformed manifest).",
-        bs.body,
     )

@@ -543,7 +543,7 @@ envVars:
 
 ### /stx-deploy:* slash commands
 
-The `stx-deploy/` command group (defined in `streamtex-claude/shared/commands/stx-deploy/`) drives the full Hetzner/Coolify deployment pipeline through Claude. The legacy `/stx-developer:deploy` command was unified into this group on 2026-03-10.
+The `stx-deploy/` command group (defined in `streamtex-claude/shared/commands/stx-deploy/`) drives the full Hetzner/Coolify deployment pipeline through Claude.
 
 **Subcommands** (run `/stx-deploy:<name>`):
 - `preflight` — verify prerequisites (Dockerfile, pyproject.toml, tests pass, git clean).

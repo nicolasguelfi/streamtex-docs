@@ -87,29 +87,29 @@ __component_meta__: ComponentMeta = {
 def build():
     """Walk through component authoring from scaffold to validate."""
     with st_block(s.center_txt):
-        st_write(("Authoring a component", bs.heading))
+        st_write((bs.heading, "Authoring a component"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "A component is a Python module shipped inside a pack. "
             "Three steps: scaffold, fill the docstring contract + the "
             "function body, validate.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Step 1: scaffold ----
-    st_write(("Step 1 — Scaffold", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 1 — Scaffold"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Use `stx component new` to scaffold a component into the "
         "primary local pack (or any pack with `--pack`):",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Default destination — primary local pack (./mypack/components/)
 stx component new my_widget --granularity composition
 
@@ -123,47 +123,47 @@ stx component new my_widget --pack mypack --granularity primitive
     st_space(15)
 
     # ---- Step 2: docstring contract ----
-    st_write(("Step 2 — Docstring contract", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 2 — Docstring contract"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "The module docstring is the canonical specification for the "
         "AI agent. Nine sections, in order:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
-        st_code(DOCSTRING_TEMPLATE, language="python")
+        st_code(code=DOCSTRING_TEMPLATE, language="python")
     st_space(15)
 
     st_write(
+        bs.body,
         "`INVARIANTS` are rules the component will never violate. "
         "`PARAMS` are the public API surface. `INTERDITS` are uses the "
         "component refuses. The AI agent reads these to decide whether "
         "to use the component as-is, extrapolate within `PARAMS`, or "
         "scaffold a new component instead.",
-        bs.body,
     )
     st_space(15)
 
     # ---- Step 3: __component_meta__ + function ----
-    st_write(("Step 3 — Meta + function", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 3 — Meta + function"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Below the docstring, add the `__component_meta__` TypedDict "
         "(consumed by `stx component list` / `find` / `show`) and a "
         "kwargs-only public function:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
-        st_code(META_TEMPLATE, language="python")
+        st_code(code=META_TEMPLATE, language="python")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 def my_widget(*, design_system, title: str = "", body: str = "") -> None:
     \"\"\"Render the widget. All params are kwargs-only.\"\"\"
     with st_block(design_system.callouts.info):
@@ -177,18 +177,18 @@ def my_widget(*, design_system, title: str = "", body: str = "") -> None:
     st_space(15)
 
     # ---- Step 4: validate ----
-    st_write(("Step 4 — Validate", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Step 4 — Validate"), toc_lvl="+1")
     st_space(10)
     st_write(
+        bs.body,
         "Validation is incremental — run it after the scaffold and "
         "again whenever the contract changes:",
-        bs.body,
     )
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # Validate this component only
 stx component validate my_widget
 
@@ -203,8 +203,8 @@ stx validate --strict
     st_space(15)
 
     st_write(
+        bs.body,
         "The validator emits `CV001`-`CV011` for component-level "
         "issues (missing meta, malformed docstring, missing bundle, "
         "etc.) — see the validation block for the full code table.",
-        bs.body,
     )

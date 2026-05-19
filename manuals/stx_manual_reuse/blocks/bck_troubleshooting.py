@@ -89,44 +89,44 @@ CASES = [
 def build():
     """Common error codes + recovery recipes."""
     with st_block(s.center_txt):
-        st_write(("Troubleshooting", bs.heading))
+        st_write((bs.heading, "Troubleshooting"), toc_lvl="1")
         st_space(15)
         st_write(
+            bs.body,
             "Cookbook of the most common error codes raised by the "
             "discoverer (`PR0xx`) and the validators (`PV/CV/DV/KV/"
             "BV0xx`), with one-line fixes.",
-            bs.body,
         )
         st_space(15)
 
     # ---- Recipes ----
-    st_write(("Recipes by code", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "Recipes by code"), toc_lvl="+1")
     st_space(10)
 
     with st_grid(cols="1fr 3fr 3fr", gap="8px", cell_styles=bs.cell) as g:
         with g.cell():
-            st_write(("Code", bs.cell_head))
+            st_write((bs.cell_head, "Code"))
         with g.cell():
-            st_write(("Symptom", bs.cell_head))
+            st_write((bs.cell_head, "Symptom"))
         with g.cell():
-            st_write(("Fix", bs.cell_head))
+            st_write((bs.cell_head, "Fix"))
 
         for code, symptom, fix in CASES:
             with g.cell():
-                st_write(code, bs.body + s.bold)
+                st_write(bs.body + s.bold, code)
             with g.cell():
-                st_write(symptom, bs.body)
+                st_write(bs.body, symptom)
             with g.cell():
-                st_write(fix, bs.body)
+                st_write(bs.body, fix)
     st_space(15)
 
     # ---- General workflow ----
-    st_write(("General debugging workflow", bs.sub), toc_lvl="+1")
+    st_write((bs.sub, "General debugging workflow"), toc_lvl="+1")
     st_space(10)
 
     with st_block(bs.code):
         st_code(
-            """
+            code="""
 # 1) Inspect declared vs installed
 stx pack list --trace
 

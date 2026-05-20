@@ -1,21 +1,20 @@
-"""Authoring a pack — layout, manifest, entry point, validation.
+"""Authoring a pack — layout, manifest, entry point, validation."""
 
-Source: streamtex/cli/pack_cmd.py + streamtex-design (canonical reference pack).
-"""
-
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.callout import callout
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
@@ -23,24 +22,22 @@ bs = BlockStyles
 
 def build():
     """Walk through pack authoring from scaffold to entry-point registration."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Authoring a pack"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "A pack is just a Python package — same layout, same "
-            "tooling — that registers itself under the "
-            "`streamtex.packs` entry point. Four steps: scaffold, "
-            "write the manifest, populate `components/` / "
-            "`design_systems/` / `kits/`, register the entry point.",
-        )
-        st_space(15)
+    st_write((bs.heading, "Authoring a pack"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "A pack is just a Python package — same layout, same tooling — "
+        "that registers itself under the streamtex.packs entry point. "
+        "Four steps: scaffold, write the manifest, populate components/ "
+        "/ design_systems/ / kits/, register the entry point.",
+        tag=t.div,
+    )
+    st_space(20)
 
     # ---- Step 1: scaffold ----
-    st_write((bs.sub, "Step 1 — Scaffold a local pack"), toc_lvl="+1")
+    st_write((bs.sub, "Step 1 — Scaffold a local pack"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Inside an existing project — scaffold ./mypack/
@@ -54,13 +51,12 @@ stx pack set-primary mypack
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
     # ---- Step 2: directory layout ----
-    st_write((bs.sub, "Step 2 — Directory layout"), toc_lvl="+1")
+    st_write((bs.sub, "Step 2 — Directory layout"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 mypack/
@@ -78,20 +74,19 @@ mypack/
 """,
             language="text",
         )
-    st_space(15)
+    st_space(20)
 
     # ---- Step 3: manifest ----
-    st_write((bs.sub, "Step 3 — Pack manifest"), toc_lvl="+1")
+    st_write((bs.sub, "Step 3 — Pack manifest"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "The manifest is the pack's identity. Format version is "
-        "mouvant on the `0.x` track (Q16) — the validator accepts "
-        "any `0.x.y` for now.",
+        "The manifest is the pack's identity. Format version is movable "
+        "on the 0.x track — the validator accepts any 0.x.y for now.",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # mypack/mypack/_pack_manifest.toml
@@ -116,20 +111,20 @@ domain_x = "Domain-specific blocks"
 """,
             language="toml",
         )
-    st_space(15)
+    st_space(20)
 
     # ---- Step 4: entry point ----
-    st_write((bs.sub, "Step 4 — Register the entry point"), toc_lvl="+1")
+    st_write((bs.sub, "Step 4 — Register the entry point"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "Discovery uses **Python entry points** (PEP 621). The pack "
-        "must register its module under the `streamtex.packs` group "
-        "in `pyproject.toml`:",
+        "Discovery uses Python entry points (PEP 621). The pack must "
+        "register its module under the streamtex.packs group in "
+        "pyproject.toml:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # mypack/pyproject.toml
@@ -150,21 +145,22 @@ build-backend = "setuptools.build_meta"
             language="toml",
         )
     st_space(15)
-
-    st_write(
-        bs.body,
-        "The key `mypack = \"mypack\"` reads as: *the pack named "
-        "`mypack` is exported at module `mypack`*. The discoverer "
-        "imports the module and reads `_pack_manifest.toml` from "
-        "the package root.",
+    callout(
+        design_system=DS,
+        variant="info",
+        title="How the discoverer reads the entry point",
+        body=(
+            "The key mypack = \"mypack\" reads as: the pack named mypack "
+            "is exported at module mypack. The discoverer imports the "
+            "module and reads _pack_manifest.toml from the package root."
+        ),
     )
-    st_space(15)
+    st_space(20)
 
     # ---- Step 5: validate ----
-    st_write((bs.sub, "Step 5 — Validate the pack"), toc_lvl="+1")
+    st_write((bs.sub, "Step 5 — Validate the pack"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Validate this pack
@@ -179,10 +175,13 @@ stx validate --strict
             language="bash",
         )
     st_space(15)
-
-    st_write(
-        bs.body,
-        "Pack-level issues use the `PV0xx` code family (see the "
-        "validation block). The most common ones are `PV002` "
-        "(missing entry point) and `PV003` (malformed manifest).",
+    callout(
+        design_system=DS,
+        variant="warn",
+        title="PV0xx code family",
+        body=(
+            "Pack-level issues use the PV0xx code family (see the "
+            "validation block). The most common ones are PV002 (missing "
+            "entry point) and PV003 (malformed manifest)."
+        ),
     )

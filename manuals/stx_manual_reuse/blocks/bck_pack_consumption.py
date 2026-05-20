@@ -1,19 +1,20 @@
 """End-to-end pack consumption — from `stx project new` to capture/promote."""
 
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.comparison_table import comparison_table
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
@@ -21,29 +22,28 @@ bs = BlockStyles
 
 def build():
     """How packs get into a project — soup-to-nuts walkthrough."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Pack consumption: end-to-end flow"), tag=t.div, toc_lvl="1")
-        st_space(10)
-        st_write(
-            bs.body,
-            "From an empty directory to a curated set of components, "
-            "design system, and kit — without locking the project into "
-            "any specific catalog.",
-        )
-        st_space(15)
+    st_write((bs.heading, "Pack consumption: end-to-end flow"), tag=t.div, toc_lvl="1")
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "From an empty directory to a curated set of components, design "
+        "system, and kit — without locking the project into any specific "
+        "catalog.",
+        tag=t.div,
+    )
+    st_space(20)
 
-    # ---- Step 1: project bootstrap ----
-    st_write((bs.sub, "Step 1 — Bootstrap a project"), toc_lvl="+1")
+    # ---- Step 1 ----
+    st_write((bs.sub, "Step 1 — Bootstrap a project"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "`stx project new` scaffolds a project, optionally with a "
-        "primary local pack (`./mypack/`) and a starter kit. Three "
-        "flags steer pack-related bootstrap:",
+        "stx project new scaffolds a project, optionally with a primary "
+        "local pack (./mypack/) and a starter kit:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Vanilla project (creates ./mypack/ as the primary local pack)
@@ -62,28 +62,26 @@ stx project new my-app --kit streamtex-design:manual-default --no-mypack
 """,
             language="bash",
         )
-    st_space(10)
-
-    st_write(
-        bs.body,
-        "Post-scaffold, `stx.toml` records the declared packs, the "
-        "chosen design system, and (if a kit was installed) the kit "
-        "reference. `mypack/` exists as a sub-folder and is installed "
-        "editable via `uv pip install -e ./mypack`.",
-    )
     st_space(15)
+    st_write(
+        bs.body,
+        "Post-scaffold, stx.toml records the declared packs, the chosen "
+        "design system, and (if a kit was installed) the kit reference.",
+        tag=t.div,
+    )
+    st_space(20)
 
-    # ---- Step 2: add packs to an existing project ----
-    st_write((bs.sub, "Step 2 — Add packs to an existing project"), toc_lvl="+1")
+    # ---- Step 2 ----
+    st_write((bs.sub, "Step 2 — Add packs to an existing project"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "`stx pack add` covers the 3 pack sources symmetrically — git, "
+        "stx pack add covers the 3 pack sources symmetrically — git, "
         "local path, and PyPI all go through one command:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Add a git pack at a specific revision (tag, branch, or SHA)
@@ -104,22 +102,20 @@ stx pack add /Users/me/dev/my-fork --dev
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 3: install a kit ----
-    st_write((bs.sub, "Step 3 — Install a kit (DS + components)"), toc_lvl="+1")
+    # ---- Step 3 ----
+    st_write((bs.sub, "Step 3 — Install a kit (DS + components)"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "A **kit** is a TOML manifest bundling a design system "
-        "reference + a curated list of components. Installing a kit "
-        "writes `[design_system].use` and `[kit].use` to `stx.toml`. "
-        "The components themselves remain importable from the pack — "
-        "the kit just declares **which subset is recommended**.",
+        "A kit is a TOML manifest bundling a design system reference + a "
+        "curated list of components. Installing a kit writes "
+        "[design_system].use and [kit].use to stx.toml.",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Apply a kit (records design_system + kit reference)
@@ -136,20 +132,20 @@ stx kit show streamtex-design:slides-modern-dark
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 4: capture a new component locally ----
-    st_write((bs.sub, "Step 4 — Capture a new component"), toc_lvl="+1")
+    # ---- Step 4 ----
+    st_write((bs.sub, "Step 4 — Capture a new component"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
         "When a project's blocks invent a recurring visual idiom not "
-        "covered by any installed pack, capture it as a component "
-        "inside the project's primary local pack:",
+        "covered by any installed pack, capture it as a component inside "
+        "the project's primary local pack:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Scaffold a new component into the primary local pack (./mypack/)
@@ -163,66 +159,38 @@ stx component validate
 """,
             language="bash",
         )
-    st_space(10)
+    st_space(20)
 
-    st_write(
-        bs.body,
-        "The scaffold creates a `components/my_widget.py` module with "
-        "the docstring contract (Visual / Structure / Styling rules / "
-        "INVARIANTS / PARAMS / INTERDITS / When to use / NOT to use / "
-        "bundles required), the `__component_meta__` TypedDict, and a "
-        "stub function. Edit the docstring, implement the function, "
-        "then validate.",
-    )
-    st_space(15)
-
-    # ---- Step 5: promote a component to a shared pack ----
-    st_write((bs.sub, "Step 5 — Promote to a shared pack (Q12)"), toc_lvl="+1")
+    # ---- Step 5 ----
+    st_write((bs.sub, "Step 5 — Promote to a shared pack"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
         "Once a captured component proves reusable across projects, "
-        "promote it to a shared pack with `stx component promote`. "
-        "Routing depends on the destination pack's type (Q12, "
-        "four branches):",
+        "promote it to a shared pack with stx component promote. Routing "
+        "depends on the destination pack's type:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
-        with g.cell():
-            st_write((bs.body, "primary_local"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Copy only — the developer commits with the project. "
-                "No separate commit.",
-            )
-        with g.cell():
-            st_write((bs.body, "secondary_local_with_git"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Copy + QCM commit in the pack's own repo.",
-            )
-        with g.cell():
-            st_write((bs.body, "git_remote"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Clone cache → branch → push → `gh pr create`. "
-                "Never push to main directly.",
-            )
-        with g.cell():
-            st_write((bs.body, "pypi"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Refused (PR001). Promote to the upstream **git** "
-                "pack instead, then bump the PyPI release manually.",
-            )
+    comparison_table(
+        design_system=DS,
+        columns=["Destination type", "Behaviour"],
+        rows=[
+            ("primary_local",
+             "Copy only — the developer commits with the project. No "
+             "separate commit."),
+            ("secondary_local_with_git",
+             "Copy + QCM commit in the pack's own repo."),
+            ("git_remote",
+             "Clone cache → branch → push → gh pr create. Never push "
+             "to main directly."),
+            ("pypi",
+             "Refused (PR001). Promote to the upstream git pack instead, "
+             "then bump the PyPI release manually."),
+        ],
+    )
     st_space(15)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Promote to a writable local pack (plain copy)
@@ -233,59 +201,39 @@ stx component promote my_widget --to=streamtex-design
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 6: persistence — what lives where ----
-    st_write((bs.sub, "Step 6 — Persistence model"), toc_lvl="+1")
+    # ---- Step 6 ----
+    st_write((bs.sub, "Step 6 — Persistence model"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
         "Three files capture pack-related state in a project, all "
         "versioned with the project:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
-        with g.cell():
-            st_write((bs.body, "stx.toml"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "`[[packs]]` declarations + `[design_system].use` + "
-                "`[kit].use` + `[resolution].prefer`. The single "
-                "source of truth for pack intent.",
-            )
-        with g.cell():
-            st_write((bs.body, "pyproject.toml"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Lists installed Python deps including git packs. "
-                "Optionally `[tool.uv.sources]` for editable links.",
-            )
-        with g.cell():
-            st_write((bs.body, "uv.lock"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Resolved, deterministic versions per package. "
-                "Regenerated by `stx pack sync` (= `uv sync`).",
-            )
-    st_space(15)
-
-    st_write(
-        bs.body,
-        "On a fresh `git clone`, run `stx pack sync` once — it "
-        "regenerates the lockfile-driven environment from `stx.toml` "
-        "+ `pyproject.toml`. No extra cache, no drift bookkeeping.",
+    comparison_table(
+        design_system=DS,
+        columns=["File", "Role"],
+        rows=[
+            ("stx.toml",
+             "[[packs]] declarations + [design_system].use + [kit].use + "
+             "[resolution].prefer. The single source of truth for pack intent."),
+            ("pyproject.toml",
+             "Lists installed Python deps including git packs. Optionally "
+             "[tool.uv.sources] for editable links."),
+            ("uv.lock",
+             "Resolved, deterministic versions per package. Regenerated "
+             "by stx pack sync (= uv sync)."),
+        ],
     )
-    st_space(15)
+    st_space(20)
 
-    # ---- Recap cheatsheet ----
-    st_write((bs.sub, "Recap"), toc_lvl="+1")
+    # ---- Recap ----
+    st_write((bs.sub, "Recap"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
-    with st_block(bs.cell):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Bootstrap

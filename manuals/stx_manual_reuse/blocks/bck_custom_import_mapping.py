@@ -1,24 +1,21 @@
-"""Prepare a custom mapping artefact for a pack (Q19 / D19).
+"""Prepare a custom mapping artefact for a pack — strict-separation pattern."""
 
-Source: PLAN.md §18.9 + §19.2 (Q19, D19) — separation between
-pack-agnostic shared `/stx-import:*` commands and user-prepared
-custom artefacts that refactor imported code towards a pack's
-components.
-"""
-
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.callout import callout
+from streamtex_design.components.comparison_table import comparison_table
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
@@ -61,6 +58,7 @@ here, then keep the list up-to-date with your active pack version.
 3. Review the diff, run `stx validate --strict`.
 """
 
+
 COMMAND_TEMPLATE = """\
 ---
 name: refactor-streamtex-design
@@ -89,81 +87,98 @@ addition to the user before refactoring — do not invent mappings.
 
 
 def build():
-    """Document the custom-import-mapping pattern (D19 strict separation)."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Custom import mapping"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "When importing HTML / Marp / LaTeX through the shared "
-            "`/stx-import:*` commands and you want the resulting "
-            "blocks to consume a pack's components, the StreamTeX "
-            "doctrine is **strict separation**: the shared profile "
-            "stays pack-agnostic, and you prepare a tiny custom "
-            "skill + command pair to handle the mapping for your "
-            "active pack. Once prepared, reuse it on every re-import.",
-        )
-        st_space(15)
+    """Document the custom-import-mapping pattern (strict separation)."""
+    st_write((bs.heading, "Custom import mapping"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "When importing HTML / Marp / LaTeX through the shared "
+        "/stx-import:* commands and you want the resulting blocks to "
+        "consume a pack's components, the StreamTeX doctrine is strict "
+        "separation: the shared profile stays pack-agnostic, and you "
+        "prepare a tiny custom skill + command pair to handle the "
+        "mapping for your active pack. Once prepared, reuse it on every "
+        "re-import.",
+        tag=t.div,
+    )
+    st_space(20)
 
-    # ---- 1) Why pack-agnostic in the shared profile ----
-    st_write((bs.sub, "1 — Why pack-agnostic in the shared profile"), toc_lvl="+1")
+    # ---- 1) Why pack-agnostic ----
+    st_write((bs.sub, "1 — Why pack-agnostic in the shared profile"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "The seven `/stx-import:*` commands (`html`, `html-audit`, "
-        "`marp`, `marp-analyze`, `latex`, `latex-analyze`, `pdf`) "
-        "produce **low-level StreamTeX code** with no knowledge of "
-        "any pack. Two reasons:",
+        "The seven /stx-import:* commands (html, html-audit, marp, "
+        "marp-analyze, latex, latex-analyze, pdf) produce low-level "
+        "StreamTeX code with no knowledge of any pack. Two reasons:",
+        tag=t.div,
     )
     st_space(10)
-    st_write(
-        bs.body,
-        "- **Doctrine D19 (separation strict)** — import and reuse "
-        "architecture are orthogonal. The shared profile must not "
-        "couple itself to any pack's component vocabulary.\n"
-        "- **Scalability** — without this rule, the shared profile "
-        "would grow proportionally with the ecosystem (one mapping "
-        "table per pack). The user's custom artefacts scale with "
-        "the user's choices instead.",
+    callout(
+        design_system=DS,
+        variant="info",
+        title="Doctrine: separation strict",
+        body=(
+            "Import and reuse architecture are orthogonal. The shared "
+            "profile must not couple itself to any pack's component "
+            "vocabulary."
+        ),
     )
-    st_space(15)
+    st_space(10)
+    callout(
+        design_system=DS,
+        variant="info",
+        title="Scalability",
+        body=(
+            "Without this rule, the shared profile would grow "
+            "proportionally with the ecosystem (one mapping table per "
+            "pack). The user's custom artefacts scale with the user's "
+            "choices instead."
+        ),
+    )
+    st_space(20)
 
-    # ---- 2) Custom skill template ----
-    st_write((bs.sub,
-              "2 — Custom skill: `.claude/custom/skills/import-<pack>-mapping.md`"), toc_lvl="+1")
+    # ---- 2) Custom skill ----
+    st_write(
+        (bs.sub, "2 — Custom skill: .claude/custom/skills/import-<pack>-mapping.md"),
+        toc_lvl="+1", tag=t.div,
+    )
     st_space(10)
     st_write(
         bs.body,
         "A markdown skill scoped to one pack, declaring the mapping "
         "table the AI agent consults during refactor:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(code=SKILL_TEMPLATE, language="markdown")
-    st_space(15)
+    st_space(20)
 
-    # ---- 3) Custom command template ----
-    st_write((bs.sub,
-              "3 — Custom command: `.claude/custom/commands/refactor-<pack>/run.md`"), toc_lvl="+1")
+    # ---- 3) Custom command ----
+    st_write(
+        (bs.sub, "3 — Custom command: .claude/custom/commands/refactor-<pack>/run.md"),
+        toc_lvl="+1", tag=t.div,
+    )
     st_space(10)
     st_write(
         bs.body,
         "A slash-command companion that reads the skill above and "
         "performs the refactor on a target block file:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(code=COMMAND_TEMPLATE, language="markdown")
-    st_space(15)
+    st_space(20)
 
     # ---- 4) Concrete example ----
-    st_write((bs.sub,
-              "4 — Concrete example: refactor towards `streamtex-design`"), toc_lvl="+1")
+    st_write(
+        (bs.sub, "4 — Concrete example: refactor towards streamtex-design"),
+        toc_lvl="+1", tag=t.div,
+    )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # 1) Import a slide deck via the pack-agnostic shared command
@@ -183,47 +198,44 @@ stx validate --strict
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
     # ---- 5) Storage & conservation ----
-    st_write((bs.sub, "5 — Storage and conservation"), toc_lvl="+1")
+    st_write((bs.sub, "5 — Storage and conservation"), toc_lvl="+1", tag=t.div)
     st_space(10)
-    st_write(
-        bs.body,
-        "Custom artefacts in `.claude/custom/` are owned by the "
-        "user and are NOT overwritten by `stx claude update`. Two "
-        "conservation strategies, both supported:",
+    callout(
+        design_system=DS,
+        variant="info",
+        title="Custom artefacts are owned by the user",
+        body=(
+            "Files in .claude/custom/ are NOT overwritten by stx claude "
+            "update. Two conservation strategies, both supported:"
+        ),
     )
     st_space(10)
-
-    with st_grid(cols="1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
-        with g.cell():
-            st_write((bs.body + s.bold, "Version in the project"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Commit `.claude/custom/skills/import-<pack>-mapping.md` "
-                "and `.claude/custom/commands/refactor-<pack>/` into the "
-                "project's git repo. The mapping evolves alongside the "
-                "blocks and the pack version. Good default for single-"
-                "project work.",
-            )
-        with g.cell():
-            st_write((bs.body + s.bold,
-                      "Archive once, reuse across projects"))
-        with g.cell():
-            st_write(
-                bs.body,
-                "Keep a personal `.claude/custom/` snapshot in a side "
-                "repository or dotfiles. Copy it into each new project "
-                "after `stx project new`. Good for teams that import "
-                "from the same pipeline across many projects.",
-            )
+    comparison_table(
+        design_system=DS,
+        columns=["Strategy", "Description"],
+        rows=[
+            ("Version in the project",
+             "Commit .claude/custom/skills/import-<pack>-mapping.md and "
+             ".claude/custom/commands/refactor-<pack>/ into the project's "
+             "git repo. The mapping evolves alongside the blocks and the "
+             "pack version. Good default for single-project work."),
+            ("Archive once, reuse across projects",
+             "Keep a personal .claude/custom/ snapshot in a side "
+             "repository or dotfiles. Copy it into each new project after "
+             "stx project new. Good for teams that import from the same "
+             "pipeline across many projects."),
+        ],
+    )
     st_space(15)
-
-    st_write(
-        bs.body,
-        "Either way: prepare once, reuse on every re-import. The "
-        "shared `/stx-import:*` commands never need to know about "
-        "your active pack.",
+    callout(
+        design_system=DS,
+        variant="success",
+        title="Prepare once, reuse on every re-import",
+        body=(
+            "Either way: the shared /stx-import:* commands never need to "
+            "know about your active pack."
+        ),
     )

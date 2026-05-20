@@ -1,23 +1,20 @@
-"""Authoring a component — scaffold, docstring contract, validate.
+"""Authoring a component — scaffold, docstring contract, validate."""
 
-Source: streamtex/cli/component_cmd.py + streamtex-claude
-shared/skills/reuse-architecture.md + streamtex-design components.
-"""
-
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.callout import callout
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
     body = s.large
-    section = s.bold + s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
@@ -86,28 +83,28 @@ __component_meta__: ComponentMeta = {
 
 def build():
     """Walk through component authoring from scaffold to validate."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Authoring a component"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "A component is a Python module shipped inside a pack. "
-            "Three steps: scaffold, fill the docstring contract + the "
-            "function body, validate.",
-        )
-        st_space(15)
+    st_write((bs.heading, "Authoring a component"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "A component is a Python module shipped inside a pack. Three "
+        "steps: scaffold, fill the docstring contract + the function "
+        "body, validate.",
+        tag=t.div,
+    )
+    st_space(20)
 
-    # ---- Step 1: scaffold ----
-    st_write((bs.sub, "Step 1 — Scaffold"), toc_lvl="+1")
+    # ---- Step 1 ----
+    st_write((bs.sub, "Step 1 — Scaffold"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "Use `stx component new` to scaffold a component into the "
-        "primary local pack (or any pack with `--pack`):",
+        "Use stx component new to scaffold a component into the primary "
+        "local pack (or any pack with --pack):",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Default destination — primary local pack (./mypack/components/)
@@ -120,48 +117,50 @@ stx component new my_widget --pack mypack --granularity primitive
 """,
             language="bash",
         )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 2: docstring contract ----
-    st_write((bs.sub, "Step 2 — Docstring contract"), toc_lvl="+1")
+    # ---- Step 2 ----
+    st_write((bs.sub, "Step 2 — Docstring contract"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "The module docstring is the canonical specification for the "
-        "AI agent. Nine sections, in order:",
+        "The module docstring is the canonical specification for the AI "
+        "agent. Nine sections, in order:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(code=DOCSTRING_TEMPLATE, language="python")
     st_space(15)
-
-    st_write(
-        bs.body,
-        "`INVARIANTS` are rules the component will never violate. "
-        "`PARAMS` are the public API surface. `INTERDITS` are uses the "
-        "component refuses. The AI agent reads these to decide whether "
-        "to use the component as-is, extrapolate within `PARAMS`, or "
-        "scaffold a new component instead.",
+    callout(
+        design_system=DS,
+        variant="info",
+        title="INVARIANTS / PARAMS / INTERDITS",
+        body=(
+            "INVARIANTS are rules the component will never violate. "
+            "PARAMS are the public API surface. INTERDITS are uses the "
+            "component refuses. The AI agent reads these to decide "
+            "whether to use the component as-is, extrapolate within "
+            "PARAMS, or scaffold a new component instead."
+        ),
     )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 3: __component_meta__ + function ----
-    st_write((bs.sub, "Step 3 — Meta + function"), toc_lvl="+1")
+    # ---- Step 3 ----
+    st_write((bs.sub, "Step 3 — Meta + function"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
-        "Below the docstring, add the `__component_meta__` TypedDict "
-        "(consumed by `stx component list` / `find` / `show`) and a "
+        "Below the docstring, add the __component_meta__ TypedDict "
+        "(consumed by stx component list / find / show) and a "
         "kwargs-only public function:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(code=META_TEMPLATE, language="python")
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 def my_widget(*, design_system, title: str = "", body: str = "") -> None:
@@ -174,19 +173,19 @@ def my_widget(*, design_system, title: str = "", body: str = "") -> None:
 """,
             language="python",
         )
-    st_space(15)
+    st_space(20)
 
-    # ---- Step 4: validate ----
-    st_write((bs.sub, "Step 4 — Validate"), toc_lvl="+1")
+    # ---- Step 4 ----
+    st_write((bs.sub, "Step 4 — Validate"), toc_lvl="+1", tag=t.div)
     st_space(10)
     st_write(
         bs.body,
         "Validation is incremental — run it after the scaffold and "
         "again whenever the contract changes:",
+        tag=t.div,
     )
     st_space(10)
-
-    with st_block(bs.code):
+    with st_block(bs.code_box):
         st_code(
             code="""
 # Validate this component only
@@ -201,10 +200,13 @@ stx validate --strict
             language="bash",
         )
     st_space(15)
-
-    st_write(
-        bs.body,
-        "The validator emits `CV001`-`CV011` for component-level "
-        "issues (missing meta, malformed docstring, missing bundle, "
-        "etc.) — see the validation block for the full code table.",
+    callout(
+        design_system=DS,
+        variant="warn",
+        title="CV0xx code family",
+        body=(
+            "The validator emits CV001-CV011 for component-level issues "
+            "(missing meta, malformed docstring, missing bundle, etc.) — "
+            "see the validation block for the full code table."
+        ),
     )

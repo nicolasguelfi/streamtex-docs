@@ -1,17 +1,24 @@
 """Anatomy of a Python component — module shape + docstring contract."""
 
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.callout import callout
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
     body = s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    section = s.bold + s.large
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
+
 
 EXAMPLE_COMPONENT = '''
 """Boxed inline notice — primitive component.
@@ -104,36 +111,47 @@ def callout(*, design_system, title: str = "", body: str = "", variant: str = "i
 
 def build():
     """Detail the anatomy of a Python component."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Anatomy of a component"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "A component is a Python module exposing a public kwargs-only "
-            "function + a structured docstring + a __component_meta__ "
-            "TypedDict. The docstring is canonical: it documents Visual, "
-            "Structure, Styling rules, Extrapolation rules (INVARIANTS / "
-            "PARAMS / INTERDITS), When to use, When NOT to use, and Design "
-            "system bundles required.",
-        )
-        st_space(15)
-        st_write((bs.section, "Example: streamtex_design.components.callout"))
-        with st_block(bs.code):
-            st_code(code=EXAMPLE_COMPONENT, language="python")
+    st_write((bs.heading, "Anatomy of a component"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "A component is a Python module exposing a public kwargs-only "
+        "function + a structured docstring + a __component_meta__ "
+        "TypedDict. The docstring is canonical: it documents Visual, "
+        "Structure, Styling rules, Extrapolation rules (INVARIANTS / "
+        "PARAMS / INTERDITS), When to use, When NOT to use, and Design "
+        "system bundles required.",
+        tag=t.div,
+    )
+    st_space(20)
 
-        st_space(15)
-        st_write((bs.section, "Why a Python module?"))
-        st_write(
-            bs.body,
-            "The component is real, importable Python — so a block can do "
-            "from streamtex_design.components import callout and call it "
-            "directly. git diff works on it. Pytest tests it. Static "
-            "analysis (basedpyright, ruff) covers it. There is no separate "
-            "scan-time parser.",
-        )
-        st_write(
-            bs.body,
+    st_write((bs.sub, "Example: streamtex_design.components.callout"), toc_lvl="+1", tag=t.div)
+    st_space(10)
+    with st_block(bs.code_box):
+        st_code(code=EXAMPLE_COMPONENT, language="python")
+    st_space(20)
+
+    st_write((bs.sub, "Why a Python module?"), toc_lvl="+1", tag=t.div)
+    st_space(10)
+    callout(
+        design_system=DS,
+        variant="success",
+        title="Real, importable Python — diffable, testable, type-checked",
+        body=(
+            "A block can do from streamtex_design.components import callout "
+            "and call it directly. git diff works on it. Pytest tests it. "
+            "Static analysis (basedpyright, ruff) covers it. There is no "
+            "separate scan-time parser."
+        ),
+    )
+    st_space(15)
+    callout(
+        design_system=DS,
+        variant="info",
+        title="The docstring carries the extrapolation contract",
+        body=(
             "INVARIANTS, PARAMS, INTERDITS are kept as natural-language "
             "rules inside the docstring so the AI agent that consumes the "
-            "docstring still gets the extrapolation contract.",
-        )
+            "docstring still gets the extrapolation contract."
+        ),
+    )

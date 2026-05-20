@@ -1,14 +1,20 @@
-"""Reference card — CLI cheatsheet for the reuse architecture (PLAN §7)."""
+"""Reference card — CLI cheatsheet for the reuse architecture."""
 
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.comparison_table import comparison_table
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
+    sub = s.project.titles.section_subtitle
     body = s.large
-    code = s.container.paddings.small_padding + s.container.borders.solid_border
-    section = s.bold + s.large
+    code_box = s.container.paddings.small_padding + s.container.borders.solid_border
 
 
 bs = BlockStyles
@@ -62,33 +68,33 @@ stx project validate [<path>]        # default path = "."
 
 
 ERROR_CODES = [
-    ("PR001", "Promotion vers un pack pypi refusée (cf. §8.3 branche 4)."),
-    ("PR002", "Pack déclaré dans stx.toml mais pas installé (Drift install)."),
-    ("PR003", "Manifest _pack_manifest.toml illisible (Manifest cassé)."),
-    ("PR004", "Collision d'entry-points sur le nom du pack."),
-    ("PV001-PV010", "Échec validation du manifest pack (format, semver, compat)."),
-    ("CV001-CV011", "Échec validation d'un component (docstring / meta)."),
-    ("DV001-DV006", "Échec validation d'un design system (Protocol)."),
-    ("KV001-KV005", "Échec validation d'un kit."),
-    ("BV001-BV002", "Bundle requis par un component absent du design system actif."),
+    ("PR001", "Promotion to a pypi pack refused (see promotion flow, branch 4)."),
+    ("PR002", "Pack declared in stx.toml but not installed (drift install)."),
+    ("PR003", "Manifest _pack_manifest.toml unreadable (broken manifest)."),
+    ("PR004", "Entry-point collision on the pack name."),
+    ("PV001-PV010", "Pack manifest validation failed (format, semver, compat)."),
+    ("CV001-CV011", "Component validation failed (docstring / meta)."),
+    ("DV001-DV006", "Design system validation failed (Protocol)."),
+    ("KV001-KV005", "Kit validation failed."),
+    ("BV001-BV002", "Bundle required by a component absent from the active DS."),
 ]
 
 
 def build():
     """Quick reference for the reuse architecture CLI + error codes."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Reference card"), toc_lvl="1")
-        st_space(15)
-        st_write((bs.section, "CLI surface"))
-        with st_block(bs.code):
-            st_code(code=COMMANDS, language="bash")
+    st_write((bs.heading, "Reference card"), toc_lvl="1", tag=t.div)
+    st_space(15)
 
-        st_space(20)
-        st_write((bs.section, "Error codes"))
-        for code, description in ERROR_CODES:
-            st_write(
-                (s.bold, code + " — "),
-                description,
-                bs.body,
-            )
-            st_space(4)
+    st_write((bs.sub, "CLI surface"), toc_lvl="+1", tag=t.div)
+    st_space(10)
+    with st_block(bs.code_box):
+        st_code(code=COMMANDS, language="bash")
+    st_space(20)
+
+    st_write((bs.sub, "Error codes"), toc_lvl="+1", tag=t.div)
+    st_space(10)
+    comparison_table(
+        design_system=DS,
+        columns=["Code", "Meaning"],
+        rows=ERROR_CODES,
+    )

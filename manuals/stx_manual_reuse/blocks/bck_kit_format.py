@@ -1,10 +1,14 @@
-"""Kit format — TOML manifest bundling a DS + a curated component list.
+"""Kit format — TOML manifest bundling a DS + a curated component list."""
 
-Source: streamtex/cli/kit_cmd.py + streamtex-design/streamtex_design/kits/*.toml.
-"""
-
-from streamtex import *
+from streamtex import st_block, st_code, st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.callout import callout
+from streamtex_design.components.comparison_table import comparison_table
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
@@ -12,11 +16,6 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     body = s.large
     code = s.container.paddings.small_padding + s.container.borders.solid_border
-    cell = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
-    cell_head = s.bold + s.large
 
 
 bs = BlockStyles
@@ -24,24 +23,21 @@ bs = BlockStyles
 
 def build():
     """Document the kit TOML format and the install / show / new commands."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Kit format"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "A kit is a TOML manifest packaged inside a pack at "
-            "`<pack>/kits/<name>.toml`. It bundles **one design system "
-            "reference** + **a curated subset of components** the user "
-            "is expected to start with. Installing a kit writes "
-            "`[design_system].use` and `[kit].use` into the project's "
-            "`stx.toml`.",
-        )
-        st_space(15)
+    st_write((bs.heading, "Kit format"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body + s.center_txt,
+        "A kit is a TOML manifest packaged inside a pack at "
+        "<pack>/kits/<name>.toml. It bundles one design system reference "
+        "+ a curated subset of components. Installing a kit writes "
+        "[design_system].use and [kit].use into the project's stx.toml.",
+        tag=t.div,
+    )
+    st_space(20)
 
     # ---- Manifest schema ----
-    st_write((bs.sub, "Manifest schema"), toc_lvl="+1")
+    st_write((bs.sub, "Manifest schema"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
     with st_block(bs.code):
         st_code(
             code="""
@@ -81,51 +77,37 @@ include = ["bck_title_demo.py", "bck_card_grid_demo.py"]
 """,
             language="toml",
         )
-    st_space(15)
+    st_space(20)
 
     # ---- Required vs optional ----
-    st_write((bs.sub, "Required vs optional fields"), toc_lvl="+1")
+    st_write((bs.sub, "Required vs optional fields"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
-    with st_grid(cols="1fr 1fr 3fr", gap="8px", cell_styles=bs.cell) as g:
-        with g.cell():
-            st_write((bs.cell_head, "Section"))
-        with g.cell():
-            st_write((bs.cell_head, "Status"))
-        with g.cell():
-            st_write((bs.cell_head, "Meaning"))
-
-        for section, status, meaning in [
+    comparison_table(
+        design_system=DS,
+        columns=["Section", "Status", "Meaning"],
+        rows=[
             ("name / description / since", "required",
-             "Identity metadata; `since` is an ISO date string."),
+             "Identity metadata; since is an ISO date string."),
             ("[design_system].ref", "required",
-             "Active DS to record in stx.toml. Same-pack DSs use the "
-             "bare name; cross-pack uses `<pack>:<name>`."),
+             "Active DS to record in stx.toml. Same-pack uses the bare "
+             "name; cross-pack uses <pack>:<name>."),
             ("[components].include", "required",
              "List of component names the kit recommends. The resolver "
-             "does not enforce this list — it's a curated subset."),
+             "doesn't enforce this list — it's a curated subset."),
             ("[cli_template].ref", "optional",
-             "Identifier of a CLI template bundled with the kit "
-             "(scaffold copied by `stx project new --kit`)."),
+             "Identifier of a CLI template bundled with the kit (scaffold "
+             "copied by stx project new --kit)."),
             ("[blueprints].include", "optional",
-             "Project blueprints (.md AI-agent instructions) shipped "
-             "into the project."),
+             "Project blueprints (.md AI-agent instructions)."),
             ("[samples].include", "optional",
-             "Sample block files copied verbatim into `./blocks/` to "
-             "give the user a starting point."),
-        ]:
-            with g.cell():
-                st_write(bs.body, section)
-            with g.cell():
-                st_write(bs.body, status)
-            with g.cell():
-                st_write(bs.body, meaning)
-    st_space(15)
+             "Sample block files copied verbatim into ./blocks/."),
+        ],
+    )
+    st_space(20)
 
     # ---- CLI ----
-    st_write((bs.sub, "CLI surface"), toc_lvl="+1")
+    st_write((bs.sub, "CLI surface"), toc_lvl="+1", tag=t.div)
     st_space(10)
-
     with st_block(bs.code):
         st_code(
             code="""
@@ -148,10 +130,13 @@ stx kit validate
             language="bash",
         )
     st_space(15)
-
-    st_write(
-        bs.body,
-        "Validation emits `KV001`-`KV005` for kit-level issues "
-        "(missing DS, unknown component, malformed TOML). See the "
-        "validation block for the full code table.",
+    callout(
+        design_system=DS,
+        variant="info",
+        title="Validation",
+        body=(
+            "Kit validation emits KV001-KV005 for kit-level issues "
+            "(missing DS, unknown component, malformed TOML). See the "
+            "validation block for the full code table."
+        ),
     )

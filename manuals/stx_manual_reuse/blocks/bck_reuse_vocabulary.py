@@ -1,20 +1,22 @@
 """The 9 terms of the reuse architecture glossary."""
 
-from streamtex import *
+from streamtex import st_space, st_write
+from streamtex.enums import Tags as t
 from custom.styles import Styles as s
+from streamtex_design.design_systems.default import DesignSystem
+from streamtex_design.components.term_definition_list import term_definition_list
+
+
+DS = DesignSystem()
 
 
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
-    body = s.large
-    row = (
-        s.container.borders.solid_border
-        + s.container.paddings.small_padding
-    )
-    term = s.bold + s.large
+    body = s.large + s.center_txt
 
 
 bs = BlockStyles
+
 
 TERMS = [
     (
@@ -60,7 +62,7 @@ TERMS = [
     (
         "stx.toml",
         "The project-level configuration declaring active packs, design "
-        "system, resolution preference, and active kit (PLAN §6.1).",
+        "system, resolution preference, and active kit.",
     ),
     (
         "Granularity",
@@ -74,17 +76,13 @@ TERMS = [
 
 def build():
     """List the 9 glossary terms of the reuse architecture."""
-    with st_block(s.center_txt):
-        st_write((bs.heading, "Vocabulary"), toc_lvl="1")
-        st_space(15)
-        st_write(
-            bs.body,
-            "Nine terms cover the reuse architecture. Each artefact has a "
-            "narrow definition — overlap is intentionally minimal.",
-        )
-        st_space(15)
-        for term, definition in TERMS:
-            with st_block(bs.row):
-                st_write((bs.term, term))
-                st_write(bs.body, definition)
-            st_space(8)
+    st_write((bs.heading, "Vocabulary"), toc_lvl="1", tag=t.div)
+    st_space(10)
+    st_write(
+        bs.body,
+        "Nine terms cover the reuse architecture. Each artefact has a "
+        "narrow definition — overlap is intentionally minimal.",
+        tag=t.div,
+    )
+    st_space(20)
+    term_definition_list(design_system=DS, items=TERMS)

@@ -5,6 +5,56 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.6] — 2026-05-20 — v2 relative scale documentation refresh
+
+### Changed
+
+- 5 documentation blocks updated to describe the relative architecture
+  shipped in streamtex 0.7.6: `bck_font_sizes` (intro), `bck_indexed_font_scale`
+  + `bck_font_scale_curves_demo` (advanced), `bck_font_scale_internals`
+  (developer — major rewrite of TOML schema + add-a-curve walkthrough),
+  `bck_pack_font_scale_integration` (reuse). All annotations now reflect
+  the new Tailwind alias map (text_base = idx_7 = 18pt).
+- `references/streamtex_cheatsheet_en.md`: "Indexed responsive font
+  scale" section rewritten around the base + ratios model with the
+  new ScaleConfig knob priority.
+- streamtex dep bumped to >= 0.7.6 (relative scale architecture).
+- streamtex-design dep transitively bumped to >= 0.2.3.
+
+## [0.7.5] — 2026-05-20 — Indexed responsive font scale documentation
+
+### Added
+
+- New documentation block `bck_font_sizes` in `stx_manual_intro` —
+  welcoming introduction to the 3 font-size systems available in
+  streamtex, with a live 5-palier ladder and "which to use when"
+  comparison table.
+- New documentation block `bck_indexed_font_scale` in
+  `stx_manual_advanced` — comprehensive deep-dive on the new scale:
+  3 access modes, 4 named curves, full 29-palier visual reference,
+  per-document configuration, out-of-range tolerance, identity table.
+- New documentation block `bck_font_scale_curves_demo` in
+  `stx_manual_advanced` — live head-to-head comparison of all four
+  named curves (WORD_PROCESSOR / GEOMETRIC / BODY_CENTRIC / BELL) on
+  identical content, with locally-scoped CSS variable overrides.
+- New documentation block `bck_font_scale_internals` in
+  `stx_manual_developer` — 3-layer architecture, TOML schema,
+  "how to add a new curve" walkthrough, generator API, fallback
+  chain, validation rules.
+- New documentation block `bck_pack_font_scale_integration` in
+  `stx_manual_reuse` — pack-author rule and before/after migration
+  pattern showing how design-system bundles consume the indexed scale.
+
+### Changed
+
+- `references/streamtex_cheatsheet_en.md` — new "Indexed responsive
+  font scale (recommended for new blocks)" section after the existing
+  font-size reference, mirroring the streamtex-claude shared cheatsheet.
+- streamtex dependency bumped to `>=0.7.5,<0.8` (was `>=0.7.3,<0.8`)
+  to pick up `ScaleConfig` / `ScaleCurve` / `st_book(scale=…)` API and
+  the `streamtex-design 0.2.2` migration of design-system bundles to
+  `var(--stx-scale-K, …)`.
+
 ## [0.7.3] — 2026-05-19 (L5 callers migration — TOCConfig.numerate_titles removed upstream)
 
 The library deprecated and now removed the `TOCConfig.numerate_titles`

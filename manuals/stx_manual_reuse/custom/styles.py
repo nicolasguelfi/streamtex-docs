@@ -111,8 +111,7 @@ class ContainerStylesCustom:
         + Container.borders.solid_border
         + Style("border-color: #a78bfa; border-width: 1px;", "code_box_border")
         + Style("border-radius: 6px;", "code_box_radius")
-        + Container.paddings.medium_padding
-        + Container.layouts.center,
+        + Container.paddings.medium_padding,
         "code_box"
     )
     explanation_box = Style.create(

@@ -520,6 +520,79 @@ s.small     # 8pt      s.tiny      # 4pt
 s.text.sizes.size(20, "custom_20pt")   # Factory method
 ```
 
+## Indexed responsive font scale (recommended for new blocks)
+
+A 29-palier scale derived from a **single base value** + a profile of
+adimensional ratios. Changing the base re-scales everything
+proportionally on every breakpoint for every curve.
+
+### The model
+
+```python
+desktop[N] = round(base_pt_desktop * ratios[N])
+tablet[N]  = round(desktop[N] * tablet_scale)   # default 0.85
+mobile[N]  = round(desktop[N] * mobile_scale)   # default 0.70
+```
+
+Default: `base_pt_desktop = 18`, `base_idx = 7`. So palier 7 desktop
+equals base_pt_desktop directly. All paliers above/below derive from
+the curve's ratios.
+
+### Three access modes (unchanged shape)
+
+```python
+from streamtex import StxStyles as s
+
+st_write(s.text_base, "Body text")          # text_base = palier 7 = BASE (18pt @ default)
+st_write(s.text_xs,   "Caption text")       # palier 5 = 14pt @ default (≥18.7px floor)
+st_write(s.text_7xl,  "Hero")               # palier 16 = 60pt @ default
+
+st_write(s.scale[12], "Heading via subscript")
+st_write(s.idx_7,     "BASE via direct attribute")
+```
+
+### Per-document override
+
+```python
+from streamtex import st_book, ScaleConfig, ScaleCurve
+
+# Slightly bigger desktop type — every palier and every breakpoint follows
+st_book([...], scale=ScaleConfig(base_pt_desktop=20))
+
+# Custom tablet shrink
+st_book([...], scale=ScaleConfig(tablet_scale=0.9))
+
+# Different curve silhouette (same base)
+st_book([...], scale=ScaleConfig(curve=ScaleCurve.GEOMETRIC))
+
+# Combine multiple knobs
+st_book([...], scale=ScaleConfig(
+    curve=ScaleCurve.GEOMETRIC,
+    base_pt_desktop=24,
+    tablet_scale=0.9,
+    mobile_scale=0.65,
+))
+```
+
+### Curves (= ratio profiles, share the same base)
+
+| Curve | Silhouette |
+|---|---|
+| `WORD_PROCESSOR` (default) | Word/Google Docs lineage; fine at small, coarser at display |
+| `GEOMETRIC` | Uniform ratio ≈ 1.125 per palier (modular scale) |
+| `BODY_CENTRIC` | Dense in 14-32pt body range, sparse extremes |
+| `BELL` | Bell-shaped: sparse extremes, dense middle, plateau at top |
+
+All four curves anchor at palier 7 = `base_pt_desktop`. They differ
+only in their silhouette — the relative ratios between paliers.
+
+### Out-of-range tolerance
+
+```python
+s.scale[-1]   # → s.scale[0] (silent clamp, debug-logged)
+s.scale[100]  # → s.scale[28] (silent clamp, debug-logged)
+```
+
 ### Text Wrapping
 
 ```python

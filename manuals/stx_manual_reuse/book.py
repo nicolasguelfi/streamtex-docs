@@ -136,7 +136,6 @@ st_book([
         ),
     ],
     page_width=80,
-    zoom=80,
     view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS],
     doc_version=_doc_version,
     presentation_profiles=PresentationProfile.desktop_mobile_preset())

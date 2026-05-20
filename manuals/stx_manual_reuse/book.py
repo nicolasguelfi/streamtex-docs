@@ -73,6 +73,7 @@ st_book([
 
     # ── Part 3: Authoring ────────────────────────────────────
     blocks.bck_pack_authoring,
+    blocks.bck_pack_font_scale_integration,
     blocks.bck_component_authoring,
     blocks.bck_kit_format,
     blocks.bck_cli_template_format,

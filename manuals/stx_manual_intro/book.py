@@ -82,6 +82,9 @@ st_book([
     blocks.bck_tags_enum,
     blocks.bck_style_composition,
 
+    # Font sizes overview (3 systems — semantic, pt, indexed responsive)
+    blocks.bck_font_sizes,
+
     # Layout & content
     blocks.bck_containers_and_layout,
     blocks.bck_grids_and_lists,

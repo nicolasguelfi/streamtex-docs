@@ -1,11 +1,11 @@
 [project]
 name = "streamtex-docs"
-version = "0.7.3"
+version = "0.7.5"
 description = "StreamTeX interactive manuals and documentation"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "streamtex[ai,cli,inspector,pdf]>=0.7.3,<0.8",
+    "streamtex[ai,cli,inspector,pdf]>=0.7.5,<0.8",
     "streamtex-design @ git+https://github.com/nicolasguelfi/streamtex-design.git@v0.1.0",
     "streamtex-manuals",
 ]

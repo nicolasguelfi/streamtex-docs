@@ -62,6 +62,9 @@ st_book([
     # Architecture deep-dive
     blocks.bck_dev_architecture,
 
+    # Indexed font scale internals (0.7.5+)
+    blocks.bck_font_scale_internals,
+
     # Coding standards
     blocks.bck_dev_coding_standards,
 

@@ -98,6 +98,8 @@ st_book([
     blocks.bck_overlays_positioning,
     blocks.bck_visibility_control,
     blocks.bck_custom_themes,
+    blocks.bck_indexed_font_scale,
+    blocks.bck_font_scale_curves_demo,
     blocks.bck_hover_and_preview,
     blocks.bck_ui_components,
 

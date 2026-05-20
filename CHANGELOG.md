@@ -5,6 +5,36 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.7] — 2026-05-20 — Migration to streamtex-packs monorepo
+
+### Changed
+
+- **Pack naming convention** — packs now follow the convention
+  `streamtex-pack-{name}`. The two packs consumed by streamtex-docs
+  have been renamed accordingly:
+  - `streamtex-design` → `streamtex-pack-design` (was a standalone
+    GitHub repo; now lives in the `streamtex-packs` monorepo).
+  - `streamtex-manuals` → `streamtex-pack-manuals` (was local-only;
+    now versioned in the `streamtex-packs` monorepo).
+- **Dependency declarations** in `pyproject.toml` updated to reference
+  the monorepo via
+  `git+https://github.com/nicolasguelfi/streamtex-packs.git@{prefixed-tag}#subdirectory={pack-name}`.
+- **Python imports remain unchanged** — the Python module names
+  `streamtex_design` and `streamtex_manuals` are preserved by design,
+  so all block code continues to import them as before.
+- `manuals/stx_manual_reuse/stx.toml` updated with new pack names + refs.
+- `manuals/stx_manual_reuse/blocks/bck_reuse_layers.py`: cosmetic text
+  string update to new pack names.
+- streamtex dep bumped to `>=0.7.7,<0.8` (picks up the
+  `scale_curves.toml` packaging fix shipped in 0.7.7).
+- `.stx-version` bumped to `0.7.7`.
+
+### Fixed
+
+- The Hetzner/Coolify Docker build now succeeds — the broken dep
+  `streamtex-manuals` (local-only, unresolvable via `--no-sources`)
+  is replaced by a resolvable git URL pointing at the monorepo.
+
 ## [0.7.6] — 2026-05-20 — v2 relative scale documentation refresh
 
 ### Changed

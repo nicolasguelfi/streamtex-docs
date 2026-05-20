@@ -316,7 +316,7 @@ check_project() {
 [ "$LAUNCH_REUSE" = true ] && check_project "$REUSE_PROJECT" "reuse"
 
 # Logs
-LOG_DIR="/tmp/streamtex-manuals"
+LOG_DIR="/tmp/streamtex-docs-manuals"
 mkdir -p "$LOG_DIR"
 COLLECTION_LOG="$LOG_DIR/collection.log"
 INTRO_LOG="$LOG_DIR/intro.log"

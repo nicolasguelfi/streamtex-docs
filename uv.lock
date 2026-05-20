@@ -2350,7 +2350,7 @@ wheels = [
 
 [[package]]
 name = "streamtex"
-version = "0.7.6"
+version = "0.7.7"
 source = { editable = "../streamtex" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -2435,31 +2435,13 @@ dev = [
 ]
 
 [[package]]
-name = "streamtex-design"
-version = "0.2.3"
-source = { editable = "../streamtex-design" }
-dependencies = [
-    { name = "streamtex" },
-]
-
-[package.metadata]
-requires-dist = [{ name = "streamtex", editable = "../streamtex" }]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=8.0" },
-    { name = "ruff", specifier = ">=0.5" },
-    { name = "streamtex", extras = ["cli"], editable = "../streamtex" },
-]
-
-[[package]]
 name = "streamtex-docs"
-version = "0.7.6"
+version = "0.7.7"
 source = { virtual = "." }
 dependencies = [
     { name = "streamtex", extra = ["ai", "cli", "inspector", "pdf"] },
-    { name = "streamtex-design" },
-    { name = "streamtex-manuals" },
+    { name = "streamtex-pack-design" },
+    { name = "streamtex-pack-manuals" },
 ]
 
 [package.dev-dependencies]
@@ -2473,8 +2455,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "streamtex", extras = ["ai", "cli", "inspector", "pdf"], editable = "../streamtex" },
-    { name = "streamtex-design", editable = "../streamtex-design" },
-    { name = "streamtex-manuals", editable = "../streamtex-manuals" },
+    { name = "streamtex-pack-design", editable = "../streamtex-packs/streamtex-pack-design" },
+    { name = "streamtex-pack-manuals", editable = "../streamtex-packs/streamtex-pack-manuals" },
 ]
 
 [package.metadata.requires-dev]
@@ -2486,25 +2468,43 @@ dev = [
 ]
 
 [[package]]
-name = "streamtex-manuals"
-version = "0.1.0"
-source = { editable = "../streamtex-manuals" }
+name = "streamtex-pack-design"
+version = "0.2.4"
+source = { editable = "../streamtex-packs/streamtex-pack-design" }
 dependencies = [
     { name = "streamtex" },
-    { name = "streamtex-design" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "streamtex", specifier = ">=0.7.7" }]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "ruff", specifier = ">=0.5" },
+    { name = "streamtex", extras = ["cli"], specifier = ">=0.7.7" },
+]
+
+[[package]]
+name = "streamtex-pack-manuals"
+version = "0.1.0"
+source = { editable = "../streamtex-packs/streamtex-pack-manuals" }
+dependencies = [
+    { name = "streamtex" },
+    { name = "streamtex-pack-design" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "streamtex", editable = "../streamtex" },
-    { name = "streamtex-design", editable = "../streamtex-design" },
+    { name = "streamtex", specifier = ">=0.7.7" },
+    { name = "streamtex-pack-design", editable = "../streamtex-packs/streamtex-pack-design" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "pytest", specifier = ">=8.0" },
     { name = "ruff", specifier = ">=0.5" },
-    { name = "streamtex", extras = ["cli"], editable = "../streamtex" },
+    { name = "streamtex", extras = ["cli"], specifier = ">=0.7.7" },
 ]
 
 [[package]]

@@ -1,13 +1,13 @@
 [project]
 name = "streamtex-docs"
-version = "0.7.6"
+version = "0.7.7"
 description = "StreamTeX interactive manuals and documentation"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "streamtex[ai,cli,inspector,pdf]>=0.7.6,<0.8",
-    "streamtex-design @ git+https://github.com/nicolasguelfi/streamtex-design.git@v0.2.3",
-    "streamtex-manuals",
+    "streamtex[ai,cli,inspector,pdf]>=0.7.7,<0.8",
+    "streamtex-pack-design  @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-design-v0.2.4#subdirectory=streamtex-pack-design",
+    "streamtex-pack-manuals @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-manuals-v0.1.0#subdirectory=streamtex-pack-manuals",
 ]
 
 [dependency-groups]
@@ -21,11 +21,11 @@ dev = [
 [tool.uv]
 default-groups = ["dev"]
 
-# Override for local dev — points to adjacent library repos
+# Override for local dev — points to the sibling streamtex-packs monorepo
 [tool.uv.sources]
-streamtex = { path = "../streamtex", editable = true }
-streamtex-design = { path = "../streamtex-design", editable = true }
-streamtex-manuals = { path = "../streamtex-manuals", editable = true }
+streamtex             = { path = "../streamtex",                              editable = true }
+streamtex-pack-design  = { path = "../streamtex-packs/streamtex-pack-design",  editable = true }
+streamtex-pack-manuals = { path = "../streamtex-packs/streamtex-pack-manuals", editable = true }
 
 [tool.ruff.lint]
 ignore = ["F403", "F405", "E701", "E741"]

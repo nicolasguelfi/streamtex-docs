@@ -27,7 +27,7 @@ MANUALS = {
 # Display order
 DISPLAY_ORDER = ["collection", "intro", "ai", "advanced", "deployment", "developer", "ce"]
 
-LOG_DIR = Path(tempfile.gettempdir()) / "streamtex-manuals"
+LOG_DIR = Path(tempfile.gettempdir()) / "streamtex-docs-manuals"
 
 
 def check_project(name: str, info: dict) -> None:

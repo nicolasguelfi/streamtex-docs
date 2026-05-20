@@ -51,7 +51,7 @@ def build():
                 "Layer 2 — Packs",
                 "success",
                 [
-                    "streamtex-design, streamtex-manuals, mypack, ...",
+                    "streamtex-pack-design, streamtex-pack-manuals, mypack, ...",
                     "Catalogues: components, design systems, kits.",
                     "Distributed via git, local path, or PyPI.",
                     "Composable: a project can declare N packs.",

@@ -1,6 +1,7 @@
 # Project configuration for the reuse-architecture manual.
-# This manual consumes two packs: streamtex-design (universal components +
-# design systems) and streamtex-manuals (manual-specific overview components).
+# This manual consumes two packs: streamtex-pack-design (universal components +
+# design systems) and streamtex-pack-manuals (manual-specific overview
+# components). Both live in the nicolasguelfi/streamtex-packs monorepo.
 
 [project]
 name = "stx-manual-reuse"
@@ -8,18 +9,18 @@ version = "0.2.0"
 
 [[packs]]
 type = "git"
-name = "streamtex-design"
-ref = "github.com/nicolasguelfi/streamtex-design"
-rev = "v0.2.1"
+name = "streamtex-pack-design"
+ref = "github.com/nicolasguelfi/streamtex-packs#streamtex-pack-design"
+rev = "pack-design-v0.2.4"
 
 [[packs]]
 type = "git"
-name = "streamtex-manuals"
-ref = "github.com/nicolasguelfi/streamtex-manuals"
-rev = "v0.1.0"
+name = "streamtex-pack-manuals"
+ref = "github.com/nicolasguelfi/streamtex-packs#streamtex-pack-manuals"
+rev = "pack-manuals-v0.1.0"
 
 [design_system]
 use = "default"
 
 [resolution]
-prefer = ["streamtex-design", "streamtex-manuals"]
+prefer = ["streamtex-pack-design", "streamtex-pack-manuals"]

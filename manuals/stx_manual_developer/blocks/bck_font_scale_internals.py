@@ -13,6 +13,7 @@ from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation
 from streamtex_design.design_systems.default import DesignSystem
 from streamtex_design.components.callout import callout
+from streamtex_design.components.comparison_table import comparison_table
 
 
 DS = DesignSystem()
@@ -52,8 +53,9 @@ def build():
         st_write(
             s.text_base,
             "The indexed scale flows from a single source of truth "
-            "(scale_curves.toml) through CSS custom properties to the "
-            "Python tokens consumers use. Each layer has one responsibility.",
+            "(scale_curves.toml — one base_pt_desktop + 29 adimensional "
+            "ratios per curve) through CSS custom properties to the Python "
+            "tokens consumers use. Each layer has one responsibility.",
         )
         st_space("v", 1)
 
@@ -68,9 +70,11 @@ def build():
                 st_space("v", 0.5)
                 st_write(
                     s.text_base,
-                    "streamtex/styles/scale.py loads scale_curves.toml at "
-                    "import time, validates it, and exposes ScaleCurve, "
-                    "ScaleConfig, compute_scale(), and emit_scale_css().",
+                    "streamtex/styles/scale.py loads ratios + base from "
+                    "scale_curves.toml at import time, then derives "
+                    "desktop = base × ratios (and tablet/mobile via uniform "
+                    "scale factors). Exposes ScaleCurve, ScaleConfig, "
+                    "compute_scale(), and emit_scale_css().",
                 )
 
             with st_block(bs.layer_card):
@@ -81,8 +85,10 @@ def build():
                 st_write(
                     s.text_base,
                     "emit_static_css() output ships inside default.css as "
-                    "29 :root --stx-scale-N variables, plus two media-query "
-                    "overrides for tablet (≤1024px) and mobile (≤480px).",
+                    "87 var(--stx-scale-N) declarations across 3 "
+                    "breakpoints — 29 :root values for desktop, plus two "
+                    "media-query overrides for tablet (≤1024px) and "
+                    "mobile (≤480px).",
                 )
 
             with st_block(bs.layer_card):
@@ -94,7 +100,8 @@ def build():
                     s.text_base,
                     "Text.sizes.idx_0…idx_28 wrap each variable in a Style "
                     "with a fallback pt value. StxStyles re-exposes them as "
-                    "s.scale[N] subscript and s.text_xs…text_9xl aliases.",
+                    "s.scale[N] subscript and s.text_xs…text_9xl Tailwind "
+                    "aliases (text_base = idx_7 = BASE).",
                 )
         st_space("v", 2)
 
@@ -103,10 +110,14 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            One TOML section per named curve. Each provides exactly 29 ints
-            per breakpoint (desktop / tablet / mobile). Editing the TOML and
-            regenerating default.css is enough to ship new values — no
-            Python code changes required.
+            Schema v0.2: one TOML section per named curve, each providing
+            29 adimensional ratios. [metadata] declares the single base
+            value (base_pt_desktop), the anchor index (base_idx, where
+            ratios[base_idx] must equal 1.0), the tablet/mobile uniform
+            scale factors, and the default curve. desktop[i] is computed at
+            import time as round(base_pt_desktop * ratios[i]). Editing the
+            TOML and regenerating default.css is enough to ship new values
+            — no Python code changes required.
         """)
         st_space("v", 1)
 
@@ -114,19 +125,23 @@ def build():
 # streamtex/styles/scale_curves.toml (truncated)
 
 [metadata]
-schema_version = "0.1"
+schema_version = "0.2"
+base_pt_desktop = 18      # palier-7 desktop pt (the only absolute value)
+base_idx = 7              # ratios[base_idx] MUST equal 1.0
+tablet_scale = 0.85       # tablet[i] = round(desktop[i] * 0.85)
+mobile_scale = 0.70       # mobile[i] = round(desktop[i] * 0.70)
 default_curve = "word_processor"
 
 [word_processor]
 description = "Classical word-processor scale (Word/Docs lineage)."
-desktop = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40,
-           48, 60, 72, 96, 128, 156, 168, 180, 188, 192, 194, 195, 196, 200]
-tablet  = [7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 30, 36,
-           42, 50, 60, 78, 100, 120, 130, 140, 145, 148, 150, 152, 154, 156]
-mobile  = [6, 7, 7, 8, 9, 10, 11, 13, 14, 16, 18, 20, 22, 26, 30,
-           36, 42, 50, 64, 84, 100, 108, 116, 120, 124, 126, 128, 130, 132]
+ratios = [
+    0.44, 0.50, 0.56, 0.61, 0.67, 0.78, 0.89, 1.00, 1.11, 1.22,
+    1.33, 1.56, 1.78, 2.00, 2.22, 2.67, 3.33, 4.00, 5.33, 7.11,
+    8.67, 9.33, 10.00, 10.44, 10.67, 10.78, 10.83, 10.89, 11.11,
+]
 
 # 3 more curves follow: [geometric], [body_centric], [bell]
+# Each has its own [name].ratios = [29 floats] with ratios[7] = 1.0
 """, language="toml")
         st_space("v", 2)
 
@@ -138,36 +153,37 @@ mobile  = [6, 7, 7, 8, 9, 10, 11, 13, 14, 16, 18, 20, 22, 26, 30,
             with l.item():
                 st_write(
                     s.text_base,
-                    (s.bold, "Edit the TOML. "),
-                    "Add a new [my_curve] section to "
-                    "streamtex/styles/scale_curves.toml with three "
-                    "29-element lists (desktop, tablet, mobile).",
+                    (s.bold, "Edit scale_curves.toml. "),
+                    "Add a new [my_new_curve] section with a single key, "
+                    "ratios = [29 floats]. CRITICAL: ratios[base_idx] = 1.0 "
+                    "(default base_idx=7) — this is the anchor that ties "
+                    "your curve to base_pt_desktop.",
                 )
             with l.item():
                 st_write(
                     s.text_base,
                     (s.bold, "Add the enum entry. "),
-                    "Append MY_CURVE = \"my_curve\" to the ScaleCurve "
-                    "Enum in streamtex/styles/scale.py — the string "
-                    "value must match the TOML section name.",
+                    "Append MY_NEW_CURVE = \"my_new_curve\" to the "
+                    "ScaleCurve Enum in streamtex/styles/scale.py — the "
+                    "string value must match the TOML section name.",
                 )
             with l.item():
                 st_write(
                     s.text_base,
-                    (s.bold, "Validate. "),
+                    (s.bold, "Verify. "),
                     "Run uv run python -m streamtex.styles.scale — the "
                     "module's __main__ guard prints the generated CSS "
-                    "block. If validation fails, you get a ValueError "
-                    "pointing at the offending values.",
+                    "block. If validation fails (e.g. ratios[7] ≠ 1.0), "
+                    "you get a ValueError pointing at the offending value.",
                 )
             with l.item():
                 st_write(
                     s.text_base,
-                    (s.bold, "Regenerate default.css. "),
-                    "Pipe emit_static_css() output into the BEGIN/END "
-                    "markers in streamtex/static/default.css. The default "
-                    "curve is metadata.default_curve in the TOML — change "
-                    "that string to switch the library-wide default.",
+                    (s.bold, "Add a test. "),
+                    "test_scale.py::TestComputeScale::test_all_named_"
+                    "curves_valid is already parametrized over every "
+                    "ScaleCurve member — adding the enum entry is enough "
+                    "for the test to pick up the new curve automatically.",
                 )
         st_space("v", 2)
 
@@ -187,14 +203,16 @@ from streamtex.styles.scale import (
     ScaleConfig, ScaleCurve, compute_scale, emit_scale_css,
 )
 
-cfg = ScaleConfig(curve=ScaleCurve.GEOMETRIC, count=20)
+# Override the base — every palier follows proportionally.
+cfg = ScaleConfig(curve=ScaleCurve.GEOMETRIC, base_pt_desktop=24)
 
 desktop, tablet, mobile = compute_scale(cfg)
-# → [10, 11, 13, 15, 17, 20, 23, 26, 30, 35,
-#    40, 46, 53, 61, 70, 81, 93, 107, 123, 142]
+# desktop[7] = base_pt_desktop = 24 (anchor)
+# tablet[i]  = round(desktop[i] * tablet_scale)   # 0.85 default
+# mobile[i]  = round(desktop[i] * mobile_scale)   # 0.70 default
 
 css_block = emit_scale_css(cfg)
-# → ":root {\\n    --stx-scale-0: 10pt;\\n    ...\\n} ..."
+# → ":root {\\n    --stx-scale-0: ...pt;\\n    ...\\n} ..."
 """)
         st_space("v", 2)
 
@@ -227,13 +245,45 @@ css_block = emit_scale_css(cfg)
             variant="warn",
             title="_load_curves() at import time",
             body=(
-                "Every curve must declare exactly 29 ints per breakpoint "
-                "(desktop, tablet, mobile) — otherwise ValueError. All "
-                "values must be positive integers — otherwise ValueError. "
-                "Monotonic non-decreasing values emit a warning (not an "
-                "error): the library still loads but logs a "
-                "'visual inconsistency risk' message to streamtex.styles."
+                "Every curve must declare exactly 29 ratios — otherwise "
+                "ValueError. ratios[base_idx] MUST equal 1.0; otherwise "
+                "the curve is rejected at import time. All ratios must be "
+                "positive floats — otherwise ValueError. Monotonic "
+                "non-decreasing ratios emit a warning (not an error): the "
+                "library still loads but logs a 'visual inconsistency "
+                "risk' message to streamtex.styles."
             ),
+        )
+        st_space("v", 2)
+
+        # ── 7. Changing the base ──────────────────────────────────────
+        st_write(bs.sub, "Changing the base", toc_lvl="+1")
+        st_space("v", 1)
+
+        st_write(
+            s.text_base,
+            "For an individual document, ",
+            (s.bold, "st_book(scale=ScaleConfig(base_pt_desktop=X))"),
+            " is the simplest knob to rescale every palier on every "
+            "breakpoint without touching the curve or the ratios.",
+        )
+        st_space("v", 1)
+
+        comparison_table(
+            design_system=DS,
+            columns=["base_pt_desktop", "Use case",
+                     "Palier 7 desktop (BASE)"],
+            rows=[
+                ("16",
+                 "Dense documents — manuals, reports, multi-column prose.",
+                 "16pt"),
+                ("18 (default)",
+                 "General reading — articles, blog posts, mixed media.",
+                 "18pt"),
+                ("24",
+                 "Presentation projection or accessibility-first sites.",
+                 "24pt"),
+            ],
         )
 
         st_space("v", 2)

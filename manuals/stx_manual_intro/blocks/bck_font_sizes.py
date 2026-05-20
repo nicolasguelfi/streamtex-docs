@@ -103,8 +103,8 @@ def build():
             st_space("v", 0.5)
             st_write(
                 s.text_sm + s.project.colors.neutral_gray,
-                "A 29-palier scale, responsive at 1024px and 480px. "
-                "Tailwind-style aliases and a subscript form.",
+                "29 paliers derived from a single base_pt_desktop + "
+                "4 curve silhouettes. Responsive at 1024px and 480px.",
             )
 
     st_space("v", 2)
@@ -123,19 +123,20 @@ def build():
 
     with st_block(s.project.containers.result_box):
         st_write(s.text_xs, "Sample paragraph (text_xs)")
-        st_write(bs.annotation, "text_xs = palier 2 = 10pt desktop")
+        st_write(bs.annotation, "text_xs = palier 5 = 14pt desktop")
         st_space("v", 1)
         st_write(s.text_base, "Sample paragraph (text_base)")
-        st_write(bs.annotation, "text_base = palier 4 = 12pt desktop")
+        st_write(bs.annotation,
+                 "text_base = palier 7 = 18pt desktop (= BASE)")
         st_space("v", 1)
         st_write(s.text_lg, "Sample paragraph (text_lg)")
-        st_write(bs.annotation, "text_lg = palier 5 = 14pt desktop")
+        st_write(bs.annotation, "text_lg = palier 8 = 20pt desktop")
         st_space("v", 1)
         st_write(s.text_xl, "Sample paragraph (text_xl)")
-        st_write(bs.annotation, "text_xl = palier 6 = 16pt desktop")
+        st_write(bs.annotation, "text_xl = palier 9 = 22pt desktop")
         st_space("v", 1)
         st_write(s.text_3xl, "Sample paragraph (text_3xl)")
-        st_write(bs.annotation, "text_3xl = palier 9 = 22pt desktop")
+        st_write(bs.annotation, "text_3xl = palier 11 = 28pt desktop")
 
     st_space("v", 2)
 
@@ -149,7 +150,8 @@ def build():
         rows=[
             ("Quick start / new block",
              "s.text_xs … s.text_9xl",
-             "Responsive, future-proof, Tailwind-style readability."),
+             "Responsive, future-proof. One knob — base_pt_desktop — "
+             "rescales every palier on every breakpoint."),
             ("Exact pt forever",
              "s.text.sizes.pt16 / pt24 / pt48",
              "Pick when the design contract demands one frozen value."),
@@ -171,7 +173,10 @@ def build():
             (s.bold, "var(--stx-scale-N, fallback)"),
             " under the hood. Resize the browser past 1024px or 480px to "
             "see the indexed paliers shrink automatically — the absolute "
-            "pt and semantic sizes stay constant by design.",
+            "pt and semantic sizes stay constant by design. Switching the "
+            "base via ",
+            (s.bold, "st_book(scale=ScaleConfig(base_pt_desktop=20))"),
+            " rescales every palier proportionally on every breakpoint.",
         )
 
     st_space("v", 2)

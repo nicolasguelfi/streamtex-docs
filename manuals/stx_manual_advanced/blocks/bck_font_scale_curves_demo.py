@@ -33,16 +33,21 @@ class BlockStyles:
 bs = BlockStyles
 
 
-# Curves displayed side-by-side, in this order.
+# Curves displayed side-by-side, in this order. All 4 curves share
+# base_pt_desktop = 18 — they differ only in their ratio profile.
 _CURVES = [
     (ScaleCurve.WORD_PROCESSOR,
-     "WORD_PROCESSOR — the default, balanced for general documents."),
+     "WORD_PROCESSOR — the default, balanced for general documents. "
+     "Silhouette: fine at small, coarser at display."),
     (ScaleCurve.GEOMETRIC,
-     "GEOMETRIC — uniform ~1.15 ratio, predictable for design systems."),
+     "GEOMETRIC — uniform ratio ~1.125 per palier, predictable modular "
+     "scale for design systems."),
     (ScaleCurve.BODY_CENTRIC,
-     "BODY_CENTRIC — dense in 14-32pt, prose-friendly."),
+     "BODY_CENTRIC — dense in 14-32pt body range, sparse extremes. "
+     "Prose-friendly."),
     (ScaleCurve.BELL,
-     "BELL — sparse extremes + one giant hero, best for slides."),
+     "BELL — bell-shaped: sparse extremes, dense middle, plateau at top. "
+     "Best for slides."),
 ]
 
 
@@ -72,7 +77,10 @@ def build():
             "section overrides ",
             (s.bold, "--stx-scale-*"),
             " on its own container, so paliers visibly differ across "
-            "curves while every other style stays identical.",
+            "curves while every other style stays identical. All 4 curves "
+            "share ",
+            (s.bold, "base_pt_desktop = 18"),
+            " — they differ only in their ratio profile.",
         )
         st_space("v", 2)
 
@@ -112,12 +120,15 @@ def build():
             variant="info",
             title="Picking a curve",
             body=(
+                "Pick a curve for SILHOUETTE; pick a base for OVERALL SIZE. "
                 "WORD_PROCESSOR is safe for any mixed document. GEOMETRIC "
                 "is the right pick when designers will hand-tune palette and "
                 "want predictable ratios. BODY_CENTRIC suits dense prose "
                 "(manuals, reports). BELL is for slide decks with one hero "
                 "title and tight body — extremes collapse to a single sky-high "
-                "palier so the entire deck reads at one giant size."
+                "palier so the entire deck reads at one giant size. To shift "
+                "every palier proportionally, change base_pt_desktop on the "
+                "same ScaleConfig."
             ),
         )
 

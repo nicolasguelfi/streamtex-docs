@@ -68,9 +68,12 @@ def build():
         body=(
             "Pack design systems MUST use indexed scale references in "
             "font-size declarations — never hardcoded px. Use "
-            "var(--stx-scale-K, fallback_pt) where K is the palier index "
-            "and the fallback matches the WORD_PROCESSOR desktop value at "
-            "that palier."
+            "var(--stx-scale-K, fallback_pt) where K is the palier index. "
+            "Sub-rule: fallback pt values should match the WORD_PROCESSOR "
+            "curve desktop value at the chosen palier (default base = 18, "
+            "anchored at palier 7) — when the streamtex package is "
+            "missing, the fallback ensures graceful degradation at the "
+            "right size."
         ),
     )
     st_space(20)
@@ -157,21 +160,24 @@ def build():
     with st_block(bs.code_box):
         st_code(
             code=(
-                "# Recommended palier choices for a generic design system\n"
-                "var(--stx-scale-2,   10pt)   # captions\n"
-                "var(--stx-scale-4,   12pt)   # secondary body\n"
-                "var(--stx-scale-5,   14pt)   # primary body\n"
-                "var(--stx-scale-7,   18pt)   # subhead\n"
+                "# Recommended palier choices for a generic design system"
+                " (default base=18)\n"
+                "var(--stx-scale-2,   10pt)   # captions (≈13.3px)\n"
+                "var(--stx-scale-5,   14pt)   # small body / annotations"
+                " (≈18.7px floor)\n"
+                "var(--stx-scale-7,   18pt)   # primary body (= BASE)\n"
                 "var(--stx-scale-10,  24pt)   # section title\n"
-                "var(--stx-scale-15,  48pt)   # slide title\n"
-                "var(--stx-scale-19, 128pt)   # hero number\n"
+                "var(--stx-scale-12,  32pt)   # display heading\n"
+                "var(--stx-scale-13,  36pt)   # hero\n"
+                "var(--stx-scale-16,  60pt)   # giant hero\n"
+                "var(--stx-scale-19, 128pt)   # display 1\n"
             ),
             language="css",
         )
     st_space(20)
 
     # ── 5. Canonical example ──────────────────────────────────────────
-    st_write((bs.sub, "Canonical example — streamtex-design 0.2.2"),
+    st_write((bs.sub, "Canonical example — streamtex-design 0.2.3"),
              toc_lvl="+1", tag=t.div)
     st_space(10)
 
@@ -180,7 +186,7 @@ def build():
         variant="info",
         title="Pack migration reference",
         body=(
-            "streamtex-design 0.2.2 is the canonical reference for this "
+            "streamtex-design 0.2.3 is the canonical reference for this "
             "migration. Read its design_systems/default.py for the full "
             "before/after across every bundle (callouts, body, comparison_"
             "table, hero, …). Adapt the same palier choices to your own "

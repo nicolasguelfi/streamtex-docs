@@ -5,6 +5,22 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.6] — 2026-05-20 — v2 relative scale documentation refresh
+
+### Changed
+
+- 5 documentation blocks updated to describe the relative architecture
+  shipped in streamtex 0.7.6: `bck_font_sizes` (intro), `bck_indexed_font_scale`
+  + `bck_font_scale_curves_demo` (advanced), `bck_font_scale_internals`
+  (developer — major rewrite of TOML schema + add-a-curve walkthrough),
+  `bck_pack_font_scale_integration` (reuse). All annotations now reflect
+  the new Tailwind alias map (text_base = idx_7 = 18pt).
+- `references/streamtex_cheatsheet_en.md`: "Indexed responsive font
+  scale" section rewritten around the base + ratios model with the
+  new ScaleConfig knob priority.
+- streamtex dep bumped to >= 0.7.6 (relative scale architecture).
+- streamtex-design dep transitively bumped to >= 0.2.3.
+
 ## [0.7.5] — 2026-05-20 — Indexed responsive font scale documentation
 
 ### Added

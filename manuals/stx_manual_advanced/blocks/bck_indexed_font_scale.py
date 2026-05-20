@@ -40,7 +40,9 @@ class BlockStyles:
 bs = BlockStyles
 
 
-# Palier → pt fallback table (matches text.py WORD_PROCESSOR desktop values)
+# Palier → pt fallback table — desktop values for WORD_PROCESSOR with
+# base_pt_desktop = 18 (palier 7 anchor). All paliers above/below derive
+# from the curve's adimensional ratios: desktop[i] = round(18 * ratios[i]).
 _PALIER_PT = [
     8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40,
     48, 60, 72, 96, 128, 156, 168, 180, 188, 192, 194, 195, 196, 200,
@@ -58,13 +60,16 @@ def build():
         callout(
             design_system=DS,
             variant="info",
-            title="Why an indexed scale?",
+            title="A single base value drives every palier",
             body=(
-                "Pre-0.7.5, font sizes were either fixed pt values (s.pt16) "
-                "or named buckets (s.medium, s.large). Both froze the layout "
-                "at desktop size. The indexed scale adds a 29-palier "
-                "responsive ladder — each token resolves to a CSS variable "
-                "that shrinks automatically at 1024px and 480px breakpoints."
+                "The indexed scale is RELATIVE: a single base_pt_desktop "
+                "(default 18pt at palier 7) is multiplied by 29 adimensional "
+                "ratios to produce every desktop palier. Tablet and mobile "
+                "columns are then derived uniformly via tablet_scale (0.85) "
+                "and mobile_scale (0.70). Changing the base re-scales "
+                "everything proportionally — no per-palier hand-tuning "
+                "needed. Curves differ only in their ratio silhouette; they "
+                "all anchor at palier 7 = base_pt_desktop."
             ),
         )
         st_space("v", 2)
@@ -88,10 +93,10 @@ def build():
                 )
                 st_space("v", 0.5)
                 show_code(
-                    "st_write(s.text_xs,   'Caption')\n"
-                    "st_write(s.text_base, 'Body')\n"
-                    "st_write(s.text_3xl,  'Heading')\n"
-                    "st_write(s.text_7xl,  'Hero title')",
+                    "st_write(s.text_xs,   'Caption')    # idx_5 = 14pt\n"
+                    "st_write(s.text_base, 'Body')       # idx_7 = 18pt (BASE)\n"
+                    "st_write(s.text_3xl,  'Heading')    # idx_11 = 28pt\n"
+                    "st_write(s.text_7xl,  'Hero title') # idx_16 = 60pt",
                 )
 
             with st_block(bs.mode_card):
@@ -105,6 +110,7 @@ def build():
                 st_space("v", 0.5)
                 show_code(
                     "for level in range(4):\n"
+                    "    # 12=32pt, 10=24pt, 8=20pt, 6=16pt\n"
                     "    idx = 12 - level * 2\n"
                     "    st_write(s.scale[idx],\n"
                     "             f'H{level+1} heading')",
@@ -123,8 +129,8 @@ def build():
                 show_code(
                     "from streamtex.styles import Text\n"
                     "\n"
-                    "st_write(Text.sizes.idx_6, 'Palier 6')\n"
-                    "st_write(s.text.sizes.idx_12, 'Heading')",
+                    "st_write(Text.sizes.idx_7, 'BASE = 18pt')\n"
+                    "st_write(s.text.sizes.idx_12, 'Display = 32pt')",
                 )
         st_space("v", 2)
 
@@ -133,32 +139,36 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Each curve is a complete 29-value mapping shipped in
-            ``streamtex/styles/scale_curves.toml``. Pick one per document
-            via ``st_book(scale=ScaleConfig(curve=...))``.
+            Each curve is a 29-value **ratio profile** shipped in
+            ``streamtex/styles/scale_curves.toml``. All four curves share
+            the SAME base — they differ only in their silhouette
+            (the relative ratios between paliers). Anchor: ``ratios[7] = 1.0``
+            so palier 7 always equals ``base_pt_desktop`` (default 18pt).
+            Pick one per document via ``st_book(scale=ScaleConfig(curve=...))``.
         """)
         st_space("v", 1)
 
         comparison_table(
             design_system=DS,
-            columns=["Curve", "Intended use", "Key paliers"],
+            columns=["Curve", "Intended use",
+                     "Ratios at key paliers (5 / 7 / 8 / 12 / 16)"],
             rows=[
                 ("WORD_PROCESSOR (default)",
                  "General documents — Word/Docs lineage. "
                  "Fine at small sizes, coarser in display range.",
-                 "8 / 12 / 16 / 24 / 48 / 96 / 196"),
+                 "0.78 / 1.00 / 1.11 / 1.78 / 3.33"),
                 ("GEOMETRIC",
-                 "Uniform visual ratio (~1.15) between paliers. "
+                 "Uniform visual ratio (~1.125) between paliers. "
                  "Predictable for design systems.",
-                 "10 / 17 / 30 / 53 / 93 / 163 / 497"),
+                 "0.79 / 1.00 / 1.13 / 1.80 / 2.88"),
                 ("BODY_CENTRIC",
                  "Dense in the body range (14-32pt). "
                  "Best for prose-heavy manuals.",
-                 "8 / 16 / 20 / 28 / 56 / 128 / 196"),
+                 "0.89 / 1.00 / 1.11 / 1.56 / 3.11"),
                 ("BELL",
                  "Sparse at extremes, dense in the middle. "
                  "One giant hero + small captions for slides.",
-                 "6 / 18 / 24 / 32 / 64 / 196 / 196"),
+                 "0.33 / 1.00 / 1.33 / 1.78 / 10.89"),
             ],
         )
         st_space("v", 2)
@@ -179,7 +189,17 @@ def build():
         for i in range(29):
             with g.cell():
                 st_write(s.scale[i], "Aa")
-                st_write(bs.palier_label, f"idx_{i} = {_PALIER_PT[i]}pt")
+                if i == 7:
+                    st_write(
+                        bs.palier_label,
+                        f"idx_{i} = {_PALIER_PT[i]}pt  "
+                        "← BASE = base_pt_desktop = 18pt by default",
+                    )
+                else:
+                    st_write(
+                        bs.palier_label,
+                        f"idx_{i} = {_PALIER_PT[i]}pt",
+                    )
     st_space("v", 2)
 
     with st_block(s.center_txt):
@@ -189,21 +209,44 @@ def build():
 
         show_explanation("""\
             Pass a ``ScaleConfig`` to ``st_book(scale=...)`` to override
-            the curve and palier count for one document — the change is
-            scoped to that book's HTML output.
+            any of the four knobs that drive the scale. The change is
+            scoped to that book's HTML output. All four fields are
+            optional — unset fields fall back to the TOML defaults
+            (base_pt_desktop=18, base_idx=7, tablet_scale=0.85,
+            mobile_scale=0.70, curve=WORD_PROCESSOR).
         """)
         st_space("v", 1)
 
         show_code("""\
 from streamtex import st_book, ScaleConfig, ScaleCurve
 
-st_book(
-    [blocks...],
-    scale=ScaleConfig(
-        curve=ScaleCurve.GEOMETRIC,   # WORD_PROCESSOR | GEOMETRIC | BODY_CENTRIC | BELL
-        count=20,                      # 1..29 paliers exposed
-    ),
-)""")
+# 1) Bigger desktop type — every palier follows on every breakpoint.
+#    Use when the project ships at a larger reading size (e.g. projection,
+#    accessibility-first sites).
+st_book([blocks...], scale=ScaleConfig(base_pt_desktop=24))
+
+# 2) Shift the anchor — palier other than 7 maps to base_pt_desktop.
+#    Use when the project's natural body text is at a different index
+#    than the default (rare; advanced).
+st_book([blocks...], scale=ScaleConfig(base_idx=8))
+
+# 3) Custom breakpoint shrink — tighter or looser tablet/mobile.
+#    Defaults: tablet_scale=0.85, mobile_scale=0.70.
+st_book([blocks...], scale=ScaleConfig(
+    tablet_scale=0.9,    # tablet keeps 90% of desktop (less shrink)
+    mobile_scale=0.65,   # mobile drops to 65% (more shrink)
+))
+
+# 4) Different silhouette — same base, different ratio profile.
+st_book([blocks...], scale=ScaleConfig(curve=ScaleCurve.GEOMETRIC))
+
+# Combine any subset of knobs.
+st_book([blocks...], scale=ScaleConfig(
+    curve=ScaleCurve.GEOMETRIC,
+    base_pt_desktop=24,
+    tablet_scale=0.9,
+    mobile_scale=0.65,
+))""")
         st_space("v", 2)
 
         # ── 6. Out-of-range tolerance ─────────────────────────────────
@@ -239,10 +282,11 @@ st_book(
             variant="info",
             title="Three breakpoints out of the box",
             body=(
-                "Desktop ≥ 1024px uses the curve's desktop column. "
-                "Tablet 480-1024px swaps to ~75% of desktop. "
-                "Mobile < 480px swaps to ~60%. Resize this window past "
-                "1024 and 480 to see every palier above shrink in lockstep."
+                "Desktop ≥ 1024px uses base_pt_desktop × ratios. "
+                "Tablet 480-1024px applies tablet_scale (default 0.85) "
+                "uniformly to every desktop palier. Mobile < 480px applies "
+                "mobile_scale (default 0.70). Resize this window past 1024 "
+                "and 480 to see every palier above shrink in lockstep."
             ),
         )
         st_space("v", 2)
@@ -255,17 +299,17 @@ st_book(
         comparison_table(
             design_system=DS,
             columns=["Tailwind alias", "Subscript", "Direct attribute",
-                     "pt (desktop)"],
+                     "pt (desktop @ base=18)"],
             rows=[
-                ("s.text_xs",   "s.scale[2]",  "s.text.sizes.idx_2",  "10pt"),
-                ("s.text_sm",   "s.scale[3]",  "s.text.sizes.idx_3",  "11pt"),
-                ("s.text_base", "s.scale[4]",  "s.text.sizes.idx_4",  "12pt"),
-                ("s.text_lg",   "s.scale[5]",  "s.text.sizes.idx_5",  "14pt"),
-                ("s.text_xl",   "s.scale[6]",  "s.text.sizes.idx_6",  "16pt"),
-                ("s.text_2xl",  "s.scale[7]",  "s.text.sizes.idx_7",  "18pt"),
-                ("s.text_3xl",  "s.scale[9]",  "s.text.sizes.idx_9",  "22pt"),
-                ("s.text_4xl",  "s.scale[10]", "s.text.sizes.idx_10", "24pt"),
-                ("s.text_5xl",  "s.scale[12]", "s.text.sizes.idx_12", "32pt"),
+                ("s.text_xs",   "s.scale[5]",  "s.text.sizes.idx_5",  "14pt"),
+                ("s.text_sm",   "s.scale[6]",  "s.text.sizes.idx_6",  "16pt"),
+                ("s.text_base", "s.scale[7]",  "s.text.sizes.idx_7",  "18pt (BASE)"),
+                ("s.text_lg",   "s.scale[8]",  "s.text.sizes.idx_8",  "20pt"),
+                ("s.text_xl",   "s.scale[9]",  "s.text.sizes.idx_9",  "22pt"),
+                ("s.text_2xl",  "s.scale[10]", "s.text.sizes.idx_10", "24pt"),
+                ("s.text_3xl",  "s.scale[11]", "s.text.sizes.idx_11", "28pt"),
+                ("s.text_4xl",  "s.scale[12]", "s.text.sizes.idx_12", "32pt"),
+                ("s.text_5xl",  "s.scale[13]", "s.text.sizes.idx_13", "36pt"),
                 ("s.text_6xl",  "s.scale[15]", "s.text.sizes.idx_15", "48pt"),
                 ("s.text_7xl",  "s.scale[16]", "s.text.sizes.idx_16", "60pt"),
                 ("s.text_8xl",  "s.scale[17]", "s.text.sizes.idx_17", "72pt"),

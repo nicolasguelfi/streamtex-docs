@@ -5,6 +5,18 @@ All notable changes to the StreamTeX documentation will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Removed
+
+- **`references/` directory** — legacy artifact from before the
+  `streamtex-claude` profile system. Contained only stale snapshots of
+  `coding_standards.md` and `streamtex_cheatsheet_en.md` that drifted
+  independently from the canonical source. No runtime consumer existed.
+  The canonical references remain at `streamtex-claude/shared/references/`
+  and the auto-installed mirror at `.claude/references/` (kept in sync
+  by `stx claude update`).
+
 ## [0.7.7] — 2026-05-20 — Migration to streamtex-packs monorepo
 
 ### Changed

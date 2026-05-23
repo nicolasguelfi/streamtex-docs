@@ -90,9 +90,6 @@ streamtex-docs/
 │   ├── stx_manual_developer/   # Developer guide
 │   ├── stx_manuals_collection/ # Collection hub
 │   └── shared-blocks/          # Shared block library
-├── references/
-│   ├── coding_standards.md     # Coding standards
-│   └── streamtex_cheatsheet_en.md  # Syntax reference
 └── templates/
     ├── template_project/       # Project starter template
     ├── template_collection/    # Collection starter template

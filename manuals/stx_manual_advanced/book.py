@@ -101,6 +101,7 @@ st_book([
     blocks.bck_indexed_font_scale,
     blocks.bck_font_scale_curves_demo,
     blocks.bck_hover_and_preview,
+    blocks.bck_hover_tooltip,
     blocks.bck_ui_components,
 
     # --- Section 3: Navigation & Book ---

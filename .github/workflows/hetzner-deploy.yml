@@ -22,6 +22,13 @@ jobs:
   deploy:
     name: Trigger Coolify deploys
     runs-on: ubuntu-latest
+    # UV_NO_SOURCES ignores [tool.uv.sources] for any uv command in this job.
+    # The current workflow doesn't invoke uv directly (only curl/python3/gh),
+    # but this defensive guard prevents drift if a future step adds `uv sync`:
+    # in CI only streamtex-docs is checked out, so the editable ../streamtex
+    # path declared in pyproject.toml doesn't exist.
+    env:
+      UV_NO_SOURCES: "1"
     steps:
       - uses: actions/checkout@v4
         with:

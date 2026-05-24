@@ -128,7 +128,7 @@ This command works for both installation AND upgrade. Do NOT use `uv tool upgrad
 
 ## Reuse architecture (packs, components, design systems, kits)
 
-The documentation profile uses the `streamtex-design` pack — declared in
+The documentation profile uses the `streamtex-pack-design` pack — declared in
 each manual's `stx.toml` — to expose components like `manual_section`,
 `api_reference_card`, `feature_walkthrough`, plus the universal primitives
 (callout, card_grid, slide_heading). See the `reuse-architecture` skill
@@ -147,6 +147,10 @@ each manual's `stx.toml` — to expose components like `manual_section`,
    `show_explanation()` / `show_details()`).
 5. If the user describes a reusable element with no matching component,
    suggest `stx component new <name>` to capture it into `mypack/`.
+
+**Pack-first design**: see the `modular-design-philosophy` skill for
+the decision tree of where styles/components live (project pack vs.
+upstream pack vs. block-local).
 
 **Commands**: `/stx-pack`, `/stx-component`, `/stx-ds`, `/stx-kit`,
 `/stx-validate`.

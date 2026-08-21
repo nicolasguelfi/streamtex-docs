@@ -5,6 +5,7 @@ from streamtex import st_include
 
 
 bck_images = stx.load_atomic_block("bck_images", __file__)
+bck_images_crop = stx.load_atomic_block("bck_images_crop", __file__)
 
 
 class BlockStyles:
@@ -18,3 +19,4 @@ bs = BlockStyles
 def build():
     """Include atomic blocks for this section."""
     st_include(bck_images)
+    st_include(bck_images_crop)

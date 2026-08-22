@@ -53,6 +53,12 @@ def build():
             2. Local files — bitmap sizes read via Pillow, SVG sizes
                parsed from width/height or the viewBox. Cached by
                (path, mtime) like the base64 encoding.
+            3. Images served via configure_image_path (the "served,
+               never inlined" pattern) — the bytes are located on the
+               server's disk via the optional fs_root= parameter of
+               configure_image_path, or automatically via Streamlit's
+               app/static serving convention. The served URL emission
+               is unchanged (never inlined).
 
             **Failure behavior**: invalid values (outside [0, 100),
             top+bottom >= 100, left+right >= 100), an explicit height=

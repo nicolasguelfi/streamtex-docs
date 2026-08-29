@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Advanced manual — new chapter "Multilingual Documents"**
+  (`bck_multilingual_documents.py`, atomic `bck_block_kwargs.py` +
+  `bck_multilingual_pattern.py`, Section 3 "Navigation & Book"):
+  - `st_book(block_args=, block_kwargs=)` documented for the first time
+    outside the library CHANGELOG — forwarding contract, recommended
+    `def build(lang: str = "en", **_)` signature, interaction with the
+    pagination cache (kwargs fingerprint, `page_cache-<fp>.json`);
+    reference example "a language passed to every `build()`"
+    (streamtex #37).
+  - The bilingual pattern with no i18n API: leaves `{"en": …, "fr": …}`
+    in the block or in a shared lexicon, `T()` / `TF()` resolution with
+    English fallback and bare-string `TypeError`, language in the address
+    (`STX_LANG` > `?lang=` > default, `with_lang()` links), one static
+    export per language, `BibConfig(locale=…)`, and the `check_i18n`
+    quality gate (baseline/regress, inventory, parity, words, drift).
+    Reference implementation: POSTAIR / AI Day 2026 (`sumvadis-streamtex`)
+    (streamtex #41).
+- **Deploy manual — `stx export html --lang` / `--suffix`** in the CLI
+  commands section (streamtex #38).
+
 ### Removed
 
 - **`references/` directory** — legacy artifact from before the

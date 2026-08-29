@@ -110,6 +110,7 @@ st_book([
     blocks.bck_banner_config,
     blocks.bck_inspector_config,
     blocks.bck_collections_and_discovery,
+    blocks.bck_multilingual_documents,
 
     # --- Section 4: Langages documentaires ---
     blocks.bck_document_languages,

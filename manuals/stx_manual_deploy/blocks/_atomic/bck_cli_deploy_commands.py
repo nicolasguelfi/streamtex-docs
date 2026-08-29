@@ -264,7 +264,18 @@ def build():
         show_code("""\
             stx export html .
             stx export html --output /app/static-html/ ./manuals/stx_manual_intro
+            stx export html --lang fr .                  # <html lang="fr">
+            STX_LANG=fr stx export html --suffix -fr .   # env drives blocks AND <html lang>; writes <project>-fr.html
         """, language="bash", line_numbers=False)
+        st_space("v", 1)
+
+        show_explanation("""\
+            `--lang` sets the `<html lang>` attribute of the export
+            (resolution: `--lang` > `$STX_LANG` > `en`); `--suffix` is
+            appended to the output basename so one directory can hold every
+            language. See the *Multilingual Documents* chapter of the
+            advanced manual for the one-export-per-language loop.
+        """)
         st_space("v", 2)
 
         # --- stx deploy env-sync ---

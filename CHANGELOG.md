@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Advanced manual — "Deep Links — ?marker= and ?page="** section in
+  *Markers in Paginated Mode* (`_atomic/bck_marker_pagination.py`):
+  `st_marker(key=…)`, `page_url()`, app/export parity, why a key beats a
+  label slug across languages (streamtex #42).
 - **Advanced manual — new chapter "Multilingual Documents"**
   (`bck_multilingual_documents.py`, atomic `bck_block_kwargs.py` +
   `bck_multilingual_pattern.py`, Section 3 "Navigation & Book"):

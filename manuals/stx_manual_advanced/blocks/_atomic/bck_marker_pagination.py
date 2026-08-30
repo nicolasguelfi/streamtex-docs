@@ -86,6 +86,56 @@ def build():
     st_space("v", 2)
 
     # ------------------------------------------------------------------
+    # Deep links — open a deck at a given page or marker
+    # ------------------------------------------------------------------
+    st_write(bs.sub, "Deep Links — ?marker= and ?page=", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A paginated book opens on page 1 — unless the address says
+        otherwise. Two URL parameters are honoured on the **first run of a
+        session**, in the live app and, client-side, in the static HTML
+        export (the static server ignores the query, so **one URL form
+        works for both**):
+
+        - `?marker=<key-or-slug>` — the `key=` given to `st_marker()`, or
+          the slug of the marker label (`"Electricity"` → `electricity`);
+          the book opens on the marker's page **and scrolls to it**;
+        - `?page=<n>` — a 1-based page number.
+
+        `?marker=` wins over `?page=`; an unknown value is ignored (page 1);
+        no other parameter is read or modified, so a project's own `?lang=`
+        travels untouched. The export also accepts `#<key>` and the
+        sidebar convention `#stx-goto-<n>` (0-based).
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# blocks/bck_wave_electricity.py — a stable key survives a translation
+st_marker(T({"en": "Electricity", "fr": "Électricité"}, lang), key="electricity")
+
+# blocks/bck_hub.py — link to that wave, in the reader's language
+from streamtex import page_url
+url = page_url("https://example.org/waves?lang=fr", marker="electricity")
+# → https://example.org/waves?lang=fr&marker=electricity
+# page_url(base, page=12) gives ...?page=12 (1-based); marker= wins over page=""")
+    st_space("v", 1)
+
+    show_details("""\
+        **Why a key?** Without `key=`, the deep link matches the slug of the
+        label as rendered — `electricity` in English, `électricité` in
+        French: a link built for one language misses in the other. The
+        key is language-independent. Page numbers shift whenever a slide
+        is added; prefer `marker=` over `page=` for anything you share.
+
+        **Mechanism.** The page is resolved server-side from the marker
+        cache (no extra render); the marker index is handed to the
+        navigation JS as the initial widget position, so the intra-page
+        scroll goes through the same path as cross-page navigation.
+    """)
+    st_space("v", 2)
+
+    # ------------------------------------------------------------------
     # Architecture (for maintainers)
     # ------------------------------------------------------------------
     st_write(bs.sub, "Architecture Overview", toc_lvl="+1")

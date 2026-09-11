@@ -78,22 +78,14 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Pre-warm the page cache for every manual so the first visitor loads instantly.
-# Each manual gets its own .stx_cache/page_cache.json with the correct hash.
-RUN for dir in manuals/stx_manual_*/; do \
-        echo "Warming up cache for $dir ..." && \
-        (cd "$dir" && uv run stx cache warmup .) || true; \
-    done
-
-# Pre-generate static HTML for every manual (served by Nginx on /html/).
-# The entrypoint will clean and regenerate for the active FOLDER at runtime.
-# This build-time export speeds up first cold-start.
+# Régime d'images (2026-09-11, décision d'auteur) : plus AUCUN réchauffage de
+# cache ni export HTML à la construction. L'entrypoint efface et régénère les
+# deux, pour le seul module servi (FOLDER), à CHAQUE démarrage — les couches
+# de construction étaient jetées avant la première visite (mesuré : 2,6 Go par
+# image, 87 Go sur le serveur pour rien). Le cache reste chaud dès la première
+# visite : c'est le démarrage qui le garantit, pas l'image.
 RUN mkdir -p /app/static-html && \
-    echo 'return 302 /html/;' > /app/static-html/.nginx-redirect.conf && \
-    for dir in manuals/stx_manual_*/; do \
-        echo "Exporting HTML for $dir ..." && \
-        (cd "$dir" && uv run stx export html --output /app/static-html/ .) || true; \
-    done
+    echo 'return 302 /html/;' > /app/static-html/.nginx-redirect.conf
 
 # STX_SERVE_MODE controls which services start (set at runtime by Coolify)
 #   dual           = Nginx (:80) + Streamlit (:8501) — default

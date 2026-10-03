@@ -46,9 +46,10 @@ def build():
         streamtex-docs/
         └── manuals/
             ├── shared-blocks/           # Shared block library
-            │   ├── bck_header.py        # Common header
-            │   ├── bck_footer.py        # Common footer
-            │   └── bck_disclaimer.py    # Legal disclaimer
+            │   └── blocks/
+            │       ├── bck_header.py    # Common header
+            │       ├── bck_footer.py    # Common footer
+            │       └── bck_disclaimer.py  # Legal disclaimer
             ├── stx_manual_intro/
             │   └── blocks/              # Manual-specific blocks
             └── stx_manual_advanced/
@@ -58,20 +59,21 @@ def build():
 
     show_code("""\
         # In book.py — importing shared blocks
-        from streamtex import LazyBlockRegistry
+        from pathlib import Path
+        from streamtex import LazyBlockRegistry, st_book
+        import blocks  # Local blocks
 
-        registry = LazyBlockRegistry(
-            local_path="blocks",
-            shared_path="../shared-blocks",
-        )
+        shared_blocks = LazyBlockRegistry([
+            str(Path(__file__).parent.parent / "shared-blocks" / "blocks"),
+        ])
 
-        # Shared blocks are resolved automatically
-        blocks = [
-            "bck_header",        # Found in shared-blocks/
-            "bck_01_intro",      # Found in local blocks/
-            "bck_02_content",    # Found in local blocks/
-            "bck_footer",        # Found in shared-blocks/
-        ]""", language="python")
+        # Shared blocks are lazy-loaded on first access
+        st_book([
+            shared_blocks.bck_header,   # Found in shared-blocks/blocks/
+            blocks.bck_01_intro,        # Found in local blocks/
+            blocks.bck_02_content,      # Found in local blocks/
+            shared_blocks.bck_footer,   # Found in shared-blocks/blocks/
+        ])""", language="python")
     st_space("v", 2)
 
     # ── Code review with AI ───────────────────────────────────────

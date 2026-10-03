@@ -96,11 +96,13 @@ st_book([
 
         # --- 5. Details ---
         show_details("""\
-            The exported file embeds all CSS and base64 images.
+            The exported file embeds all CSS. By default
+            (`asset_mode=AssetMode.EXTERNAL`) the download is a ZIP: the HTML
+            plus a `data/` folder holding the images. With
+            `asset_mode=AssetMode.EMBEDDED` the images are embedded as base64
+            and the HTML is a single self-contained file.
 
             Interactive features (markers, zoom) are not included.
-
-            The HTML is fully self-contained: no external dependencies.
         """)
         st_space("v", 2)
 
@@ -137,9 +139,9 @@ st_book([
         st_space("v", 1)
 
         show_explanation("""\
-            All images are embedded as base64 in the exported HTML.
-
-            Large images increase file size significantly.
+            With `asset_mode=AssetMode.EMBEDDED`, images are embedded as base64
+            in the exported HTML: large images increase file size significantly
+            (the default `EXTERNAL` mode keeps them as files in `data/`).
 
             Optimize images before export for smaller files.
         """)

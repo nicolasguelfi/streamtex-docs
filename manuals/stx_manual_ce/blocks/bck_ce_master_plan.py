@@ -41,8 +41,8 @@ def build():
 
     | File | Role |
     |---|---|
-    | `docs/master-plan.yaml` | **Pilotage** — machine-readable metadata: identity, objectives, TOC statuses, transverse decisions, patterns mapping, iterations history, decisions log, coherence debt, pointers |
-    | `docs/master-plan.md` | **Contenu détaillé** — human-readable: TOC hiérarchique avec, par nœud, intention / sources / notes de conception / propositions brutes de contenu |
+    | `docs/master-plan.yaml` | **Steering** — machine-readable metadata: identity, objectives, TOC statuses, transverse decisions, patterns mapping, iterations history, decisions log, coherence debt, pointers |
+    | `docs/master-plan.md` | **Detailed content** — human-readable: hierarchical TOC with, for each node, intent / sources / design notes / raw content proposals |
 
     Both files are always kept in sync. Snapshots are taken as paired files in
     `docs/master-plan/archive/YYYY-MM-DD-NNN.{yaml,md}` (same timestamp prefix).

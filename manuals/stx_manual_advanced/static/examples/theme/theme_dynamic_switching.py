@@ -20,4 +20,4 @@ else:
     sts.theme = dark_theme
 
 # Now render blocks - they use the active theme
-st_book(blocks=[...])
+st_book([...])

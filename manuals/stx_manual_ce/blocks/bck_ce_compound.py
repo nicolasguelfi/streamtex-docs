@@ -94,7 +94,7 @@ def build():
     |------|---------|--------|
     | **Bug** | Import pipeline fails on nested tables | streamtex library |
     | **Feature** | Need `st_accordion` widget | streamtex library |
-    | **Doc** | Missing example for `st_tabs` nesting | streamtex-docs |
+    | **Doc** | Missing example for `st_grid` nesting | streamtex-docs |
     | **Profile** | Style rule conflict in presentation mode | streamtex-claude |
 
     **Automatic detection:**

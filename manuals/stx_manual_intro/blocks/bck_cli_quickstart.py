@@ -97,8 +97,8 @@ stx project new myproject
 # Rich template with 9 tutorial blocks
 stx project new myproject --template project
 
-# Available templates: project (default), presentation, collection, course
-stx project new myslides --template presentation
+# Available templates: project (default), slides, collection
+stx project new myslides --template slides
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 

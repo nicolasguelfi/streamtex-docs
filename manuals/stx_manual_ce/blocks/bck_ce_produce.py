@@ -55,7 +55,7 @@ def build():
     2. Content is mapped to StreamTeX primitives (`st_write`, `st_code`, etc.)
     3. A new block file is generated with proper structure
     4. The block is validated against StreamTeX patterns
-    - Uses: `/stx-import:convert`, `/stx-import:html`, `/stx-import:latex`
+    - Uses: `/stx-import:marp`, `/stx-import:html`, `/stx-import:latex`
 
     **IMPROVE** — Enhance existing StreamTeX blocks
     1. The existing block is loaded and analyzed

@@ -188,11 +188,11 @@ def build():
     | `SpacingConfig` | Section spacing: vertical space between parts, blocks, elements | `docs/plan.md`, `custom/styles.py` |
     | `ProfileConfig` | Presentation profile: layout mode, slide dimensions, transitions | `docs/plan.md`, `book.py` |
     | `GSheetConfig` | Google Sheets integration: sheet ID, credentials, sync options | `docs/plan.md`, `book.py` |
-    | `ExportConfig` | Export settings: PDF format, page size, `AssetMode` (inline/linked) | `docs/plan.md`, `book.py` |
+    | `ExportConfig` | Export settings: PDF format, page size, `AssetMode` (embedded/external) | `docs/plan.md`, `book.py` |
 
     **`AssetMode`** (used by `ExportConfig`):
-    - `AssetMode.INLINE` — embed images as base64 in exported HTML/PDF
-    - `AssetMode.LINKED` — reference images as external files
+    - `AssetMode.EMBEDDED` — embed images as base64 in exported HTML/PDF
+    - `AssetMode.EXTERNAL` (default) — images saved as files in `data/` (ZIP download)
 
     These objects are documented in the plan template so that PRODUCE agents
     can apply them consistently across all blocks.

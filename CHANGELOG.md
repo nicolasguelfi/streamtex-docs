@@ -50,6 +50,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `asset_mode=AssetMode.EMBEDDED`; the default downloads a ZIP with `data/`.
 - CE manual: one French table row translated; `CLAUDE.md`: the star import no
   longer shadows `list()` since streamtex 0.7.36.
+- **Deploy files in the online manuals** (board `audit2`, 2026-10-03) — the
+  site image did not contain the repository files that six deploy/advanced
+  blocks display, so they showed "not found" online. `Dockerfile` and
+  `Dockerfile.staging` now copy them read-only to `/app/repo-files/`
+  (`Dockerfile`, `.dockerignore`, `docker-compose.yml`,
+  `.github/workflows/ci.yml`, `deploy/preflight.sh`,
+  `deploy/ansible/deploy.yml`, `deploy/ansible/inventory.ini.example`;
+  `.dockerignore` re-includes `ci.yml`), and each block reads
+  `$STX_REPO_FILES` (default `/app/repo-files`) first, then the repo root.
+- **Empty Git LFS pointers removed** (board `audit2`) — `chameleon.mp4`
+  (advanced and intro manuals) and the template's `background.jpg` were
+  ~130-byte LFS pointers whose content was never committed. They are deleted;
+  the advanced "Local video files" section keeps the `st_video` code sample
+  (generic file name) without a live demo.
 ### Changed
 
 - **Deployment — the image installs exactly the tested streamtex** (board

@@ -140,16 +140,14 @@ stx.st_audio(audio_path, format="audio/wav")""")
             Play local video with stx.st_video() (Streamlit native).
 
             Place .mp4, .webm, .ogg files in static/videos/.
+            This manual ships no local video file, so there is no live
+            demo here; the YouTube section below shows stx.st_video() playing.
         """)
         st_space("v", 1)
 
         show_code("""\
-video_path = os.path.join("static", "videos", "chameleon.mp4")
+video_path = os.path.join("static", "videos", "your_video.mp4")
 stx.st_video(video_path)""")
-        st_space("v", 1)
-
-        video_path = os.path.join(_static_dir, "videos", "chameleon.mp4")
-        stx.st_video(video_path)
         st_space("v", 2)
 
         # --- 7. YouTube Videos ---

@@ -8,7 +8,15 @@ import os
 # Resolve path to docker-compose.yml
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _repo_root = os.path.dirname(os.path.dirname(_project_root))
-_compose_path = os.path.join(_repo_root, "docker-compose.yml")
+# In the Docker image these files are copied to /app/repo-files (see
+# Dockerfile); read that copy first, then fall back to the repo root.
+_repo_files = os.environ.get("STX_REPO_FILES", "/app/repo-files")
+_compose_path = next(
+    (p for p in (os.path.join(_repo_files, "docker-compose.yml"),
+                 os.path.join(_repo_root, "docker-compose.yml"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, "docker-compose.yml"),  # missing -> "not found" below
+)
 
 
 class BlockStyles:

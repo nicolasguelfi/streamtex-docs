@@ -17,3 +17,8 @@ preset = "docs"
 
 # Install mode: "copy" (recommended, portable) or "symlink" (for pattern authors).
 mode = "copy"
+
+# Claude profile, kept in line by `stx claude sync` (project mode, board s2)
+[claude]
+mode = "project"
+profile = "documentation"

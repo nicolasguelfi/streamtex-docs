@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Deployment — the image installs exactly the tested streamtex** (board
+  `audit1`, 2026-10-03). The `Dockerfile` no longer passes
+  `--upgrade-package streamtex`, which installed the latest PyPI release at
+  every Coolify build while the CI tested the version of `uv.lock`; the build
+  now fails unless the installed version equals `.stx-version`.
+- **streamtex 0.7.27 → 0.7.40** (`uv.lock`, `.stx-version`). Measured before
+  the change: the 213 blocks of the 8 manuals and 3 templates build without
+  error under 0.7.40; one block renders differently from 0.7.30 (the release
+  in production): `stx_manual_advanced` bibliography, same text, entries now
+  carry `overflow-wrap:anywhere` (streamtex #54).
+
 ### Added
 
 - **Advanced manual — "Deep Links — ?marker= and ?page="** section in

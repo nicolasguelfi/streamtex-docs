@@ -9,8 +9,21 @@ import os
 # _atomic/ → blocks/ → project root → manuals/ → repo root
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _repo_root = os.path.dirname(os.path.dirname(_project_root))
-_dockerfile_path = os.path.join(_repo_root, "Dockerfile")
-_dockerignore_path = os.path.join(_repo_root, ".dockerignore")
+# In the Docker image these files are copied to /app/repo-files (see
+# Dockerfile); read that copy first, then fall back to the repo root.
+_repo_files = os.environ.get("STX_REPO_FILES", "/app/repo-files")
+_dockerfile_path = next(
+    (p for p in (os.path.join(_repo_files, "Dockerfile"),
+                 os.path.join(_repo_root, "Dockerfile"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, "Dockerfile"),  # missing -> "not found" below
+)
+_dockerignore_path = next(
+    (p for p in (os.path.join(_repo_files, ".dockerignore"),
+                 os.path.join(_repo_root, ".dockerignore"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, ".dockerignore"),  # missing -> "not found" below
+)
 
 class BlockStyles:
     """Dockerfile block styles."""

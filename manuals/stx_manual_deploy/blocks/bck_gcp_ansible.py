@@ -9,8 +9,21 @@ import os
 # Resolve paths to ansible files
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _repo_root = os.path.dirname(os.path.dirname(_project_root))
-_deploy_yml_path = os.path.join(_repo_root, "deploy", "ansible", "deploy.yml")
-_inventory_path = os.path.join(_repo_root, "deploy", "ansible", "inventory.ini.example")
+# In the Docker image these files are copied to /app/repo-files (see
+# Dockerfile); read that copy first, then fall back to the repo root.
+_repo_files = os.environ.get("STX_REPO_FILES", "/app/repo-files")
+_deploy_yml_path = next(
+    (p for p in (os.path.join(_repo_files, "deploy", "ansible", "deploy.yml"),
+                 os.path.join(_repo_root, "deploy", "ansible", "deploy.yml"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, "deploy", "ansible", "deploy.yml"),  # missing -> "not found" below
+)
+_inventory_path = next(
+    (p for p in (os.path.join(_repo_files, "deploy", "ansible", "inventory.ini.example"),
+                 os.path.join(_repo_root, "deploy", "ansible", "inventory.ini.example"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, "deploy", "ansible", "inventory.ini.example"),  # missing -> "not found" below
+)
 
 
 class BlockStyles:

@@ -27,6 +27,8 @@ Thumbs.db
 
 # CI/CD
 .github/
+# ...except the workflow shown by the deploy manual (copied to /app/repo-files)
+!.github/workflows/ci.yml
 
 # Claude profiles
 .claude/

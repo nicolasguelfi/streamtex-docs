@@ -9,7 +9,15 @@ import os
 # Resolve path to the preflight script
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _repo_root = os.path.dirname(os.path.dirname(_project_root))
-_preflight_path = os.path.join(_repo_root, "deploy", "preflight.sh")
+# In the Docker image these files are copied to /app/repo-files (see
+# Dockerfile); read that copy first, then fall back to the repo root.
+_repo_files = os.environ.get("STX_REPO_FILES", "/app/repo-files")
+_preflight_path = next(
+    (p for p in (os.path.join(_repo_files, "deploy", "preflight.sh"),
+                 os.path.join(_repo_root, "deploy", "preflight.sh"))
+     if os.path.isfile(p)),
+    os.path.join(_repo_root, "deploy", "preflight.sh"),  # missing -> "not found" below
+)
 
 
 class BlockStyles:

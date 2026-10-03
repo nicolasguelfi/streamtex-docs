@@ -66,6 +66,18 @@ RUN find manuals -mindepth 2 -maxdepth 2 -name pyproject.toml -exec \
 # Changelog (read by bck_changelog block in each manual)
 COPY CHANGELOG.md ./
 
+# Repository files shown verbatim by the deploy/advanced manuals
+# (bck_ci_cd, bck_dockerfile, bck_docker_compose, bck_gcp_ansible,
+# bck_preflight, bck_deploy_docker). Copied read-only under
+# /app/repo-files/ with their repo-relative paths; the blocks read
+# $STX_REPO_FILES (default /app/repo-files) first, then the repo root.
+# Placed after the dependency install so it does not bust that layer.
+COPY Dockerfile .dockerignore docker-compose.yml /app/repo-files/
+COPY .github/workflows/ci.yml /app/repo-files/.github/workflows/
+COPY deploy/preflight.sh /app/repo-files/deploy/
+COPY deploy/ansible/deploy.yml deploy/ansible/inventory.ini.example /app/repo-files/deploy/ansible/
+RUN chmod -R a-w /app/repo-files
+
 # FOLDER is set at runtime by Coolify/Hetzner envVars (not build-time ARG)
 ENV FOLDER="manuals/stx_manual_intro"
 

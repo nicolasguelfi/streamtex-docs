@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Ghost APIs in the manuals** (board `audit1`, 2026-10-03) — shown code that
+  called functions or parameters that do not exist: `ExportConfig(include_styles=…)`
+  and `st_book(export_config=)` (intro, now `exports=[…]`); `st_book(blocks=)`
+  (advanced themes example); `set_export_active` / `export_generate` and `export_*`
+  imported from `streamtex` (developer testing pages, now `streamtex.export`);
+  `streamtex.cli.console.console` (now `get_console()`);
+  `LazyBlockRegistry(local_path=, shared_path=)` (AI collaboration page);
+  `ListStyle(style=)` in the shown code of the list-styles page;
+  `inject_zoom_logic(width=, zoom=)` in the Python cheatsheet;
+  `stx project new --template presentation` (the templates are project,
+  collection, slides).
+- **Deploy manual** — six blocks read the repository files they display one
+  folder too high and always showed "not found" when run locally.
+- **Export page** — images are embedded as base64 only with
+  `asset_mode=AssetMode.EMBEDDED`; the default downloads a ZIP with `data/`.
+- CE manual: one French table row translated; `CLAUDE.md`: the star import no
+  longer shadows `list()` since streamtex 0.7.36.
 ### Changed
 
 - **Deployment — the image installs exactly the tested streamtex** (board

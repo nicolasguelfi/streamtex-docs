@@ -29,7 +29,9 @@ def build():
         show_code("""\
 # streamtex/cli/mycommand_cmd.py
 import click
-from streamtex.cli.console import console
+from streamtex.cli.console import get_console
+
+console = get_console()
 
 @click.group()
 def mycommand():

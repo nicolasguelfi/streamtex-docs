@@ -6,9 +6,9 @@ from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 import os
 
-# _atomic/ → blocks/ → project root → manuals/ → documentation/ → repo root
+# _atomic/ → blocks/ → project root → manuals/ → repo root
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
+_repo_root = os.path.dirname(os.path.dirname(_project_root))
 _dockerfile_path = os.path.join(_repo_root, "Dockerfile")
 _dockerignore_path = os.path.join(_repo_root, ".dockerignore")
 

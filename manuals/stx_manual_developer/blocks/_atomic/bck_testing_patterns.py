@@ -148,8 +148,8 @@ def build():
                 from streamtex import (
                     reset_toc_registry,
                     reset_bib_registry,
-                    reset_export_buffer,
                 )
+                from streamtex.export import reset_export_buffer
                 yield
                 reset_toc_registry()
                 reset_bib_registry()
@@ -206,29 +206,27 @@ def build():
 
         show_code("""\
             def test_export_buffer_lifecycle():
-                from streamtex import (
+                from streamtex.export import (
+                    ExportConfig,
                     export_push_wrapper,
                     export_pop_wrapper,
                     export_append,
-                    export_generate,
+                    generate_export_html,
                     reset_export_buffer,
-                    set_export_active,
                 )
 
-                reset_export_buffer()
-                set_export_active(True)
+                reset_export_buffer(ExportConfig(enabled=True))
 
                 export_push_wrapper('<div class="page">')
                 export_append("<p>Hello</p>")
                 export_pop_wrapper("</div>")
 
-                html = export_generate()
+                html = generate_export_html()
                 assert "<p>Hello</p>" in html
                 assert '<div class="page">' in html
                 assert "</div>" in html
 
-                set_export_active(False)
-                reset_export_buffer()\
+                reset_export_buffer()  # deactivate export\
         """, language="python")
         st_space("v", 2)
 

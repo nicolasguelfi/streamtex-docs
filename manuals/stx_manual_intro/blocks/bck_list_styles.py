@@ -87,7 +87,7 @@ from streamtex import ListStyle, st_list, st_write
 # Define custom bullet symbols
 my_list_style = ListStyle(
     symbols=["→", "◦", "■", "◆"],
-    style=None  # Optional: CSS style for list
+    css="",  # Optional: CSS for the <ul>/<ol> element
 )
 
 # Use it
@@ -105,7 +105,6 @@ from streamtex import ListStyle, st_list, st_write
 
 custom_style = ListStyle(
     symbols=["🔹", "◦", "▪"],  # Different symbols per level
-    style=None
 )
 
 # Three-level nested structure
@@ -177,7 +176,7 @@ extended = base + ListStyle(symbols=["■", "◆"])
 # Result: ["•", "◦", "■", "◆"]
 
 # Remove (not common, but possible)
-minimal = base - "◦"  # Remove the second symbol
+minimal = base - ListStyle(symbols=["◦"])  # Remove the "◦" symbol
     """, language="python")
 
     st_space("v", 2)
@@ -189,22 +188,20 @@ minimal = base - "◦"  # Remove the second symbol
     st_space("v", 1)
 
     show_explanation("""
-The style parameter in ListStyle applies CSS to the <ul> or <ol> element.
+The css parameter in ListStyle applies CSS to the <ul> or <ol> element.
 
 Control spacing, color, margins, etc.
     """)
 
     st_write(s.project.titles.feature_title, "Styled lists:")
     show_code("""
-from streamtex import ListStyle, Style, st_list, st_write
+from streamtex import ListStyle, st_list, st_write
 
 # List style with custom CSS
 compact_style = ListStyle(
+    "list-style-position:inside;margin-left:0;padding-left:0;",
+    "compact_list",
     symbols=["→", "•"],
-    style=Style(
-        "list-style-position:inside;margin-left:0;padding-left:0;",
-        "compact_list"
-    )
 )
 
 with st_list(l_style=compact_style) as l:
@@ -231,9 +228,7 @@ ListStyle symbols don't affect numbering, but CSS styling does.
 from streamtex import ListStyle, st_list, st_write
 
 # Style the ordered list (not the symbols)
-ordered_style = ListStyle(
-    style=Style("padding-left:24px;margin-top:8px;", "ordered")
-)
+ordered_style = ListStyle("padding-left:24px;margin-top:8px;", "ordered")
 
 with st_list(list_type="ol", l_style=ordered_style) as l:
     with l.item(): st_write("First step")
@@ -256,7 +251,6 @@ from streamtex import ListStyle, st_list, st_write
 
 checklist = ListStyle(
     symbols=["☐", "✓"],  # Unchecked, checked
-    style=None
 )
 
 with st_list(l_style=checklist) as l:
@@ -277,7 +271,6 @@ from streamtex import ListStyle, st_list, st_write
 
 toc_style = ListStyle(
     symbols=["📖", "📄", "📌"],
-    style=None
 )
 
 with st_list(l_style=toc_style) as l:

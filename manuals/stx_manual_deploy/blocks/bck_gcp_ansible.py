@@ -8,7 +8,7 @@ import os
 
 # Resolve paths to ansible files
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
+_repo_root = os.path.dirname(os.path.dirname(_project_root))
 _deploy_yml_path = os.path.join(_repo_root, "deploy", "ansible", "deploy.yml")
 _inventory_path = os.path.join(_repo_root, "deploy", "ansible", "inventory.ini.example")
 

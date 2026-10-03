@@ -10,9 +10,9 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
 
-# _atomic/ → blocks/ → project root → manuals/ → documentation/ → repo root
+# _atomic/ → blocks/ → project root → manuals/ → repo root
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
+_repo_root = os.path.dirname(os.path.dirname(_project_root))
 _dockerfile_path = os.path.join(_repo_root, "Dockerfile")
 
 def build():

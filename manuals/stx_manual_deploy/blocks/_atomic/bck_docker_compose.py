@@ -7,7 +7,7 @@ import os
 
 # Resolve path to docker-compose.yml
 _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
+_repo_root = os.path.dirname(os.path.dirname(_project_root))
 _compose_path = os.path.join(_repo_root, "docker-compose.yml")
 
 

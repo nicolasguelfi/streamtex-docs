@@ -1716,7 +1716,7 @@ pdf_bytes = export_pdf(html_string, config=PdfConfig(format="A4", landscape=True
 ```python
 from streamtex import add_zoom_options, inject_zoom_logic
 add_zoom_options()                           # Sidebar controls
-inject_zoom_logic(width=100, zoom=100)      # Programmatic
+inject_zoom_logic(page_width_pct=100, zoom_pct=100)  # Programmatic
 ```
 
 ---

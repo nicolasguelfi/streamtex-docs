@@ -8,7 +8,7 @@ import os
 
 # Resolve path to the preflight script
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(_project_root)))
+_repo_root = os.path.dirname(os.path.dirname(_project_root))
 _preflight_path = os.path.join(_repo_root, "deploy", "preflight.sh")
 
 

@@ -29,8 +29,8 @@ def build():
     show_explanation("""\
         Use the stx CLI to scaffold a new project.
         The --template option selects a starter template:
-        project (default, 9 tutorial blocks), presentation,
-        collection, or course.
+        project (default, 9 tutorial blocks), slides,
+        or collection.
     """)
     st_space("v", 1)
 
@@ -38,8 +38,8 @@ def build():
 # Default project template with 9 tutorial blocks
 stx project new mon-projet --template project
 
-# Other templates: presentation, collection, course
-stx project new my-slides --template presentation
+# Other templates: slides, collection
+stx project new my-slides --template slides
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 

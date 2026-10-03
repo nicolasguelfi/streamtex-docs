@@ -165,22 +165,20 @@ def build():
 
         show_code("""\
             def test_nested_export():
-                from streamtex import (
+                from streamtex.export import (
+                    ExportConfig,
                     export_push_wrapper,
                     export_pop_wrapper,
                     reset_export_buffer,
-                    set_export_active,
                 )
 
-                reset_export_buffer()
-                set_export_active(True)
+                reset_export_buffer(ExportConfig(enabled=True))
                 try:
                     export_push_wrapper("<div>")
                     # ... test logic ...
                     export_pop_wrapper("</div>")
                 finally:
-                    set_export_active(False)
-                    reset_export_buffer()\
+                    reset_export_buffer()  # deactivate export\
         """, language="python")
         st_space("v", 2)
 

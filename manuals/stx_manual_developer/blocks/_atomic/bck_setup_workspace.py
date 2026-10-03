@@ -52,9 +52,9 @@ stx install --preset developer   # all 3 repos
 
 # Create a project during install
 stx install --project myapp
-stx install --project myapp --template presentation
+stx install --project myapp --template slides
 
-# Template options: project (default), presentation, collection, course
+# Template options: project (default), slides, collection
 
 # Creates:
 #   stx.toml    — workspace configuration

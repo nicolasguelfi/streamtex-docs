@@ -123,3 +123,48 @@ st_image(uri="sample_gradient.png", width="60%",
             Style is overridable via `css=` — declarations are appended after
             the default pill style, so they win in cascade order.
         """)
+        st_space("v", 2)
+
+        # --- 4. Overlay, crop and window bounds together (0.7.37) ---
+        st_write(bs.sub, "Overlay on a cropped, bounded image", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            The overlay follows the final display box, so it combines with
+            `crop=` and with the window bounds `max_vw=` / `max_vh=`. With
+            `crop=`, the bounds use the ratio of the **cropped zone**, not
+            of the source file: below, 25 % is cut on the left and on the
+            right of a 400 x 250 image, the visible zone is 200 x 250, and
+            `max_vh=30` keeps that zone at 30 % of the window height.
+
+            `align=` places the image locally (here on the right of a
+            centred container); a `text-align` inside the image `style`
+            does not place it.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+st_image(uri="sample_gradient.png",
+         crop=(0, 25, 0, 25),       # top, right, bottom, left (%)
+         max_vh=30,                 # bound on the CROPPED zone
+         align="right",
+         alt="Cropped, bounded, badged",
+         overlay=MediaOverlay(text="crop + max_vh", position="top-left"))""")
+        st_space("v", 1)
+
+        st_image(uri="sample_gradient.png",
+                 crop=(0, 25, 0, 25),
+                 max_vh=30,
+                 align="right",
+                 alt="Cropped, bounded, badged",
+                 overlay=MediaOverlay(text="crop + max_vh", position="top-left"))
+        st_space("v", 1)
+
+        show_details("""\
+            Width rule with a bound: min(width, max_vw vw, max_vh vh x ratio),
+            where width defaults to 100% of the container. height must stay
+            "auto". For a remote URI, pass natural_size=(W, H) so the ratio
+            can be computed; without it the bounds degrade to CSS max-width /
+            max-height.
+        """)
+

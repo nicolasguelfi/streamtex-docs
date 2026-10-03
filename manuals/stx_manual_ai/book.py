@@ -66,6 +66,7 @@ st_book([
     blocks.bck_profile_install,
     blocks.bck_claude_md,
     blocks.bck_settings,
+    blocks.bck_project_mode_migration,
 
     # ── Part 3: Commands ──────────────────────────────────────
     blocks.bck_commands_overview,

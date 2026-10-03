@@ -3,10 +3,13 @@
 Covers: where the text lives (leaves), how it is resolved (T / TF),
 where the language comes from (STX_LANG > ?lang= > default), the double
 export, the i18n quality gate, and the reference implementation (POSTAIR).
+Since 0.7.37 the helpers are provided by ``streamtex.i18n`` (explicit import,
+not in the star import) and ``st_book(lang="auto")``.
 """
 
 from streamtex import st_write, st_space, st_block, st_list
 from streamtex.enums import Tags as t
+from streamtex.i18n import T, with_lang
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
@@ -26,13 +29,18 @@ def build():
     st_space("v", 2)
 
     show_explanation("""\
-        StreamTeX has **no i18n API** — and a bilingual document does not
-        need one. The pattern below ships EN/FR presentations with three
-        things the library already provides: a parameter passed to every
-        block (`block_kwargs`), a language read from the address, and one
-        static export per language. It was built for the POSTAIR / AI Day
-        2026 decks (Université du Luxembourg) and is described here as the
-        reference way to do it.
+        A bilingual document needs no message catalog. The pattern below
+        ships EN/FR presentations with a parameter passed to every block,
+        a language read from the address, and one static export per
+        language. It was built for the POSTAIR / AI Day 2026 decks
+        (Université du Luxembourg); since streamtex 0.7.37 its helpers are
+        part of the library, in the module `streamtex.i18n` (`T`, `TF`,
+        `current_lang`, `with_lang`, `set_languages`), and
+        `st_book(lang="auto")` hands the language to every block.
+
+        These names are **not** exported by `from streamtex import *`:
+        import them explicitly. A project that already defines its own `T`
+        or `current_lang` keeps it — nothing in the library collides with it.
 
         Four decisions, in order: **where the text lives**, **how it is
         resolved**, **where the language comes from**, **how it is exported**.
@@ -78,42 +86,43 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        Two tiny helpers resolve a leaf. `T()` returns a string; `TF()`
-        returns a **sequence of `st_write` fragments** — strings and
-        `(style, text)` tuples — to unpack in a single call. Both live in
-        one shared module (`postair_lang.py` in the reference project).
+        Two helpers resolve a leaf. `T()` returns its text; `TF()` returns
+        a **sequence of `st_write` fragments** — strings and
+        `(style, text)` tuples — to unpack in a single call. Both come from
+        `streamtex.i18n`, imported explicitly.
     """)
     st_space("v", 1)
 
     show_code("""\
-        LANGS = ("en", "fr")
-        DEFAULT = "en"
+        from streamtex.i18n import T, TF
 
-        def T(node, lang: str | None = None) -> str:
-            if isinstance(node, str):
-                # A bare string is an unfinished migration, not a missing
-                # translation: fail now, not in front of the audience.
-                raise TypeError(f"bare string passed to T(): {node[:60]!r}")
-            if not isinstance(node, dict) or "en" not in node:
-                raise TypeError(f"invalid leaf: {node!r}")
-            lang = lang or current_lang()
-            value = node.get(lang)
-            return node[DEFAULT] if value is None else value   # "" is a value
-
-        def TF(node, lang: str | None = None) -> tuple:
-            value = T(node, lang)
-            return (value,) if isinstance(value, str) else tuple(value)
+        # T(entry, lang=None, *, strict=False)  — lang=None: current_lang()
+        # TF(entry, lang=None, *, strict=False) — a tuple of fragments
 
         # In a block
         def build(lang: str = "en", **_):
             st_write(s.large, T(TITLE, lang), toc_lvl="1")
-            st_write(s.medium, *TF(YOUR_TURN, lang))""")
+            st_write(s.medium, *TF(YOUR_TURN, lang))
+
+        # strict=True: a bare string is refused (an unfinished migration)
+        T("Welcome", strict=True)       # TypeError""")
+    st_space("v", 1)
+
+    st_write(s.medium, "Live — the same leaf, in each language:")
+    st_space("v", 1)
+    demo_leaf = {"en": "The survey, by show of hands",
+                 "fr": "Le sondage, à main levée"}
+    with st_block(s.project.containers.result_box):
+        st_write(s.medium, (bs.param_label, 'T(leaf, "en") → '), T(demo_leaf, "en"))
+        st_write(s.medium, (bs.param_label, 'T(leaf, "fr") → '), T(demo_leaf, "fr"))
+        st_write(s.medium, (bs.param_label, 'T(leaf, "de") → '), T(demo_leaf, "de"),
+                 "  (not a language of the leaf: the default language)")
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.medium, (bs.param_label, "Fallback, never a hole"), " — a missing translation shows the English text on screen. The gate (step 5) is what makes the absence loud — before the rehearsal, not in the room.")
-            with l.item(): st_write(s.medium, (bs.param_label, "A bare string raises"), " — `T(\"Welcome\")` is a `TypeError`. Every projected string goes through a leaf, so an inventory of bare literals (step 5) is the exact list of what is left to migrate.")
+            with l.item(): st_write(s.medium, (bs.param_label, "Fallback, never a hole"), " — a missing translation shows the default language (then the first value of the leaf) on screen. The gate (step 5) is what makes the absence loud — before the rehearsal, not in the room.")
+            with l.item(): st_write(s.medium, (bs.param_label, "A bare string, with strict=True, raises"), " — `T(\"Welcome\", strict=True)` is a `TypeError` (without `strict`, the library returns a bare string as is). Every projected string goes through a leaf, so an inventory of bare literals (step 5) is the exact list of what is left to migrate.")
             with l.item(): st_write(s.medium, (bs.param_label, "An empty string is a value"), " — `{\"en\": \" — the evidence\", \"fr\": \"\"}` is a template suffix French does not have; it must not fall back to English.")
     st_space("v", 2)
 
@@ -129,37 +138,53 @@ def build():
         click in an auditorium, and has to be kept in sync across decks.
         Instead the language is *in the address*: `…/?lang=fr`. What you
         opened is what you project; changing language is editing the
-        address and reloading. Resolution order:
+        address and reloading. `current_lang()` resolves, in order:
+        `$STX_LANG` > `?lang=` > default.
     """)
     st_space("v", 1)
 
     show_code("""\
-        import os
-        import streamlit as st
+        # book.py
+        from streamtex import st_book
+        from streamtex.i18n import set_languages, current_lang
 
-        ENV_KEY, QUERY_KEY = "STX_LANG", "lang"
+        # The languages of the document and its default (default: ("en", "fr"), "en")
+        set_languages(["en", "fr"], default="en")
 
-        def _query_lang() -> str | None:
-            try:
-                value = st.query_params.get(QUERY_KEY)
-            except Exception:            # headless export: no script context
-                return None
-            return value if value in LANGS else None   # a bad suffix never breaks a deck
+        # Hands build(lang=...) to every block: the same as
+        # block_kwargs={"lang": current_lang()}
+        st_book([...], lang="auto", paginate=True)
 
-        def current_lang() -> str:
-            \"\"\"export > address > default\"\"\"
-            lang = os.environ.get(ENV_KEY) or _query_lang() or DEFAULT
-            if lang not in LANGS:
-                raise ValueError(f"language {lang!r} not in {LANGS}")
-            return lang
+        # An explicit code is accepted too: st_book([...], lang="fr")""")
+    st_space("v", 1)
 
-        def with_lang(url: str, lang: str) -> str:
-            \"\"\"A link to another deck, in *lang*: the language travels in the address.\"\"\"
-            sep = "&" if "?" in url else "?"
-            return f"{url}{sep}{QUERY_KEY}={lang}"
+    show_code("""\
+        from streamtex.i18n import with_lang
 
-        # book.py — the single entry point into the blocks
-        st_book([...], block_kwargs={"lang": current_lang()}, paginate=True)""")
+        # A link to another deck, in the same language: the language travels
+        # in the address. An existing lang= is replaced; the other parameters
+        # and the #fragment are kept.
+        with_lang("https://example.org/deck2/?page=3#intro", "fr")
+        # → "https://example.org/deck2/?page=3&lang=fr#intro"
+        with_lang("https://example.org/deck2/?lang=en", "fr")
+        # → "https://example.org/deck2/?lang=fr"
+        """)
+    st_space("v", 1)
+
+    st_write(s.medium, (bs.param_label, "Live — "), "with_lang(\"https://example.org/deck2/?page=3#intro\", \"fr\") → ",
+             with_lang("https://example.org/deck2/?page=3#intro", "fr"))
+    st_space("v", 1)
+
+    show_details("""\
+        A language outside set_languages() in the address is ignored (a
+        wrong suffix never breaks a projection); in `$STX_LANG` it raises
+        (an export in an unknown language is a command error). An explicit
+        "lang" in block_kwargs wins over st_book(lang=...).
+
+        Projects that wrote these helpers themselves (as the reference
+        project did, in postair_lang.py) can keep them: the library names
+        live in streamtex.i18n and never enter the star import.
+    """)
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
@@ -243,7 +268,8 @@ def build():
     show_explanation("""\
         The POSTAIR / AI Day 2026 decks (Université du Luxembourg, project
         `sumvadis-streamtex`, streamtex 0.7.25, eight paginated modules
-        behind one hub) are the implementation this chapter describes:
+        behind one hub) are the implementation this chapter describes; its
+        helpers became `streamtex.i18n` in 0.7.37:
 
         - `modules/shared-blocks/postair_lang.py` — `LANGS`, `current_lang()`,
           `with_lang()`, `T()`, `TF()`;

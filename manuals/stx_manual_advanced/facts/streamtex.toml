@@ -1,0 +1,10 @@
+# Facts about streamtex shown by the "Versioned Facts" chapter (bck_versioned_facts.py).
+# No `current` on purpose: the demo never turns stale in `stx validate`.
+[source]
+name = "StreamTeX"
+version = "0.7.40"            # the version these facts were read from
+
+[facts]
+book_defaults.keys = 10                     # len(streamtex.book.BOOK_DEFAULT_KEYS)
+slides.container_min_height = "80vh"        # streamtex.SLIDE_CONTAINER
+scale.amphi_base_pt = 30                    # ScaleConfig.amphi().base_pt_desktop

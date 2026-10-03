@@ -8,6 +8,8 @@ from custom.styles import Styles as s
 
 from blocks.helpers import show_code, show_details, show_explanation
 from streamtex import Style, st_block, st_list, st_space, st_write
+from streamtex import next_project, st_next_deck
+from streamtex.collection import CollectionConfig, ProjectMeta
 from streamtex.enums import Tags as t
 
 
@@ -265,6 +267,96 @@ STX_URL_TEST_INTRO=https://docs-intro.streamtex.org
 STX_URL_TEST_ADVANCED=https://docs-advanced.streamtex.org
     """, language="bash")
 
+    st_space("v", 2)
+
+    # ========================================================================
+    # CARD APPEARANCE (0.7.39)
+    # ========================================================================
+    st_write(s.project.titles.section_title, "Card Frame and Text Colour", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(s.medium,
+             "The frame and the description colour of the collection cards are "
+             "settings of CollectionConfig, in Python or in collection.toml. The "
+             "defaults keep the previous look.")
+    st_space("v", 1)
+
+    show_code("""
+# collection.toml
+[collection]
+title = "StreamTeX Training Collection"
+cards_per_row = 3
+card_border = "2px solid #2EC4B6"     # default: "1px solid #ddd"
+card_text_color = "#444"              # default: "#666"
+    """, language="toml")
+    st_space("v", 1)
+
+    show_code("""
+from streamtex.collection import CollectionConfig
+
+config = CollectionConfig(
+    title="StreamTeX Learn",
+    cards_per_row=2,
+    card_border="2px solid #2EC4B6",
+    card_text_color="#444",
+)
+    """, language="python")
+    st_space("v", 2)
+
+    # ========================================================================
+    # NEXT DOCUMENT (0.7.39)
+    # ========================================================================
+    st_write(s.project.titles.section_title, "Next Document — next_project() and st_next_deck()", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(s.medium,
+             "next_project(config, current_key) returns the (key, ProjectMeta) of the "
+             "document after current_key in the collection order — None after the last "
+             "one, unless wrap=True. st_next_deck() writes the link to it, with the "
+             "language carried in the address (lang= goes through "
+             "streamtex.i18n.with_lang).")
+    st_space("v", 1)
+
+    show_code("""
+from streamtex import next_project, st_next_deck
+from streamtex.collection import CollectionConfig, ProjectMeta
+
+config = CollectionConfig(title="Decks")
+config.projects["intro"] = ProjectMeta(title="Introduction",
+                                       project_url="https://docs-intro.streamtex.org", order=1)
+config.projects["advanced"] = ProjectMeta(title="Advanced",
+                                          project_url="https://docs-advanced.streamtex.org", order=2)
+
+next_project(config, "intro")               # ("advanced", ProjectMeta(title="Advanced", ...))
+next_project(config, "advanced")            # None — the last one
+next_project(config, "advanced", wrap=True) # ("intro", ...)
+
+# At the end of the last block of the "intro" deck
+st_next_deck(config, "intro", label="Next →", lang="fr")
+    """, language="python")
+    st_space("v", 1)
+
+    demo_config = CollectionConfig(title="Decks")
+    demo_config.projects["intro"] = ProjectMeta(title="Introduction",
+                                                project_url="https://docs-intro.streamtex.org", order=1)
+    demo_config.projects["advanced"] = ProjectMeta(title="Advanced",
+                                                   project_url="https://docs-advanced.streamtex.org", order=2)
+    with st_block(bs.feature_box):
+        _key, _meta = next_project(demo_config, "intro")
+        st_write(s.medium, (s.bold, "next_project(config, \"intro\") → "), _key, " — ", _meta.title)
+        st_write(s.medium, (s.bold, "st_next_deck(config, \"intro\", lang=\"fr\"):"))
+        st_next_deck(demo_config, "intro", label="Next →", lang="fr")
+    st_space("v", 1)
+
+    show_details("""
+`st_next_deck(config, current_key, label="Next →", *, lang=None, style="")` renders
+nothing after the last document. Without project_url, the link is `?project=<key>`.
+style= is the CSS of the link (default: no underline, weight 600).
+
+The URLs read by CollectionConfig.from_toml() honour the `STX_URL_<KEY>` override —
+the variables `stx run --set` gives every document — so the same link works on
+localhost and in production.
+    """)
     st_space("v", 2)
 
     # ========================================================================

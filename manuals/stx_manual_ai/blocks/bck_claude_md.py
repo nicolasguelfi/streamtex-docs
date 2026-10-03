@@ -154,6 +154,44 @@ def build():
     """, language="text", line_numbers=False)
     st_space("v", 2)
 
+    # --- Ownership of the root CLAUDE.md (0.7.35) ---
+    st_write(bs.sub, "Your CLAUDE.md Is Never Overwritten", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Since streamtex 0.7.35, stx writes the root CLAUDE.md only when
+        it owns it: the file is absent, or it is byte-identical to the
+        render of the template installed before. A root CLAUDE.md that
+        you wrote or edited stays byte-identical; the profile text then
+        goes to .claude/CLAUDE.md. Claude Code loads both files. The
+        rule is the same for stx claude install, update and sync (in
+        project mode, the hash recorded in .claude/stx.lock is also
+        accepted as proof that stx wrote the file).
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        my-project/
+        +-- CLAUDE.md            # yours: never rewritten by stx
+        +-- .claude/
+            +-- CLAUDE.md        # the profile text, written by stx
+            +-- CLAUDE.md.j2     # the profile template
+    """, language="text", line_numbers=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        To give the root file back to the profile, ask for it
+        explicitly with --force. The previous file is saved in
+        .claude/.backup/ first.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # Take the root CLAUDE.md back (backup in .claude/.backup/)
+        stx claude update --force
+    """, language="bash", line_numbers=False)
+    st_space("v", 2)
+
     # --- Template tip ---
     with st_block(s.project.containers.tip_callout):
         st_write(s.project.titles.tip_label, "Tip")
@@ -165,5 +203,7 @@ def build():
                  (s.bold, "stx claude install"),
                  ", the template is rendered with your project's configuration. "
                  "You can modify the generated file freely — it will not "
-                 "be overwritten unless you explicitly reinstall.")
+                 "be overwritten unless you run ",
+                 (s.bold, "stx claude update --force"),
+                 " (with a backup in .claude/.backup/).")
     st_space("v", 1)

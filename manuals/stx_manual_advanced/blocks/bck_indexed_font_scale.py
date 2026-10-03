@@ -249,6 +249,37 @@ st_book([blocks...], scale=ScaleConfig(
 ))""")
         st_space("v", 2)
 
+        # ── 5b. Lecture-hall preset (0.7.37) ──────────────────────────
+        st_write(bs.sub, "Lecture-hall preset — ScaleConfig.amphi()",
+                 toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            ``ScaleConfig.amphi()`` is the preset for decks projected in a
+            lecture hall: base 30 pt on desktop, tablet x0.70, mobile x0.55
+            — readable from the back row, still usable on a phone. It sets
+            the BASE of the document only: every block keeps its own
+            ``st_zoom`` and sizes. Any field can be overridden by keyword.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import st_book, ScaleConfig
+
+# The preset: base_pt_desktop=30, tablet_scale=0.70, mobile_scale=0.55
+st_book([blocks...], scale=ScaleConfig.amphi())
+
+# Same preset, one value changed
+st_book([blocks...], scale=ScaleConfig.amphi(base_pt_desktop=28))
+
+# Written by hand, the preset is exactly
+st_book([blocks...], scale=ScaleConfig(
+    base_pt_desktop=30,
+    tablet_scale=0.70,
+    mobile_scale=0.55,
+))""")
+        st_space("v", 2)
+
         # ── 6. Out-of-range tolerance ─────────────────────────────────
         st_write(bs.sub, "Out-of-range tolerance", toc_lvl="+1")
         st_space("v", 1)

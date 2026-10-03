@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **streamtex 0.7.35 → 0.7.40 documented** (lots A-F, #11, board `audit1`):
+  - AI manual — project mode (`[claude]`, `stx claude sync`, `.claude/stx.lock`),
+    machine mode (`stx claude global status/remove`, `global_commands`), CLAUDE.md
+    ownership, merged `settings.json`, `extends`, shared skills/agents installed;
+    new block *Migrating to project mode* (projects first, global removal last).
+  - Developer manual — new block *stx validate --build* (real build of every
+    block, `[[validate.rules]]`, `--snapshot/--against` and its limit: Markdown
+    text is not fingerprinted, star import exports `__all__` only).
+  - Advanced manual — `st_slide`, `st_image(max_vw=, max_vh=, align=)` with the
+    crop, `ScaleConfig.amphi()`, `streamtex.i18n` (library version of the
+    multilingual pattern), BibTeX decoding / `BibConfig(strict=True)` /
+    `projection()`, `ProjectBlockRegistry(shared_dirs=)`, collection cards and
+    `st_next_deck`, `is_editable/is_exportable/env_flag`, `kept_widget/kept_value`;
+    new blocks *Book defaults* (`[book.defaults]`, `doc_version="auto"`) and
+    *Versioned facts* (`streamtex.facts`).
+  - Intro manual — image bounds and `align=` (a style's text-align does not
+    place an image), `stx run --set`.
+  - Deploy manual — version coherence and `--build --published` in preflight,
+    entrypoint failures (`/app/STX_ERRORS.txt`), `stx deploy diff` / `stx deploy ci`,
+    pre-commit hooks, `stx run --set` in the CLI reference.
+- `pyproject.toml`: `streamtex>=0.7.40` (the manuals use its API).
+
 ### Fixed
 
 - **Ghost APIs in the manuals** (board `audit1`, 2026-10-03) — shown code that

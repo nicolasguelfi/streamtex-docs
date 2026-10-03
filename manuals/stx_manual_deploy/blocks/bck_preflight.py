@@ -101,3 +101,63 @@ def build():
             "**Exit code 1** means a critical check failed (tests, config).\n\n"
             "**Warnings** (git dirty, missing static/) do not block deployment."
         )
+        st_space("v", 3)
+
+        # --- stx validate: what production will see (0.7.38) ---
+        st_write(bs.sub, "Before deploying — stx validate", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation(
+            "**stx validate** checks the project itself. Three of its checks are "
+            "deployment checks: the **version coherence** of `.stx-version`, "
+            "`pyproject.toml` and `uv.lock`; the **real build** of every block "
+            "(`--build`); and the same build against the **published** streamtex "
+            "(`--build --published`), the way the Docker image installs it."
+        )
+        st_space("v", 1)
+
+        show_code("""\
+            # Structure, packs, rules, versions, hygiene, facts
+            stx validate
+
+            # + the real build() of every block of every book.py (headless)
+            stx validate --build
+
+            # + the same build against the PUBLISHED streamtex wheel
+            stx validate --build --published
+        """, language="bash")
+        st_space("v", 2)
+
+        with st_grid(cols=3, cell_styles=(
+            s.container.borders.solid_border
+            + s.container.paddings.small_padding
+            + s.container.layouts.vertical_center_layout
+        )) as g:
+            with g.cell(): st_write(s.bold + s.large, "Version check")
+            with g.cell(): st_write(s.bold + s.large, "Level")
+            with g.cell(): st_write(s.bold + s.large, "Why")
+
+            with g.cell(): st_write(s.large, ".stx-version above the streamtex locked in uv.lock")
+            with g.cell(): st_write(s.project.colors.warning_red + s.large, "Error")
+            with g.cell(): st_write(s.large, "The Docker build guard would fail")
+
+            with g.cell(): st_write(s.large, ".stx-version below the pyproject minimum")
+            with g.cell(): st_write(s.project.colors.highlight_amber + s.large, "Warning")
+            with g.cell(): st_write(s.large, "The guard checks less than the project needs")
+
+            with g.cell(): st_write(s.large, "streamtex locked from a local source")
+            with g.cell(): st_write(s.project.colors.highlight_amber + s.large, "Warning")
+            with g.cell(): st_write(s.large, "Production (uv sync --no-sources) installs the published wheel")
+
+        st_space("v", 2)
+
+        show_details(
+            "**--published** resolves the project with streamtex WITHOUT its local "
+            "source (local packs keep theirs, as in the Docker image) in an isolated "
+            "environment under `~/.cache/streamtex/published/`, then builds every block "
+            "with it. A project that does not resolve that way is reported: production "
+            "would fail the same way.\n\n"
+            "**Exit codes**: 0 = clean, 1 = warnings only, 2 = errors. "
+            "`--strict` promotes warnings to errors (exit 2)."
+        )
+

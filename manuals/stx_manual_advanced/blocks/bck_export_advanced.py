@@ -1,5 +1,6 @@
 """Advanced Export — ExportConfig, HtmlExportBuffer, and st_html()."""
 
+import streamtex as stx
 from streamtex import *
 from streamtex.styles import Style as ns
 from streamtex.enums import Tags as t
@@ -268,3 +269,52 @@ def build():
         during the export phase.
     """)
     st_space("v", 3)
+
+    # --- Section 8: Run-time switches (0.7.39) ---
+    st_write(bs.sub, "Run-time Switches \u2014 is_editable(), is_exportable(), env_flag()", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A deployed document is often read-only while the author's copy
+        shows the export panel and the image editors. Two switches give
+        one reading of that choice: is_exportable() reads STX_EXPORTABLE,
+        is_editable() reads STX_EDITABLE (the legacy names IS_EXPORTABLE /
+        IS_EDITABLE are accepted). Each is read from the environment, then
+        from an optional .env file (env_file=), and defaults to False.
+        Nothing in the library reads them implicitly: the book passes them
+        where it wants them.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        import streamtex as stx
+
+        # book.py — the export panel only where STX_EXPORTABLE=1
+        st_book([...], export=stx.is_exportable(), paginate=True)
+
+        # a block — the image editor only where STX_EDITABLE=1
+        st_image(uri="diagram.png", name="diagram",
+                 editable=stx.is_editable(), alt="Architecture")
+
+        # the same switches read from a .env file when not in the environment
+        stx.is_editable(env_file=".env")
+
+        # any other boolean switch, with an optional legacy name
+        show_drafts = stx.env_flag("MY_SHOW_DRAFTS", default=False,
+                                   legacy="SHOW_DRAFTS", env_file=".env")""")
+    st_space("v", 1)
+
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.medium, (bs.param_label, "Live \u2014 "),
+                 "stx.is_exportable() = ", str(stx.is_exportable()),
+                 ", stx.is_editable() = ", str(stx.is_editable()))
+    st_space("v", 1)
+
+    with st_block(s.project.containers.explanation_box):
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, (bs.param_label, "True"), " \u2014 1, true, yes, on (any case)")
+            with l.item(): st_write(s.medium, (bs.param_label, "False"), " \u2014 0, false, no, off, empty")
+            with l.item(): st_write(s.medium, (bs.param_label, "Anything else"), " \u2014 ValueError: a typo in a deployment variable is an error, not a silent default")
+            with l.item(): st_write(s.medium, (bs.param_label, "Order"), " \u2014 the environment first (new name, then legacy), then env_file, then default")
+    st_space("v", 3)
+

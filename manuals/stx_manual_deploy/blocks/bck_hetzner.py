@@ -402,3 +402,16 @@ def build():
             # Export HTML locally
             stx export html .
         """)
+        st_space("v", 2)
+
+        show_details(
+            "**Start-up failures are visible (0.7.38).** In every mode, the generated "
+            "entrypoint warms the page cache and exports the static HTML at start-up. "
+            "If one of them fails, the service still starts, but the error is written "
+            "to the container log (`[entrypoint] ERROR: ...`, visible in Coolify's logs) "
+            "and appended to `/app/STX_ERRORS.txt`, outside the folder nginx serves. "
+            "The Dockerfile no longer exports at build time.\n\n"
+            "Services deployed before 0.7.38 keep their own `entrypoint.sh`: "
+            "`stx deploy diff` shows how it differs from the current template."
+        )
+

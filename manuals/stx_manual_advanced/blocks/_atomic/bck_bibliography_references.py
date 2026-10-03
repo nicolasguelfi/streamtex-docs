@@ -425,6 +425,9 @@ st_write(s.medium, apa_html)""")
             An institutional author written with double braces,
             `{{United Nations}}`, is ONE name: it is shown whole ("United
             Nations", never "Nations") and listed in `BibEntry.institutional`.
+            A long name can be cited short with the biblatex field
+            `shortauthor = {UN}`: the citation reads "(UN, 2015)", the
+            bibliography keeps "United Nations" (since 0.7.42).
         """)
         st_space("v", 1)
 
@@ -543,7 +546,7 @@ st_book([...], bib_sources=bib_sources, bib_config=bib_config)""")
         with st_block(s.project.containers.explanation_box):
             with st_list(list_type="ul") as l:
                 with l.item(): st_write(s.medium, (s.bold, "Workarounds to remove"), " — a title or an author typed with literal accents to dodge the old rendering can go back to TeX, or stay as is: both read the same now.")
-                with l.item(): st_write(s.medium, (s.bold, "Institutions"), " — write an organisation as {{United Nations}} (double braces) so it is one name, not a surname and a first name.")
+                with l.item(): st_write(s.medium, (s.bold, "Institutions"), " — write an organisation as {{United Nations}} (double braces) so it is one name, not a surname and a first name; add shortauthor = {UN} to keep its citation short.")
                 with l.item(): st_write(s.medium, (s.bold, "Ancient works"), " — add origdate (or a negative year) when the citation code should show the original date rather than the edition year; citation codes of those entries change.")
                 with l.item(): st_write(s.medium, (s.bold, "Unknown keys"), " — turn on BibConfig(strict=True) once, run stx validate --build, fix the [key?] it reports.")
                 with l.item(): st_write(s.medium, (s.bold, "Check the blocks"), " — stx validate --build --snapshot before.json on the old version, then --against before.json on the new one: the list of blocks whose rendering changed.")

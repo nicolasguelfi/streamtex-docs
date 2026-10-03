@@ -6,7 +6,8 @@ __pycache__/
 .Python
 env/
 venv/
-.venv/
+# No trailing slash: .venv is often a link to ~/.venvs/<project>
+.venv
 *.egg-info/
 dist/
 build/
@@ -22,6 +23,9 @@ build/
 .DS_Store
 Thumbs.db
 
+# Render caches written by builds and `stx validate --build`
+.stx_cache/
+
 # Streamlit
 .streamlit/secrets.toml
 
@@ -29,3 +33,4 @@ Thumbs.db
 .claude/*
 !.claude/custom/
 !.claude/.stx-profile
+!.claude/stx.lock

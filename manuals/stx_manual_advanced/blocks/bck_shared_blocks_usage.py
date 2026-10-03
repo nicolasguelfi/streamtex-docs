@@ -634,6 +634,78 @@ st_book([
     st_space("v", 3)
 
     # ========================================================================
+    # SECTION 7b: Shared directories in ProjectBlockRegistry (0.7.39)
+    # ========================================================================
+    st_write(
+        bs.section,
+        "Shared Directories in ProjectBlockRegistry",
+        toc_lvl="+1",
+    )
+    st_space("v", 1)
+
+    show_explanation("""\
+In a repository of several modules (decks, chapters), each module's
+blocks/__init__.py can declare the shared directories directly:
+ProjectBlockRegistry(blocks_dir, shared_dirs=[...]). A block name not found
+in the module's own blocks/ is looked up in the shared directories, in
+order and recursively; a local block with the same name always wins.
+""")
+    st_space("v", 1)
+
+    show_code("""\
+# modules/my_deck/blocks/__init__.py
+from pathlib import Path
+from streamtex import ProjectBlockRegistry, BlockNotFoundError, BlockImportError
+
+_here = Path(__file__).parent
+registry = ProjectBlockRegistry(
+    _here,                                                  # the module's own blocks (flat)
+    shared_dirs=[_here.parent.parent / "shared-blocks" / "blocks"],  # recursive
+)
+
+
+def __getattr__(name: str):
+    try:
+        return registry.get(name)
+    except (BlockNotFoundError, BlockImportError) as e:
+        raise AttributeError(str(e)) from e
+""")
+    st_space("v", 1)
+
+    show_code("""\
+# modules/my_deck/book.py — a shared block is used like a local one
+import blocks
+
+st_book([
+    blocks.bck_title,              # modules/my_deck/blocks/bck_title.py
+    blocks.bck_org_footer,         # found in shared-blocks/blocks/ (no local copy)
+], paginate=True)
+
+blocks.registry.list_blocks()          # the module's own blocks only
+blocks.registry.list_shared_blocks()   # shared blocks not shadowed locally
+""")
+    st_space("v", 1)
+
+    with st_block(bs.highlight_box):
+        st_write(
+            s.medium,
+            (s.text.weights.bold_weight, "What stays the same: "),
+            "iteration, len() and list_blocks() keep the module's own blocks, "
+            "so st_book(registry) renders exactly what it rendered before. "
+            "A missing name raises BlockNotFoundError listing both the local "
+            "and the shared blocks.",
+        )
+    st_space("v", 1)
+
+    show_details("""\
+ProjectBlockRegistry(shared_dirs=...) or LazyBlockRegistry? Use shared_dirs
+when the shared blocks should be reachable under the module's own `blocks.*`
+names (one namespace, the local copy wins). Use a separate LazyBlockRegistry
+(the pattern above, `shared.bck_*`) when the book should say explicitly which
+blocks come from the shared library.""")
+    st_space("v", 3)
+
+    # ========================================================================
     # SECTION 8: Best Practices
     # ========================================================================
     st_write(bs.section, "Best Practices", toc_lvl="+1")

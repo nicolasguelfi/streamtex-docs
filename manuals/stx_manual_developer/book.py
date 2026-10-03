@@ -71,6 +71,9 @@ st_book([
     # Testing
     blocks.bck_dev_testing,
 
+    # Validating the real build (0.7.36+)
+    blocks.bck_validate_build,
+
     # CI/CD pipelines
     blocks.bck_dev_ci_cd,
 

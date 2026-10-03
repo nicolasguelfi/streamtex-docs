@@ -203,3 +203,46 @@ def build():
             "the containers will use the old version and new features will be missing.\n\n"
             "The workflow polls PyPI every 15 seconds until the expected version appears."
         )
+        st_space("v", 3)
+
+        # --- stx deploy ci (0.7.38) ---
+        st_write(bs.sub, "A validation workflow for any project — stx deploy ci", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation(
+            "**stx deploy ci** writes `.github/workflows/stx-validate.yml` in a "
+            "project: install as production does (streamtex without its local "
+            "source), **ruff**, then **stx validate --build** — the real build of "
+            "every block. A deploy workflow can depend on it (`needs: validate`): a "
+            "block that fails to build never reaches the server."
+        )
+        st_space("v", 1)
+
+        show_code("""\
+            stx deploy ci              # writes .github/workflows/stx-validate.yml
+            stx deploy ci --force      # overwrites an existing one
+            stx deploy ci path/to/project
+        """, language="bash")
+        st_space("v", 1)
+
+        show_explanation("The workflow it writes (the current template, read from the library):")
+        st_space("v", 1)
+
+        try:
+            from streamtex.cli.deploy_cmd import generate_ci_workflow
+            workflow = generate_ci_workflow()
+        except ImportError:
+            workflow = "# install streamtex[cli] to display the template"
+        show_code(workflow, language="yaml")
+        st_space("v", 2)
+
+        show_details(
+            "**Against the published wheel.** `stx validate --build --published` runs "
+            "the same build with streamtex resolved WITHOUT local sources, in an "
+            "isolated environment — useful locally before a release, or as an extra "
+            "CI step when the repository pins streamtex to a local checkout.\n\n"
+            "**Version coherence** (`.stx-version` / `pyproject.toml` / `uv.lock`) is "
+            "checked by every `stx validate` run: a `.stx-version` above the locked "
+            "streamtex is an error, because the Docker build guard would fail."
+        )
+

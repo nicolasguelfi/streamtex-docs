@@ -6,6 +6,7 @@ from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 from streamtex.bib import cite, st_bibliography, export_bibtex, get_bib_registry
+from streamtex.bib import parse_bibtex_string
 from streamtex import BibRefs  # noqa: F401 — API coverage
 from custom.bib_refs import st_refs
 
@@ -407,3 +408,143 @@ st_write(s.medium, apa_html)""")
             The function returns an HTML string with italic tags for journals
             and hyperlinks for DOIs/URLs.
         """)
+        st_space("v", 3)
+
+        # --- Section 14: BibTeX that reads right (0.7.38) ---
+        st_write(bs.sub, "14. BibTeX Values Read Right (TeX decoding)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            BibTeX values are TeX-decoded when they are read: accents
+            (`\\'e`, `\\=o`, `{\\"O}`, `\\v{Z}`), symbols (`\\oe`, `\\ss`),
+            escaped characters (`\\&`, `\\%`, `\\#`) and grouping braces
+            (`{GPT}` → GPT). Author fields are read at any brace depth, so a
+            name such as `{\\v{Z}}{\\'i}dek` no longer turns the whole field
+            into "Unknown".
+
+            An institutional author written with double braces,
+            `{{United Nations}}`, is ONE name: it is shown whole ("United
+            Nations", never "Nations") and listed in `BibEntry.institutional`.
+        """)
+        st_space("v", 1)
+
+        demo_bib = r"""@article{zidek2021,
+  author  = {{\v{Z}}{\'i}dek, Augustin and M{\"u}ller, J.},
+  title   = {Protein \& {GPT} structure},
+  journal = {Nature}, year = {2021}}
+@techreport{un2015,
+  author = {{United Nations}},
+  title  = {Transforming our World: the 2030 Agenda},
+  year   = {2015}}"""
+        show_code("""\
+from streamtex.bib import parse_bibtex_string
+
+entries = parse_bibtex_string(r\"\"\"@article{zidek2021,
+  author  = {{\\v{Z}}{\\'i}dek, Augustin and M{\\"u}ller, J.},
+  title   = {Protein \\& {GPT} structure},
+  journal = {Nature}, year = {2021}}
+@techreport{un2015,
+  author = {{United Nations}},
+  title  = {Transforming our World: the 2030 Agenda},
+  year   = {2015}}\"\"\")
+
+for e in entries:
+    st_write(s.medium, e.key, " — ", "; ".join(e.authors), " — ", e.title)""")
+        st_space("v", 1)
+
+        with st_block(bs.cite_demo):
+            for e in parse_bibtex_string(demo_bib):
+                st_write(s.medium, (s.bold, e.key), " — ", "; ".join(e.authors), " — ", e.title)
+        st_space("v", 2)
+
+        show_details("""\
+            parse_bibtex_string() returns decoded values. BibEntry.institutional
+            lists the authors given as {{...}}: ["United Nations"] above.
+        """)
+        st_space("v", 3)
+
+        # --- Section 15: Ancient and original dates ---
+        st_write(bs.sub, "15. Ancient and Original Dates (origdate)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            When an entry carries origdate (biblatex), or a negative /
+            pre-1500 year, the citation code shows the original date:
+            "c. 380 BCE" in English, "~380 av. J.-C." with
+            BibConfig(locale="fr"). The edition year stays in the hover
+            card and in the reference list.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+@book{plato_republic,
+  author    = {Plato},
+  title     = {The {R}epublic},
+  publisher = {Hackett},
+  year      = {2004},       % the edition you read
+  origdate  = {-380}        % the original date: cited as "c. 380 BCE"
+}""", language="latex", line_numbers=False)
+        st_space("v", 3)
+
+        # --- Section 16: strict mode and projection preset ---
+        st_write(bs.sub, "16. BibConfig(strict=True) and BibConfig.projection()", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            strict=True turns an unknown key in cite() into an error
+            instead of printing [key?] — a typo is caught when the block is
+            built (stx validate --build), not in front of the audience.
+
+            BibConfig.projection(**overrides) is the preset for projected
+            decks: hover cards 780 px wide with text x2. It is exactly
+            BibConfig(card_width="780px", card_font_scale=2.0); any field
+            can be overridden by keyword.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.bib import BibConfig, BibFormat, CitationStyle
+
+# Reading on a screen: fail on unknown keys
+bib_config = BibConfig(
+    format=BibFormat.APA,
+    citation_style=CitationStyle.AUTHOR_YEAR,
+    strict=True,
+)
+
+# Projecting in a room: large hover cards, strict too
+bib_config = BibConfig.projection(strict=True)
+
+# Written by hand, the preset is exactly
+bib_config = BibConfig(card_width="780px", card_font_scale=2.0)
+
+st_book([...], bib_sources=bib_sources, bib_config=bib_config)""")
+        st_space("v", 2)
+
+        show_details("""\
+            Long URLs in st_bibliography() now wrap (overflow-wrap: anywhere)
+            instead of widening the whole exported document. Nothing to
+            change in a project.
+        """)
+        st_space("v", 3)
+
+        # --- Migrating .bib files ---
+        st_write(bs.sub, "Migrating your .bib files (0.7.38)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            Upgrading to 0.7.38 or later changes how some entries READ, never
+            what you have to write. On the maintainer's own .bib files, 205 of
+            421 entries render differently — every one of them was showing TeX
+            commands or braces before. What to check after the upgrade:
+        """)
+        st_space("v", 1)
+
+        with st_block(s.project.containers.explanation_box):
+            with st_list(list_type="ul") as l:
+                with l.item(): st_write(s.medium, (s.bold, "Workarounds to remove"), " — a title or an author typed with literal accents to dodge the old rendering can go back to TeX, or stay as is: both read the same now.")
+                with l.item(): st_write(s.medium, (s.bold, "Institutions"), " — write an organisation as {{United Nations}} (double braces) so it is one name, not a surname and a first name.")
+                with l.item(): st_write(s.medium, (s.bold, "Ancient works"), " — add origdate (or a negative year) when the citation code should show the original date rather than the edition year; citation codes of those entries change.")
+                with l.item(): st_write(s.medium, (s.bold, "Unknown keys"), " — turn on BibConfig(strict=True) once, run stx validate --build, fix the [key?] it reports.")
+                with l.item(): st_write(s.medium, (s.bold, "Check the blocks"), " — stx validate --build --snapshot before.json on the old version, then --against before.json on the new one: the list of blocks whose rendering changed.")
+

@@ -1,7 +1,8 @@
 """Presentation Mode — fullscreen 16/9 slide deck with footer and sidebar controls.
 
 Documents the Presentation API: PresentationConfig, set_presentation_config,
-st_presentation_footer, and add_presentation_options.
+st_presentation_footer, add_presentation_options, and the slide helper
+st_slide / SLIDE_CONTAINER / set_slide_container (0.7.37).
 """
 
 from streamtex import (
@@ -9,7 +10,9 @@ from streamtex import (
     PresentationConfig, set_presentation_config,  # noqa: F401 — API coverage
     st_presentation_footer, add_presentation_options,  # noqa: F401 — API coverage
     ViewMode,  # noqa: F401 — API coverage
+    st_slide, set_slide_container, SLIDE_CONTAINER,  # noqa: F401 — API coverage
 )
+from streamtex.styles import Style
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
@@ -282,4 +285,99 @@ with st.expander("Presenter Controls"):
             Both toggles persist their state in Streamlit session state
             across reruns. The initial values are derived from the
             PresentationConfig (footer=True, fullscreen=True by default).
+        """)
+        st_space("v", 3)
+
+        # --------------------------------------------------------------
+        # One slide — st_slide() (0.7.37)
+        # --------------------------------------------------------------
+        st_write(bs.sub, "One slide — st_slide()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            A block often holds several slides. st_slide() writes the two
+            calls a block would otherwise write by hand for each of them:
+            the break before the slide (cut=True calls st_slide_break()),
+            then the slide container (an st_block). Nothing else.
+
+            The helper is deliberately thin. The title, the marker, the
+            zoom, the alignment and every size stay written in the block,
+            slide by slide — so any slide can be specialised at any time
+            without fighting a helper that decided for you.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import st_slide, st_write, st_zoom
+from streamtex.styles import Style
+from custom.styles import Styles as s
+
+def build():
+    with st_slide():                      # first slide: no break before it
+        st_zoom(120)
+        st_write(s.huge + s.center_txt, "Why containers?", toc_lvl="1")
+
+    with st_slide(cut=True):              # a break, then the slide
+        st_write(s.large, "Three reasons", toc_lvl="+1")
+
+    # This slide only: a style added (+) to the container
+    with st_slide(cut=True, style=Style("min-height: 60vh;", "short_slide")):
+        st_write(s.large, "Questions?")""")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Live example — st_slide(style=...) with a short container, so
+            that the slide fits in this page. The dashed border is part of
+            the per-call style; the title and its size are written here,
+            in the block.
+        """)
+        st_space("v", 1)
+
+        demo_slide = Style("min-height: 20vh; margin: 2vh 0; "
+                           "border: 1px dashed rgba(128,128,128,0.6);",
+                           "pm_demo_slide")
+        with st_slide(style=demo_slide):
+            st_write(s.huge + s.center_txt, "A slide written by st_slide()")
+        st_space("v", 2)
+
+        show_details("""\
+            SLIDE_CONTAINER, the default container:
+
+            min-height: 80vh; margin: 10vh 0; display: flex;
+            flex-direction: column; justify-content: center;
+
+            — at least 80 % of the window, 10 vh above and below, content
+            centred vertically. A style passed with style= is added to it
+            (box + style), so its declarations win for that slide only.
+        """)
+        st_space("v", 2)
+
+        st_write(bs.sub, "One container per book — set_slide_container()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            set_slide_container(style) replaces SLIDE_CONTAINER for every
+            st_slide() of the book. Call it once in book.py — typically
+            with the design system's own slide container. None restores
+            SLIDE_CONTAINER. A per-call style= still applies on top.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# book.py — once, before st_book()
+import streamtex as stx
+from custom.styles import Styles as s
+
+stx.set_slide_container(s.project.containers.slide_center)
+
+# Back to the library default
+stx.set_slide_container(None)""")
+        st_space("v", 1)
+
+        show_details("""\
+            What st_slide() does NOT do, on purpose: no title, no
+            st_marker(), no st_zoom(), no sizes. Writing them in the block
+            keeps every value explicit and visible where the slide is read.
+            st_slide() was promoted from a helper used on 341 slides of a
+            training project; that project keeps working unchanged.
         """)

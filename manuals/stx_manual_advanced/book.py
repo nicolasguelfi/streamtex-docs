@@ -108,6 +108,7 @@ st_book([
     # --- Section 3: Navigation & Book ---
     blocks.bck_navigation_markers,
     blocks.bck_banner_config,
+    blocks.bck_book_defaults,
     blocks.bck_inspector_config,
     blocks.bck_collections_and_discovery,
     blocks.bck_multilingual_documents,
@@ -122,6 +123,7 @@ st_book([
     blocks.bck_gsheet_import,
     blocks.bck_bibliography_references,
     blocks.bck_interactive_and_state,
+    blocks.bck_versioned_facts,
 
     # --- Section 6: Export ---
     blocks.bck_export_aware_widgets,

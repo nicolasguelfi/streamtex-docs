@@ -95,6 +95,43 @@ def build():
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
+        # --- stx deploy diff (0.7.38) ---
+        st_write(bs.sub, "stx deploy diff [PATH]", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Show how the project's Dockerfile, entrypoint.sh and
+            nginx.conf differ from the current StreamTeX templates, as a
+            unified diff (template → project). Nothing is written:
+            stx deploy only generates these files when they are missing,
+            so a project keeps its own copy.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            stx deploy diff
+            stx deploy diff path/to/project
+        """, language="bash", line_numbers=False)
+        st_space("v", 2)
+
+        # --- stx deploy ci (0.7.38) ---
+        st_write(bs.sub, "stx deploy ci [PATH]", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Write .github/workflows/stx-validate.yml: install without the
+            local streamtex source, ruff, then stx validate --build on
+            every push and pull request. --force overwrites an existing
+            workflow file.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            stx deploy ci
+            stx deploy ci --force
+        """, language="bash", line_numbers=False)
+        st_space("v", 2)
+
         # ============================================================
         # Hetzner/Coolify Commands
         # ============================================================
@@ -256,8 +293,9 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Export a StreamTeX project to static HTML. Used by the Dockerfile
-            in dual/static-only serve modes, or standalone for offline archives.
+            Export a StreamTeX project to static HTML. Run by the generated
+            entrypoint at container start-up (dual/static-only serve modes;
+            no longer at image build time), or standalone for offline archives.
         """)
         st_space("v", 1)
 
@@ -292,3 +330,101 @@ def build():
             stx deploy env-sync
         """, language="bash", line_numbers=False)
         st_space("v", 2)
+
+        # ============================================================
+        # Validation and running (0.7.38 / 0.7.39)
+        # ============================================================
+        st_space("v", 2)
+        st_write(bs.heading, "Validation & Running", tag=t.div, toc_lvl="1")
+        st_space("v", 2)
+
+        # --- stx validate ---
+        st_write(bs.sub, "stx validate", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Validates the current project: packs, components, design
+            systems, kits, the project rules of stx.toml, and — since
+            0.7.38 — version coherence (.stx-version / pyproject.toml /
+            uv.lock), hygiene (git conflict markers: error; deprecated
+            stx.toml sections such as `[patterns]`: warning) and, since
+            0.7.40, facts whose source has moved on (warning).
+            Exit codes: 0 clean, 1 warnings, 2 errors.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            stx validate                          # every check except the build
+            stx validate --strict                 # warnings promoted to errors (exit 2)
+            stx validate --build                  # + real build() of every block
+            stx validate --build --book book.py   # only this book (repeatable)
+            stx validate --build --timeout 300    # seconds per book (default 180)
+            stx validate --build --published      # against the PUBLISHED streamtex
+            stx validate --build --snapshot before.json   # HTML fingerprint per block
+            stx validate --build --against before.json    # blocks that render differently
+        """, language="bash", line_numbers=False)
+        st_space("v", 2)
+
+        # --- pre-commit hooks of new projects ---
+        st_write(bs.sub, "Pre-commit hooks of new projects", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            stx project new writes a .pre-commit-config.yaml with ruff and,
+            since 0.7.38, two hooks of pre-commit-hooks: check-merge-conflict
+            (no `<<<<<<<` / `>>>>>>>` marker reaches a commit) and check-toml.
+            stx validate reports the same conflict markers as errors in an
+            existing project.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            repos:
+              - repo: https://github.com/astral-sh/ruff-pre-commit
+                rev: v0.11.2
+                hooks:
+                  - id: ruff
+                    args: [--fix, --exit-non-zero-on-fix]
+              # A merge that leaves <<<<<<< / >>>>>>> markers in 46 files was once
+              # committed and deployed; these hooks stop it before the commit.
+              - repo: https://github.com/pre-commit/pre-commit-hooks
+                rev: v5.0.0
+                hooks:
+                  - id: check-merge-conflict
+                  - id: check-toml
+        """, language="yaml", line_numbers=False)
+        st_space("v", 2)
+
+        # --- stx run --set (0.7.39) ---
+        st_write(bs.sub, "stx run — several documents (--set)", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            stx run [BOOK] runs one project (shortcut for streamlit run).
+            With --set it runs every document declared in the stx.toml
+            `[[run.documents]]` tables (id, book, port) together, in the
+            background, each one receiving `$STX_URL_<ID>` for every
+            document. State and logs live in .stx_run/ next to stx.toml.
+            stx run without these options is unchanged.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+            stx run --set                          # start every declared document
+            stx run --set --doc survey             # only this document id
+            stx run --list                         # declared documents and their state
+            stx run --kill                         # stop them (or --doc ones)
+            stx run --set --fresh                  # stop, clear the page cache, start again
+            stx run --set --lang fr                # URLs carry ?lang=fr
+            stx run --set --ports-offset 100       # add 100 to every declared port
+            stx run --set --open --chrome-profile ~/.stx-projection-chrome
+        """, language="bash", line_numbers=False)
+        st_space("v", 1)
+
+        show_explanation("""\
+            --chrome-profile DIR opens the documents in a dedicated Chrome
+            profile allowed to autoplay media (projection). See the intro
+            manual (CLI Quick Start) for the `[[run.documents]]` declaration.
+        """)
+        st_space("v", 2)
+

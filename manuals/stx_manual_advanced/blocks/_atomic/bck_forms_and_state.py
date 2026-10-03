@@ -1,4 +1,5 @@
 import streamlit as st
+import streamtex as stx
 from streamtex import *
 from streamtex.styles import Style as ns
 from streamtex.enums import Tags as t, ListTypes as lt
@@ -135,3 +136,52 @@ with st_block(s.project.containers.result_box):
 
             Use unique keys for all widgets to avoid conflicts.
         """)
+        st_space("v", 2)
+
+        # --- Section 5: Values that survive pagination (0.7.40) ---
+        st_write(bs.sub, "Values that Survive Pagination — kept_widget()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            In a paginated book a widget lives on ONE page. Streamlit purges
+            a widget's session key as soon as a rerun ends without that
+            widget — so its value holds one page, then falls back to the
+            default on the next one.
+
+            stx.kept_widget(name, default) returns the key= and on_change=
+            of the two-key pattern: the widget keeps its own key and copies
+            its value, on change, into a plain session key the purge never
+            touches. stx.kept_value(name) reads it back, on any page.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# Page 1 — the widget (no value= / index=: the kept value is its initial state)
+st.radio("Language", ["en", "fr"],
+         **stx.kept_widget("bck26_lang", default="en"))
+
+# Any page, before or after — the value, even when the widget is not shown
+lang = stx.kept_value("bck26_lang", "en")""")
+        st_space("v", 1)
+
+        st.radio("Language", ["en", "fr"],
+                 **stx.kept_widget("bck26_lang", default="en"))
+        with st_block(s.project.containers.result_box):
+            st_write(s.large, "kept_value(\"bck26_lang\") = ",
+                     (s.bold, str(stx.kept_value("bck26_lang", "en"))),
+                     " — change it, then turn the page: the value stays.")
+        st_space("v", 1)
+
+        show_details("""\
+            kept_widget(name, default=None) -> dict with key and on_change;
+            kept_value(name, default=None) returns the default before the
+            widget was ever shown.
+
+            Do not pass value= / index= to the widget: Streamlit would
+            reset it each time the page is shown again.
+
+            Keep the language of a projected document in the address
+            instead (see Multilingual Documents): kept_widget is for the
+            reader's choices inside a session.
+        """)
+

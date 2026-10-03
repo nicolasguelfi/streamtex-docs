@@ -152,3 +152,74 @@ st_image(uri=theImageURL, editable=True, name="demo_edit",
             AI generation requires streamtex[ai] and provider
             configuration — see the AI manual for details.
         """)
+        st_space("v", 2)
+
+        # Bounds relative to the window (0.7.37)
+        st_write(bs.sub, "Window bounds — max_vw= / max_vh=", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            Bound one image by the window, per call: max_vw is a
+            percentage of the window width, max_vh of the window height.
+            The image takes min(width, max_vw vw, max_vh vh x ratio) —
+            the largest size inside every bound, never distorted. The
+            ratio is read from the local or served file (or from
+            natural_size=, or from the cropped zone when crop= is set).
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+st_image(uri="crop/crop_demo_screenshot.png",
+         max_vh=30,
+         alt="Never taller than 30% of the window")""")
+        st_space("v", 1)
+
+        st_image(uri="crop/crop_demo_screenshot.png",
+                 max_vh=30,
+                 alt="Never taller than 30% of the window")
+        st_space("v", 1)
+
+        show_details("""\
+            height must stay "auto" with a bound (an explicit height= is
+            refused: the bounds already fix the size). A remote URI
+            without natural_size= has no readable ratio: the bounds then
+            become CSS max-width / max-height (the image is never
+            enlarged). st_video is not covered.
+        """)
+        st_space("v", 2)
+
+        # Explicit placement (0.7.37)
+        st_write(bs.sub, "Placement — align=", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            By default an image follows the alignment of its container
+            (this whole page is inside st_block(s.center_txt), so its
+            images are centred). align="left" | "center" | "right" places
+            one image locally, contradicting its container.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+st_image(uri=theImageURL, width="200px", align="left",
+         alt="Placed on the left of a centred container")""")
+        st_space("v", 1)
+
+        st_image(uri=theImageURL, width="200px", align="left",
+                 alt="Placed on the left of a centred container")
+        st_space("v", 1)
+
+        show_details("""\
+            Design decision: placement is always written with align=.
+            The text-align inside a style passed to st_image does NOT
+            place the image — it applies to the `<img>` itself, so
+
+                st_image(s.center_txt, uri=..., ...)   # does NOT centre
+
+            leaves the image wherever its container puts it. Write
+            st_image(uri=..., align="center") instead. Reinterpreting
+            text-align would have moved images in existing documents
+            (102 blocks of one project changed their HTML when it was
+            tried), so the library keeps the explicit parameter.
+        """)
+

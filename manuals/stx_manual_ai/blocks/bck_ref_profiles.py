@@ -4,7 +4,7 @@ from streamtex import st_write, st_space, st_block, st_grid, st_list
 from streamtex.enums import Tags as t
 from streamtex.styles import Style
 from custom.styles import Styles as s
-from blocks.helpers import show_explanation
+from blocks.helpers import show_code, show_details, show_explanation
 
 
 class BlockStyles:
@@ -163,4 +163,99 @@ def build():
             need presentation optimization, HTML migration tools,
             or library development capabilities.
         """)
+    st_space("v", 1)
+    st_space("v", 1)
+
+    # ── Child profiles (0.7.35) ───────────────────────────────────
+    st_write(bs.sub, "Child Profiles: Parent, then overlay/", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        presentation, documentation and library declare
+        extends = "project" in their manifest.toml. Since streamtex
+        0.7.35, installing a child profile installs the parent's files
+        first, then the child's overlay/ directory on top, then the
+        [shared] files the child declares. Before 0.7.35 the overlay
+        landed in .claude/overlay/, where Claude Code reads nothing; the
+        next update or sync puts the files where they belong.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        streamtex-claude/profiles/presentation/
+        +-- manifest.toml        # [profile] extends = "project"
+        +-- overlay/
+            +-- CLAUDE.md.j2     # replaces the parent's template
+            +-- commands/
+            |   +-- stx-presentation/
+            +-- designer/
+                +-- presentation/
+
+        # stx claude install presentation ./my-deck
+        #   1. every file of profiles/project/ (+ shared references and commands)
+        #   2. overlay/ copied on top, into .claude/
+        #   3. the [shared] skills / agents / import-formats it declares
+    """, language="text", line_numbers=False)
+    st_space("v", 2)
+
+    # ── Project-mode declaration reference (0.7.35) ───────────────
+    st_write(bs.sub, "Project Mode: the [claude] Section", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        In project mode, the profile is declared in the project's
+        stx.toml instead of being chosen once at install time. Every
+        key below is read by stx claude sync and checked by
+        stx validate.
+    """)
+    st_space("v", 1)
+
+    with st_grid(cols=2, cell_styles=s.container.paddings.small_padding
+                 + s.container.borders.solid_border) as g:
+        with g.cell():
+            st_write(bs.feature_label, "mode")
+        with g.cell():
+            st_write(bs.feature_value,
+                     "\"project\" turns project mode on. Absent: the classic "
+                     "install / update.")
+        with g.cell():
+            st_write(bs.feature_label, "profile")
+        with g.cell():
+            st_write(bs.feature_value,
+                     "Required with mode = \"project\": project, presentation, "
+                     "documentation or library.")
+        with g.cell():
+            st_write(bs.feature_label, "include")
+        with g.cell():
+            st_write(bs.feature_value,
+                     "Extra profiles merged in, e.g. [\"library\"]. Default [].")
+        with g.cell():
+            st_write(bs.feature_label, "exclude")
+        with g.cell():
+            st_write(bs.feature_value,
+                     "Groups left out, matched against the folder or file "
+                     "names under .claude/, e.g. [\"stx-ce\", \"ce\"]. "
+                     "An exclude that matches nothing is reported by "
+                     "stx validate. Default [].")
+    st_space("v", 1)
+
+    show_code("""\
+        # stx.toml — a presentation project without the CE and PE workflows
+        [claude]
+        mode = "project"
+        profile = "presentation"
+        include = []
+        exclude = ["stx-ce", "ce", "stx-pe", "pack-engineering"]
+    """, language="toml", line_numbers=False)
+    st_space("v", 1)
+
+    show_details("""\
+        stx claude sync records the result in .claude/stx.lock
+        (format = 1): profile, include, exclude, the streamtex-claude
+        revision and the sha256 of every installed file. Commit stx.toml
+        and .claude/stx.lock; the installed copies are ignored by git.
+        Note: stx claude update run with streamtex 0.7.34 or older does
+        not know the lock and removes it as an orphan — upgrade
+        streamtex on every machine that works on a project-mode project.
+    """)
     st_space("v", 1)

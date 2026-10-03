@@ -161,6 +161,81 @@ def build():
         language="toml")
     st_space("v", 2)
 
+    # ── settings.json merge (0.7.35) ──────────────────────────────
+    st_write(bs.sub, "settings.json: Merged, Never Replaced", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A profile's settings.json is merged into the project's existing
+        .claude/settings.json (streamtex 0.7.35+): missing keys are
+        added, permission lists become the union of both, and on a
+        conflicting value your value wins. Nothing of yours is removed.
+        stx claude check treats a file that already contains everything
+        the profile sets as up to date.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        // Your .claude/settings.json before the install
+        {
+          "permissions": {
+            "allow": ["Bash(git add *)", "Bash(make *)"]
+          }
+        }
+
+        // After stx claude install / update / sync with the project profile
+        {
+          "permissions": {
+            "allow": [
+              "Bash(git add *)",
+              "Bash(make *)",
+              "Bash(uv run *)",
+              "Bash(uv sync*)",
+              "Bash(uv add *)",
+              "Bash(git status*)",
+              "Bash(git diff*)",
+              "Bash(git log*)",
+              "Bash(ls *)",
+              "Bash(gh issue *)",
+              "Bash(gh auth *)",
+              "Bash(gh repo view *)"
+            ]
+          }
+        }""",
+        language="json", line_numbers=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        Since streamtex-claude 0.3.5, the project profile no longer
+        grants git add and git commit: only read-only git commands
+        (status, diff, log) stay allowed. Because settings are merged
+        and never pruned, an existing install keeps the git add / git
+        commit permissions it already has; remove them by hand if you
+        want Claude Code to ask before staging or committing.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        // profiles/project/settings.json (streamtex-claude 0.3.5)
+        {
+          "permissions": {
+            "allow": [
+              "Bash(uv run *)",
+              "Bash(uv sync*)",
+              "Bash(uv add *)",
+              "Bash(git status*)",
+              "Bash(git diff*)",
+              "Bash(git log*)",
+              "Bash(ls *)",
+              "Bash(gh issue *)",
+              "Bash(gh auth *)",
+              "Bash(gh repo view *)"
+            ]
+          }
+        }""",
+        language="json", line_numbers=False)
+    st_space("v", 2)
+
     # ── Tips ──────────────────────────────────────────────────────
     with st_block(s.project.containers.tip_callout):
         st_write(s.project.titles.tip_label, "Tip: Extend, Don't Duplicate")

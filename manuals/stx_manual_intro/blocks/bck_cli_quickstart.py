@@ -102,6 +102,76 @@ stx project new myslides --template slides
 """, language="bash", line_numbers=False)
     st_space("v", 2)
 
+    # --- stx run ---
+    st_write(bs.sub, "Run a project", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        stx run starts the project in the current directory (a shortcut
+        for uv run streamlit run book.py) and opens it in the browser.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+stx run                       # book.py of the current directory
+stx run path/to/book.py       # another book
+stx run --port 8502           # a fixed port
+stx run --force               # free the port first
+stx run --headless            # no browser
+""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    # --- stx run --set (0.7.39) ---
+    st_write(bs.sub, "Run several documents together", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A project made of several documents (decks, modules, a hub)
+        declares them once in its stx.toml, one `[[run.documents]]`
+        table each: an id, the book, a fixed port. stx run --set then
+        starts all of them in the background. Every document receives
+        one environment variable per document, `STX_URL_<ID>` (the id in
+        upper case, - becomes _), holding that document's address — the
+        links between documents need no hard-coded port.
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+# stx.toml (at the root of the project)
+[[run.documents]]
+id = "opening"                               # $STX_URL_OPENING
+book = "modules/opening/book.py"
+port = 8731
+
+[[run.documents]]
+id = "survey"                                # $STX_URL_SURVEY
+book = "modules/survey/book.py"
+port = 8732
+""", language="toml", line_numbers=False)
+    st_space("v", 1)
+
+    show_code("""\
+stx run --set                    # start every declared document
+stx run --set --doc survey       # only this one
+stx run --list                   # documents, ports, state
+stx run --kill                   # stop them (--doc to target one)
+stx run --set --fresh            # stop, clear the page cache, start again
+stx run --set --lang fr          # the URLs carry ?lang=fr
+stx run --set --ports-offset 100 # 8831, 8832: a second set side by side
+stx run --set --open             # open the documents in the browser
+stx run --set --open --chrome-profile ~/.stx-projection-chrome
+""", language="bash", line_numbers=False)
+    st_space("v", 1)
+
+    show_details("""\
+        State and logs live in `.stx_run/` next to stx.toml (one
+        `<id>.json` and `<id>.log` per document). The project's .venv is
+        used when present. --chrome-profile opens a dedicated Chrome
+        profile allowed to autoplay media, for projection. stx run
+        without these options behaves as before.
+    """)
+    st_space("v", 2)
+
     # --- stx project validate ---
     st_write(bs.sub, "Validate project structure", toc_lvl="+1")
     st_space("v", 1)

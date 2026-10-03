@@ -446,6 +446,42 @@ in a higher-priority source directory.""")
     st_space("v", 3)
 
     # ========================================================================
+    # SECTION 7b: Shared directories without a second registry (0.7.39)
+    # ========================================================================
+    st_write(bs.section, "Shared Directories in ProjectBlockRegistry", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+Since 0.7.39 a project's own registry can also reach shared blocks:
+ProjectBlockRegistry(blocks_dir, shared_dirs=[...]). The difference with
+LazyBlockRegistry is the namespace: shared blocks are reached under the
+module's own blocks.* names, a local block always wins, and the shared
+directories are scanned recursively.""")
+    st_space("v", 1)
+
+    show_code("""\
+from pathlib import Path
+from streamtex import LazyBlockRegistry, ProjectBlockRegistry
+
+shared_dir = Path(__file__).parent.parent / "shared-blocks" / "blocks"
+
+# Two namespaces: the book says where each block comes from
+shared = LazyBlockRegistry([str(shared_dir)])          # shared.bck_footer_training
+
+# One namespace: blocks/__init__.py of the module
+registry = ProjectBlockRegistry(Path(__file__).parent,
+                                shared_dirs=[shared_dir])  # blocks.bck_footer_training
+registry.list_shared_blocks()      # shared names with no local file
+""")
+    st_space("v", 1)
+
+    show_details("""\
+Iteration, len() and list_blocks() of a ProjectBlockRegistry keep the
+module's own blocks: st_book(registry) is unchanged when shared_dirs is
+added. See the Shared Blocks Usage chapter for the full module layout.""")
+    st_space("v", 3)
+
+    # ========================================================================
     # SECTION 8: Best Practices
     # ========================================================================
     st_write(bs.section, "Best Practices", toc_lvl="+1")

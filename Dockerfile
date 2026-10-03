@@ -28,31 +28,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Cache-bust: Coolify passes SOURCE_COMMIT automatically. Changing this ARG
-# invalidates all subsequent layers, ensuring uv sync fetches the latest PyPI packages.
+# invalidates all subsequent layers.
 ARG SOURCE_COMMIT=unknown
 
 # Install dependencies
 # .stx-version is copied first: changing the required version invalidates the cache.
-# --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path
-# --upgrade-package streamtex forces latest PyPI version regardless of uv.lock
+# --no-sources ignores [tool.uv.sources] so uv resolves from PyPI instead of local path,
+# keeping the streamtex version recorded in uv.lock — the version the CI tests.
+# (No --upgrade-package: it installed the latest PyPI release, untested here.)
 # Then strip the sources section so "uv run" won't try to re-resolve the local path
 COPY .stx-version pyproject.toml uv.lock ./
-RUN uv sync --no-sources --no-dev --upgrade-package streamtex && \
+RUN uv sync --no-sources --no-dev && \
     sed -i '/^\[tool\.uv\.sources\]/,/^$/d' pyproject.toml && \
     uv pip install rich jinja2 && \
     uv run playwright install --with-deps chromium
 
-# Fail the build if the installed streamtex version is older than required.
+# Fail the build unless the installed streamtex is exactly the pinned version.
 # Uses importlib.metadata (package registry) — NOT streamtex.__version__
 # which was historically hardcoded and could be stale.
 RUN REQUIRED=$(cat .stx-version | tr -d '[:space:]') && \
     INSTALLED=$(uv run python -c "from importlib.metadata import version; print(version('streamtex'))") && \
-    echo "streamtex: required >= ${REQUIRED}, installed ${INSTALLED}" && \
-    uv run python -c "import sys; \
-r = tuple(int(x) for x in '${REQUIRED}'.split('.')); \
-i = tuple(int(x) for x in '${INSTALLED}'.split('.')); \
-sys.exit(1) if i < r else sys.exit(0)" || \
-    { echo "ERROR: streamtex ${INSTALLED} < ${REQUIRED} — aborting build"; exit 1; }
+    echo "streamtex: pinned ${REQUIRED}, installed ${INSTALLED}" && \
+    [ "${INSTALLED}" = "${REQUIRED}" ] || \
+    { echo "ERROR: streamtex ${INSTALLED} != ${REQUIRED} (.stx-version) — aborting build"; exit 1; }
 
 # Copy all manuals (shared-blocks is needed by LazyBlockRegistry)
 COPY manuals/ ./manuals/

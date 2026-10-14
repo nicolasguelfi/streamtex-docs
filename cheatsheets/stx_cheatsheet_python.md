@@ -284,7 +284,7 @@ def st_write(
     hover: bool = True,
     toc_lvl: Optional[str] = None,
     label: str = "",
-    marker: Optional[bool] = None,
+    marker: bool | MarkerRoles | Literal["attach"] | None = None,
 )
 ```
 
@@ -334,6 +334,8 @@ st_write(s.big, "Custom label", toc_lvl="2", label="Short TOC Label")
 ```python
 st_write(s.Large, "Title", toc_lvl="1", marker=True)   # force marker
 st_write(s.Large, "Title", toc_lvl="1", marker=False)   # suppress marker
+st_write(s.Large, "Title", toc_lvl="2", marker=MarkerRoles.HIDDEN)  # TOC + stop, not listed
+st_write(s.Large, "Title", toc_lvl="2", marker="attach")  # link to the slide's own marker
 ```
 
 **HTML tags:**
@@ -985,6 +987,7 @@ class NumberingMode:
 class MarkerConfig:
     show_nav_ui: bool = True
     auto_marker_on_toc: int | bool = False  # True=all, int N=up to level N
+    toc_marker_roles: MarkerRoles | dict[int, MarkerRoles] = MarkerRoles.NAMED  # roles of those markers
     nav_position: str = "bottom-right"      # or "bottom-center"
     nav_label_chars: int = 40
     popup_open: bool = False
@@ -995,19 +998,30 @@ class MarkerConfig:
 ### st_marker
 
 ```python
-def st_marker(label: str = "", visible: bool = False, hidden: bool = False)
+def st_marker(label: str = "", visible: bool = False, hidden: bool | None = None,
+              key: str | None = None, *, stop: bool | None = None,
+              listed: bool | None = None, toc_lvl: str | None = None,
+              roles: MarkerRoles | None = None)
 ```
 
 ```python
-st_marker("Section Start")
-st_marker("Nav stop", visible=True)    # dashed line visible
-st_marker("Silent", hidden=True)       # works for PageDown but not in list
+st_marker("Section Start")                       # stop + listed
+st_marker("Nav stop", visible=True)              # dashed line in the content (not about "listed")
+st_marker("Silent", hidden=True)                 # stop, not in the marker list
+st_marker("Part B", stop=False)                  # listed, no arrow press
+st_marker("Annex", stop=False, listed=False, toc_lvl="1")  # TOC entry + anchor only
+st_marker("X", roles=MarkerRoles.HIDDEN)         # same as hidden=True
 ```
+
+Three independent roles (#116): `stop`, `listed`, `in TOC`; all 8
+combinations are valid. `MarkerRoles(stop=True, listed=True, toc_lvl=None)`,
+constants `NAMED`, `HIDDEN`, `ANCHOR`.
 
 ### st_slide_break / SlideBreakConfig
 
 ```python
-def st_slide_break()
+def st_slide_break(marker_label="", config=None, spacing=None, zoom=None,
+                   marker_hidden=None, *, marker: bool | MarkerRoles | None = None)
 ```
 
 ```python
@@ -1024,7 +1038,8 @@ class SlideBreakConfig:
     thickness: str = "1px"
     color: str = "128, 128, 128"  # RGB values
     opacity: float = 0.5
-    marker: bool = True
+    marker: bool | MarkerRoles = True   # False = no marker; MarkerRoles = exact roles
+    marker_hidden: bool = True          # listed role of a True marker
 ```
 
 ```python

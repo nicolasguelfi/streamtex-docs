@@ -1017,6 +1017,10 @@ Three independent roles (#116): `stop`, `listed`, `in TOC`; all 8
 combinations are valid. `MarkerRoles(stop=True, listed=True, toc_lvl=None)`,
 constants `NAMED`, `HIDDEN`, `ANCHOR`.
 
+One number per marker, its slide number (#117): the counter, the footer, the
+popup and the Markers tab (`4–8. Section B`), the page titles, and the deep
+link `?slide=n` (`page_url(base, slide=n)`).
+
 ### st_slide_break / SlideBreakConfig
 
 ```python

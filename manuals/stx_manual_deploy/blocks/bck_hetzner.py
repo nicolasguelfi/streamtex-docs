@@ -186,7 +186,10 @@ def build():
         st_space("v", 1)
 
         show_explanation(
-            "Two files track deployment state and credentials."
+            "These files track deployment state and hold the credentials. The secret ones "
+            "must be ignored by git: stx deploy preflight checks it (a failure for "
+            ".stx-deploy.env and .stx-passwords.toml, a warning for .env), and the generated "
+            ".dockerignore keeps all three out of the image."
         )
         st_space("v", 1)
 
@@ -211,6 +214,19 @@ def build():
                                     "Service UUIDs, last deploy timestamps, health status")
             with g.cell(): st_write(s.project.colors.success_green + s.large, "Yes")
 
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large, ".env")
+            with g.cell(): st_write(s.large,
+                                    "Optional: COOLIFY_URL / COOLIFY_API_TOKEN, read after "
+                                    ".stx-deploy.env (then environment variables, then "
+                                    ".stx-deploy.json)")
+            with g.cell(): st_write(s.project.colors.warning_red + s.large, "No (.gitignore)")
+
+            with g.cell(): st_write(s.project.colors.accent_teal + s.large, ".stx-passwords.toml")
+            with g.cell(): st_write(s.large,
+                                    "Plain passwords of the login screen (stx deploy lock); "
+                                    "only their hashes reach Coolify")
+            with g.cell(): st_write(s.project.colors.warning_red + s.large, "No (.gitignore)")
+
         st_space("v", 2)
 
         # --- Daily management ---
@@ -224,16 +240,19 @@ def build():
 
         show_code("""\
             # Check status of all deployed services
-            stx deploy status
+            stx deploy status coolify
 
-            # Rebuild and redeploy (full Docker build)
-            stx deploy update
+            # Rebuild and redeploy a service (full Docker build)
+            stx deploy update docs-intro
 
             # Quick restart (no rebuild, faster)
-            stx deploy update --quick
+            stx deploy update docs-intro --quick
 
-            # Redeploy a specific service
-            stx deploy update docs-intro
+            # Without a target: pick the service in a list
+            stx deploy update
+
+            # Protect it with a login screen (see Access Control)
+            stx deploy lock docs-intro
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -376,14 +395,16 @@ def build():
             with g.cell(): st_write(s.bold, "Components")
             with g.cell(): st_write(s.bold, "Use case")
 
-            with g.cell(): st_write(s.large, "streamlit-only")
-            with g.cell(): st_write(s.large, "Streamlit (:8501)")
-            with g.cell(): st_write(s.large, "Default, fully interactive, no Nginx layer")
-
             with g.cell(): st_write(s.large, "dual")
             with g.cell(): st_write(s.large, "Nginx (:80) + Streamlit")
-            with g.cell(): st_write(s.large, "Static HTML at /html/ + interactive at /. "
+            with g.cell(): st_write(s.large, "Default. Static HTML at /html/ + interactive at /. "
                                     "Auto-fallback to static if Streamlit is down.")
+
+            with g.cell(): st_write(s.large, "streamlit-only")
+            with g.cell(): st_write(s.large, "Streamlit (:8501)")
+            with g.cell(): st_write(s.large, "Fully interactive, no Nginx layer: no /html/, and no "
+                                    "login screen — with stx deploy lock (session) the container "
+                                    "refuses to start.")
 
             with g.cell(): st_write(s.large, "static-only")
             with g.cell(): st_write(s.large, "Nginx (:80)")
@@ -393,8 +414,8 @@ def build():
         st_space("v", 1)
 
         st_code(s.none, language="bash", code="""
-            # Deploy in dual mode
-            stx deploy hetzner --serve-mode dual .
+            # Deploy (dual mode is the default)
+            stx deploy hetzner .
 
             # Switch existing service to static-only
             stx deploy update docs-intro --serve-mode static-only
@@ -406,12 +427,15 @@ def build():
 
         show_details(
             "**Start-up failures are visible (0.7.38).** In every mode, the generated "
-            "entrypoint warms the page cache and exports the static HTML at start-up. "
+            "entrypoint exports the static HTML at start-up, and warms the page cache "
+            "(except in static-only). "
             "If one of them fails, the service still starts, but the error is written "
             "to the container log (`[entrypoint] ERROR: ...`, visible in Coolify's logs) "
             "and appended to `/app/STX_ERRORS.txt`, outside the folder nginx serves. "
             "The Dockerfile no longer exports at build time.\n\n"
-            "Services deployed before 0.7.38 keep their own `entrypoint.sh`: "
-            "`stx deploy diff` shows how it differs from the current template."
+            "Services deployed before 0.7.41 keep their own `entrypoint.sh`: those "
+            "generated by 0.7.38 to 0.7.40 write STX_ERRORS.txt inside the folder nginx "
+            "serves, where it is public at /html/STX_ERRORS.txt. `stx deploy diff` shows "
+            "how the files differ from the current templates."
         )
 

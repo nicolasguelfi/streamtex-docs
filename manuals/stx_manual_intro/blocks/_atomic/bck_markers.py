@@ -18,7 +18,9 @@ def build():
         show_explanation("""\
             Markers let you place navigation waypoints anywhere in content.
 
-            Use ArrowRight/ArrowLeft to jump between them.
+            Use ArrowRight/ArrowLeft (or the ◀ ▶ buttons of the floating
+            widget) to jump from one stop to the next; the ☰ button lists
+            the named ones.
         """)
         st_space("v", 2)
 
@@ -29,15 +31,15 @@ def build():
         st_space("v", 1)
 
         show_code("""\
-# Place a visible marker
+# A marker drawn as a dashed line with its label
 st_marker("Section Start", visible=True)
 
-# Place an invisible marker (default)
-st_marker("Hidden Waypoint")""")
+# The same kind of marker, not drawn (the default): a stop, listed
+st_marker("Invisible Waypoint")""")
         st_space("v", 2)
 
         # --- Invisible marker ---
-        st_marker("Hidden Waypoint")
+        st_marker("Invisible Waypoint")
 
         st_write(bs.sub, "Auto-markers from TOC", toc_lvl="+1")
         st_space("v", 1)
@@ -64,7 +66,13 @@ st_write(s.huge, "Appendix", toc_lvl="1", marker=False)""")
         st_marker("End of Marker Demo", visible=True)
 
         show_details("""\
-            The nav widget shows your position and total marker count.
+            The nav widget shows your position as "n / N": the current
+            slide number over the number of stops.
+
+            Markers can do more: a marker can be a stop without being
+            listed, listed without being a stop, or linked to a TOC entry.
+            The advanced manual's Marker Navigation chapter covers these
+            roles, slides and deep links.
 
             Keyboard navigation skips focused inputs for form safety.
 

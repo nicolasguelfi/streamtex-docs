@@ -32,13 +32,22 @@ def build():
 
         show_explanation("""\
             Run pre-deployment checks before deploying to any
-            platform. Validates project structure, dependencies,
-            and configuration files.
+            platform: book.py, enableStaticServing, the streamtex
+            dependency, git status, secret files present and whether git
+            ignores them (.stx-deploy.env and .stx-passwords.toml must be
+            ignored: failure; .env: warning), static/, Dockerfile,
+            .stx-version (which the generated Dockerfile copies),
+            .dockerignore (present, and excluding the secret files),
+            local packs with relative paths, then tests and ruff.
+            stx deploy docker / hetzner run the same checks first and stop
+            on a failure.
         """)
         st_space("v", 1)
 
         show_code("""\
-            stx deploy preflight
+            stx deploy preflight                          # the current project
+            stx deploy preflight path/to/project
+            stx deploy preflight --skip-tests --skip-lint # structure only
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -47,9 +56,9 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Build a Docker image and run it locally.
-            Uses the repository Dockerfile with the correct
-            FOLDER build-arg for your project.
+            Build a Docker image of the project and run it locally.
+            Generates Dockerfile, entrypoint.sh, nginx.conf and
+            .dockerignore first when they are missing.
         """)
         st_space("v", 1)
 
@@ -57,8 +66,9 @@ def build():
             # Build and run with default settings
             stx deploy docker
 
-            # Specify a custom port
+            # Specify a custom port, an image tag, or build only
             stx deploy docker --port 8502
+            stx deploy docker --tag my-docs --build-only
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -100,9 +110,9 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Show how the project's Dockerfile, entrypoint.sh and
-            nginx.conf differ from the current StreamTeX templates, as a
-            unified diff (template → project). Nothing is written:
+            Show how the project's Dockerfile, entrypoint.sh, nginx.conf
+            and .dockerignore differ from the current StreamTeX templates,
+            as a unified diff (template → project). Nothing is written:
             stx deploy only generates these files when they are missing,
             so a project keeps its own copy.
         """)
@@ -237,11 +247,14 @@ def build():
         st_space("v", 1)
 
         show_code("""\
-            # Deploy the default project (docs collection)
+            # Deploy the project of the current directory
             stx deploy hetzner
 
-            # Deploy a specific project
-            stx deploy hetzner projects/my_project
+            # Deploy a specific project, with a subdomain
+            stx deploy hetzner projects/my_project --subdomain my-project
+
+            # Serve mode: dual (default), static-only or streamlit-only
+            stx deploy hetzner projects/my_project --serve-mode static-only
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -250,21 +263,26 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Rebuild and redeploy services on Coolify. Without
-            arguments, redeploys all services. Use --quick for
-            a restart without a full Docker rebuild.
+            Rebuild and redeploy a service on Coolify. TARGET is a
+            service name, a subdomain or a Coolify UUID; without it, the
+            services are listed and you pick one. Use --quick for a
+            restart without a full Docker rebuild, --serve-mode to change
+            the serve mode first.
         """)
         st_space("v", 1)
 
         show_code("""\
-            # Rebuild all services
+            # Pick the service in a list, then rebuild it
             stx deploy update
 
-            # Quick restart (no rebuild)
-            stx deploy update --quick
-
-            # Redeploy a specific service
+            # Rebuild a specific service
             stx deploy update docs-intro
+
+            # Quick restart (no rebuild)
+            stx deploy update docs-intro --quick
+
+            # Change the serve mode, then rebuild
+            stx deploy update docs-intro --serve-mode static-only
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -304,6 +322,10 @@ def build():
             stx export html --output /app/static-html/ ./manuals/stx_manual_intro
             stx export html --lang fr .                  # <html lang="fr">
             STX_LANG=fr stx export html --suffix -fr .   # env drives blocks AND <html lang>; writes <project>-fr.html
+            stx export html --html-mode paginated .      # one file per page of the page map
+            stx export html --html-mode both .           # the continuous file + one file per page
+            stx export html --asset-mode external .      # media in a data/ folder instead of base64
+            stx export html --theme light --no-nav .     # forced theme, content only
         """, language="bash", line_numbers=False)
         st_space("v", 1)
 
@@ -313,21 +335,39 @@ def build():
             appended to the output basename so one directory can hold every
             language. See the *Multilingual Documents* chapter of the
             advanced manual for the one-export-per-language loop.
+            `--html-mode` is `continuous` (one file), `paginated` (one file
+            per page, in `<base>/pages/`) or `both`; without it, the module's
+            `st_book(html_export_mode=…)` decides (also a `[book.defaults]`
+            key of stx.toml). Other options: `--title`, `--theme-bg`,
+            `--theme-text`.
         """)
         st_space("v", 2)
 
-        # --- stx deploy env-sync ---
-        st_write(bs.sub, "stx deploy env-sync", toc_lvl="+1")
+        # --- stx deploy lock / unlock / passwd / auth-status (0.7.44) ---
+        st_write(bs.sub, "stx deploy lock / unlock / passwd / auth-status", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            Sync environment variables to deployed services.
-            Reads from .stx-deploy.env and pushes to Coolify.
+            Access control of a Coolify application (see the Access
+            Control chapter). lock turns a mode on — session (the login
+            screen, default), stx-password (the keypad) or basic (Coolify's
+            HTTP Basic Authentication); passwd re-applies
+            .stx-passwords.toml; unlock turns modes off (all by default);
+            auth-status shows every mode, never a secret. Each change
+            restarts the application and its replicas unless --no-restart.
         """)
         st_space("v", 1)
 
         show_code("""\
-            stx deploy env-sync
+            stx deploy lock docs-intro                        # login screen on / and /html/
+            stx deploy lock docs-intro --faces live           # only the app
+            stx deploy lock docs-intro --mode stx-password    # the keypad (prompted)
+            stx deploy lock docs-intro --mode basic --user teacher
+            stx deploy passwd docs-intro --section course-2026
+            stx deploy auth-status docs-intro
+            stx deploy unlock docs-intro --mode basic --no-restart
+            # Common options: --path DIR (where .stx-passwords.toml is), --yes
+            # lock / passwd: --file, --section, --faces
         """, language="bash", line_numbers=False)
         st_space("v", 2)
 
@@ -348,7 +388,12 @@ def build():
             0.7.38 — version coherence (.stx-version / pyproject.toml /
             uv.lock), hygiene (git conflict markers: error; deprecated
             stx.toml sections such as `[patterns]`: warning) and, since
-            0.7.40, facts whose source has moved on (warning).
+            0.7.40, facts whose source has moved on (warning). Since
+            0.7.41 it also warns about the stx.toml sections read at run
+            time: `[book.defaults]` keys outside the closed list (a typo
+            used to be a log line at render time) and `[[run.documents]]`
+            entries that stx run --set would refuse (missing id, book or
+            port, duplicate id or port, book not found).
             Exit codes: 0 clean, 1 warnings, 2 errors.
         """)
         st_space("v", 1)
@@ -360,7 +405,7 @@ def build():
             stx validate --build --book book.py   # only this book (repeatable)
             stx validate --build --timeout 300    # seconds per book (default 180)
             stx validate --build --published      # against the PUBLISHED streamtex
-            stx validate --build --snapshot before.json   # HTML fingerprint per block
+            stx validate --build --snapshot before.json   # fingerprint of what each block shows
             stx validate --build --against before.json    # blocks that render differently
         """, language="bash", line_numbers=False)
         st_space("v", 2)

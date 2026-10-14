@@ -140,11 +140,58 @@ Buffer lifecycle:
 2. append(html)         — add fragment to buffer
    push(open_tag)       — open a nested container
    pop(close_tag)       — close a nested container
-3. generate_full_html() — produce self-contained HTML file
+3. generate_full_html() — produce one complete HTML document
    |
-   +-> wraps fragments in <html><head>...<body>...</body></html>
-   +-> injects page title, width, and base styles
-   +-> returns a single string ready for download""", language="text")
+   +-> wraps fragments in <html><head>...<body><div class="streamtex-page">
+   +-> inlines default.css, injects page title, width, and base styles
+   +-> returns one string: the continuous document""", language="text", wrap=False)
+        st_space("v", 2)
+
+        # --- 7. Paginated export: page sentinels ---
+        st_write(bs.sub, "Paginated export: page sentinels", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            `stx export html --html-mode paginated | both` writes one
+            file per page of the page map. The document is still built
+            once, as one string; it is cut afterwards, at marks the
+            page-cache build leaves in it.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+stx export html --html-mode paginated  (cli/export_cmd.py)
+   |
+   +-> sets book._export_page_sentinels = True, runs book.py headless
+   |     the page-cache build computes the page map (paginate_by)
+   |     and inserts <!--stx-page:N--> as a top-level fragment where
+   |     page N starts (export_insert_root); a start inside an open
+   |     container cannot be cut and stays with the previous page
+   |
+   +-> continuous file  = strip_page_sentinels(html)          (export.py)
+   +-> page files       = build_page_documents(html, pages, toc)
+   |                       (export_paginate.py: split_pages() cuts the
+   |                        <div class="streamtex-page"> body at the
+   |                        sentinels, each piece gets the same <head>
+   |                        and tail; page_file_names() names them after
+   |                        their block, never with a number;
+   |                        strip_head_break() drops the break at the
+   |                        head of a page)
+   +-> enrich_export_html(..., page_nav={"mode", "files", "here", ...})
+   |                       whole TOC + search index in every file,
+   |                       arrows that cross files, view button ("both")
+   +-> entry file       = build_entry_html(files_by_page, "pages/", ...)
+                           (mode "paginated": resolves ?marker=,
+                            ?slide=, ?page=, #anchor to its page file)""",
+                  language="text", wrap=False)
+        st_space("v", 1)
+
+        show_details("""\
+            Sentinels are only inserted when a paginated export is
+            requested; the live app and the continuous export never
+            carry them. The page map is the one of `st_book(paginate_by=...)`,
+            so the page files follow the same pages as the paginated app.
+        """)
         st_space("v", 2)
 
         show_details("""\

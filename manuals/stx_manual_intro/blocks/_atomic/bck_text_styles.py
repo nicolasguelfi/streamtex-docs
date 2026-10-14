@@ -11,8 +11,7 @@ class BlockStyles:
     label = s.bold + s.large
     cell = (s.container.borders.solid_border
             + s.container.paddings.small_padding
-            + s.center_txt
-            + s.container.layouts.vertical_center_layout)
+            + s.cell_center)
 bs = BlockStyles
 
 def build():
@@ -53,27 +52,33 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Predefined sizes from GIANT (196pt) to tiny (4pt),
-            plus a factory method.
+            Predefined sizes from GIANT (196pt) to tiny (4pt), plus a
+            factory method. The values below are the desktop ones: the
+            named sizes are responsive and shrink below 1024px (tablet)
+            and 480px (mobile), e.g. s.Large is 48pt, 36pt, then 26pt,
+            and s.HUGE 104pt, 69pt, then 45pt.
         """)
         st_space("v", 1)
 
         show_code("""\
-st_write(s.huge, "huge (80pt)")
-st_write(s.Large, "Large (48pt)")
-st_write(s.large, "large (32pt)")
-st_write(s.small, "small (8pt)")""")
+st_write(s.huge, "huge (80pt desktop)")
+st_write(s.Large, "Large (48pt desktop)")
+st_write(s.large, "large (32pt desktop)")
+st_write(s.small, "small (8pt desktop)")""")
         st_space("v", 1)
 
-        st_write(s.huge, "huge (80pt)")
-        st_write(s.LARGE, "LARGE (64pt)")
-        st_write(s.Large, "Large (48pt)")
-        st_write(s.large, "large (32pt)")
-        st_write(s.big, "big (24pt)")
-        st_write(s.medium, "medium (16pt)")
-        st_write(s.little, "little (12pt)")
-        st_write(s.small, "small (8pt)")
-        st_write(s.tiny, "tiny (4pt)")
+        st_write(s.giant, "giant (112pt desktop)")
+        st_write(s.HUGE, "HUGE (104pt desktop)")
+        st_write(s.Huge, "Huge (96pt desktop)")
+        st_write(s.huge, "huge (80pt desktop)")
+        st_write(s.LARGE, "LARGE (64pt desktop)")
+        st_write(s.Large, "Large (48pt desktop)")
+        st_write(s.large, "large (32pt desktop)")
+        st_write(s.big, "big (24pt desktop)")
+        st_write(s.medium, "medium (16pt desktop)")
+        st_write(s.little, "little (12pt desktop)")
+        st_write(s.small, "small (8pt desktop)")
+        st_write(s.tiny, "tiny (4pt desktop)")
         st_space("v", 1)
 
         show_code("""\

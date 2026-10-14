@@ -70,8 +70,8 @@ def build():
             st_space("v", 0.5)
             st_write(
                 s.text_sm + s.project.colors.neutral_gray,
-                "Named sizes from a fixed scale. Familiar but tied to "
-                "absolute pt values and not responsive.",
+                "Named sizes from GIANT to tiny. Responsive: their pt "
+                "values change at 1024px and 480px.",
             )
 
         with st_block(bs.card):
@@ -162,21 +162,23 @@ def build():
     )
     st_space("v", 2)
 
-    # ── Info callout — they are all responsive via CSS variables ─────
+    # ── Info callout — which systems are responsive ─────────────────
     with st_block(s.project.containers.tip_callout):
         st_write(s.text_lg + s.bold + s.project.colors.primary_blue,
-                 "All three systems live behind CSS variables")
+                 "Two of the three systems are responsive")
         st_space("v", 0.5)
         st_write(
             s.text_base,
-            "Every token compiles to ",
+            "The indexed tokens compile to ",
             (s.bold, "var(--stx-scale-N, fallback)"),
-            " under the hood. Resize the browser past 1024px or 480px to "
-            "see the indexed paliers shrink automatically — the absolute "
-            "pt and semantic sizes stay constant by design. Switching the "
-            "base via ",
+            ", the semantic sizes to ",
+            (s.bold, "var(--stx-<name>-size, fallback)"),
+            ". Resize the browser past 1024px or 480px: both shrink "
+            "automatically (s.Large: 48pt, 36pt, 26pt). The absolute pt "
+            "sizes are plain values and stay constant by design. Switching "
+            "the base via ",
             (s.bold, "st_book(scale=ScaleConfig(base_pt_desktop=20))"),
-            " rescales every palier proportionally on every breakpoint.",
+            " rescales every indexed palier proportionally on every breakpoint.",
         )
 
     st_space("v", 2)

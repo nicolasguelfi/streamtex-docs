@@ -49,16 +49,16 @@ def build():
 # Vanilla project (creates ./mypack/ as the primary local pack)
 stx project new my-app
 
-# Project that pulls a starter kit from streamtex-design
-stx project new my-app --kit streamtex-design:project-default
+# Project that pulls a starter kit from streamtex-pack-design
+stx project new my-app --kit streamtex-pack-design:project-default
 
 # Project that pulls multiple packs (kit pack + an extra one)
 stx project new my-app \\
-    --kit streamtex-design:slides-modern-dark \\
+    --kit streamtex-pack-design:slides-modern-dark \\
     --pack github.com/your-org/your-pack
 
 # Skip the primary local pack (only consume external packs)
-stx project new my-app --kit streamtex-design:manual-default --no-mypack
+stx project new my-app --kit streamtex-pack-design:manual-default --no-mypack
 """,
             language="bash",
         )
@@ -67,6 +67,16 @@ stx project new my-app --kit streamtex-design:manual-default --no-mypack
         bs.body,
         "Post-scaffold, stx.toml records the declared packs, the chosen "
         "design system, and (if a kit was installed) the kit reference.",
+        tag=t.div,
+    )
+    st_space(10)
+    st_write(
+        bs.body,
+        "A pack has two names: its entry-point name (streamtex-pack-design), "
+        "which discovery looks up, and its Python module (streamtex_design). "
+        "Kit references accept either one — stx project new --kit, stx kit "
+        "show / validate / install — and stx.toml always records the "
+        "entry-point name.",
         tag=t.div,
     )
     st_space(20)
@@ -85,7 +95,7 @@ stx project new my-app --kit streamtex-design:manual-default --no-mypack
         st_code(
             code="""
 # Add a git pack at a specific revision (tag, branch, or SHA)
-stx pack add git:https://github.com/streamtex/streamtex-design@v0.2.0
+stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.0#subdirectory=streamtex-pack-design
 
 # Add a local pack inside the project, then mark it primary
 stx pack add local:./mypack
@@ -119,16 +129,16 @@ stx pack add /Users/me/dev/my-fork --dev
         st_code(
             code="""
 # Apply a kit (records design_system + kit reference)
-stx kit install streamtex-design:slides-modern-dark
+stx kit install streamtex-pack-design:slides-modern-dark
 
 # Switch the active design system without re-installing the kit
-stx ds switch streamtex-design:modern_light
+stx ds switch streamtex-pack-design:modern_light
 
 # List available kits across all installed packs
 stx kit list
 
 # Inspect a kit's content
-stx kit show streamtex-design:slides-modern-dark
+stx kit show streamtex-pack-design:slides-modern-dark
 """,
             language="bash",
         )
@@ -197,7 +207,7 @@ stx component validate
 stx component promote my_widget --to=shared_pack
 
 # Promote to a git remote pack (opens a PR)
-stx component promote my_widget --to=streamtex-design
+stx component promote my_widget --to=streamtex-pack-design
 """,
             language="bash",
         )
@@ -237,7 +247,7 @@ stx component promote my_widget --to=streamtex-design
         st_code(
             code="""
 # Bootstrap
-stx project new my-app --kit streamtex-design:project-default
+stx project new my-app --kit streamtex-pack-design:project-default
 
 # Inspect
 stx pack list                          # what is declared + state

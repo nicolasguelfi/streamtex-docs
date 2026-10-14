@@ -259,8 +259,9 @@ def build():
     show_explanation("""\
         Body text must use s.large (32pt) or larger. Never
         use default size or s.small for content that readers
-        need to see clearly. Titles use s.Large (40pt) or
-        s.LARGE (48pt).
+        need to see clearly. Titles use s.Large (48pt) or
+        s.LARGE (64pt). These are desktop values: the named
+        sizes shrink below 1024px and 480px.
     """)
     st_space("v", 2)
 

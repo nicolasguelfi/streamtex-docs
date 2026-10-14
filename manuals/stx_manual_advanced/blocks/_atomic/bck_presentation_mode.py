@@ -1,16 +1,19 @@
 """Presentation Mode — fullscreen 16/9 slide deck with footer and sidebar controls.
 
 Documents the Presentation API: PresentationConfig, set_presentation_config,
-st_presentation_footer, add_presentation_options, and the slide helper
-st_slide / SLIDE_CONTAINER / set_slide_container (0.7.37).
+st_presentation_footer, add_presentation_options, the break marker
+(SlideBreakConfig.marker), and the single slide construction st_slide
+(0.7.37; marker=, key=, roles=, box=, zoom=, spacing=, config=) with
+SLIDE_CONTAINER / set_slide_container / get_slide_container (per session).
 """
 
 from streamtex import (
-    st_write, st_block, st_space,
+    st_write, st_block, st_list, st_space,
+    MarkerRoles,
     PresentationConfig, set_presentation_config,  # noqa: F401 — API coverage
     st_presentation_footer, add_presentation_options,  # noqa: F401 — API coverage
     ViewMode,  # noqa: F401 — API coverage
-    st_slide, set_slide_container, SLIDE_CONTAINER,  # noqa: F401 — API coverage
+    st_slide, set_slide_container, get_slide_container, SLIDE_CONTAINER,  # noqa: F401 — API coverage
 )
 from streamtex.styles import Style
 from streamtex.enums import Tags as t
@@ -24,9 +27,20 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     field_name = s.bold + s.large
     field_desc = s.large
+    code = s.text.fonts.font_monospace + s.big
 
 
 bs = BlockStyles
+
+#: Contradictory st_slide() calls: each raises before anything is drawn.
+_SLIDE_RULES = [
+    ("st_slide(box=False, style=...)",
+     {"box": False, "style": Style("color: inherit;", "pm_rule_style")}),
+    ("st_slide(zoom=80)", {"zoom": 80}),
+    ('st_slide(cut=True, marker=False, key="x")', {"cut": True, "marker": False, "key": "x"}),
+    ("st_slide(marker=MarkerRoles.HIDDEN, roles=MarkerRoles.NAMED)",
+     {"marker": MarkerRoles.HIDDEN, "roles": MarkerRoles.NAMED}),
+]
 
 
 def build():
@@ -75,7 +89,7 @@ config = PresentationConfig(
 
     # Footer
     footer=True,               # Show fixed slide counter bar
-    counter_mode="bloc",       # "bloc" = section count, "slide" = marker count
+    counter_mode="bloc",       # "bloc" = page / entry count, "slide" = slide number over the stops
     footer_height="48px",      # CSS height of the footer bar
     footer_bg=None,            # Background colour (None = inherit theme)
     footer_text_color=None,    # Text colour (None = inherit theme)
@@ -113,7 +127,7 @@ config = PresentationConfig(
 
         show_code("""\
 from streamtex import (
-    st_book, PresentationConfig, set_presentation_config,
+    st_book, MarkerConfig, PresentationConfig, set_presentation_config,
     add_presentation_options,
     SlideBreakConfig, SlideBreakMode, set_slide_break_config,
 )
@@ -128,23 +142,35 @@ set_presentation_config(PresentationConfig(
     enforce_ratio=True,
 ))
 
-# 2. Configure slide breaks
+# 2. Configure slide breaks (stored per session)
 set_slide_break_config(SlideBreakConfig(
     mode=SlideBreakMode.FULL,
     space="5vh",
-    marker=True,
-))
+    marker=True,          # each break: a stop, not listed (marker_hidden=True);
+))                        # False = no marker; or a MarkerRoles(...)
 
 # 3. Add sidebar controls (toggle footer, fullscreen)
 add_presentation_options()
 
-# 4. Launch the book
+# 4. Launch the book — a deck: one stop per slide, no heading stops
 st_book([
     blocks.bck_title_slide,
     blocks.bck_agenda,
     blocks.bck_content,
     blocks.bck_conclusion,
-], paginate=True, view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS])""")
+], paginate=True, view_modes=[ViewMode.PAGINATED, ViewMode.CONTINUOUS],
+   marker_config=MarkerConfig(auto_marker_on_toc=0, scroll_offset=0))""")
+        st_space("v", 1)
+
+        show_details("""\
+            SlideBreakConfig.marker is the marker of every break: True (a
+            stop; listed only when marker_hidden=False), False (no marker)
+            or a MarkerRoles. One call overrides it with
+            st_slide_break(marker=True | False | MarkerRoles(...)). Every
+            break starts a new slide, with or without a marker: a heading
+            after it can be linked to the break's stop with
+            st_write(..., marker="attach").
+        """)
         st_space("v", 3)
 
         # --------------------------------------------------------------
@@ -234,13 +260,17 @@ st_presentation_footer(
             a counter on the right. Two counter modes are available:
 
             - counter_mode="bloc" (default): shows "Bloc N / M" where
-              N is the current section and M the total number of
-              sections. The values are static (server-side).
+              N is the current page and M the number of pages (in
+              continuous mode: 1 over the number of book entries). The
+              values are static (server-side).
 
-            - counter_mode="slide": shows "Slide N / M" where N and M
-              match the floating marker navigation bar. The counter is
-              updated dynamically via JavaScript as you navigate
-              between markers.
+            - counter_mode="slide": shows "Slide N / M" where N is the
+              slide number and M the number of stops — the same numbers
+              as the floating widget's counter, updated as you navigate.
+              A paginated page paints the slide number from the start:
+              the deep-linked marker's, else the page's first stop, else
+              the last stop before the page. Without any stop, it falls
+              back to the page count.
 
             The footer uses a fixed position at the bottom of the
             viewport with a subtle top border. It respects theme
@@ -289,59 +319,138 @@ with st.expander("Presenter Controls"):
         st_space("v", 3)
 
         # --------------------------------------------------------------
-        # One slide — st_slide() (0.7.37)
+        # One slide — st_slide()
         # --------------------------------------------------------------
         st_write(bs.sub, "One slide — st_slide()", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
-            A block often holds several slides. st_slide() writes the two
-            calls a block would otherwise write by hand for each of them:
-            the break before the slide (cut=True calls st_slide_break()),
-            then the slide container (an st_block). Nothing else.
-
-            The helper is deliberately thin. The title, the marker, the
-            zoom, the alignment and every size stay written in the block,
-            slide by slide — so any slide can be specialised at any time
-            without fighting a helper that decided for you.
+            st_slide() (0.7.37) is the single construction for one slide
+            of a block. It writes three things, in this order: the break
+            before the slide (cut=True), the slide's marker, then the slide
+            box. Nothing else: the title, the zoom of the content, the
+            alignment and every size stay written in the block, slide by
+            slide — so any slide can be specialised at any time without
+            fighting a helper that decided for you.
         """)
         st_space("v", 1)
 
         show_code("""\
-from streamtex import st_slide, st_write, st_zoom
-from streamtex.styles import Style
+st_slide(
+    cut=False,        # True: st_slide_break() before the slide
+    style=None,       # a Style added (+) to the box, for this slide only
+    *,
+    marker=None,      # the slide's marker: None | False | True | "Label" | MarkerRoles(...)
+    key=None,         # its stable deep-link key (as st_marker(key=))
+    roles=None,       # its roles (as st_marker(roles=))
+    box=True,         # False: no box, the content flows (forms B and D)
+    zoom=None,        # settings of the break before the slide,
+    spacing=None,     #   as st_slide_break() takes them;
+    config=None,      #   they need cut=True
+)                     # a context manager: with st_slide(...): ...""")
+        st_space("v", 1)
+
+        st_write(bs.field_name, "marker= — at most one marker per slide")
+        st_space("v", 1)
+        with st_block(s.project.containers.explanation_box):
+            with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
+                with l.item():
+                    st_write(s.large, (s.bold, "None"),
+                             " (default) — as before: with cut=True the break places its "
+                             "usual marker (SlideBreakConfig: a stop, not listed); without "
+                             "cut, no marker.")
+                with l.item():
+                    st_write(s.large, (s.bold, "False"),
+                             " — no marker; with cut=True the break still draws its rule "
+                             "and spacer and starts a new slide.")
+                with l.item():
+                    st_write(s.large, (s.bold, "True"), " — a stop, not listed.")
+                with l.item():
+                    st_write(s.large, (s.bold, "\"Label\""),
+                             " — a stop, listed, with that label (as st_marker(\"Label\")).")
+                with l.item():
+                    st_write(s.large, (s.bold, "key= / roles="),
+                             " — as st_marker; a MarkerRoles can also be given as marker=.")
+            st_write(s.large, """\
+                With cut=True the marker takes the place of the break's own
+                marker; without, it comes just before the box, never inside.
+                An explicit marker is placed whatever the break mode or the
+                sidebar's slide-break switch: it belongs to the slide. Link
+                the slide's title to it with marker="attach".
+            """, breaks=False)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import st_slide, st_write
 from custom.styles import Styles as s
 
 def build():
-    with st_slide():                      # first slide: no break before it
-        st_zoom(120)
-        st_write(s.huge + s.center_txt, "Why containers?", toc_lvl="1")
+    with st_slide(marker="Why containers?"):          # first slide: its listed stop, then the box
+        st_write(s.huge + s.center_txt, "Why containers?", toc_lvl="1", marker="attach")
 
-    with st_slide(cut=True):              # a break, then the slide
-        st_write(s.large, "Three reasons", toc_lvl="+1")
+    with st_slide(cut=True, marker="Three reasons", key="reasons"):  # break, stop, box
+        st_write(s.large, "Three reasons", toc_lvl="+1", marker="attach")
 
-    # This slide only: a style added (+) to the container
-    with st_slide(cut=True, style=Style("min-height: 60vh;", "short_slide")):
-        st_write(s.large, "Questions?")""")
+    # The break's usual stop; this slide only: a style added (+) to the box
+    with st_slide(cut=True, style=s.project.containers.slide_top):
+        st_write(s.large, "Questions?")
+
+    with st_slide(cut=True, zoom=80):                 # the break's settings (cut=True only)
+        st_write(s.large, "Appendix")""")
         st_space("v", 1)
 
+        st_write(bs.field_name, "Three forms, one construction")
+        st_space("v", 1)
+        with st_block(s.project.containers.explanation_box):
+            with st_list(list_type="ul", l_style=s.large, li_style=s.large) as l:
+                with l.item():
+                    st_write(s.large, (s.bold, "S"),
+                             " — each slide in the module's slide box (box=True, the "
+                             "default). The usual form.")
+                with l.item():
+                    st_write(s.large, (s.bold, "B"),
+                             " — free content cut by breaks, inside a composite only: "
+                             "with st_slide(cut=True, box=False).")
+                with l.item():
+                    st_write(s.large, (s.bold, "D"),
+                             " — a scrolling slide, taller than the screen: no box, no "
+                             "break inside, one marker at its head: "
+                             "with st_slide(cut=True, marker=\"Long read\", box=False).")
+        st_space("v", 1)
+
+        st_write(bs.field_name, "Rules (executed here)")
+        st_space("v", 1)
+        with st_list(list_type="ul", l_style=s.big, li_style=s.big) as l:
+            for call, kwargs in _SLIDE_RULES:
+                try:
+                    with st_slide(**kwargs):
+                        pass
+                    outcome = "accepted"
+                except (TypeError, ValueError) as exc:
+                    outcome = f"{type(exc).__name__}: {exc}"
+                with l.item():
+                    st_write(s.big, (bs.code, call), " → ", outcome)
+        st_space("v", 2)
+
         show_explanation("""\
-            Live example — st_slide(style=...) with a short container, so
-            that the slide fits in this page. The dashed border is part of
-            the per-call style; the title and its size are written here,
-            in the block.
+            Live example — st_slide(style=..., marker=True,
+            key="st-slide-demo") with a short box, so that the slide fits
+            in this page. The slide has its own stop, not listed: ▶ lands
+            on it, and ?marker=st-slide-demo opens it. The dashed border is
+            part of the per-call style; the title and its size are written
+            here, in the block.
         """)
         st_space("v", 1)
 
         demo_slide = Style("min-height: 20vh; margin: 2vh 0; "
                            "border: 1px dashed rgba(128,128,128,0.6);",
                            "pm_demo_slide")
-        with st_slide(style=demo_slide):
+        with st_slide(style=demo_slide, marker=True, key="st-slide-demo"):
             st_write(s.huge + s.center_txt, "A slide written by st_slide()")
         st_space("v", 2)
 
         show_details("""\
-            SLIDE_CONTAINER, the default container:
+            SLIDE_CONTAINER, the default box:
 
             min-height: 80vh; margin: 10vh 0; display: flex;
             flex-direction: column; justify-content: center;
@@ -352,14 +461,15 @@ def build():
         """)
         st_space("v", 2)
 
-        st_write(bs.sub, "One container per book — set_slide_container()", toc_lvl="+1")
+        st_write(bs.sub, "One box per module — set_slide_container()", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
             set_slide_container(style) replaces SLIDE_CONTAINER for every
-            st_slide() of the book. Call it once in book.py — typically
-            with the design system's own slide container. None restores
-            SLIDE_CONTAINER. A per-call style= still applies on top.
+            st_slide() of the module. Call it once in book.py, before
+            st_book(), with the design system's own slide box. None
+            restores SLIDE_CONTAINER; get_slide_container() returns the box
+            st_slide() uses now. A per-call style= still applies on top.
         """)
         st_space("v", 1)
 
@@ -370,14 +480,48 @@ from custom.styles import Styles as s
 
 stx.set_slide_container(s.project.containers.slide_center)
 
-# Back to the library default
-stx.set_slide_container(None)""")
+stx.get_slide_container()          # the box st_slide() uses now
+stx.set_slide_container(None)      # back to SLIDE_CONTAINER""")
+        st_space("v", 1)
+
+        st_write(s.large, (s.bold, "In this manual: "),
+                 "get_slide_container() is ",
+                 (bs.code, get_slide_container().style_id),
+                 " (read while this page renders).")
         st_space("v", 1)
 
         show_details("""\
-            What st_slide() does NOT do, on purpose: no title, no
-            st_marker(), no st_zoom(), no sizes. Writing them in the block
-            keeps every value explicit and visible where the slide is read.
-            st_slide() was promoted from a helper used on 341 slides of a
-            training project; that project keeps working unchanged.
+            Per session: set_slide_container() and set_slide_break_config()
+            store their value in the Streamlit session. book.py runs at
+            every rerun of every session, so each session gets its module's
+            box and break settings, and two modules served by one process
+            no longer overwrite each other. Outside a session (tests, the
+            stx CLIs) a process-wide value is used. The marker and TOC
+            registries, the spacing state and the export buffer stay
+            process-wide.
         """)
+        st_space("v", 2)
+
+        st_write(bs.sub, "Migrating a project's own slide() helper", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            A project that wrote its own slide(cut, style) helper — a break,
+            then the design system's box — can retire it: st_slide() takes
+            cut and style at the same positions with the same meaning. Two
+            lines, no block file changes, no visual change.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# shared/slides.py — the helper becomes an alias
+from streamtex import st_slide as slide
+
+# book.py — the box the helper used, once, before st_book()
+import streamtex as stx
+stx.set_slide_container(s.project.containers.slide_center)
+
+# then, slide by slide, a marker written apart can move onto its slide:
+#   st_marker("RAG")              →   with slide(marker="RAG"):
+#   with slide():                          ...
+#       ...""")

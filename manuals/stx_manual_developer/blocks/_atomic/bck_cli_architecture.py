@@ -86,12 +86,25 @@ stx                          # Root CLI group
  |         |-- --skip-sync   #     skip uv sync during upgrade
  |         +-- --skip-claude #     skip Claude profile update
  |
- |-- deploy                  # deploy_cmd.py
+ |-- deploy                  # deploy_cmd.py (+ deploy_auth_cmd.py)
  |    |-- preflight          #   Pre-deployment checks
- |    |-- docker             #   Build Docker image
+ |    |-- docker             #   Build and run the Docker image locally
+ |    |-- diff               #   Project deployment files vs templates
+ |    |-- ci                 #   Write the stx-validate GitHub workflow
+ |    |-- huggingface        #   Deploy to Hugging Face Spaces
+ |    |-- setup              #   Hetzner/Coolify: interactive local setup
+ |    |-- provision          #   Hetzner/Coolify: create the server
+ |    |-- secure             #   Hetzner/Coolify: harden the server
+ |    |-- install-coolify    #   Hetzner/Coolify: install Coolify
+ |    |-- configure-domain   #   Hetzner/Coolify: DNS + SSL
  |    |-- hetzner            #   Deploy to Hetzner via Coolify API
- |    |-- huggingface        #   Deploy to HuggingFace
- |    +-- status             #   Check deployment status
+ |    |-- update             #   Rebuild or restart a service
+ |    |-- scale              #   Replicas of a service
+ |    |-- status             #   Check deployment status (huggingface|coolify)
+ |    |-- lock               #   Access control on (deploy_auth_cmd.py)
+ |    |-- unlock             #   Access control off
+ |    |-- passwd             #   Re-apply .stx-passwords.toml
+ |    +-- auth-status        #   Every access-control mode (no secret)
  |
  +-- publish                 # publish_cmd.py
       |-- check              #   Verify version and changelog

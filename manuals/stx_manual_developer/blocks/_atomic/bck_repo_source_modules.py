@@ -112,7 +112,8 @@ def build():
         show_code("""\
             bib.py          # BibTeX parsing and citation management
             gsheet.py       # Google Sheets data import
-            auth.py         # Authentication helpers (GCP service accounts)
+            auth.py         # STX_PASSWORD keypad gate shown by st_book (STX_GATE=1: local preview)
+            deploy/stx_auth.py # Login service of the server-side login screen (stdlib only, next to nginx)
             link_config.py  # Link configuration and URL management\
         """, language="text")
         st_space("v", 2)
@@ -135,9 +136,10 @@ def build():
             cli/
             ├── main.py         # Entry point, click group registration
             ├── commands.py     # Top-level command definitions
-            ├── project_cmd.py  # stx project init/info/validate
+            ├── project_cmd.py  # stx project new/validate/upgrade
             ├── workspace_cmd.py# stx install/update/status
             ├── deploy_cmd.py   # stx deploy (Docker, cloud)
+            ├── deploy_auth_cmd.py # stx deploy lock/unlock/passwd/auth-status
             ├── publish_cmd.py  # stx publish (PyPI release)
             ├── claude_cmd.py   # stx claude (profile management)
             ├── bib_cmd.py      # stx bib (bibliography tools)

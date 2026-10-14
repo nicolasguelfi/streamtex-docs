@@ -14,16 +14,22 @@ def build():
         st_write(bs.heading, "Export HTML", tag=t.div, toc_lvl="1")
         st_space("v", 2)
 
-        # --- 1. Download HTML button ---
-        st_write(bs.sub, "The Download HTML button", toc_lvl="+1")
+        # --- 1. The export panel ---
+        st_write(bs.sub, "The \"Download as...\" panel", toc_lvl="+1")
         st_space("v", 1)
 
         show_explanation("""\
             st_book() enables HTML export by default.
 
-            A "Download HTML" button appears in the sidebar.
+            A "Download as..." panel appears in the sidebar: it downloads
+            the whole document as HTML (and as PDF when the pdf extra is
+            installed).
 
-            The exported file is a self-contained HTML document.
+            The exported HTML carries its CSS and, by default, its images
+            in a `data/` folder (a ZIP). `stx export html` writes the same
+            document from the command line, as one continuous file or, with
+            `--html-mode paginated | both`, as one file per page: see
+            "Paginated HTML Export" in the Advanced manual.
         """)
         st_space("v", 1)
 
@@ -35,7 +41,7 @@ st_book([
     # ...
 ], export_title="My Course")
 
-# The sidebar shows a "Download HTML" button automatically.""")
+# The sidebar shows a "Download as..." panel automatically.""")
         st_space("v", 2)
 
         # --- 2. How it works ---
@@ -83,7 +89,7 @@ st_book([...], export_title="My Document Title")""")
 
         show_explanation("""\
             Pass export=False to st_book() to hide the
-            Download button and skip buffer accumulation.
+            export panel and skip buffer accumulation.
         """)
         st_space("v", 1)
 
@@ -91,7 +97,7 @@ st_book([...], export_title="My Document Title")""")
 st_book([
     blocks.bck_00_welcome,
     # ...
-], export=False)  # No download button""")
+], export=False)  # No export panel""")
         st_space("v", 2)
 
         # --- 5. Details ---
@@ -102,7 +108,13 @@ st_book([
             `asset_mode=AssetMode.EMBEDDED` the images are embedded as base64
             and the HTML is a single self-contained file.
 
-            Interactive features (markers, zoom) are not included.
+            Navigation is included: the table of contents in a sidebar,
+            the marker bar with its arrows and keys, search, and deep
+            links (`?marker=`, `?slide=`, `#anchor`). The file keeps the
+            view zoom of the moment, or the "Zoom HTML (%)" of the panel
+            (`st_book(html_export_zoom=...)` sets its starting value); only
+            the zoom control itself is absent. Streamlit widgets (buttons,
+            sliders) are not exported.
         """)
         st_space("v", 2)
 

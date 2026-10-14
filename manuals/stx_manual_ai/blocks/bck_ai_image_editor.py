@@ -46,6 +46,9 @@ def build():
             The Display tab lets you control image rendering without
             changing the source image. Settings are persisted in the
             image metadata JSON and applied automatically on every render.
+            They belong to the image slot, not to one version: a new
+            version (regeneration, replacement) and a failed first load
+            keep the zoom and size (0.7.45).
         """)
         st_space("v", 1)
 

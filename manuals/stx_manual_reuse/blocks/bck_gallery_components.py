@@ -34,6 +34,16 @@ from streamtex_design.components.title_slide import title_slide
 DS = DesignSystem()
 
 
+def _pack_version() -> str:
+    """The installed version of the pack (entry-point name streamtex-pack-design)."""
+    from importlib.metadata import PackageNotFoundError, version
+
+    try:
+        return "v" + version("streamtex-pack-design")
+    except PackageNotFoundError:
+        return ""
+
+
 class BlockStyles:
     heading = s.project.titles.section_title + s.center_txt
     section = s.bold + s.large
@@ -60,7 +70,7 @@ def _demo(label: str, render):
 def build():
     """The 18-component live gallery, grouped by granularity."""
     with st_block(s.center_txt):
-        st_write((bs.heading, "Live gallery — `streamtex_design` v0.1.0"), toc_lvl="1")
+        st_write((bs.heading, f"Live gallery — streamtex-pack-design {_pack_version()}"), toc_lvl="1")
         st_space(15)
         st_write(
             bs.body,
@@ -288,7 +298,7 @@ def build():
         lambda: exercise_flow(
             design_system=DS,
             steps=[
-                "`stx project new my-app --kit streamtex_design:project-default`",
+                "`stx project new my-app --kit streamtex-pack-design:project-default`",
                 "Edit `blocks/bck_hello.py` — import a component.",
                 "`stx run` to render locally.",
                 "`stx component new <name>` to capture a new one into mypack.",

@@ -1,11 +1,14 @@
 """MarkerConfig Reference — complete field-by-field documentation.
 
-Covers every MarkerConfig field, modifier key syntax, a full book.py
-example, and keyboard safety notes.
+Covers every MarkerConfig field (defaults read from the library at render
+time), documents vs decks, the "second navigation stop" warning, modifier
+key syntax, a full book.py example, keyboard safety notes and NumberingMode.
 """
 
+import dataclasses
+
 from streamtex import (
-    st_write, st_block, st_space,
+    MarkerConfig, MarkerRoles, st_write, st_block, st_space,
 )
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -23,6 +26,68 @@ class BlockStyles:
 
 bs = BlockStyles
 
+#: field -> (type, description); the default is read from MarkerConfig itself.
+_FIELDS = {
+    "show_nav_ui": (
+        "bool",
+        "Show the floating navigation widget (counter, ◀ ▶ buttons, ☰ popup, label). "
+        "The sidebar offers the same switch to the reader."),
+    "auto_marker_on_toc": (
+        "bool | int",
+        "Which TOC heading levels get a marker automatically: True = all levels, "
+        "N = levels 1 to N, False (or 0) = none. For documents, where the headings "
+        "give the stops; 0 in a deck."),
+    "toc_marker_roles": (
+        "MarkerRoles | dict[int, MarkerRoles]",
+        "Roles of those automatic heading markers: one MarkerRoles for every level, "
+        "or a dict level → MarkerRoles (missing levels: MarkerRoles.NAMED). "
+        "A toc_lvl inside is ignored: the heading decides its level."),
+    "nav_position": (
+        "str",
+        'Widget position: "bottom-right" or "bottom-center".'),
+    "nav_label_chars": (
+        "int",
+        "Max characters of the current marker's label in the widget; 0 hides it. "
+        "An unlisted marker without a label of its own shows its section."),
+    "popup_open": (
+        "bool",
+        "Initial state of the ☰ popup (the list of listed markers)."),
+    "next_keys": (
+        "list[str]",
+        "Keys that go to the next stop. Supports modifier syntax (see below)."),
+    "prev_keys": (
+        "list[str]",
+        "Keys that go to the previous stop. Supports modifier syntax (see below)."),
+    "draggable": (
+        "bool",
+        "Let the reader drag the widget anywhere on screen (mouse and touch). "
+        "The position is kept in localStorage."),
+    "collapsible": (
+        "bool",
+        "Show a ⋮ button that collapses / expands the widget. "
+        "The collapsed state is kept in localStorage."),
+    "scroll_offset": (
+        "int",
+        "Pixels left above a marker when navigation scrolls to it (also the CSS "
+        "scroll-margin-top of marker anchors), room for a header or a toolbar. "
+        "0 for a deck whose slides fill the viewport."),
+}
+
+
+def _default_text(f: dataclasses.Field) -> str:
+    """The default of a MarkerConfig field, as one would write it."""
+    if f.default is not dataclasses.MISSING:
+        value = f.default
+    elif f.default_factory is not dataclasses.MISSING:
+        value = f.default_factory()
+    else:
+        return "(required)"
+    if isinstance(value, MarkerRoles):
+        for name in ("NAMED", "HIDDEN", "ANCHOR"):
+            if value == getattr(MarkerRoles, name):
+                return f"MarkerRoles.{name}"
+    return repr(value).replace("'", '"')
+
 
 def build():
     st_write(bs.heading, "MarkerConfig Reference", tag=t.div, toc_lvl="1")
@@ -30,56 +95,71 @@ def build():
 
     show_explanation("""\
         MarkerConfig is a dataclass that controls the marker navigation
-        system. Pass it to st_book() via the marker_config= parameter.
+        system. Pass it to st_book() via the marker_config= parameter;
+        without it, a book has no markers at all.
 
-        All fields have sensible defaults — you only need to set what
-        you want to customize.
+        All fields have defaults — you only set what you want to change.
+        The defaults below are read from the library while this page
+        renders.
     """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------
-    # Field reference grid
+    # Field reference — defaults read from the dataclass
     # ------------------------------------------------------------------
     st_write(bs.sub, "Field Reference", toc_lvl="+1")
     st_space("v", 1)
 
-    _field_row("show_nav_ui", "bool", "True",
-               "Show or hide the floating navigation widget "
-               "(counter, prev/next buttons, popup list).")
+    for f in dataclasses.fields(MarkerConfig):
+        type_str, desc = _FIELDS.get(f.name, ("", "(not documented here yet)"))
+        _field_row(f.name, type_str, _default_text(f), desc)
 
-    _field_row("auto_marker_on_toc", "bool | int", "False",
-               "Bridge TOC headings to markers automatically. "
-               "True = all levels, int N = up to level N, False = none. "
-               "Recommended: 1 for paginated books.")
+    st_space("v", 2)
 
-    _field_row("nav_position", "str", '"bottom-right"',
-               'Widget position. Supported values: '
-               '"bottom-right", "bottom-center".')
+    # ------------------------------------------------------------------
+    # Documents and decks
+    # ------------------------------------------------------------------
+    st_write(bs.sub, "Documents and Decks — One Way per Book", toc_lvl="+1")
+    st_space("v", 1)
 
-    _field_row("nav_label_chars", "int", "40",
-               "Max characters shown for the current marker label "
-               "in the widget. Set to 0 to hide the label.")
+    show_explanation("""\
+        A book takes its stops from one source. A **document** takes them
+        from its headings: auto_marker_on_toc=1 (or more), no slide breaks
+        with markers. A **deck** takes one stop per slide from the slide's
+        own marker — st_slide(marker=...), the break's marker, or an
+        st_marker() at the head of the slide — keeps auto_marker_on_toc=0,
+        and links a heading to its slide with st_write(..., marker="attach").
+    """)
+    st_space("v", 1)
 
-    _field_row("popup_open", "bool", "False",
-               "Initial state of the marker popup list "
-               "(open or closed on first render).")
+    show_code("""\
+# book.py of a document — the headings give the stops
+marker_config = MarkerConfig(auto_marker_on_toc=1)
 
-    _field_row("next_keys", "list[str]", '["PageDown"]',
-               "Keyboard keys to navigate to the next marker. "
-               "Supports modifier syntax (see below).")
+# book.py of a deck — one stop per slide, slides fill the viewport
+marker_config = MarkerConfig(auto_marker_on_toc=0, scroll_offset=0)
 
-    _field_row("prev_keys", "list[str]", '["PageUp"]',
-               "Keyboard keys to navigate to the previous marker. "
-               "Supports modifier syntax (see below).")
+# a slide of the deck
+with st_slide(cut=True, marker="Prompt patterns"):        # the slide's stop, listed
+    st_write(bs.title, "Prompt patterns", toc_lvl="2", marker="attach")""")
+    st_space("v", 1)
 
-    _field_row("draggable", "bool", "False",
-               "Allow the user to drag the floating navigation widget "
-               "anywhere on screen. Position is persisted in localStorage.")
+    show_details("""\
+        **The "second navigation stop" warning.** When a slide opened by
+        st_slide_break() or st_slide() already has its stop and an automatic
+        heading marker (auto_marker_on_toc) would add a second stop to it,
+        the library warns, naming both:
 
-    _field_row("collapsible", "bool", "False",
-               "Show a ⋮ button to collapse/expand the navigation widget. "
-               "Collapsed state is persisted in localStorage.")
+        The heading 'Prompt patterns' adds a second navigation stop to a
+        slide that already has one ('Marker 12'): write marker="attach" to
+        link the heading to the slide, or marker=False (or
+        auto_marker_on_toc=0 in a deck).
 
+        The book mixes heading stops (documents) with slide stops (decks).
+        Nothing is merged behind your back: the heading still gets its
+        stop, and the reader presses ▶ twice on that slide until you follow
+        the advice. A heading with an explicit marker= never triggers it.
+    """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------
@@ -142,7 +222,7 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
     st_space("v", 1)
 
     show_explanation("""\
-        NumberingMode controls how TOC heading numbers are displayed.
+        NumberingMode controls where TOC heading numbers are displayed.
         Set via TOCConfig(numbering=NumberingMode.XXX).
     """)
     st_space("v", 1)
@@ -150,21 +230,25 @@ prev_keys=["PageUp", "Ctrl+ArrowLeft"]
     show_code("""\
 from streamtex import NumberingMode, TOCConfig
 
-# SIDEBAR_ONLY — numbers appear only in the sidebar TOC (default)
+# BOTH — numbers in the sidebar and inline in the content (default)
+toc = TOCConfig(numbering=NumberingMode.BOTH)
+
+# SIDEBAR_ONLY — numbers only in the sidebar TOC
 toc = TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY)
 
-# BOTH — numbers appear both in sidebar and inline in the content
-toc = TOCConfig(numbering=NumberingMode.BOTH)
+# MAIN_ONLY — numbers only in the content
+toc = TOCConfig(numbering=NumberingMode.MAIN_ONLY)
 
 # NONE — no numbering anywhere
 toc = TOCConfig(numbering=NumberingMode.NONE)""")
     st_space("v", 1)
 
     show_details("""\
-        SIDEBAR_ONLY is the default and recommended mode for most manuals.
+        BOTH is the TOCConfig default. SIDEBAR_ONLY is the usual choice
+        for manuals (this one uses it): the content stays free of numbers.
 
-        BOTH is useful for formal documents where section numbers
-        should be visible in the rendered content.
+        BOTH suits formal documents where section numbers should be
+        visible in the rendered content.
 
         NONE disables numbering entirely (useful for single-page docs).
     """)

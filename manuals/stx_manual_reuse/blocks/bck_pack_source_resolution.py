@@ -25,6 +25,19 @@ class BlockStyles:
 bs = BlockStyles
 
 
+def _installed_manifest() -> str:
+    """The _pack_manifest.toml of the installed streamtex-pack-design, read at render time."""
+    from pathlib import Path
+
+    import streamtex_design
+
+    path = Path(streamtex_design.__file__).parent / "_pack_manifest.toml"
+    try:
+        return "# streamtex_design/_pack_manifest.toml (installed pack)\n" + path.read_text(encoding="utf-8")
+    except OSError:
+        return "# streamtex_design/_pack_manifest.toml not found in the installed pack"
+
+
 def build():
     """How packs are discovered, declared, and tracked across the 3 locations."""
     st_write((bs.heading, "Pack discovery & lifecycle"), tag=t.div, toc_lvl="1")
@@ -59,9 +72,10 @@ path = "/Users/me/shared"    # local pack on disk (any path)
 
 [[packs]]
 type = "git"
-name = "streamtex-design"
-ref = "github.com/nicolasguelfi/streamtex-design"
-rev = "v0.2.0"               # tag, branch, or commit SHA
+name = "streamtex-pack-design"   # the entry-point name of the pack
+ref = "github.com/nicolasguelfi/streamtex-packs"   # the git repository
+subdirectory = "streamtex-pack-design"           # the pack's folder in a monorepo
+rev = "pack-design-v0.3.0"       # tag, branch, or commit SHA
 
 [[packs]]
 type = "pypi"
@@ -89,7 +103,7 @@ constraint = ">=1.0,<2.0"
             code="""
 # Pack's pyproject.toml
 [project.entry-points."streamtex.packs"]
-streamtex-design = "streamtex_design"
+streamtex-pack-design = "streamtex_design"
 
 # Runtime discovery
 from streamtex.core.discovery import discover_packs
@@ -150,25 +164,7 @@ for p in packs:
     )
     st_space(10)
     with st_block(bs.code_box):
-        st_code(
-            code="""
-# streamtex_design/_pack_manifest.toml
-
-[manifest]
-format = "0.1"
-
-[pack]
-name = "streamtex-design"
-version = "0.2.0"
-author = "Nicolas Guelfi"
-license = "MIT"
-streamtex_compat = ">=0.7.0,<1.0"
-
-[entrypoint]
-module = "streamtex_design"
-""",
-            language="toml",
-        )
+        st_code(code=_installed_manifest(), language="toml")
     st_space(20)
 
     # ---- 5) Component granularity tags ----
@@ -215,7 +211,7 @@ module = "streamtex_design"
         st_code(
             code="""
 # Update a git pack to a new revision (encode rev in the ref)
-stx pack add git:https://github.com/streamtex/streamtex-design@v0.2.0
+stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.0#subdirectory=streamtex-pack-design
 stx pack sync                                # uv sync applies it
 
 # Iterate on a pack locally (editable install)

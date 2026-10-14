@@ -20,11 +20,39 @@ _preflight_path = next(
 )
 
 
+# The checks of streamtex.cli.deploy_cmd.run_preflight, in its order.
+_STX_PREFLIGHT = [
+    ("book.py", "Failure", "Missing entry point"),
+    ("enableStaticServing", "Failure", "Not true in .streamlit/config.toml, or the file is missing"),
+    ("pyproject.toml", "Failure", "Missing, or no streamtex dependency"),
+    ("git clean", "Warning", "Uncommitted changes, or not a git repository"),
+    ("sensitive files", "Warning", ".env, .stx-deploy.env, .stx-passwords.toml, credentials*, "
+                                   "*.key or *.pem in the project folder"),
+    ("secrets git-ignored", "Failure", ".stx-deploy.env or .stx-passwords.toml present and not ignored "
+                                       "by git (.env alone: warning)"),
+    ("static/", "Warning", "No static/ folder"),
+    ("Dockerfile", "Warning", "Missing (stx deploy docker generates it)"),
+    (".stx-version", "Failure", "Missing while the Dockerfile copies it, or there is no Dockerfile yet "
+                                "(warning for a Dockerfile that does not use it)"),
+    (".dockerignore", "Warning", "Missing, or does not exclude a secret file that is present "
+                                 "(COPY . . would put it in the image)"),
+    ("local packs", "Warning", "A [[packs]] type=\"local\" of stx.toml with an absolute path: "
+                               "not available in the container"),
+    ("tests", "Failure", "uv run pytest tests/ -q fails (--skip-tests)"),
+    ("lint", "Warning", "uv run ruff check . reports issues (--skip-lint)"),
+]
+
+
 class BlockStyles:
     """Local styles for preflight block."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
 bs = BlockStyles
+
+_LEVEL_STYLE = {
+    "Failure": s.project.colors.warning_red,
+    "Warning": s.project.colors.highlight_amber,
+}
 
 
 def build():
@@ -111,6 +139,39 @@ def build():
         )
         st_space("v", 3)
 
+        # --- stx deploy preflight (the library's own checks) ---
+        st_write(bs.sub, "stx deploy preflight checks", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation(
+            "**./deploy/preflight.sh** above is the manuals repository's script. Any StreamTeX "
+            "project has the library's own command, **stx deploy preflight [PATH]**, which "
+            "**stx deploy docker** and **stx deploy hetzner** also run first (without tests and "
+            "lint), stopping on any failure."
+        )
+        st_space("v", 1)
+
+        show_code("""\
+            stx deploy preflight                           # every check, tests and ruff included
+            stx deploy preflight path/to/project --skip-tests --skip-lint
+        """, language="bash")
+        st_space("v", 1)
+
+        with st_grid(cols=3, cell_styles=(
+            s.container.borders.solid_border
+            + s.container.paddings.small_padding
+            + s.container.layouts.vertical_center_layout
+        )) as g:
+            with g.cell(): st_write(s.bold + s.large, "Check")
+            with g.cell(): st_write(s.bold + s.large, "Level")
+            with g.cell(): st_write(s.bold + s.large, "Details")
+            for check, level, details in _STX_PREFLIGHT:
+                with g.cell(): st_write(s.large, check)
+                with g.cell(): st_write(_LEVEL_STYLE[level] + s.large, level)
+                with g.cell(): st_write(s.large, details)
+
+        st_space("v", 2)
+
         # --- stx validate: what production will see (0.7.38) ---
         st_write(bs.sub, "Before deploying — stx validate", toc_lvl="+1")
         st_space("v", 1)
@@ -155,7 +216,8 @@ def build():
 
             with g.cell(): st_write(s.large, "streamtex locked from a local source")
             with g.cell(): st_write(s.project.colors.highlight_amber + s.large, "Warning")
-            with g.cell(): st_write(s.large, "Production (uv sync --no-sources) installs the published wheel")
+            with g.cell(): st_write(s.large, "Production (UV_NO_SOURCES_PACKAGE=streamtex, then uv sync "
+                                    "--no-dev) installs the published wheel")
 
         st_space("v", 2)
 

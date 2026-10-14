@@ -1,7 +1,8 @@
-"""Advanced Export — ExportConfig, HtmlExportBuffer, and st_html()."""
+"""Advanced Export — ExportConfig, HtmlExportBuffer, st_html() and the paginated HTML export."""
 
 import streamtex as stx
 from streamtex import *
+from streamtex.book import HTML_EXPORT_MODES
 from streamtex.styles import Style as ns
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -15,6 +16,7 @@ class BlockStyles:
     param_label = s.medium + s.text.weights.bold_weight
     warning_box = ns("background:rgba(255,100,100,0.1);padding:16px;border-radius:8px;", "warning_box")
     tip_box = ns("background:rgba(100,200,100,0.1);padding:16px;border-radius:8px;", "tip_box")
+    caption = s.medium + s.italic + s.project.colors.neutral_gray
 
 
 bs = BlockStyles
@@ -28,9 +30,12 @@ def build():
 
     show_explanation("""\
         StreamTeX's HTML export system converts your live Streamlit app
-        into a static, self-contained HTML file. This section covers the
-        internal machinery: ExportConfig, the HtmlExportBuffer, the
-        push/pop wrapper pattern, and the st_html() dual-render bridge.
+        into static HTML: one continuous file by default, or one file per
+        page with `stx export html --html-mode paginated | both` (see
+        "Paginated HTML export" below). This section covers the internal
+        machinery: ExportConfig, the HtmlExportBuffer, the push/pop
+        wrapper pattern, the st_html() dual-render bridge, and the
+        paginated export.
     """)
     st_space("v", 2)
 
@@ -39,28 +44,31 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        ExportConfig is a dataclass that controls how the exported HTML
-        page is generated. Pass it to st_book() via the export parameter.
+        ExportConfig is a dataclass that describes an exported document.
+        st_book() builds the buffer's config itself from export= and
+        export_title=; you pass ExportConfig objects to st_book(exports=[...])
+        to describe the files written to disk (format, mode, output_dir,
+        filename, asset_mode...).
     """)
     st_space("v", 1)
 
     show_code("""\
-        from streamtex import ExportConfig
+        from streamtex import ExportConfig, ExportMode
 
-        export_cfg = ExportConfig(
-            enabled=True,            # enable HTML export
-            page_title="My Export",  # <title> of exported HTML
-            page_width="90%",        # max-width of the page container
-            page_padding="20px",     # padding around the page
-        )
+        # The buffer: st_book() fills enabled / page_title from these two
+        st_book(blocks, export=True, export_title="My Export")
 
-        st_book(blocks, export=export_cfg)""")
+        # Files on disk: one ExportConfig per output file
+        st_book(blocks, exports=[
+            ExportConfig(format="html", mode=ExportMode.ALWAYS,
+                         output_dir="./exports", filename="my-export"),
+        ])""")
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
         with st_list(list_type="ul") as l:
-            with l.item(): st_write(s.medium, (bs.param_label, "enabled"), " \u2014 toggle export on or off (default False)")
-            with l.item(): st_write(s.medium, (bs.param_label, "page_title"), " \u2014 the HTML page title in the exported file")
+            with l.item(): st_write(s.medium, (bs.param_label, "enabled"), " \u2014 toggle export on or off (default False; st_book sets it from export=)")
+            with l.item(): st_write(s.medium, (bs.param_label, "page_title"), " \u2014 the HTML page title in the exported file (st_book sets it from export_title=)")
             with l.item(): st_write(s.medium, (bs.param_label, "page_width"), " \u2014 CSS max-width for the page container (default 90%)")
             with l.item(): st_write(s.medium, (bs.param_label, "page_padding"), " \u2014 CSS padding around the main content area")
     st_space("v", 2)
@@ -76,8 +84,10 @@ def build():
         their HTML representation into this buffer.
 
         At the end of the render cycle, generate_full_html() assembles
-        all accumulated fragments into a complete, self-contained HTML
-        document.
+        all accumulated fragments into one complete HTML document, CSS
+        inlined. That document is the continuous export; a paginated
+        export cuts the same document into one file per page (see
+        "Paginated HTML export" below).
     """)
     st_space("v", 1)
 
@@ -209,7 +219,7 @@ def build():
             with l.item(): st_write(s.medium, "Nested containers use push/pop to maintain proper HTML structure")
             with l.item(): st_write(s.medium, "After all blocks render, generate_full_html() assembles the output")
             with l.item(): st_write(s.medium, "CSS from default.css is inlined into the HTML document")
-            with l.item(): st_write(s.medium, "The final HTML file is offered for download via Streamlit")
+            with l.item(): st_write(s.medium, "The download button offers it: a ZIP (HTML + data/) with the default EXTERNAL assets, an .html file with EMBEDDED ones")
     st_space("v", 2)
 
     # --- Section 7: CSS Bundling ---
@@ -217,11 +227,13 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        The exported HTML is fully self-contained. StreamTeX reads the
-        project's default.css file and inlines it as a <style> block
-        inside the generated HTML. This ensures that all styles render
-        correctly when the HTML file is opened offline, without needing
-        any external resources.
+        Every exported HTML file carries its own styles: StreamTeX reads
+        the library's default.css and inlines it as a <style> block, so
+        the styles render offline. The media follow asset_mode: EXTERNAL
+        (the default) writes them to a data/ folder next to the HTML,
+        EMBEDDED inlines them as base64. Only the continuous export with
+        EMBEDDED assets is a single self-contained file; a paginated
+        export is a set of files that share one data/ folder.
     """)
     st_space("v", 1)
 
@@ -234,10 +246,11 @@ def build():
         #   <title>{page_title}</title>
         #   <style>
         #     /* contents of default.css inlined here */
+        #     .streamtex-page { max-width: {page_width}; padding: {page_padding}; }
         #   </style>
         # </head>
         # <body>
-        #   <div style="max-width:{page_width}; padding:{page_padding};">
+        #   <div class="streamtex-page">
         #     {accumulated_html_fragments}
         #   </div>
         # </body>
@@ -246,7 +259,7 @@ def build():
 
     show_details("""\
         - **ExportConfig** is a Python dataclass. All fields have sensible defaults.
-        Only set enabled=True to activate export; the rest is optional.
+        st_book() sets enabled and page_title from export= and export_title=.
 
         - **HtmlExportBuffer** is a singleton managed by StreamTeX internally.
         You never instantiate it directly. It is reset at the start of each
@@ -270,7 +283,151 @@ def build():
     """)
     st_space("v", 3)
 
-    # --- Section 8: Run-time switches (0.7.39) ---
+    # --- Section 8: Paginated HTML export ---
+    st_write(bs.sub, "Paginated HTML Export", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        `stx export html` writes a module in one of three modes. The mode
+        is a module setting, `st_book(html_export_mode=...)` or the
+        `html_export_mode` key of `[book.defaults]` in `stx.toml`, and the
+        `--html-mode` option of the command wins over it. The pages are
+        those of the page map: `st_book(paginate_by=...)` decides where the
+        document is cut (one page per book entry by default).
+    """)
+    st_space("v", 1)
+
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.medium, (bs.param_label, "Accepted values (read live from streamtex.book.HTML_EXPORT_MODES): "),
+                 ", ".join(HTML_EXPORT_MODES))
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, (bs.param_label, "continuous"), " — one file, <name>.html (the default)")
+            with l.item(): st_write(s.medium, (bs.param_label, "paginated"), " — one file per page in pages/; <name>.html becomes an entry file that sends every link to its page")
+            with l.item(): st_write(s.medium, (bs.param_label, "both"), " — the continuous file and pages/, with a “Continuous view / Paginated view” button in the navigation bar of every file")
+    st_space("v", 1)
+
+    show_code("""\
+        # book.py of the example module my_deck/: four blocks, one TOC entry
+        # each, and a second slide inside bck_intro (st_slide(cut=True, marker=...))
+        st_book(
+            [blocks.bck_title, blocks.bck_intro, blocks.bck_details, blocks.bck_summary],
+            toc_config=TOCConfig(numbering=NumberingMode.SIDEBAR_ONLY, sidebar_max_level=2, search=True),
+            marker_config=MarkerConfig(auto_marker_on_toc=1),
+            paginate=True,
+            html_export_mode="both",
+        )""")
+    st_space("v", 1)
+
+    show_code("""\
+        # stx.toml: the same settings for every book of the project
+        [book.defaults]
+        html_export_mode = "both"   # continuous | paginated | both
+        paginate_by = "entry"       # one page per entry (or N, "depth:N", "leaf")""",
+              language="toml", line_numbers=False)
+    st_space("v", 1)
+
+    show_code("""\
+        stx export html --html-mode continuous my_deck
+        stx export html --html-mode paginated my_deck
+        stx export html --html-mode both my_deck""", language="bash", line_numbers=False)
+    st_space("v", 2)
+
+    st_write(bs.param_label, "What these three commands wrote (output ./static-html, external assets, both defaults)")
+    st_space("v", 1)
+
+    show_code("""\
+        # --html-mode continuous
+        static-html/my_deck/
+          my_deck.html                  # the whole module
+          data/images/b83deb264d99.png  # the sidebar logo
+
+        # --html-mode paginated
+        static-html/my_deck/
+          my_deck.html                  # the entry file
+          data/images/b83deb264d99.png
+          pages/
+            bck_details.html
+            bck_intro.html              # both of its slides
+            bck_summary.html
+            bck_title.html
+
+        # --html-mode both
+        static-html/my_deck/
+          my_deck.html                  # continuous, "Paginated view"
+          data/images/b83deb264d99.png
+          pages/
+            bck_details.html            # each: "Continuous view"
+            bck_intro.html
+            bck_summary.html
+            bck_title.html""", language="text", line_numbers=False, wrap=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        File names carry no number: a page file is named after its block.
+        When the same block makes several pages, each copy is qualified by
+        its section (the list block that includes it, or the level-1
+        heading before it), e.g.
+        `exercice-1-la-question-directe--bck_title_bravo.html`.
+        With `--asset-mode embedded` the files go straight into the output
+        folder: `my_deck.html` and `my_deck-pages/`, media inlined.
+    """)
+    st_space("v", 2)
+
+    st_write(bs.param_label, "Deep links through the entry file (opened in Chromium on the export above)")
+    st_space("v", 1)
+
+    show_code("""\
+        my_deck.html?slide=3                 -> pages/bck_intro.html#stx-marker-second-slide-2
+        my_deck.html?marker=Second%20slide   -> pages/bck_intro.html#stx-marker-second-slide-2
+        my_deck.html?page=4                  -> pages/bck_summary.html
+        my_deck.html#summary                 -> pages/bck_summary.html#4-summary
+        my_deck.html                         -> pages/bck_title.html""",
+              language="text", line_numbers=False, wrap=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        The entry file keeps the address of the continuous export, so the
+        links written for it keep working. Precedence: `marker` > `slide` >
+        `page`; `?slide=n` opens the slide the counter calls n. Inside a
+        page file the arrows walk the stops across files, one press per
+        slide: from the second slide of `bck_intro.html`, the next press
+        opens `bck_details.html`. In `both` mode the view button opens the
+        same slide in the other view.
+    """)
+    st_space("v", 2)
+
+    with st_grid(cols="repeat(auto-fit, minmax(600px, 1fr))", gap="24px") as g:
+        with g.cell():
+            st_image(uri="export/paginated_export_page_nav_bar.png", width="100%",
+                     alt="Page file bck_intro.html of a paginated export, with its navigation bar")
+            st_write(bs.caption, "pages/bck_intro.html (--html-mode both): the whole table of "
+                     "contents with this page's entry marked; the bar shows 2 / 5 and the "
+                     "“Continuous view” button")
+        with g.cell():
+            st_image(uri="export/paginated_export_continuous_view.png", width="100%",
+                     alt="Continuous file my_deck.html of the same export")
+            st_write(bs.caption, "my_deck.html (--html-mode both): the continuous file, "
+                     "with the “Paginated view” button")
+    st_space("v", 1)
+
+    show_details("""\
+        - Each page file holds only its page and requests only its own
+        images, but carries the whole module's table of contents (a link to
+        another page opens that file at the heading) and the global search
+        index.
+
+        - No rule is drawn at the head of a page file, as in the paginated app.
+
+        - Only `stx export html` writes page files; the "Download as..."
+        panel of the running app downloads the continuous document.
+
+        - The developer manual (Export architecture) explains how the
+        document is cut: page sentinels written during the page-cache
+        build, then `streamtex/export_paginate.py`.
+    """)
+    st_space("v", 3)
+
+    # --- Section 9: Run-time switches (0.7.39) ---
     st_write(bs.sub, "Run-time Switches \u2014 is_editable(), is_exportable(), env_flag()", toc_lvl="+1")
     st_space("v", 1)
 

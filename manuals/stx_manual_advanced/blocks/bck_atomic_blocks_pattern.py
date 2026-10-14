@@ -160,3 +160,12 @@ def build():
         (no _atomic/ directory) is perfectly fine.
     """)
     st_space("v", 1)
+
+    show_explanation("""\
+        **Going further.** The next chapter, *Composing by Atoms*, builds
+        whole modules this way: one-slide blocks (atoms), list blocks
+        that only hold the order of other blocks (`st_sequence`), and the
+        options of `st_include` — markers, breaks, cycles, hot reload and
+        pages that follow the tree.
+    """)
+    st_space("v", 1)

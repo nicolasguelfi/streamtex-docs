@@ -125,9 +125,13 @@ class AppEntry:
 
         show_explanation("""\
             ``CoolifyClient`` wraps the Coolify v4 REST API using only ``urllib``
-            (no external HTTP dependency). It is constructed from credentials
-            found in ``.stx-deploy.env``, environment variables, or
-            ``.stx-deploy.json``.
+            (no external HTTP dependency). ``from_env()`` takes each credential
+            (``COOLIFY_URL``, ``COOLIFY_API_TOKEN``) from the first place that
+            has it: ``.stx-deploy.env`` in the current directory, then in its
+            parent, then the project's ``.env``, then the environment
+            variables, then ``.stx-deploy.json``. ``client.sources`` records
+            where each one was found; ``update``, ``lock``, ``unlock``,
+            ``passwd`` and ``auth-status`` print it.
         """)
         st_space("v", 1)
 
@@ -179,14 +183,15 @@ valid = client.verify_token()           # True if token works""", language="pyth
 
         show_explanation("""\
             The ``stx deploy`` CLI commands live in ``streamtex/cli/deploy_cmd.py``
-            and are organized around shared helpers from ``coolify.py``:
+            (access control in ``deploy_auth_cmd.py``) and are organized around
+            shared helpers from ``coolify.py``:
 
             ```
-            stx deploy status        # list apps + health status
-            stx deploy rebuild       # full rebuild (all or specific app)
-            stx deploy restart       # quick restart
-            stx deploy logs          # fetch recent logs
-            stx deploy setup         # interactive first-time setup
+            stx deploy status coolify    # list apps + health status
+            stx deploy update [TARGET]   # full rebuild (--quick: restart only)
+            stx deploy scale TARGET -r N # replicas
+            stx deploy setup             # interactive first-time setup
+            stx deploy lock [TARGET]     # access control (deploy_auth_cmd.py)
             ```
 
             Each command follows the same pattern:
@@ -214,6 +219,59 @@ def deploy_rebuild(app_name: str | None = None):
         if result.success:
             ok = client.wait_healthy(app.uuid, timeout=300)
             print(f"{app.name}: {'healthy' if ok else 'timeout'}")""", language="python")
+        st_space("v", 2)
+
+        # --- Access-control modes (deploy_auth_cmd.py) ---
+        st_write(bs.sub, "Access-control modes: register_auth_mode", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            ``stx deploy lock / unlock / passwd / auth-status`` (0.7.44) live in
+            ``streamtex/cli/deploy_auth_cmd.py``. They do not know the modes
+            they drive: each mode is an ``AuthMode`` subclass — ``name``,
+            ``level`` (``"proxy"`` or ``"application"``), ``instant`` (``True``
+            when no restart is needed), ``summary`` — with ``enable(ctx)``,
+            ``disable(ctx)`` and ``status(ctx, env)``, added to the
+            ``AUTH_MODES`` registry by ``register_auth_mode()``. The library
+            registers ``session`` (the nginx login screen), ``stx-password``
+            (the keypad) and ``basic`` (Coolify's HTTP Basic Authentication).
+            ``AuthContext`` carries the Coolify client, the application's UUID
+            and name, the project path, the console and the command options;
+            ``ctx.env()`` returns the application's production variables.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex.cli.deploy_auth_cmd import AuthContext, AuthMode, register_auth_mode
+
+
+class MaintenanceMode(AuthMode):
+    \"\"\"Close the app behind a maintenance page served by the project itself.\"\"\"
+
+    name = "maintenance"
+    level = "application"
+    summary = "the project's own maintenance page (MAINTENANCE=1)"
+
+    def enable(self, ctx: AuthContext) -> None:
+        ctx.client.set_env_var(ctx.uuid, "MAINTENANCE", "1")
+
+    def disable(self, ctx: AuthContext) -> None:
+        ctx.client.delete_env_var(ctx.uuid, "MAINTENANCE")
+
+    def status(self, ctx: AuthContext, env: dict[str, str]) -> str:
+        return "on" if env.get("MAINTENANCE") == "1" else "off"   # never a secret
+
+
+register_auth_mode(MaintenanceMode())""", language="python")
+        st_space("v", 1)
+
+        show_details("""\
+            Once registered, ``--mode maintenance`` is accepted by ``lock`` and
+            ``unlock``, and ``auth-status`` lists it. There is no entry point
+            for modes: the module that registers one must be imported before
+            the command runs (a wrapper CLI, or a test). ``status`` must never
+            return a secret — ``auth-status`` prints it as is.
+        """)
         st_space("v", 2)
 
         # --- State file lifecycle ---
@@ -251,10 +309,14 @@ def deploy_rebuild(app_name: str | None = None):
         st_space("v", 1)
 
         show_details("""\
-            The ``.stx-deploy.env`` file is searched in three locations:
-            current directory, parent directory, then environment variables.
-            This supports both running from the workspace root (``streamtex-dev/``)
-            and from individual repos (``streamtex-docs/``).
+            Credentials are searched in this order, each value taken from the
+            first place that has it: ``.stx-deploy.env`` in the current
+            directory, ``.stx-deploy.env`` in the parent directory, ``.env`` in
+            the current directory, the ``COOLIFY_URL`` / ``COOLIFY_API_TOKEN``
+            environment variables, then the ``infrastructure`` section of
+            ``.stx-deploy.json``. This supports both running from the workspace
+            root (``streamtex-dev/``) and from individual repos
+            (``streamtex-docs/``).
         """)
         st_space("v", 2)
 

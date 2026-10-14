@@ -109,7 +109,7 @@ def build():
         ### The UV_NO_SOURCES Problem
         - pyproject.toml has local editable source
         - CI fix: UV_NO_SOURCES=1 as env var
-        - Docker fix: uv sync --no-sources
+        - Docker fix (generated Dockerfile): ENV UV_NO_SOURCES_PACKAGE=streamtex + uv sync --no-dev
 
         ### Coolify Services
         | Name | URL | FOLDER |

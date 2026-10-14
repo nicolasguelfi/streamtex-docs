@@ -15,6 +15,15 @@ class BlockStyles:
 bs = BlockStyles
 
 
+def _generated_gitignore() -> str:
+    """The .gitignore that `stx project new` writes, read from the installed CLI."""
+    try:
+        from streamtex.cli.project_cmd import generate_gitignore
+    except ImportError:
+        return "# install streamtex[cli] to display the generated .gitignore"
+    return generate_gitignore()
+
+
 def build():
     """CLI Quick Start — introduce the stx command-line tool."""
     st_space("v", 1)
@@ -100,6 +109,19 @@ stx project new myproject --template project
 # Available templates: project (default), slides, collection
 stx project new myslides --template slides
 """, language="bash", line_numbers=False)
+    st_space("v", 1)
+
+    show_explanation("""\
+        stx project new also writes a .gitignore. It ignores `.venv`
+        without a trailing slash, so that a .venv that is a link to an
+        environment kept elsewhere (~/.venvs/<project>) is ignored too, and
+        `.stx_cache/`, the render caches that builds write; it keeps
+        `.claude/stx.lock` under version control. The file, as the
+        installed stx writes it:
+    """)
+    st_space("v", 1)
+
+    show_code(_generated_gitignore(), language="text", line_numbers=False)
     st_space("v", 2)
 
     # --- stx run ---
@@ -168,7 +190,10 @@ stx run --set --open --chrome-profile ~/.stx-projection-chrome
         `<id>.json` and `<id>.log` per document). The project's .venv is
         used when present. --chrome-profile opens a dedicated Chrome
         profile allowed to autoplay media, for projection. stx run
-        without these options behaves as before.
+        without these options behaves as before. `stx validate` warns
+        about a `[[run.documents]]` entry that stx run --set would refuse
+        (missing id, book or port, a duplicate id or port, a book that
+        does not exist), before you try to start the set.
     """)
     st_space("v", 2)
 

@@ -10,8 +10,7 @@ class BlockStyles:
     sub = s.project.titles.section_subtitle
     cell = (s.container.borders.solid_border
             + s.container.paddings.small_padding
-            + s.center_txt
-            + s.container.layouts.vertical_center_layout)
+            + s.cell_center)
 bs = BlockStyles
 
 def build():

@@ -227,7 +227,11 @@ When multiple directories are provided, they are searched in order.
 
 The first directory containing a matching bck_*.py file wins (priority order).
 
-See the LazyBlockRegistry block for the full priority and caching documentation.""")
+See the LazyBlockRegistry block for the full priority and caching documentation.
+
+Editing a shared block, or a shared or pack module that an included block
+imports, needs no server restart: they reload with the page (see the
+Composing by Atoms chapter, Hot reload of included blocks).""")
     st_space("v", 3)
 
     # ========================================================================

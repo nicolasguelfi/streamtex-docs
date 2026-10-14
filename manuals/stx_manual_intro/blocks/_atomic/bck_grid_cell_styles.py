@@ -8,14 +8,21 @@ from blocks.helpers import show_code, show_explanation, show_details
 _cell_bg = Style("background-color: rgba(74, 144, 217, 0.15);", "demo_cell_bg")
 _highlight_bg = Style("background-color: rgba(243, 156, 18, 0.25);", "demo_highlight")
 
+# The nine presets of CellAlignments, in reading order (row by row)
+_PRESETS = ["left_top", "center_top", "right_top",
+            "left_middle", "center_middle", "right_middle",
+            "left_bottom", "center_bottom", "right_bottom"]
+
 class BlockStyles:
     """Grid cell styles demo."""
     heading = s.project.titles.section_title + s.center_txt
     sub = s.project.titles.section_subtitle
+    tall_cell = (s.container.borders.solid_border
+                 + s.container.paddings.small_padding
+                 + Style("min-height: 140px;", "demo_tall_cell"))
     base_cell = (s.container.borders.solid_border
                  + s.container.paddings.small_padding
-                 + s.center_txt
-                 + s.container.layouts.vertical_center_layout)
+                 + s.cell_center)
 bs = BlockStyles
 
 def build():
@@ -49,6 +56,51 @@ with st_grid(cols=2,
             with g.cell(): st_write(s.large, "Same style")
             with g.cell(): st_write(s.large, "Same style")
             with g.cell(): st_write(s.large, "Same style")
+        st_space("v", 2)
+
+        # Content alignment presets
+        st_write(bs.sub, "Aligning content in a cell (CellAlignments)", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            A grid cell stacks its content in a column. To place that
+            content, use one of the nine presets of `CellAlignments`,
+            named `<horizontal>_<vertical>`: left / center / right ×
+            top / middle / bottom. Each preset is a flex column, so the
+            vertical position works; `text-align` follows the horizontal one.
+
+            Reach them as `s.container.cells.*` (or `stx.CellAlignments.*`);
+            `s.cell_center` is `center_middle`. `s.center_txt` +
+            `s.container.layouts.vertical_center_layout` does **not**
+            center vertically in a cell (no `flex-direction: column`).
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+_PRESETS = ["left_top", "center_top", "right_top",
+            "left_middle", "center_middle", "right_middle",
+            "left_bottom", "center_bottom", "right_bottom"]
+tall_cell = (s.container.borders.solid_border
+             + s.container.paddings.small_padding
+             + Style("min-height: 140px;", "demo_tall_cell"))
+
+# a flat list of cell styles: one preset per cell
+cell_styles = [getattr(s.container.cells, p) + tall_cell for p in _PRESETS]
+with st_grid(cols=3, cell_styles=cell_styles) as g:
+    for p in _PRESETS:
+        with g.cell(): st_write(s.large, p)""")
+        st_space("v", 1)
+
+        cell_styles = [getattr(s.container.cells, p) + bs.tall_cell for p in _PRESETS]
+        with st_grid(cols=3, cell_styles=cell_styles) as g:
+            for p in _PRESETS:
+                with g.cell(): st_write(s.large, p)
+        st_space("v", 1)
+
+        show_code("""\
+# one alignment for every cell
+with st_grid(cols=2, cell_styles=s.cell_center + tall_cell) as g:
+    ...""")
         st_space("v", 2)
 
         # StyleGrid.create() with Excel notation

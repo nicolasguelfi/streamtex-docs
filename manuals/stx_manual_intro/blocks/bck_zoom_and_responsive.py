@@ -49,8 +49,8 @@ def build():
     st_write(
         s.medium,
         "👉 Look at your ",
-        (s.text.weights.bold_weight, "Sidebar (top right)"),
-        " to find the Zoom slider. "
+        (s.text.weights.bold_weight, "Sidebar"),
+        " to find the Zoom % field (10 % to 400 %). "
         "Use it to scale the entire page content up/down without reflow.",
     )
     st_space("v", 2)
@@ -79,8 +79,8 @@ def build():
 # Zoom is automatically injected by st_book()
 # No need to manually add it to your blocks
 
-# Users control it via sidebar slider
-# Default range: 80% - 120%""", language="python")
+# Users control it via the sidebar "Zoom %" field (10 % - 400 %)
+# Starting value: st_book(zoom=100), or zoom in [book.defaults]""", language="python")
     st_space("v", 2)
 
     # Section 3: Responsive Design Pattern
@@ -161,7 +161,43 @@ with st_grid(
 
     st_space("v", 3)
 
-    # Section 6: inject_zoom_logic (low-level API)
+    # Section 6: Zoom in exports
+    st_write(bs.section, "Zoom in Exports", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(s.medium, "Screen, HTML export and PDF export each have their own zoom:")
+    st_space("v", 1)
+
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.medium, (s.bold, "Screen"), " — the sidebar Zoom %; the export panel carries it into the HTML and the PDF.")
+        with l.item():
+            st_write(s.medium, (s.bold, "HTML file"),
+                     " — \"Zoom HTML (%)\" in the export panel: 0 follows the view zoom, "
+                     "any other value replaces it in the HTML file only.")
+        with l.item():
+            st_write(s.medium, (s.bold, "PDF"),
+                     " — \"Zoom (%)\" in the PDF layout (PdfConfig(zoom=...)): it multiplies "
+                     "the view zoom, so view 80 % × PDF 70 % = 56 %. It shrinks everything, "
+                     "vw/vh included; \"Scale\" (Chromium's print scale) only shrinks pt/px sizes.")
+    st_space("v", 1)
+
+    show_code("""\
+st_book(
+    [...],
+    zoom=100,                       # screen
+    html_export_zoom=0,             # HTML: follow the view
+    pdf_config=PdfConfig(zoom=80),  # PDF: 80 % of the view
+)""", language="python")
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "The Advanced manual (PDF Export) compares zoom and scale on real PDFs.",
+    )
+    st_space("v", 2)
+
+    # Section 7: inject_zoom_logic (low-level API)
     st_write(bs.section, "Low-Level API: inject_zoom_logic()", toc_lvl="+1")
     st_space("v", 1)
 

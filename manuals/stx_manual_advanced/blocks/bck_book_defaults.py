@@ -38,8 +38,11 @@ def build():
 # stx.toml — at the root of the project
 [book.defaults]
 paginate = true
+paginate_by = "entry"       # pages: one per entry, or N, "depth:N", "leaf"
 page_width = 80
 zoom = 110
+html_export_zoom = 0        # "Zoom HTML (%)" start value; 0 = follow the view zoom
+html_export_mode = "both"   # stx export html: "continuous" | "paginated" | "both"
 loading = false
 doc_version = "auto"        # [project].version of pyproject.toml
 lang = "auto"               # $STX_LANG > ?lang= > default (streamtex.i18n)

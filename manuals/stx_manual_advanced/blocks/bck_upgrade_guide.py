@@ -1,4 +1,4 @@
-"""Upgrade Guide — v0.2 to v0.3: breaking changes, new features, migration steps."""
+"""Upgrade Guide — retiring a project's own slide() helper; v0.2 to v0.3 migration."""
 
 from streamtex import *
 from streamtex.enums import Tags as t
@@ -17,22 +17,82 @@ bs = BlockStyles
 
 
 def build():
-    """Upgrade Guide — migration from v0.2 to v0.3."""
-    st_write(bs.heading, "Upgrade Guide \u2014 v0.2 to v0.3", tag=t.div, toc_lvl="1")
+    """Upgrade Guide — slide() helper to st_slide; migration from v0.2 to v0.3."""
+    st_write(bs.heading, "Upgrade Guide", tag=t.div, toc_lvl="1")
     st_space("v", 2)
 
     show_explanation("""\
-        This guide covers everything you need to migrate a StreamTeX
-        project from version 0.2 to version 0.3. It lists breaking
-        changes, highlights new features, provides step-by-step
-        migration instructions, and documents deprecated APIs.
+        This guide collects the migrations a StreamTeX project may need:
+        first, retiring a project's own slide() helper in favour of
+        st_slide(); then the move from version 0.2 to version 0.3, with
+        its breaking changes, new features and step-by-step migration
+        instructions.
+    """)
+    st_space("v", 2)
+
+    # ------------------------------------------------------------------ #
+    # 0. A project's own slide() helper -> st_slide
+    # ------------------------------------------------------------------ #
+    st_write(bs.sub, "Retiring a Project's Own slide() Helper", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        Some projects wrote their own slide(cut, style) helper: a break
+        when cut is true, then the design system's slide box, plus the
+        style of that slide. st_slide() is the same construction, with
+        cut and style at the same positions and the same meaning, and it
+        now carries what the helper could not: the slide's marker, the
+        break's settings and slides without a box. Two lines retire the
+        helper — no block file changes, no visual change.
+    """)
+    st_space("v", 1)
+
+    st_write(bs.feature, "Step 1: Declare the slide box once, in book.py")
+    st_space("v", 1)
+
+    show_code("""\
+        import streamtex as stx
+        from custom.styles import Styles as s
+
+        # the box the helper used, before st_book(); stored per session
+        stx.set_slide_container(s.project.containers.slide_center)
+    """, language="python")
+    st_space("v", 1)
+
+    st_write(bs.feature, "Step 2: Make the helper an alias")
+    st_space("v", 1)
+
+    show_code("""\
+        # shared/slides.py — before
+        @contextmanager
+        def slide(cut: bool = False, style: Style | None = None):
+            if cut:
+                st_slide_break()
+            box = s.project.containers.slide_center
+            with st_block(box + style if style is not None else box):
+                yield
+
+        # shared/slides.py — after
+        from streamtex import st_slide as slide
+    """, language="python")
+    st_space("v", 1)
+
+    show_details("""\
+        Every existing with slide(...) renders as before: the blocks keep
+        importing slide from the project. Afterwards, slide by slide, the
+        marker written apart can move onto the slide it belongs to
+        (st_marker("RAG") then with slide(): becomes
+        with slide(marker="RAG"):), a break that needs settings takes them
+        (with slide(cut=True, zoom=80):) and a scrolling slide drops the box
+        (with slide(marker="Long read", box=False):). See "One slide —
+        st_slide()" in the Presentation Mode chapter.
     """)
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #
     # 1. Breaking Changes
     # ------------------------------------------------------------------ #
-    st_write(bs.sub, "Breaking Changes", toc_lvl="+1")
+    st_write(bs.sub, "v0.3 — Breaking Changes", toc_lvl="+1")
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
@@ -57,19 +117,20 @@ def build():
             with l.item():
                 st_write(
                     s.medium,
-                    "BannerConfig replaces the banner_color parameter in st_book()",
+                    "BannerConfig (banner=) gives full control of the banner; banner_color= "
+                    "remains a shortcut for its colour only",
                 )
             with l.item():
                 st_write(
                     s.medium,
-                    "InspectorConfig is now a proper dataclass (previously dict)",
+                    "inspector= takes an InspectorConfig (a plain True is not accepted)",
                 )
     st_space("v", 2)
 
     # ------------------------------------------------------------------ #
     # 2. New Features
     # ------------------------------------------------------------------ #
-    st_write(bs.sub, "New Features", toc_lvl="+1")
+    st_write(bs.sub, "v0.3 — New Features", toc_lvl="+1")
     st_space("v", 1)
 
     with st_block(s.project.containers.explanation_box):
@@ -122,7 +183,7 @@ def build():
     # ------------------------------------------------------------------ #
     # 3. Migration Steps
     # ------------------------------------------------------------------ #
-    st_write(bs.sub, "Migration Steps", toc_lvl="+1")
+    st_write(bs.sub, "v0.3 — Migration Steps", toc_lvl="+1")
     st_space("v", 1)
 
     show_explanation("""\
@@ -142,12 +203,13 @@ def build():
     st_space("v", 2)
 
     # Step 2
-    st_write(bs.feature, "Step 2: Replace banner_color with BannerConfig")
+    st_write(bs.feature, "Step 2: Use BannerConfig for more than the colour")
     st_space("v", 1)
 
     show_explanation("""\
-        The banner_color= parameter has been replaced by the
-        banner= parameter which accepts a BannerConfig instance.
+        banner= takes a BannerConfig: mode, colour and the rest of the
+        banner. banner_color= stays as a shortcut that sets the colour
+        only; banner= wins when both are given.
     """)
     st_space("v", 1)
 
@@ -166,8 +228,8 @@ def build():
     st_space("v", 1)
 
     show_explanation("""\
-        The boolean inspector= parameter has been replaced by
-        the InspectorConfig dataclass for finer control.
+        inspector= takes an InspectorConfig. The boolean of v0.2 is no
+        longer accepted: st_book(inspector=True) fails.
     """)
     st_space("v", 1)
 
@@ -221,36 +283,3 @@ def build():
         uv run pytest tests/ -v
     """, language="bash")
     st_space("v", 2)
-
-    # ------------------------------------------------------------------ #
-    # 4. Deprecated APIs
-    # ------------------------------------------------------------------ #
-    st_write(bs.sub, "Deprecated APIs", toc_lvl="+1")
-    st_space("v", 1)
-
-    with st_block(s.project.containers.explanation_box):
-        st_write(
-            s.medium,
-            "The following APIs are deprecated. They continue "
-            "to work for backward compatibility but will be removed in "
-            "a future release. Update your code as described above.",
-        )
-        with st_list(list_type="ul") as l:
-            with l.item():
-                st_write(
-                    s.medium,
-                    "banner_color parameter (use BannerConfig instead)",
-                )
-            with l.item():
-                st_write(
-                    s.medium,
-                    "Direct inspector=True (use InspectorConfig instead)",
-                )
-    st_space("v", 1)
-
-    show_details("""\
-        Both deprecated parameters still work today and emit
-        a deprecation warning at runtime. They will be removed
-        in a future release. Plan your migration accordingly.
-    """)
-    st_space("v", 1)

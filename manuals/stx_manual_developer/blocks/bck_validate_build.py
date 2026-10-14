@@ -1,7 +1,7 @@
 """Block — stx validate --build, project rules and render snapshots (0.7.36)."""
 
 from streamtex import *
-from streamtex.enums import Tags as t
+from streamtex.enums import Tags as t, ListTypes as lt
 from custom.styles import Styles as s
 from blocks.helpers import show_code, show_explanation, show_details
 
@@ -40,12 +40,17 @@ def build():
         st_space("v", 1)
 
         show_explanation("""\
-            Run it in the project's own environment, so that the blocks
-            import the same packages as the app. Each book.py runs in
-            its own subprocess under Streamlit's AppTest (no browser),
-            with a checking st_book that sets up the bibliography, the
-            TOC and the markers, then calls every block's build() with
-            the book's own block_args / block_kwargs.
+            The blocks must import the same packages as the app: when
+            the project has its own environment (.venv), stx validate
+            --build uses it automatically — also when stx is a global uv
+            tool, whose interpreter has neither the project's packs nor
+            its streamtex — and prints that interpreter at the end of
+            the Build line. Each book.py runs in its own subprocess
+            under Streamlit's AppTest (no browser), with a checking
+            st_book that sets up the bibliography, the TOC and the
+            markers, then runs every entry through st_include with the
+            book's own block_args / block_kwargs — so an include cycle is
+            named from the entry, as in the app.
         """)
         st_space("v", 1)
 
@@ -88,7 +93,7 @@ def build():
         st_space("v", 1)
 
         show_code("""\
-            Build (2 book(s), real build() of every block)
+            Build (2 book(s), real build() of every block) — /path/to/project/.venv/bin/python
               manuals/stx_manual_ai/book.py: 45 block(s)
                 inlined 1131 KB project_blocks.bck_ai_image_overview: images/ai/ai_openai_demo.png — serve it (configure_image_path + set_static_sources)
               manuals/stx_manual_developer/book.py: 15 block(s) OK\
@@ -180,7 +185,7 @@ def build():
 
         show_explanation("""\
             For a refactoring pass that must not change what readers
-            see, record a fingerprint of the HTML each block emits
+            see, record a fingerprint of what each block puts on screen
             before the change, then compare after it. Base64 media are
             hashed before the fingerprint is taken. Every block that
             renders differently is a warning, listed by book.
@@ -203,18 +208,27 @@ def build():
         st_space("v", 1)
 
         with st_block(s.project.containers.warning_callout):
-            st_write(s.project.titles.warning_label, "Limit of the fingerprint")
+            st_write(s.project.titles.warning_label, "What the fingerprint covers")
             st_space("v", 1)
-            st_write(s.large,
-                     "The fingerprint covers the HTML that StreamTeX emits "
-                     "itself (st_write, st_block, st_grid, st_code, "
-                     "st_image ...). Text rendered by ",
-                     (s.bold, "st_markdown()"), " — and therefore the body "
-                     "of ", (s.bold, "show_explanation()"), " and ",
-                     (s.bold, "show_details()"),
-                     " — goes through st.markdown and is NOT in the "
-                     "fingerprint: a change in that text is not reported. "
-                     "Review those changes in the diff.")
+            with st_list(list_type=lt.unordered, text_align="left") as l:
+                with l.item():
+                    st_write(s.large, (s.bold, "Captured: "),
+                             "the HTML StreamTeX emits (st_write, st_block, st_grid, st_code, "
+                             "st_image ...) and the text a block sends through Streamlit itself — "
+                             "st_markdown(), hence the body of show_explanation() and show_details(), "
+                             "and a block's own st.markdown, st.code, st.latex and st.caption. A changed "
+                             "Markdown sentence is reported.")
+                with l.item():
+                    st_write(s.large, (s.bold, "Ignored: "),
+                             "the numbers derived from a block's position in the book — section "
+                             "anchors, navigation markers, code-wrap toggles. Inserting a block no "
+                             "longer makes every block after it \"change\"; a visible section number "
+                             "that moves is still reported.")
+                with l.item():
+                    st_write(s.large, (s.bold, "After upgrading streamtex: "),
+                             "take a new snapshot. A snapshot written before 0.7.41 is not comparable "
+                             "(it covered less), and a release that changes the HTML of a component "
+                             "makes every block using it differ.")
         st_space("v", 2)
 
         # --- Star import ---
@@ -238,7 +252,7 @@ def build():
             names = list(("a", "b"))       # the builtin list again (0.7.36+)
 
             # A sub-module is imported explicitly
-            from streamtex.enums import Tags as t
+            from streamtex.enums import Tags as t, ListTypes as lt
             import streamtex.styles as sts
 
             # Code that must still run on streamtex 0.7.35 or older

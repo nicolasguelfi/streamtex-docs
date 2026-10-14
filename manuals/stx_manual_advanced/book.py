@@ -93,6 +93,7 @@ st_book([
     blocks.bck_static_resolution_demo,
     blocks.bck_block_helpers_patterns,
     blocks.bck_atomic_blocks_pattern,
+    blocks.bck_composing_by_atoms,
 
     # --- Section 2: UI Avancee ---
     blocks.bck_overlays_positioning,
@@ -135,6 +136,9 @@ st_book([
     # --- Section 7: Presentation ---
     blocks.bck_presentation_mode,
     blocks.bck_spacing_profiles,
+
+    # --- Section 8: Upgrades ---
+    blocks.bck_upgrade_guide,
 
     # Shared block footer
     shared_blocks.bck_footer_training,

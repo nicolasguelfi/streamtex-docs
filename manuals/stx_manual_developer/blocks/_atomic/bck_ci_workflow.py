@@ -119,8 +119,14 @@ jobs:
             and install streamtex from PyPI instead. It is set as a **job-level
             env var** so it applies to ALL uv commands (sync, run, etc.).
 
-            The Dockerfile uses the same approach: `uv sync --no-sources`
-            then strips the section with sed.
+            The manuals repository's own Dockerfile does the same with
+            `uv sync --no-sources`, then strips the section with sed. The
+            Dockerfile that `stx deploy` generates for a project is
+            narrower: `ENV UV_NO_SOURCES_PACKAGE=streamtex` then
+            `uv sync --no-dev` — only streamtex loses its local source
+            (local packs keep theirs), and the variable holds for every
+            later uv command, the entrypoint's `uv run` included. The
+            `stx deploy ci` workflow sets the same variable for its job.
         """)
         st_space("v", 2)
 

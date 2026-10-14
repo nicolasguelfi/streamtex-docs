@@ -125,7 +125,57 @@ st_image(uri="sample_gradient.png", width="60%",
         """)
         st_space("v", 2)
 
-        # --- 4. Overlay, crop and window bounds together (0.7.37) ---
+        # --- 4. Badges sized on the image (0.7.45) ---
+        st_write(bs.sub, "Badges sized on the image: proportional=True", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            By default the badge text is 12px on every image, whatever
+            the image's size. With `proportional=True` (0.7.45) the badge is
+            sized on the image, not the viewport: the media box becomes a
+            size container and the default pill uses
+            `clamp(9px, 7cqw, 22px)` (7 % of the image width, between 9 and
+            22 px). A thumbnail and a hero get proportionate badges, and
+            `cqw` also works in `css=`.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+badge = MediaOverlay(text="✦ AI", proportional=True)
+
+st_image(uri="sample_gradient.png", width="120px", alt="Thumbnail", overlay=badge)
+st_image(uri="sample_gradient.png", width="60%", alt="Hero", overlay=badge)
+
+# cqw in css=: 5 % of the image width, between 8 and 18 px
+MediaOverlay(text="✦ AI", proportional=True,
+             css="font-size: clamp(8px, 5cqw, 18px);")""")
+        st_space("v", 1)
+
+        _badge = MediaOverlay(text="✦ AI", proportional=True)
+        st_image(uri="sample_gradient.png", width="120px",
+                 alt="Thumbnail with a proportional badge", overlay=_badge)
+        st_space("v", 1)
+        st_image(uri="sample_gradient.png", width="60%",
+                 alt="Hero with a proportional badge", overlay=_badge)
+        st_space("v", 1)
+
+        show_details("""\
+            Measured in Chromium on this page, 1500 px wide: the badge of
+            the 120 px thumbnail is 9 px (the lower bound), the badge of
+            the 590 px hero 22 px (the upper bound); without
+            `proportional=True` both would be 12 px.
+
+            A size container needs a definite width: `st_image`'s default
+            `100%` or an explicit width. With `width="auto"` the box is
+            left as is (a size container cannot shrink-wrap its image) and
+            `cqw` falls back to the viewport.
+
+            `proportional=False` (the default) leaves the output
+            byte-identical to earlier versions.
+        """)
+        st_space("v", 2)
+
+        # --- 5. Overlay, crop and window bounds together (0.7.37) ---
         st_write(bs.sub, "Overlay on a cropped, bounded image", toc_lvl="+1")
         st_space("v", 1)
 

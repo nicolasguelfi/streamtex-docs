@@ -103,17 +103,30 @@ def build():
     show_explanation("""\
         In paginated mode `st_book()` builds the TOC, the markers, the page
         titles and the search index **once**, in a cache keyed by the
-        modules, their mtimes and the library version. Since the kwargs
-        change what the blocks render, the cache key also includes a
-        **fingerprint of `block_args` / `block_kwargs`**:
+        entries and their mtimes, the module's `book.py`, every
+        `custom/**/*.py` and the library version (the blocks reached
+        through `st_include` are checked separately: their mtimes are
+        stored with the cache). Since the kwargs change what the blocks
+        render, the cache key also includes a **fingerprint of
+        `block_args` / `block_kwargs`**:
 
         - `block_kwargs={"lang": "fr"}` gets its own TOC / markers / titles —
           the sidebar is never the English one left by a previous run;
-        - the persistent file is `.stx_cache/page_cache-<fp>.json`, one per
-          variant, so `stx cache warmup` run once per language keeps every
-          language warm;
-        - a project that forwards nothing keeps `page_cache.json` and the
-          exact same key as before.
+        - the persistent file is `<book dir>/.stx_cache/page_cache-<fp>.json`,
+          next to the module's `book.py`, one per variant, so
+          `stx cache warmup` run once per language keeps every language warm;
+        - a project that forwards nothing keeps `page_cache.json`, with no
+          fingerprint in its key.
+    """)
+    st_space("v", 1)
+
+    show_details("""\
+        **Entries outside `<book dir>/blocks/`** (a `content/` or `lists/`
+        folder shared by several modules): the cache used to be written
+        next to the entries' parent folder. It now lives next to each
+        module's `book.py`, so the old files there are orphans:
+        `rm -r <entries parent>/.stx_cache`. See *Composing by Atoms* for
+        the page cache and hot reload of included blocks.
     """)
     st_space("v", 2)
 

@@ -248,7 +248,7 @@ Supports \textbf{bold}, \emph{italic}, and math: $E = mc^2$.
             st_write(
                 s.medium,
                 (s.text.weights.bold_weight, "st_tikz()"),
-                " \u2014 TikZ diagrams (requires local pdflatex + dvisvgm)",
+                " \u2014 TikZ diagrams (requires local latex + dvisvgm)",
             )
     st_space("v", 2)
 

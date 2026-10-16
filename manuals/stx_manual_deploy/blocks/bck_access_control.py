@@ -34,7 +34,7 @@ _SAMPLE_PASSWORDS = """\
 # .stx-passwords.toml — plain passwords: git-ignored
 # [default]: when no section has the service's name
 [default]
-live = "open sesame"              # label "default"
+live = "open-sesame"              # label "default"
 html = "COHORT1:first-pw,COHORT2:second-pw"
 
 # The section of the service docs-intro, in the
@@ -85,6 +85,7 @@ def _refusals(api) -> str:
         ("A label twice", "A:one,A:two"),
         ("Two labels share a password", "A:same,B:same"),
         ("A label with a space", "MY COHORT:pw"),
+        ("A password with a space", "A:two words"),
         (f"{api.MAX_PASSWORDS + 1} passwords", ",".join(f"L{i}:pw{i}" for i in range(api.MAX_PASSWORDS + 1))),
     ]
     out = []
@@ -239,7 +240,9 @@ def build():
             "project (`--path`, `--file`). The section is the one named after the service, else "
             "`[default]` (`--section` picks another). Each face — `live` for the app, `html` for "
             "the static export — holds a password, a list `\"LABEL:pw,LABEL:pw\"`, or a table "
-            "whose entries may carry a `valid_until` date."
+            "whose entries may carry a `valid_until` date. A password holds no space: the login "
+            "screen removes the spaces a visitor types (a phone adds one after a word, a copy-paste "
+            "keeps one at the end), so `lock` refuses a password that contains one."
         )
         st_space("v", 1)
 

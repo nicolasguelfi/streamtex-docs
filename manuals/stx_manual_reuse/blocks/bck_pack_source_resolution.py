@@ -75,7 +75,7 @@ type = "git"
 name = "streamtex-pack-design"   # the entry-point name of the pack
 ref = "github.com/nicolasguelfi/streamtex-packs"   # the git repository
 subdirectory = "streamtex-pack-design"           # the pack's folder in a monorepo
-rev = "pack-design-v0.3.0"       # tag, branch, or commit SHA
+rev = "pack-design-v0.3.2"       # tag, branch, or commit SHA
 
 [[packs]]
 type = "pypi"
@@ -211,7 +211,7 @@ for p in packs:
         st_code(
             code="""
 # Update a git pack to a new revision (encode rev in the ref)
-stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.0#subdirectory=streamtex-pack-design
+stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.2#subdirectory=streamtex-pack-design
 stx pack sync                                # uv sync applies it
 
 # Iterate on a pack locally (editable install)

@@ -12,14 +12,14 @@ type = "git"
 name = "streamtex-pack-design"
 ref = "github.com/nicolasguelfi/streamtex-packs"
 subdirectory = "streamtex-pack-design"
-rev = "pack-design-v0.3.0"
+rev = "pack-design-v0.3.2"
 
 [[packs]]
 type = "git"
 name = "streamtex-pack-manuals"
 ref = "github.com/nicolasguelfi/streamtex-packs"
 subdirectory = "streamtex-pack-manuals"
-rev = "pack-manuals-v0.2.0"
+rev = "pack-manuals-v0.2.1"
 
 [design_system]
 use = "default"

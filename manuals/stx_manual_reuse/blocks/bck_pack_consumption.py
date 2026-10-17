@@ -95,7 +95,7 @@ stx project new my-app --kit streamtex-pack-design:manual-default --no-mypack
         st_code(
             code="""
 # Add a git pack at a specific revision (tag, branch, or SHA)
-stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.0#subdirectory=streamtex-pack-design
+stx pack add git:https://github.com/nicolasguelfi/streamtex-packs@pack-design-v0.3.2#subdirectory=streamtex-pack-design
 
 # Add a local pack inside the project, then mark it primary
 stx pack add local:./mypack

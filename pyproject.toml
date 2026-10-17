@@ -5,9 +5,9 @@ description = "StreamTeX interactive manuals and documentation"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "streamtex[ai,cli,inspector,pdf]>=0.7.49,<0.8",
-    "streamtex-pack-design  @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-design-v0.3.0#subdirectory=streamtex-pack-design",
-    "streamtex-pack-manuals @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-manuals-v0.2.0#subdirectory=streamtex-pack-manuals",
+    "streamtex[ai,cli,inspector,pdf]>=0.7.50,<0.8",
+    "streamtex-pack-design  @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-design-v0.3.2#subdirectory=streamtex-pack-design",
+    "streamtex-pack-manuals @ git+https://github.com/nicolasguelfi/streamtex-packs.git@pack-manuals-v0.2.1#subdirectory=streamtex-pack-manuals",
 ]
 
 [dependency-groups]

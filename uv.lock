@@ -2350,7 +2350,7 @@ wheels = [
 
 [[package]]
 name = "streamtex"
-version = "0.7.49"
+version = "0.7.50"
 source = { editable = "../streamtex" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -2471,7 +2471,7 @@ dev = [
 
 [[package]]
 name = "streamtex-pack-design"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "../streamtex-packs/streamtex-pack-design" }
 dependencies = [
     { name = "streamtex" },
@@ -2489,7 +2489,7 @@ dev = [
 
 [[package]]
 name = "streamtex-pack-manuals"
-version = "0.2.0"
+version = "0.2.1"
 source = { editable = "../streamtex-packs/streamtex-pack-manuals" }
 dependencies = [
     { name = "streamtex" },
@@ -2499,7 +2499,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "streamtex", specifier = ">=0.7.7" },
-    { name = "streamtex-pack-design", editable = "../streamtex-packs/streamtex-pack-design" },
+    { name = "streamtex-pack-design", specifier = ">=0.3,<0.4" },
 ]
 
 [package.metadata.requires-dev]

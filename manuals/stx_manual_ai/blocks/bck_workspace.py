@@ -52,7 +52,7 @@ def build():
         With --project, the presets standard, power and developer also
         declare the design pack in the new project's stx.toml:
         streamtex-pack-design from the streamtex-packs monorepo, at the
-        tag pack-design-v0.3.0. Its components, design systems and kits
+        tag pack-design-v0.3.2. Its components, design systems and kits
         are then available to Claude and to `stx component list`.
         --no-design-pack skips it; existing stx.toml files are never
         touched.
@@ -69,7 +69,7 @@ def build():
         name = "streamtex-pack-design"
         ref = "github.com/nicolasguelfi/streamtex-packs"
         subdirectory = "streamtex-pack-design"
-        rev = "pack-design-v0.3.0"
+        rev = "pack-design-v0.3.2"
     """, language="bash", line_numbers=False)
     st_space("v", 2)
 

@@ -174,7 +174,47 @@ stx.st_video(youtube_url)""")
         stx.st_video(youtube_url)
         st_space("v", 2)
 
-        # --- 8. Various Data Files ---
+        # --- 8. Video size, alignment and autoplay ---
+        st_write(bs.sub, "Video size, alignment and autoplay", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            A video fills its container by default. width= sizes it:
+            pixels (an int) or a CSS length ("50%" of the container,
+            "60vw", "800px"); it keeps its aspect ratio. align= places
+            a narrower video: "center" (default), "left" or "right".
+            The same box is drawn live and in the HTML export.
+            st_zoom does not shrink a video: give it a width.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+stx.st_video(youtube_url, width="50%")              # half the width, centred
+stx.st_video(youtube_url, width=400, align="left")  # 400 px, left edge
+stx.st_audio(audio_path, width="50%")               # same for audio""")
+        st_space("v", 1)
+
+        stx.st_video(youtube_url, width="50%")
+        st_space("v", 1)
+        stx.st_video(youtube_url, width=400, align="left")
+        st_space("v", 2)
+
+        show_explanation("""\
+            Browsers only start a muted video on their own. An autoplay
+            video that does not mention muted is therefore muted (one
+            warning in the log); the reader turns the sound on with the
+            controls. An explicit muted=False is kept: a browser that
+            allows sound on its own (a projection profile) plays it with
+            sound, an ordinary browser waits for a click.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+stx.st_video(video_path, autoplay=True, loop=True)               # starts, muted
+stx.st_video(video_path, autoplay=True, loop=True, muted=False)  # sound kept""")
+        st_space("v", 2)
+
+        # --- 9. Various Data Files ---
         st_write(bs.sub, "Data files (JSON, CSV, ...)", toc_lvl="+1")
         st_space("v", 1)
 

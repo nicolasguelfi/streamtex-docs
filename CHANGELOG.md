@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.53**: the advanced manual's static assets chapter gains
+  *Video size, alignment and autoplay* — `st_video` / `st_audio` `width=` and
+  `align=` (live demo), autoplay muted by default and an explicit
+  `muted=False` kept.
+
+### Fixed
+
+- **Deploy cheatsheet matches the CLI** (streamtex#102): `--serve-mode`
+  values and default (`dual`), what `stx deploy hetzner` does (no git push, no
+  replica batches), `stx deploy update` without a target (it asks).
+
+### Added (earlier)
+
 - **streamtex 0.7.35 → 0.7.40 documented** (lots A-F, #11, board `audit1`):
   - AI manual — project mode (`[claude]`, `stx claude sync`, `.claude/stx.lock`),
     machine mode (`stx claude global status/remove`, `global_commands`), CLAUDE.md

@@ -148,11 +148,11 @@ docker run -p 8501:8501 \
 
 ```bash
 stx deploy hetzner PATH [--subdomain NAME] [--uuid UUID]
-                        [--serve-mode streamlit|dual|static-only]
+                        [--serve-mode dual|static-only|streamlit-only]
                         [--yes]
 ```
 
-**Default**:
+**Default** (`--serve-mode dual`):
 ```bash
 stx deploy hetzner .
 ```
@@ -163,22 +163,25 @@ stx deploy hetzner . --subdomain my-app
 # → deploys to https://my-app.streamtex.org
 ```
 
-**With dual serve-mode (Streamlit + Nginx static fallback)**:
+**Static HTML only, or Streamlit without Nginx**:
 ```bash
-stx deploy hetzner . --serve-mode dual
+stx deploy hetzner . --serve-mode static-only
+stx deploy hetzner . --serve-mode streamlit-only
 ```
 
 What it does:
-1. Runs `stx deploy preflight` first (book.py, Dockerfile, git, tests, lint).
-2. Discovers or creates a Coolify application UUID (state in `.stx-deploy.json`).
-3. Pushes git, triggers a Coolify deploy via API, waits for the rebuild.
-4. For multi-replica projects, deploys all replicas (batched ≤ 4 to avoid server hang).
-5. Updates `.stx-deploy.json` with the new state.
+1. Reads `.stx-deploy.env`, then runs the `stx deploy preflight` checks (book.py, Dockerfile, git, tests, lint).
+2. Reads the git remote (Coolify builds what is pushed: push first) and asks for the subdomain.
+3. Finds the Coolify application in `.stx-deploy.json`, or creates it via the API (or guides its creation in the Coolify UI).
+4. Sets `STX_SERVE_MODE`, the exposed port and the domain, triggers a rebuild, waits for the health check and smoke-tests the site.
+5. Records the service in `.stx-deploy.json`.
+
+Replicas are managed by `stx deploy scale`; `hetzner` rebuilds the primary application only.
 
 ### stx deploy update — rebuild or restart service
 
 ```bash
-stx deploy update                              # rebuild ALL services + replicas
+stx deploy update                              # lists the services and asks which one
 stx deploy update docs-intro                   # rebuild one service
 stx deploy update docs-intro --quick           # restart only (no rebuild)
 stx deploy update docs-intro --serve-mode static-only

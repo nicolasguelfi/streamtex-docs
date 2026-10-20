@@ -4,3 +4,51 @@
 [claude]
 mode = "project"
 profile = "documentation"
+
+# stx release — the manuals on two long-lived applications (board docrel, 2026-10-20)
+[release]
+project = "docs"
+langs = []                         # English only: /html/<manual>/<manual>.html, as before
+lock_no_sources = true             # the packs come from their git tags in the live image
+apt = ["git", "texlive-latex-base", "texlive-latex-extra", "texlive-pictures",
+       "texlive-fonts-recommended", "texlive-science", "dvisvgm", "ghostscript"]
+# shared by every manual, and the repository files the advanced and deploy manuals show
+snapshot = ["manuals/shared-blocks", "CHANGELOG.md", "pyproject.toml", ".stx-version", "stx.toml", "Dockerfile", ".dockerignore", "docker-compose.yml",
+            ".github/workflows/ci.yml", "deploy/preflight.sh", "deploy/ansible"]
+
+[[release.sites]]
+site = "docs"
+book = "manuals/stx_manuals_collection/book.py"
+
+[[release.sites]]
+site = "docs-intro"
+book = "manuals/stx_manual_intro/book.py"
+
+[[release.sites]]
+site = "docs-advanced"
+book = "manuals/stx_manual_advanced/book.py"
+
+[[release.sites]]
+site = "docs-deploy"
+book = "manuals/stx_manual_deploy/book.py"
+
+[[release.sites]]
+site = "docs-developer"
+book = "manuals/stx_manual_developer/book.py"
+
+[[release.sites]]
+site = "docs-ai"
+book = "manuals/stx_manual_ai/book.py"
+
+[[release.sites]]
+site = "docs-ce"
+book = "manuals/stx_manual_ce/book.py"
+
+[[release.sites]]
+site = "docs-patterns"
+book = "manuals/stx_manual_reuse/book.py"
+
+[[release.sites]]
+site = "docs-staging"              # the collection, published only when named (board docrel staging=b)
+book = "manuals/stx_manuals_collection/book.py"
+explicit = true

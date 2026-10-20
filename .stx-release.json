@@ -1,0 +1,19 @@
+{
+  "default_target": "prod",
+  "sites": {},
+  "targets": {
+    "prod": {
+      "type": "ssh",
+      "host": "root@138.199.148.59",
+      "ssh_key": "~/.ssh/hetzner_streamtex",
+      "root": "/data/stx/docs",
+      "domain": "streamtex.org",
+      "site_suffix": "-next",
+      "coolify_env": "../.stx-deploy.env",
+      "coolify_project": "streamtex-docs",
+      "coolify_server": "localhost",
+      "static_app": "docs-static",
+      "live_app": "docs-live"
+    }
+  }
+}

@@ -24,3 +24,4 @@ html_exports/
 !.claude/custom/
 !.claude/.stx-profile
 !.claude/stx.lock
+.stx-passwords.toml

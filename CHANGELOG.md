@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.58**: the deploy manual gains *Multi-Document Projects —
+  stx release* (streamtex#136, streamtex#111). It covers declaring the
+  sites, passwords per site, the command list (read from the library) and
+  taking a project over from the all-trainings prototype. The deploy
+  cheatsheet gains the matching section.
+
 - **streamtex 0.7.57**: the advanced manual gains *Countdown Racks*, a
   chapter on `st_countdown` (streamtex#52). It covers chain and parallel
   modes, the card types (stopwatch, clock with a time zone), alarms and

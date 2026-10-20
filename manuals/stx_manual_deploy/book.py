@@ -70,6 +70,7 @@ st_book([
     blocks.bck_huggingface,
     blocks.bck_hetzner,
     blocks.bck_access_control,
+    blocks.bck_release,
     blocks.bck_gcp_ansible,
     blocks.bck_ci_cd,
 

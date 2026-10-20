@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.57**: the advanced manual gains *Countdown Racks*, a
+  chapter on `st_countdown` (streamtex#52). It covers chain and parallel
+  modes, the card types (stopwatch, clock with a time zone), alarms and
+  bells, the break screen, editing a value and sizing, with three live
+  racks.
+
 - **streamtex 0.7.56**: the advanced manual documents the 0.7.55 options.
   *Static Assets* gains a video that dominates the screen —
   `st_video(theater="slide" | "window", fit=, fullscreen=True)`, with a live

@@ -103,6 +103,7 @@ st_book([
     blocks.bck_font_scale_curves_demo,
     blocks.bck_hover_and_preview,
     blocks.bck_hover_tooltip,
+    blocks.bck_countdown_racks,
     blocks.bck_media_overlay,
     blocks.bck_ui_components,
 

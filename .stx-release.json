@@ -1,6 +1,73 @@
 {
   "default_target": "prod",
-  "sites": {},
+  "sites": {
+    "prod": {
+      "docs": {
+        "port": 9000,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:11:37",
+        "asleep": false
+      },
+      "docs-intro": {
+        "port": 9001,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:11:53",
+        "asleep": false
+      },
+      "docs-advanced": {
+        "port": 9002,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:12:20",
+        "asleep": false
+      },
+      "docs-deploy": {
+        "port": 9003,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:12:36",
+        "asleep": false
+      },
+      "docs-developer": {
+        "port": 9004,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:12:51",
+        "asleep": false
+      },
+      "docs-ai": {
+        "port": 9005,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:13:07",
+        "asleep": false
+      },
+      "docs-ce": {
+        "port": 9006,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:13:23",
+        "asleep": false
+      },
+      "docs-patterns": {
+        "port": 9007,
+        "html_open": true,
+        "release": "1573848124ce",
+        "previous": null,
+        "date": "2026-10-20T20:13:38",
+        "asleep": false
+      }
+    }
+  },
   "targets": {
     "prod": {
       "type": "ssh",
@@ -8,12 +75,13 @@
       "ssh_key": "~/.ssh/hetzner_streamtex",
       "root": "/data/stx/docs",
       "domain": "streamtex.org",
-      "site_suffix": "-next",
       "coolify_env": "../.stx-deploy.env",
       "coolify_project": "streamtex-docs",
       "coolify_server": "localhost",
       "static_app": "docs-static",
-      "live_app": "docs-live"
+      "live_app": "docs-live",
+      "static_uuid": "mxwg6yowoysmk90167bjisao",
+      "live_uuid": "cwcai31qh8ggbww6ja9x1sf1"
     }
   }
 }

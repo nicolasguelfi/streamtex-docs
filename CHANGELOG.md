@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.56**: the advanced manual documents the 0.7.55 options.
+  *Static Assets* gains a video that dominates the screen —
+  `st_video(theater="slide" | "window", fit=, fullscreen=True)`, with a live
+  `theater="slide"` demo. *Advanced Export* gains *Usage Notice and Print
+  Rules* — `st_book(notice=..., printable=...)` and `PrintConfig`, the values
+  of `printable=False` read live from the library. 0.7.56 is needed for the
+  advanced manual's HTML export: with 0.7.54 and 0.7.55 two of its blocks
+  (forms, dynamic content) stopped the export.
+
 - **streamtex 0.7.53**: the advanced manual's static assets chapter gains
   *Video size, alignment and autoplay* — `st_video` / `st_audio` `width=` and
   `align=` (live demo), autoplay muted by default and an explicit

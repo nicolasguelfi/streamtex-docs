@@ -214,6 +214,31 @@ stx.st_video(video_path, autoplay=True, loop=True)               # starts, muted
 stx.st_video(video_path, autoplay=True, loop=True, muted=False)  # sound kept""")
         st_space("v", 2)
 
+        show_explanation("""\
+            A video can dominate the screen (streamtex 0.7.55), live and in
+            the HTML export. theater="slide" (or True) fills the screen
+            height in the flow, on black, and scrolls with its slide.
+            theater="window" covers the whole window while its slide is on
+            screen: the close button or Esc closes it, leaving the slide
+            closes it and pauses the video, coming back opens it again.
+            fit="contain" (default) shows the whole picture with black bars,
+            fit="cover" fills and crops the edges. fullscreen=True asks for
+            fullscreen on the first Play (browsers allow it only after a
+            click, never at page load) and leaves it at the end, unless the
+            video loops. A YouTube video takes theater, not fullscreen.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+stx.st_video(video_path, theater="slide")                    # the screen height, in the flow
+stx.st_video(video_path, theater="window", autoplay=True)    # covers the window on its slide
+stx.st_video(video_path, theater=True, fit="cover")          # fills, crops the edges
+stx.st_video(video_path, fullscreen=True)                    # fullscreen on the first Play""")
+        st_space("v", 1)
+
+        stx.st_video(youtube_url, theater="slide")
+        st_space("v", 2)
+
         # --- 9. Various Data Files ---
         st_write(bs.sub, "Data files (JSON, CSV, ...)", toc_lvl="+1")
         st_space("v", 1)

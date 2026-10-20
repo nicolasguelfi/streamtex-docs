@@ -3,6 +3,7 @@
 import streamtex as stx
 from streamtex import *
 from streamtex.book import HTML_EXPORT_MODES
+from streamtex.printing import resolve_printable
 from streamtex.styles import Style as ns
 from streamtex.enums import Tags as t
 from custom.styles import Styles as s
@@ -475,3 +476,56 @@ def build():
             with l.item(): st_write(s.medium, (bs.param_label, "Order"), " \u2014 the environment first (new name, then legacy), then env_file, then default")
     st_space("v", 3)
 
+    # --- Section 10: Usage notice and print rules (0.7.55) ---
+    st_write(bs.sub, "Usage Notice and Print Rules", toc_lvl="+1")
+    st_space("v", 1)
+
+    show_explanation("""\
+        A module can state how it may be used and what a reader may print
+        or download: `st_book(notice=..., printable=...)`. Each module has
+        its own book.py, so the slides of a course can refuse printing
+        while the participants' sheet of the same course allows it. The
+        settings reach the live app and every HTML export of the module
+        (`stx export html`, the "Download as..." panel, automatic exports).
+    """)
+    st_space("v", 1)
+
+    show_code("""\
+        # slides: readable everywhere, printable nowhere
+        st_book(blocks,
+                notice={"en": "For enrolled participants only",
+                        "fr": "Réservé aux participants inscrits"},
+                printable=False)
+
+        # participants' sheet: printable as HTML, no PDF from the app
+        st_book(blocks,
+                notice="For enrolled participants only",
+                printable=stx.PrintConfig(app_print=False, app_pdf=False,
+                                          html_print=True))""")
+    st_space("v", 1)
+
+    _off = resolve_printable(False)
+    with st_block(s.project.containers.explanation_box):
+        st_write(s.medium, (bs.param_label, "printable=False (read live from streamtex.printing): "),
+                 ", ".join(f"{k}={getattr(_off, k)}" for k in ("app_print", "app_pdf", "html_print", "app_html")))
+        with st_list(list_type="ul") as l:
+            with l.item(): st_write(s.medium, (bs.param_label, "app_print"), " \u2014 File \u203a Print on the live app")
+            with l.item(): st_write(s.medium, (bs.param_label, "app_pdf"), " \u2014 the PDF box of the app's \u201cDownload as...\u201d panel")
+            with l.item(): st_write(s.medium, (bs.param_label, "html_print"), " \u2014 File \u203a Print (and \u201cSave as PDF\u201d) on the exported HTML")
+            with l.item(): st_write(s.medium, (bs.param_label, "app_html"), " \u2014 the HTML box of the panel; the panel disappears with nothing left to offer")
+    st_space("v", 1)
+
+    show_details("""\
+        - The notice is one grey line under the version in the sidebar of
+        the app and of the HTML export. When printing is off, the printed
+        sheet carries the notice and nothing else.
+
+        - Printing off is a `@media print` rule: no script, nothing changes
+        on screen. It states a rule; it cannot stop a screenshot or an
+        edited copy of the HTML file.
+
+        - The PDF made by the panel ignores `html_print`. Automatic exports
+        (`exports=[ExportConfig(format="pdf", ...)]`) are the author's and
+        keep writing their PDF.
+    """)
+    st_space("v", 3)

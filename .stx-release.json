@@ -5,65 +5,65 @@
       "docs": {
         "port": 9000,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:11:37",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:40:17",
         "asleep": false
       },
       "docs-intro": {
         "port": 9001,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:11:53",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:40:33",
         "asleep": false
       },
       "docs-advanced": {
         "port": 9002,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:12:20",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:40:57",
         "asleep": false
       },
       "docs-deploy": {
         "port": 9003,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:12:36",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:41:14",
         "asleep": false
       },
       "docs-developer": {
         "port": 9004,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:12:51",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:41:31",
         "asleep": false
       },
       "docs-ai": {
         "port": 9005,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:13:07",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:41:47",
         "asleep": false
       },
       "docs-ce": {
         "port": 9006,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:13:23",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:42:04",
         "asleep": false
       },
       "docs-patterns": {
         "port": 9007,
         "html_open": true,
-        "release": "1573848124ce",
-        "previous": null,
-        "date": "2026-10-20T20:13:38",
+        "release": "32d36d8c21a1",
+        "previous": "1573848124ce",
+        "date": "2026-10-21T09:42:20",
         "asleep": false
       }
     }

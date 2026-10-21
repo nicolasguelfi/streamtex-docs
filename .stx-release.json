@@ -81,7 +81,12 @@
       "static_app": "docs-static",
       "live_app": "docs-live",
       "static_uuid": "mxwg6yowoysmk90167bjisao",
-      "live_uuid": "cwcai31qh8ggbww6ja9x1sf1"
+      "live_uuid": "cwcai31qh8ggbww6ja9x1sf1",
+      "repo": "nicolasguelfi/streamtex-docs",
+      "repo_branch": "main",
+      "repo_faces": [
+        "live"
+      ]
     }
   }
 }

@@ -121,6 +121,7 @@ def build():
     st_space("v", 1)
     show_code("""\
         stx release lock                     # the live image's dependencies, from uv.lock
+        stx release rebuild                  # public repository: Coolify rebuilds the live image
         stx release setup --target prod      # plan; --apply creates the two applications
         stx release server-config            # nginx -t, then reload without interruption
         stx release publish chat1d-slides    # or --group CHAT1D, or every site
@@ -138,6 +139,12 @@ def build():
         - **What stays manual in Coolify**: mounting the host folder
         (Persistent Storage → Directory Mount) and replacing the Dockerfile
         of an existing application; `stx release setup` prints both steps.
+        - **A public repository removes the paste** (streamtex 0.7.61): with
+        `"repo": "owner/name"` in the target, `stx release lock` also writes
+        `.stx-release/Dockerfile.live`; commit and push it, then
+        `stx release rebuild`. `stx release setup --migrate live` moves an
+        existing application to it (two runs, the volume mounted between
+        them). The StreamTeX manuals work this way.
         - **Coming from the all-trainings prototype**: `stx release import
         --from state.json` takes its state over without republishing, and
         `stx release convert-passwords` rewrites its password file without

@@ -8,11 +8,14 @@
 #
 # Required secret: COOLIFY_API_TOKEN (Coolify → Security → API Tokens)
 
-name: Deploy to Hetzner
+# RETIRED 2026-10-21: the manuals are published with `stx release publish`
+# (apps docs-static and docs-live). The push trigger is removed so a push no
+# longer restarts the old per-manual apps; manual trigger kept one week as a
+# fallback, then this file goes with the old apps.
+
+name: Deploy to Hetzner (retired)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 env:

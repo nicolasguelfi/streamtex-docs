@@ -264,6 +264,49 @@ stx.st_code(code=json.dumps(data, indent=2), language="json")""")
                    code=json.dumps(data, indent=2), language="json")
         st_space("v", 2)
 
+        # --- 10. Data files kept live ---
+        st_write(bs.sub, "Data files kept live (load_json, load_toml, load_text, watch_file)", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            open() + json.load() in a block keeps the first content: the
+            page cache does not know about the file, so the old TOC and
+            markers are served even after a restart. The stx loaders
+            (streamtex 0.7.36) return the cached value while the file's
+            mtime and size are unchanged, re-read it otherwise, and
+            register the file: when it changes, the page cache is
+            discarded. Reloading the page is enough.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+stx.load_json(path) -> Any                       # parsed JSON
+stx.load_toml(path) -> dict                      # parsed TOML
+stx.load_text(path, encoding="utf-8") -> str     # the file's text
+stx.watch_file(path) -> str                      # read it yourself; returns the absolute path
+
+json_path = os.path.join(_static_dir, "various", "sample_data.json")
+data = stx.load_json(json_path)                  # re-read when the file changes
+stx.st_code(code=json.dumps(data, indent=2), language="json")
+
+stx.watch_file(csv_path)                         # e.g. before pandas.read_csv(csv_path)""")
+        st_space("v", 1)
+
+        live_data = stx.load_json(json_path)
+        stx.st_code(s.project.containers.code_box,
+                   code=json.dumps(live_data, indent=2)[:200] + "\n...", language="json")
+        st_space("v", 1)
+
+        show_details("""\
+            path is a str or a Path; resolve it from the block's own
+            folder (os.path / Path(__file__)), not from the working
+            directory.
+
+            load_json and load_toml return a shared cached object: copy
+            it before mutating it.
+        """)
+        st_space("v", 2)
+
         show_details("""\
             Static serving requires enableStaticServing = true in config.toml.
 

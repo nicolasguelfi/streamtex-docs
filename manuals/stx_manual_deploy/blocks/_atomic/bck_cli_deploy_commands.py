@@ -326,6 +326,7 @@ def build():
             stx export html --html-mode both .           # the continuous file + one file per page
             stx export html --asset-mode external .      # media in a data/ folder instead of base64
             stx export html --theme light --no-nav .     # forced theme, content only
+            stx export html --zoom 80 --page-width 90 .  # opens as at 80 % browser zoom, page 90 % wide (0.7.63)
         """, language="bash", line_numbers=False)
         st_space("v", 1)
 
@@ -338,8 +339,12 @@ def build():
             `--html-mode` is `continuous` (one file), `paginated` (one file
             per page, in `<base>/pages/`) or `both`; without it, the module's
             `st_book(html_export_mode=…)` decides (also a `[book.defaults]`
-            key of stx.toml). Other options: `--title`, `--theme-bg`,
-            `--theme-text`.
+            key of stx.toml). `--zoom` (percent, streamtex 0.7.63) opens the
+            document as if the browser were at that zoom, for the continuous
+            file and every page; it multiplies with the document's own
+            `st_zoom`. `--page-width` (percent of the window, at most 100)
+            sets the page width, as the panel's HTML export does. Other
+            options: `--title`, `--theme-bg`, `--theme-text`.
         """)
         st_space("v", 2)
 

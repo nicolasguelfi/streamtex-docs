@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.63**: four additions.
+  - Intro manual, *Zoom Controls & Responsive Design*: *Scoped Zoom:
+    Nesting and Counter-Zoom* (streamtex-docs#10) — nested `st_zoom`
+    multiplies (a × b), zoom scales vw/vh and media given a width, and
+    `st_zoom(10000 / outer_percent)` keeps a badge or tooltip at its
+    absolute size; live example. *Zoom in Exports* mentions
+    `stx export html --zoom` / `--page-width`.
+  - Advanced manual, *Static Assets*: *Data files kept live* —
+    `load_json`, `load_toml`, `load_text`, `watch_file` (public since
+    0.7.36, part of streamtex-docs#11), with a live `load_json`.
+  - Advanced manual, *Bibliography & References*: the entry label of
+    `st_bibliography()` follows `BibConfig.citation_style` (author-year by
+    default, `[N]` in NUMERIC / SUPERSCRIPT) and `label_style=` keeps the
+    numbers (streamtex#23).
+  - Deploy manual: `stx export html --zoom <percent>` and
+    `--page-width <percent>` in the CLI reference, and the per-site
+    `zoom = 80` key of `[[release.sites]]` in *stx release* (streamtex#139).
+
 - **streamtex 0.7.58**: the deploy manual gains *Multi-Document Projects —
   stx release* (streamtex#136, streamtex#111). It covers declaring the
   sites, passwords per site, the command list (read from the library) and

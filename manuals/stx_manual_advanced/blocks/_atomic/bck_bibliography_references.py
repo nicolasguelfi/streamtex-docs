@@ -108,6 +108,14 @@ BibConfig(citation_style=CitationStyle.NUMERIC)
 
 # ^1 (superscript)
 BibConfig(citation_style=CitationStyle.SUPERSCRIPT)""")
+        st_space("v", 2)
+
+        show_details("""\
+            The citation style also sets the label before each entry of
+            st_bibliography() (streamtex 0.7.63): (Vaswani et al., 2017)
+            in AUTHOR_YEAR, [N] in NUMERIC and SUPERSCRIPT. The list shows
+            what cite() shows inline.
+        """)
         st_space("v", 3)
 
         # --- Section 4: Import Formats ---
@@ -233,7 +241,21 @@ st_bibliography(
     toc_lvl="1",
     only_cited=True,  # Only show entries cited via cite()
     format=BibFormat.APA,
-)""")
+)
+
+# Numbers beside author-year citations (streamtex 0.7.63)
+st_bibliography(label_style=CitationStyle.NUMERIC)""")
+        st_space("v", 2)
+
+        show_details("""\
+            The label before each entry follows BibConfig.citation_style:
+            this manual cites in AUTHOR_YEAR, so each entry starts with
+            (Author et al., Year), as cite() shows inline; NUMERIC and
+            SUPERSCRIPT number the list [1], [2]... (streamtex 0.7.63;
+            before, the list was always numbered). label_style=CitationStyle.NUMERIC
+            keeps [N] in the list whatever the citation style. number_style=
+            styles that label.
+        """)
         st_space("v", 2)
 
         st_bibliography(
@@ -404,6 +426,7 @@ st_write(s.medium, apa_html)""")
             - entry: a BibEntry object
             - fmt: a BibFormat enum value (APA, MLA, IEEE, CHICAGO, HARVARD)
             - number: an integer used only by IEEE format for the [N] prefix
+              (st_bibliography() passes none and adds its own label, see section 8)
 
             The function returns an HTML string with italic tags for journals
             and hyperlinks for DOIs/URLs.

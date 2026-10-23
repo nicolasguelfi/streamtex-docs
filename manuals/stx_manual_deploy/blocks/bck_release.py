@@ -73,6 +73,7 @@ def build():
         site = "chat1d-slides"           # written, checked (DNS label, unique)
         book = "trainings/CHAT1D/slides/book.py"
         group = "CHAT1D"                 # its password group
+        zoom = 80                        # optional: HTML face opens as at 80 % (0.7.63)
 
         [[release.sites]]
         site = "chat1d"                  # a home page: HTML only, published when named
@@ -83,6 +84,14 @@ def build():
 
         # or, for a computed list:  sites_from = "shared.release:sites" """,
               language="toml", line_numbers=False)
+    st_space("v", 1)
+    show_details("""\
+        - Other site keys: `faces` (default both), `paths` (its part of the
+        code snapshot), `exclude`, `explicit`.
+        - `zoom = 80` (streamtex 0.7.63, a positive percentage): the HTML
+        face is exported with `stx export html --zoom 80`, so it opens as
+        if the browser were at 80 %. The live face is unchanged.
+    """)
     st_space("v", 2)
 
     st_write(bs.sub, "Passwords per site", toc_lvl="+1")

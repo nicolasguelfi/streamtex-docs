@@ -15,6 +15,8 @@ class BlockStyles:
     info_box = Style("background:rgba(100,150,200,0.1);padding:16px;border-radius:8px;", "info_box")
     code_block = s.project.containers.code_box
     feature_box = Style("background:rgba(100,150,200,0.1);padding:16px;border-radius:8px;", "feature_box")
+    badge = Style("display:inline-block;padding:2px 10px;border-radius:10px;"
+                  "background:rgba(100,150,200,0.3);font-size:14px;", "zoom_badge")
 
 
 bs = BlockStyles
@@ -161,7 +163,61 @@ with st_grid(
 
     st_space("v", 3)
 
-    # Section 6: Zoom in exports
+    # Section 6: Scoped zoom — nesting and counter-zoom (streamtex-docs#10)
+    st_write(bs.section, "Scoped Zoom: Nesting and Counter-Zoom", toc_lvl="+1")
+    st_space("v", 1)
+
+    with st_block(bs.info_box):
+        st_write(
+            s.medium,
+            (s.bold, "st_zoom multiplies. "),
+            "with st_zoom(130): zooms its content only. Nested, the factors "
+            "multiply: st_zoom(a) inside st_zoom(b) gives a × b, on top of the "
+            "page zoom. Zoom scales every length, vw and vh included, and "
+            "images or videos given an explicit width; only width-less, fluid "
+            "elements keep filling their container.",
+        )
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "To keep a widget (badge, tooltip, icon) at a fixed absolute size inside a "
+        "zoomed region, wrap it in a counter-zoom: ",
+        (s.bold, "st_zoom(10000 / outer_percent)"),
+        ". Inside st_zoom(130), st_zoom(10000 / 130) ≈ 76.9 brings it back to 100 %.",
+    )
+    st_space("v", 1)
+
+    show_code("""\
+badge = Style("display:inline-block;padding:2px 10px;border-radius:10px;"
+              "background:rgba(100,150,200,0.3);font-size:14px;", "zoom_badge")
+
+with st_zoom(130):
+    st_write(s.medium, "Slide text at 130 %")
+    with st_zoom(130):
+        st_write(s.medium, "Nested: 130 % × 130 % = 169 %")
+    with st_zoom(10000 / 130):          # ≈ 76.9: back to 100 % absolute
+        st_write(bs.badge, "Badge at 100 %")
+st_write(bs.badge, "Badge at 100 % (outside any zoom)")""", language="python")
+    st_space("v", 1)
+
+    with st_zoom(130):
+        st_write(s.medium, "Slide text at 130 %")
+        with st_zoom(130):
+            st_write(s.medium, "Nested: 130 % × 130 % = 169 %")
+        with st_zoom(10000 / 130):
+            st_write(bs.badge, "Badge at 100 %")
+    st_write(bs.badge, "Badge at 100 % (outside any zoom)")
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "When the outer zoom varies from slide to slide, compute the counter-zoom "
+        "from it, and clamp it if needed: st_zoom(max(20, min(100, round(10000 / slide_zoom)))).",
+    )
+    st_space("v", 2)
+
+    # Section 7: Zoom in exports
     st_write(bs.section, "Zoom in Exports", toc_lvl="+1")
     st_space("v", 1)
 
@@ -174,7 +230,10 @@ with st_grid(
         with l.item():
             st_write(s.medium, (s.bold, "HTML file"),
                      " — \"Zoom HTML (%)\" in the export panel: 0 follows the view zoom, "
-                     "any other value replaces it in the HTML file only.")
+                     "any other value replaces it in the HTML file only. From the command "
+                     "line (streamtex 0.7.63): stx export html --zoom 80 opens the file as "
+                     "if the browser were at 80 % (it multiplies with the document's own "
+                     "st_zoom), --page-width 90 sets the page width in % of the window.")
         with l.item():
             st_write(s.medium, (s.bold, "PDF"),
                      " — \"Zoom (%)\" in the PDF layout (PdfConfig(zoom=...)): it multiplies "
@@ -197,7 +256,7 @@ st_book(
     )
     st_space("v", 2)
 
-    # Section 7: inject_zoom_logic (low-level API)
+    # Section 8: inject_zoom_logic (low-level API)
     st_write(bs.section, "Low-Level API: inject_zoom_logic()", toc_lvl="+1")
     st_space("v", 1)
 

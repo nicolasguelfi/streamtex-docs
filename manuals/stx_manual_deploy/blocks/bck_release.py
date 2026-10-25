@@ -135,7 +135,8 @@ def build():
         stx release server-config            # nginx -t, then reload without interruption
         stx release publish chat1d-slides    # or --group CHAT1D, or every site
         stx release status                   # what each site serves, as a visitor
-        stx release rollback chat1d-slides
+        stx release limit chat1d-slides 120  # participants see slides 1-120; `all` opens everything
+        stx release rollback chat1d-slides   # undoes the last change: a limit, or a publication
         stx release local up                 # both applications in Docker, for a trial""",
               language="bash", line_numbers=False)
     st_space("v", 2)
@@ -154,6 +155,13 @@ def build():
         `stx release rebuild`. `stx release setup --migrate live` moves an
         existing application to it (two runs, the volume mounted between
         them). The StreamTeX manuals work this way.
+        - **A slide limit per site** (streamtex 0.7.65): `stx release limit
+        SITE N` lets participants see slides 1 to N of the HTML face, N being
+        the slide counter's number as projected (the block holding it is
+        kept whole). Only the HTML face is exported again, from the release
+        already published, and switched: no password is rewritten and the
+        live face does not restart, so participants stay logged in. The
+        limit is kept: every later publication applies it.
         - **Coming from the all-trainings prototype**: `stx release import
         --from state.json` takes its state over without republishing, and
         `stx release convert-passwords` rewrites its password file without

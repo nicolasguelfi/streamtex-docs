@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.66**: deployment manual, *stx release*: `[admin]` and
+  `full` in the passwords example, one login across sites, full or limited
+  per password (streamtex#147).
+
 - **streamtex 0.7.65**: deployment manual, *stx release*: `stx release limit
   SITE N|all` in the commands example and a paragraph on the per-site slide
   limit (streamtex#146).

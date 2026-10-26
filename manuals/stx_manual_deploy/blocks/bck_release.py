@@ -106,7 +106,14 @@ def build():
         html = "PROMO-DEC:dec-pass:2026-12-31,GUEST:guest-pass"
 
         [CHAT1D.sites.chat1d]
-        open = ["html"]                  # explicit: an empty string is refused""",
+        open = ["html"]                  # explicit: an empty string is refused
+
+        [CHAT1D.sites.chat1d-slides]
+        full = ["PROMO-OCT"]             # sees all the slides despite a limit
+
+        [admin]                          # added to EVERY site, both faces
+        live = "ADMIN:admin-pass"
+        html = "ADMIN:admin-pass"        # the administrator, written once""",
               language="toml", line_numbers=False)
     st_space("v", 1)
     show_details("""\
@@ -114,8 +121,19 @@ def build():
         (it names the access in the server log) and an optional end date.
         - A later level overrides an earlier one, face by face; a face with
         no password at any level is an error, never an open site.
+        - `[admin]` (streamtex 0.7.66) is added to the passwords of every
+        face of every site, never in their place: the administrator's
+        password is written once. Its labels, and those listed in `full`,
+        see all the slides of a site with a slide limit; every other
+        password sees the limited release.
+        - One login opens every site that holds the same password: the
+        administrator logs in once per face; a password of one site stays
+        valid there only.
+        - No rule is set on what a password contains; only what the login
+        screen could never match is refused (empty, whitespace, two labels
+        sharing a password in one list).
         - `stx release passwd` writes the records without publishing again;
-        changing them closes the open sessions of that face.
+        a changed password closes the sessions of its label only.
     """)
     st_space("v", 2)
 
@@ -161,7 +179,9 @@ def build():
         kept whole). Only the HTML face is exported again, from the release
         already published, and switched: no password is rewritten and the
         live face does not restart, so participants stay logged in. The
-        limit is kept: every later publication applies it.
+        limit is kept: every later publication applies it. Since 0.7.66 the
+        site keeps both releases, and the `[admin]` and `full` passwords
+        still see all the slides.
         - **Coming from the all-trainings prototype**: `stx release import
         --from state.json` takes its state over without republishing, and
         `stx release convert-passwords` rewrites its password file without

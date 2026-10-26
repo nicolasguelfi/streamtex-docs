@@ -139,7 +139,12 @@ def build():
         screen could never match is refused (empty, whitespace, two labels
         sharing a password in one list).
         - `stx release passwd` writes the records without publishing again;
-        a changed password closes the sessions of its label only.
+        a changed password closes the sessions of its label only, and no
+        site process restarts: a participant of the live face stays
+        connected (streamtex 0.7.69).
+        - `STX_PASSWORDS_FILE=rehearsal.toml stx release …` reads another
+        passwords file, for a rehearsal with dummy passwords; the real
+        `.stx-passwords.toml` stays in place.
     """)
     st_space("v", 2)
 

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.69**: deployment manual, *stx release*: `passwd` restarts
+  no site process; `STX_PASSWORDS_FILE` for a rehearsal with dummy
+  passwords.
+
 - **streamtex 0.7.67**: deployment manual, *stx release*: one line per
   session with its level, "not open yet", scheduled openings,
   `limit --label` (streamtex#148).

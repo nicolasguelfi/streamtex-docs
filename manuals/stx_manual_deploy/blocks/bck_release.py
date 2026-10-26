@@ -108,8 +108,12 @@ def build():
         [CHAT1D.sites.chat1d]
         open = ["html"]                  # explicit: an empty string is refused
 
-        [CHAT1D.sites.chat1d-slides]
-        full = ["PROMO-OCT"]             # sees all the slides despite a limit
+        [CHAT1D.sites.chat1d-slides]     # one line per session, each with its level
+        html = [
+          { seance = "S1027", mot = "a-pass", limite = 120 },
+          { seance = "S1103", mot = "b-pass" },   # no limite: "not open yet"
+          { seance = "S1110", mot = "c-pass", limite = [["2026-11-10T09:00", 50], ["2026-11-10T14:00", "all"]] },
+        ]
 
         [admin]                          # added to EVERY site, both faces
         live = "ADMIN:admin-pass"
@@ -123,9 +127,11 @@ def build():
         no password at any level is an error, never an open site.
         - `[admin]` (streamtex 0.7.66) is added to the passwords of every
         face of every site, never in their place: the administrator's
-        password is written once. Its labels, and those listed in `full`,
-        see all the slides of a site with a slide limit; every other
-        password sees the limited release.
+        password is written once, and it always sees all the slides.
+        - Each session has its level on the HTML face (streamtex 0.7.67):
+        `limite = N` (slides 1 to N), `"all"`, a schedule in local time, or
+        no `limite` — the session sees a "not open yet" page. The login
+        service reads the schedule at each page: nothing runs on the server.
         - One login opens every site that holds the same password: the
         administrator logs in once per face; a password of one site stays
         valid there only.
@@ -153,7 +159,8 @@ def build():
         stx release server-config            # nginx -t, then reload without interruption
         stx release publish chat1d-slides    # or --group CHAT1D, or every site
         stx release status                   # what each site serves, as a visitor
-        stx release limit chat1d-slides 120  # participants see slides 1-120; `all` opens everything
+        stx release limit chat1d-slides 120 --label S1027   # writes its line, then applies it
+        stx release limit chat1d-slides none --label S1103  # "not open yet"
         stx release rollback chat1d-slides   # undoes the last change: a limit, or a publication
         stx release local up                 # both applications in Docker, for a trial""",
               language="bash", line_numbers=False)
@@ -179,9 +186,9 @@ def build():
         kept whole). Only the HTML face is exported again, from the release
         already published, and switched: no password is rewritten and the
         live face does not restart, so participants stay logged in. The
-        limit is kept: every later publication applies it. Since 0.7.66 the
-        site keeps both releases, and the `[admin]` and `full` passwords
-        still see all the slides.
+        limit is kept: every later publication applies it. Since 0.7.67,
+        `--label` gives one session its own level, written on its line of
+        `.stx-passwords.toml`; open sessions see it on their next page.
         - **Coming from the all-trainings prototype**: `stx release import
         --from state.json` takes its state over without republishing, and
         `stx release convert-passwords` rewrites its password file without

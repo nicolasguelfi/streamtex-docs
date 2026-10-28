@@ -260,6 +260,8 @@ together, rollback. `stx deploy hetzner` stays for one document per application.
 ```bash
 stx release lock                     # live image deps from uv.lock (.stx-release/requirements.txt, stx-version)
 stx release setup [--apply|--show live|--domains [--dry-run]]   # Coolify apps via the API; manual steps printed
+stx release rebuild [--face live] [--dry-run|--restore]   # 0.7.78: a Dockerfile kept in Coolify is written in its
+                                     #   database over ssh (diff, old one kept, read back), then rebuilt; repo: from the push
 stx release server-config            # nginx -t, then reload without interruption
 stx release publish SITE… | --group G | --all [--allow-skew] [--html-env K=V]   # no site: refused (0.7.74)
 stx release status                   # what each site SERVES, as a visitor
@@ -277,13 +279,15 @@ stx release local up | down          # both applications in Docker on this machi
 - State: `.stx-release.json` (versioned, no secret). Passwords: `.stx-passwords.toml`,
   `[default]` → `[<group>]` → `[<group>.sites.<site>]`, `open = true | ["html"]` (an empty string is refused).
 - Publishing is refused when the exporting streamtex is not the live image's, or a dirty working copy, or an
-  editable working copy with commits in `streamtex/` after its tag (0.7.74).
+  editable working copy with commits in `streamtex/` after its tag (0.7.74). With `--allow-skew`, status marks
+  the site; 0.7.78: `(skew, resolved: …)` once the live image runs the exporting version (a version gap only).
 - `[release] verify = "module:function"` (0.7.74): the project's check of each HTML export, before any copy;
   `None` accepts, a message, `False` or an exception refuses.
 - `[release] media_per_site = true` (0.7.76, off by default): each site's live face serves under `/app/static/`
   only the files its HTML export shows (by content) or links to under `app/static/` (0.7.77), and those
   `media_keep` globs name (`[release]`, or a
-  site's table); `stx release media-report SITE` shows the effect first.
+  site's table); `stx release media-report SITE` shows the effect first. 0.7.78: links to another site's
+  `/app/static/` files are checked after `publish` (served by the site the address names, or named as 404).
 
 ## 4. HuggingFace Spaces
 

@@ -162,7 +162,8 @@ def build():
     st_space("v", 1)
     show_code("""\
         stx release lock                     # the live image's dependencies, from uv.lock
-        stx release rebuild                  # public repository: Coolify rebuilds the live image
+        stx release rebuild                  # rebuilds the live image (0.7.78: no paste in Coolify)
+        stx release rebuild --dry-run        # Dockerfile kept in Coolify: the difference, nothing written
         stx release setup --target prod      # plan; --apply creates the two applications
         stx release server-config            # nginx -t, then reload without interruption
         stx release publish chat1d-slides    # or --group CHAT1D, or --all for every site
@@ -182,7 +183,9 @@ def build():
         working copy with uncommitted changes, or (streamtex 0.7.74) from
         an editable working copy with commits in `streamtex/` after its tag.
         `--allow-skew` publishes anyway for a trial, and `status` marks the
-        site.
+        site. Since streamtex 0.7.78, when the gap was one of version only,
+        the mark reads `(skew, resolved: …)` once the live image runs the
+        version that exported the site.
         - **Safety points** (streamtex 0.7.74): `publish` with no site and no
         group is refused, `--all` publishes every site; `setup --domains
         --dry-run` shows the domains each application would get, and writes
@@ -208,11 +211,24 @@ def build():
         table). Off by default; `stx release media-report SITE` shows the
         files kept and dropped first, and the files named in the site's own
         files that would not be kept. A rollback to an earlier release
-        serves its whole folder again.
+        serves its whole folder again. A link to another site's file
+        (`https://<other site>…/app/static/x.zip`) is that site's to serve:
+        since 0.7.78, `publish` checks after its sites that the site the
+        address names still serves each such file, and names those that
+        would answer 404; `media-report` lists the links.
         - **What stays manual in Coolify**: mounting the host folder
-        (Persistent Storage → Directory Mount) and replacing the Dockerfile
-        of an existing application; `stx release setup` prints both steps.
-        - **A public repository removes the paste** (streamtex 0.7.61): with
+        (Persistent Storage → Directory Mount); `stx release setup` prints
+        the step.
+        - **Rebuilding without a paste** (streamtex 0.7.78): Coolify's API
+        cannot replace the Dockerfile of an application created from one, so
+        `stx release rebuild` writes it where Coolify's interface does, in
+        Coolify's database, over ssh: it shows the difference, keeps the
+        Dockerfile in place under `<root>/dockerfiles/`, reads the written
+        one back, then rebuilds and checks the live image's streamtex.
+        `--dry-run` shows the difference only; `--restore` puts back the
+        last Dockerfile kept. A new streamtex is then `stx release lock`,
+        then `stx release rebuild`.
+        - **Built from a public repository** (streamtex 0.7.61): with
         `"repo": "owner/name"` in the target, `stx release lock` also writes
         `.stx-release/Dockerfile.live`; commit and push it, then
         `stx release rebuild`. `stx release setup --migrate live` moves an

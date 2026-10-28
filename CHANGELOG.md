@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.73**: advanced manual, *Presentation mode*: slide notes
+  in downloaded files (`downloads=`), the `pdf` mode, new lines.
+
 - **streamtex 0.7.72**: advanced manual, *Presentation mode*: *Several
   notes, placed by the designer — set_slide_notes()* (places, text per
   mode, opacity, layer).

@@ -580,6 +580,13 @@ stx.set_slide_notes(
             only: pair a bar note with a screen note whose text is only for
             html. set_slide_note(text, link=) is the note
             SlideNote(text, place="below", opacity=1).
+
+            Downloads (streamtex 0.7.73): downloads="always" (default),
+            "never" or "choice" decides whether a note goes into a file
+            downloaded from the app (Download as…, HTML and PDF); "choice"
+            adds a box, ticked by default, to the panel. The PDF shows the
+            pdf text of a note, else its html text. A new line in a text
+            (written \\n in Python) starts a new line.
         """)
         st_space("v", 2)
 

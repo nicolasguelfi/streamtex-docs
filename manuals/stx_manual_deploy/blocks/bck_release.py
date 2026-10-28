@@ -168,6 +168,7 @@ def build():
         stx release limit chat1d-slides 120 --label S1027   # writes its line, then applies it
         stx release limit chat1d-slides none --label S1103  # "not open yet"
         stx release rollback chat1d-slides   # undoes the last change: a limit, or a publication
+        stx release remove old-site          # takes a site off the server (shows, then asks)
         stx release local up                 # both applications in Docker, for a trial""",
               language="bash", line_numbers=False)
     st_space("v", 2)
@@ -189,6 +190,13 @@ def build():
         html_dir)` after each HTML export, before anything is copied, in the
         project's environment. `None` accepts; a message, `False` or an
         exception refuses, and the site keeps serving what it served.
+        - **Taking a site off the server** (streamtex 0.7.75): `stx release
+        remove SITE` stops its program, drops its line of `ports.map`, removes
+        its folders on both faces and its entry in `.stx-release.json`; it
+        shows the list and asks first, and refuses a site still declared in
+        `stx.toml` unless `--force`. Its domains stay until `stx release
+        setup --domains` (which redeploys both applications): `remove`
+        prints the command.
         - **What stays manual in Coolify**: mounting the host folder
         (Persistent Storage → Directory Mount) and replacing the Dockerfile
         of an existing application; `stx release setup` prints both steps.

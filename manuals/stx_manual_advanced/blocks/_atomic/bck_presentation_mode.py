@@ -86,7 +86,7 @@ config = PresentationConfig(
 
     # Aspect ratio
     aspect_ratio="16/9",       # CSS aspect-ratio ("16/9", "4/3", "16/10")
-    enforce_ratio=True,        # Apply aspect-ratio + overflow:hidden
+    enforce_ratio=True,        # Apply aspect-ratio + overflow:hidden (0.7.75: a page of several slides scrolls)
 
     # Footer
     footer=True,               # Show fixed slide counter bar

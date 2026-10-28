@@ -264,6 +264,7 @@ stx release server-config            # nginx -t, then reload without interruptio
 stx release publish SITE… | --group G | --all [--allow-skew] [--html-env K=V]   # no site: refused (0.7.74)
 stx release status                   # what each site SERVES, as a visitor
 stx release rollback SITE | sleep SITE | wake SITE | prune
+stx release remove SITE [--yes] [--force]   # 0.7.75: takes a site off the server; domains: setup --domains
 stx release passwd [SITE…]           # records without republishing; auth-status (labels, dates)
 stx release import --from state.json # take over the all-trainings prototype, nothing sent
 stx release convert-passwords --from OLD --to NEW   # same passwords, checked site by site

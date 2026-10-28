@@ -69,6 +69,8 @@ def build():
         snapshot = ["content", "shared"] # in every code snapshot
         media = "assets"                 # copied once, linked into every snapshot
         verify = "shared.checks:verify"  # optional: checks each HTML export (0.7.74)
+        media_per_site = true            # optional: each live site serves its own media (0.7.76)
+        media_keep = ["downloads/*"]     # served besides what the HTML export shows
 
         [[release.sites]]
         site = "chat1d-slides"           # written, checked (DNS label, unique)
@@ -169,6 +171,7 @@ def build():
         stx release limit chat1d-slides none --label S1103  # "not open yet"
         stx release rollback chat1d-slides   # undoes the last change: a limit, or a publication
         stx release remove old-site          # takes a site off the server (shows, then asks)
+        stx release media-report chat1d-slides   # what media_per_site would serve, nothing sent
         stx release local up                 # both applications in Docker, for a trial""",
               language="bash", line_numbers=False)
     st_space("v", 2)
@@ -197,6 +200,14 @@ def build():
         `stx.toml` unless `--force`. Its domains stay until `stx release
         setup --domains` (which redeploys both applications): `remove`
         prints the command.
+        - **Media per site** (streamtex 0.7.76): `[release] media_per_site =
+        true` makes each site's live face serve under `/app/static/` only the
+        files its HTML export shows (found again by content) and those
+        `media_keep = ["downloads/*"]` names (in `[release]`, or in a site's
+        table). Off by default; `stx release media-report SITE` shows the
+        files kept and dropped first, and the files named in the site's own
+        files that would not be kept. A rollback to an earlier release
+        serves its whole folder again.
         - **What stays manual in Coolify**: mounting the host folder
         (Persistent Storage → Directory Mount) and replacing the Dockerfile
         of an existing application; `stx release setup` prints both steps.

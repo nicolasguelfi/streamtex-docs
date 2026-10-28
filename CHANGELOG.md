@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.76**: deploy manual, *stx release*: media per site
+  (`media_per_site`, `media_keep`, `stx release media-report`); deploy
+  cheatsheet updated.
+
 - **streamtex 0.7.75**: deploy manual, *stx release*: `stx release remove`;
   advanced manual, *Presentation mode*: a page of several slides scrolls
   with `enforce_ratio`; deploy cheatsheet updated.

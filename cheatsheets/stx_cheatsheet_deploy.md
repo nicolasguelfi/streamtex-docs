@@ -265,6 +265,7 @@ stx release publish SITE… | --group G | --all [--allow-skew] [--html-env K=V] 
 stx release status                   # what each site SERVES, as a visitor
 stx release rollback SITE | sleep SITE | wake SITE | prune
 stx release remove SITE [--yes] [--force]   # 0.7.75: takes a site off the server; domains: setup --domains
+stx release media-report SITE [--list kept|dropped]   # 0.7.76: what media_per_site would serve; nothing sent
 stx release passwd [SITE…]           # records without republishing; auth-status (labels, dates)
 stx release import --from state.json # take over the all-trainings prototype, nothing sent
 stx release convert-passwords --from OLD --to NEW   # same passwords, checked site by site
@@ -279,6 +280,9 @@ stx release local up | down          # both applications in Docker on this machi
   editable working copy with commits in `streamtex/` after its tag (0.7.74).
 - `[release] verify = "module:function"` (0.7.74): the project's check of each HTML export, before any copy;
   `None` accepts, a message, `False` or an exception refuses.
+- `[release] media_per_site = true` (0.7.76, off by default): each site's live face serves under `/app/static/`
+  only the files its HTML export shows (by content) and those `media_keep` globs name (`[release]`, or a
+  site's table); `stx release media-report SITE` shows the effect first.
 
 ## 4. HuggingFace Spaces
 

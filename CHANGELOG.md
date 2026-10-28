@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.72**: advanced manual, *Presentation mode*: *Several
+  notes, placed by the designer — set_slide_notes()* (places, text per
+  mode, opacity, layer).
+
 - **streamtex 0.7.70**: advanced manual, *Presentation mode*: *A note at
   the foot of every slide — set_slide_note()* (`st_slide_note`,
   `marker_href`, links in the paginated export).

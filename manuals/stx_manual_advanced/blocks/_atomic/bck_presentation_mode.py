@@ -5,7 +5,7 @@ st_presentation_footer, add_presentation_options, the break marker
 (SlideBreakConfig.marker), and the single slide construction st_slide
 (0.7.37; marker=, key=, roles=, box=, zoom=, spacing=, config=) with
 SLIDE_CONTAINER / set_slide_container / get_slide_container (per session),
-and set_slide_note (0.7.70).
+set_slide_note (0.7.70) and set_slide_notes / SlideNote (0.7.72).
 """
 
 from streamtex import (
@@ -537,6 +537,49 @@ stx.set_slide_note(None)                  # no note""")
             In the paginated HTML export, a link ?marker=, ?slide= or ?page=
             written in a page points at the entry file, which knows every
             page. marker_href() keeps the app's other parameters (?lang=).
+        """)
+        st_space("v", 2)
+
+        st_write(bs.sub, "Several notes, placed by the designer — set_slide_notes()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            set_slide_notes(SlideNote(…), …) sets one or several notes
+            (streamtex 0.7.72). Each has a place — in the slide (below,
+            above, left, right in vertical text, across as a watermark),
+            fixed on the screen (screen-top, screen-bottom, screen-left,
+            screen-right) or in the presentation bar of the app
+            (bar-after-title, bar-title, bar-before-counter) — a text per
+            display mode (slides, document, html, phone, default; None = no
+            note there), an opacity, a style, and a layer: under the content
+            by default, so that a text placed over the note hides it, its
+            link still clickable; over to draw it above.
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# book.py — once, before st_book()
+import streamtex as stx
+
+stx.set_slide_notes(
+    stx.SlideNote({"slides": "© 2026 … — participants only",
+                   "html": "© 2026 … — for the participants only; any other use by written permission",
+                   "phone": "© 2026 …"},
+                  place="below", link="legal-notice"),
+    stx.SlideNote("© ACME", place="across"),                   # watermark, opacity 0.08
+    stx.SlideNote("Legal notice", place="bar-before-counter", link="legal-notice"),
+)""")
+        st_space("v", 1)
+
+        show_details("""\
+            A slide place follows the box of SLIDE_CONTAINER (80vh high,
+            10vh margins): under a slide taller than the screen it follows
+            the box. A note fixed on the screen is drawn once per page, in
+            every page file of the HTML export too; screen-left sits at the
+            window's edge, under an open sidebar. The bar exists in the app
+            only: pair a bar note with a screen note whose text is only for
+            html. set_slide_note(text, link=) is the note
+            SlideNote(text, place="below", opacity=1).
         """)
         st_space("v", 2)
 

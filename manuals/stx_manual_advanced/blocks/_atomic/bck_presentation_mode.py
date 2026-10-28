@@ -4,7 +4,8 @@ Documents the Presentation API: PresentationConfig, set_presentation_config,
 st_presentation_footer, add_presentation_options, the break marker
 (SlideBreakConfig.marker), and the single slide construction st_slide
 (0.7.37; marker=, key=, roles=, box=, zoom=, spacing=, config=) with
-SLIDE_CONTAINER / set_slide_container / get_slide_container (per session).
+SLIDE_CONTAINER / set_slide_container / get_slide_container (per session),
+and set_slide_note (0.7.70).
 """
 
 from streamtex import (
@@ -499,6 +500,43 @@ stx.set_slide_container(None)      # back to SLIDE_CONTAINER""")
             stx CLIs) a process-wide value is used. The marker and TOC
             registries, the spacing state and the export buffer stay
             process-wide.
+        """)
+        st_space("v", 2)
+
+        st_write(bs.sub, "A note at the foot of every slide — set_slide_note()", toc_lvl="+1")
+        st_space("v", 1)
+
+        show_explanation("""\
+            set_slide_note(note, link=, style=) closes every st_slide() of
+            the module with one small line, in the app and in every HTML
+            export (streamtex 0.7.70): a copyright line, a source. The note
+            is a text or a leaf {"en": …, "fr": …} (the module's language);
+            link= makes it a link to that marker, opened in a new tab so
+            that the reader keeps the slide. It sits just under the slide
+            box, in its bottom margin, and adds no height. A function
+            instead of a text draws the note itself. st_slide_note() draws
+            the same note on a page without st_slide(). Stored per session,
+            like set_slide_container().
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# book.py — once, before st_book()
+import streamtex as stx
+
+stx.set_slide_note({"fr": "© 2026 … — lecture réservée aux participants",
+                    "en": "© 2026 … — for the participants only"},
+                   link="legal-notice")      # the key= of the legal notice's marker
+
+stx.st_slide_note()                       # the same note, on a page without st_slide()
+stx.marker_href("legal-notice")           # "?marker=legal-notice", app and exports alike
+stx.set_slide_note(None)                  # no note""")
+        st_space("v", 1)
+
+        show_details("""\
+            In the paginated HTML export, a link ?marker=, ?slide= or ?page=
+            written in a page points at the entry file, which knows every
+            page. marker_href() keeps the app's other parameters (?lang=).
         """)
         st_space("v", 2)
 

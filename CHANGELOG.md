@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.70**: advanced manual, *Presentation mode*: *A note at
+  the foot of every slide — set_slide_note()* (`st_slide_note`,
+  `marker_href`, links in the paginated export).
+
 - **streamtex 0.7.69**: deployment manual, *stx release*: `passwd` restarts
   no site process; `STX_PASSWORDS_FILE` for a rehearsal with dummy
   passwords.

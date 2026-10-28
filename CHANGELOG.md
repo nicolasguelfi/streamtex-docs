@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.77**: deploy manual and cheatsheet: media per site also
+  keeps the files the HTML export links to (downloads).
+
 - **streamtex 0.7.76**: deploy manual, *stx release*: media per site
   (`media_per_site`, `media_keep`, `stx release media-report`); deploy
   cheatsheet updated.

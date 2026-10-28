@@ -281,7 +281,8 @@ stx release local up | down          # both applications in Docker on this machi
 - `[release] verify = "module:function"` (0.7.74): the project's check of each HTML export, before any copy;
   `None` accepts, a message, `False` or an exception refuses.
 - `[release] media_per_site = true` (0.7.76, off by default): each site's live face serves under `/app/static/`
-  only the files its HTML export shows (by content) and those `media_keep` globs name (`[release]`, or a
+  only the files its HTML export shows (by content) or links to under `app/static/` (0.7.77), and those
+  `media_keep` globs name (`[release]`, or a
   site's table); `stx release media-report SITE` shows the effect first.
 
 ## 4. HuggingFace Spaces

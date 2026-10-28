@@ -202,7 +202,8 @@ def build():
         prints the command.
         - **Media per site** (streamtex 0.7.76): `[release] media_per_site =
         true` makes each site's live face serve under `/app/static/` only the
-        files its HTML export shows (found again by content) and those
+        files its HTML export shows (found again by content) or links to
+        under `app/static/` (0.7.77: downloads), and those
         `media_keep = ["downloads/*"]` names (in `[release]`, or in a site's
         table). Off by default; `stx release media-report SITE` shows the
         files kept and dropped first, and the files named in the site's own

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.74**: deploy manual, *stx release*: `publish --all`,
+  `setup --domains --dry-run`, `[release] verify`, the skew check of an
+  editable library ahead of its tag; deploy cheatsheet updated.
+
 - **streamtex 0.7.73**: advanced manual, *Presentation mode*: slide notes
   in downloaded files (`downloads=`), the `pdf` mode, new lines.
 

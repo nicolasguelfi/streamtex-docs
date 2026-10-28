@@ -68,6 +68,7 @@ def build():
         langs = ["en", "fr"]             # one HTML export per language
         snapshot = ["content", "shared"] # in every code snapshot
         media = "assets"                 # copied once, linked into every snapshot
+        verify = "shared.checks:verify"  # optional: checks each HTML export (0.7.74)
 
         [[release.sites]]
         site = "chat1d-slides"           # written, checked (DNS label, unique)
@@ -162,7 +163,7 @@ def build():
         stx release rebuild                  # public repository: Coolify rebuilds the live image
         stx release setup --target prod      # plan; --apply creates the two applications
         stx release server-config            # nginx -t, then reload without interruption
-        stx release publish chat1d-slides    # or --group CHAT1D, or every site
+        stx release publish chat1d-slides    # or --group CHAT1D, or --all for every site
         stx release status                   # what each site serves, as a visitor
         stx release limit chat1d-slides 120 --label S1027   # writes its line, then applies it
         stx release limit chat1d-slides none --label S1103  # "not open yet"
@@ -174,8 +175,20 @@ def build():
     show_details("""\
         - **Version check**: publishing is refused when the streamtex that
         exports here is not the live image's (stx-version), or comes from a
-        working copy with uncommitted changes. `--allow-skew` publishes
-        anyway for a trial, and `status` marks the site.
+        working copy with uncommitted changes, or (streamtex 0.7.74) from
+        an editable working copy with commits in `streamtex/` after its tag.
+        `--allow-skew` publishes anyway for a trial, and `status` marks the
+        site.
+        - **Safety points** (streamtex 0.7.74): `publish` with no site and no
+        group is refused, `--all` publishes every site; `setup --domains
+        --dry-run` shows the domains each application would get, and writes
+        nothing; the check after the switch logs in with a password still
+        valid.
+        - **The project's check of an export** (streamtex 0.7.74): `[release]
+        verify = "module:function"` is called as `verify(site_name,
+        html_dir)` after each HTML export, before anything is copied, in the
+        project's environment. `None` accepts; a message, `False` or an
+        exception refuses, and the site keeps serving what it served.
         - **What stays manual in Coolify**: mounting the host folder
         (Persistent Storage → Directory Mount) and replacing the Dockerfile
         of an existing application; `stx release setup` prints both steps.

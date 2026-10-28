@@ -259,9 +259,9 @@ together, rollback. `stx deploy hetzner` stays for one document per application.
 
 ```bash
 stx release lock                     # live image deps from uv.lock (.stx-release/requirements.txt, stx-version)
-stx release setup [--apply|--show live|--domains]   # Coolify apps via the API; manual steps printed
+stx release setup [--apply|--show live|--domains [--dry-run]]   # Coolify apps via the API; manual steps printed
 stx release server-config            # nginx -t, then reload without interruption
-stx release publish [SITE…] [--group G] [--allow-skew] [--html-env K=V]
+stx release publish SITE… | --group G | --all [--allow-skew] [--html-env K=V]   # no site: refused (0.7.74)
 stx release status                   # what each site SERVES, as a visitor
 stx release rollback SITE | sleep SITE | wake SITE | prune
 stx release passwd [SITE…]           # records without republishing; auth-status (labels, dates)
@@ -274,7 +274,10 @@ stx release local up | down          # both applications in Docker on this machi
   or `[release] sites_from = "module:function"`; names written by the project, checked (DNS label, unique).
 - State: `.stx-release.json` (versioned, no secret). Passwords: `.stx-passwords.toml`,
   `[default]` → `[<group>]` → `[<group>.sites.<site>]`, `open = true | ["html"]` (an empty string is refused).
-- Publishing is refused when the exporting streamtex is not the live image's, or a dirty working copy.
+- Publishing is refused when the exporting streamtex is not the live image's, or a dirty working copy, or an
+  editable working copy with commits in `streamtex/` after its tag (0.7.74).
+- `[release] verify = "module:function"` (0.7.74): the project's check of each HTML export, before any copy;
+  `None` accepts, a message, `False` or an exception refuses.
 
 ## 4. HuggingFace Spaces
 

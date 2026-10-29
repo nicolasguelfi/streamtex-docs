@@ -1275,15 +1275,21 @@ def st_bibliography(
     style=None,
     title: str = "References",
     title_style=None,
+    entry_style=None,
+    number_style=None,
     toc_lvl: Optional[str] = None,
     only_cited: bool = True,
     format: Optional[BibFormat] = None,
+    label_style: Optional[CitationStyle] = None,   # 0.7.63: default follows BibConfig.citation_style
+    chunk_size: Optional[int] = None,              # 0.7.79: entries per slide, st_slide_break() between
+    slide_break_config=None,                       # 0.7.79: the SlideBreakConfig of those breaks
 )
 ```
 
 ```python
 st_bibliography()
 st_bibliography(title="Works Cited", toc_lvl="1", format=BibFormat.IEEE)
+st_bibliography(chunk_size=12)     # "References (1/3)", "(2/3)"…; numbering goes on; TOC entry once
 ```
 
 ### Configuration

@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.79** (board `vague4`, wave 4a): install cheatsheet, `stx styles
+  dump` and the generated styles reference (#6); advanced manual and Python
+  cheatsheet, `st_bibliography(chunk_size=N)` (#23); deploy manual and
+  cheatsheet, the SSH retry of `stx release` (#152) and the live face's
+  `/app/static/` media served without the password, kept so (#154).
+
 - **streamtex 0.7.78**: deploy manual and cheatsheet: `stx release
   rebuild` without a paste in Coolify (`--dry-run`, `--restore`), the skew
   mark said resolved, links to another site's files checked after publish.

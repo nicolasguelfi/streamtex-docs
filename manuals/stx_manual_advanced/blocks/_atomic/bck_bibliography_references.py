@@ -244,7 +244,10 @@ st_bibliography(
 )
 
 # Numbers beside author-year citations (streamtex 0.7.63)
-st_bibliography(label_style=CitationStyle.NUMERIC)""")
+st_bibliography(label_style=CitationStyle.NUMERIC)
+
+# A long list over several slides (streamtex 0.7.79)
+st_bibliography(chunk_size=12)""")
         st_space("v", 2)
 
         show_details("""\
@@ -254,7 +257,11 @@ st_bibliography(label_style=CitationStyle.NUMERIC)""")
             SUPERSCRIPT number the list [1], [2]... (streamtex 0.7.63;
             before, the list was always numbered). label_style=CitationStyle.NUMERIC
             keeps [N] in the list whatever the citation style. number_style=
-            styles that label.
+            styles that label. chunk_size=12 puts 12 entries per slide with a
+            st_slide_break() between chunks; each repeats the title with its
+            rank, "References (2/5)", the numbering goes on, and the table of
+            contents gets the plain title once (streamtex 0.7.79; the
+            library cannot know the screen height, so the author chooses N).
         """)
         st_space("v", 2)
 

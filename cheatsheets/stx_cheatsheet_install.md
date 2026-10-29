@@ -512,6 +512,22 @@ your-project/
 
 Shared files (`references/` and `commands/`) are set read-only (0o444) to signal they are managed automatically.
 
+### The styles reference, generated from the code (streamtex 0.7.79)
+
+`install` and `update` also write `.claude/references/streamtex_styles_api.md` (read-only, never pruned): every
+style of the library and of the project — shortcuts, named sizes on desktop/tablet/mobile, the pt scale, the
+indexed scale, the other styles, `s.project.*` — so that Claude uses `s.text.sizes.pt36` instead of raw CSS. It is
+rewritten only when the streamtex version or one of its inputs changes.
+
+```bash
+stx styles dump                      # write it now (project styles: custom/styles.py)
+stx styles dump --format full -o -   # every style with its CSS, printed
+stx styles dump --check              # drifts: a fallback or docstring that differs from default.css, an indexed
+                                     # scale that differs from compute_scale(), an s.xxx in .claude/ that does not exist
+```
+
+Project styles kept elsewhere than `custom/styles.py`: `[claude] styles = "shared.styles"` in `stx.toml`.
+
 ### Profile management commands
 
 ```bash

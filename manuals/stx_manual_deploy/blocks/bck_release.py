@@ -216,6 +216,18 @@ def build():
         since 0.7.78, `publish` checks after its sites that the site the
         address names still serves each such file, and names those that
         would answer 404; `media-report` lists the links.
+        - **The media are public** (decided, #154): the live face serves
+        `/app/static/` without asking the password, even on a protected
+        site, so that videos, images and downloads load in every case.
+        There is no listing, but whoever has a file's exact address can
+        download it. Put nothing confidential there; the pages, and the
+        whole HTML face, stay behind the password.
+        - **A connection cut while opening** (streamtex 0.7.79): a network
+        device on the way cuts about twenty new SSH connections opened
+        within a few seconds, for about a minute. `stx release` shares one
+        connection per run and, when an opening is cut anyway, tries again
+        after 5, 15, 30 and 60 s; a command that ran and failed is never
+        run twice.
         - **What stays manual in Coolify**: mounting the host folder
         (Persistent Storage → Directory Mount); `stx release setup` prints
         the step.

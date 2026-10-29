@@ -288,6 +288,11 @@ stx release local up | down          # both applications in Docker on this machi
   `media_keep` globs name (`[release]`, or a
   site's table); `stx release media-report SITE` shows the effect first. 0.7.78: links to another site's
   `/app/static/` files are checked after `publish` (served by the site the address names, or named as 404).
+- The live face's `/app/static/` media are served without the password, even on a protected site (no listing;
+  kept so on purpose, #154): whoever has a file's exact address can download it. Pages and the HTML face stay
+  behind the password.
+- 0.7.79: an SSH connection cut while opening (about twenty new connections within a few seconds) is tried again
+  after 5, 15, 30 and 60 s; a command that ran and failed is never run twice (#152).
 
 ## 4. HuggingFace Spaces
 

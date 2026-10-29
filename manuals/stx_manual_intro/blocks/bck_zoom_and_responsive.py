@@ -274,15 +274,16 @@ st_book(
         with l.item():
             st_write(s.medium, (s.bold, "Open it"),
                      " — Settings › \"Stage 1920×1080\", under the zoom controls, opens "
-                     "the current page in a new tab. The HTML export's sidebar has the "
-                     "same link, so it also works on a published site. Or add "
-                     "?stage=1920x1080 to the URL (?stage=1 takes the document's size).")
+                     "the current page in a new tab. It is for the live app only: the HTML "
+                     "export has no stage (streamtex 0.7.81). Or add ?stage=1920x1080 to "
+                     "the URL (?stage=1 takes the document's size).")
         with l.item():
             st_write(s.medium, (s.bold, "What you see"),
                      " — the document in a virtual screen of 1920×1080 CSS px, scaled to "
                      "the window, centred, with black bands, like Chrome's device mode. "
                      "Inside, 50vw × 50vh measures 960 × 540 px, exactly as on the "
-                     "projector. A readout gives the scale; Full screen fills the screen.")
+                     "projector. A readout gives the scale; Full screen fills the screen; "
+                     "Exit stage brings the tab back to the page.")
         with l.item():
             st_write(s.medium, (s.bold, "Navigation"),
                      " — the frame has the keyboard focus, so the arrow keys turn the "

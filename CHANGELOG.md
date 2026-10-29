@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.81**: the stage mode is for the live app only (no link in
+  the HTML export), with "Exit stage"; `[book.defaults]` reaches published
+  sites (deploy cheatsheet) (#105).
+
 - **streamtex 0.7.80** (board `vague4`, wave 4b): advanced manual and
   Python cheatsheet, the glossary — `gloss()`, `st_glossary()`,
   `glossary_sources=` (#12); intro manual (Zoom & Responsive) and Python

@@ -256,6 +256,8 @@ stx deploy install-coolify  # install Coolify on the provisioned server
 Two long-lived Coolify applications for a whole project (static nginx for the HTML exports, live
 supervisord + router for one Streamlit process per site); per-site snapshots, both faces switched
 together, rollback. `stx deploy hetzner` stays for one document per application.
+Since 0.7.81 each snapshot also gets a `stx.toml` holding only the project's `[book.defaults]`, so
+those settings apply in the export and the live process of a published site.
 
 ```bash
 stx release lock                     # live image deps from uv.lock (.stx-release/requirements.txt, stx-version)

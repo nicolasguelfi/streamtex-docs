@@ -913,11 +913,12 @@ def st_book(
 )
 ```
 
-**Stage mode (0.7.80):** Settings › "Stage 1920×1080" (and the HTML export's
-sidebar) opens the page in a new tab, in a virtual 1920×1080 screen scaled to
-the window with black bands — the projector's layout on any laptop. The URL
-`?stage=1920x1080` opens it too; `[book.defaults] stage = [1920, 1080]` in
-`stx.toml` sets it for every document.
+**Stage mode (0.7.80, live app only since 0.7.81):** Settings › "Stage 1920×1080"
+opens the page in a new tab, in a virtual 1920×1080 screen scaled to the window
+with black bands — the projector's layout on any laptop; "Exit stage" comes
+back. The URL `?stage=1920x1080` opens it too; `[book.defaults] stage = [1920,
+1080]` (or `false`) in `stx.toml` sets it for every document, published sites
+included (0.7.81). The HTML export has no stage.
 
 **Minimal book:**
 

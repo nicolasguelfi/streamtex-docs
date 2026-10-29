@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **streamtex 0.7.80** (board `vague4`, wave 4b): advanced manual and
+  Python cheatsheet, the glossary — `gloss()`, `st_glossary()`,
+  `glossary_sources=` (#12); intro manual (Zoom & Responsive) and Python
+  cheatsheet, the stage mode — the projector's 1920×1080 layout on any
+  window, `st_book(stage=...)`, `?stage=WxH` (#105).
+
 - **streamtex 0.7.79** (board `vague4`, wave 4a): install cheatsheet, `stx styles
   dump` and the generated styles reference (#6); advanced manual and Python
   cheatsheet, `st_bibliography(chunk_size=N)` (#23); deploy manual and

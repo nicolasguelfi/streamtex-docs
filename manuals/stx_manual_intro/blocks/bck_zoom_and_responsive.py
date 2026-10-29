@@ -256,7 +256,54 @@ st_book(
     )
     st_space("v", 2)
 
-    # Section 8: inject_zoom_logic (low-level API)
+    # Section 8: Stage mode (streamtex 0.7.80, #105)
+    st_write(bs.section, "Stage Mode: See the Projector's Layout", toc_lvl="+1")
+    st_space("v", 1)
+
+    st_write(
+        s.medium,
+        "A document lays itself out against the window: images bounded in vh, "
+        "titles capped in vw and slide breaks all move with it. Zoom cannot fix "
+        "that, because it shrinks the viewport units too: it changes the size of "
+        "the page, not its shape. On a 16:10 laptop you never saw what the 16:9 "
+        "projector shows.",
+    )
+    st_space("v", 1)
+
+    with st_list(list_type="ul") as l:
+        with l.item():
+            st_write(s.medium, (s.bold, "Open it"),
+                     " — Settings › \"Stage 1920×1080\", under the zoom controls, opens "
+                     "the current page in a new tab. The HTML export's sidebar has the "
+                     "same link, so it also works on a published site. Or add "
+                     "?stage=1920x1080 to the URL (?stage=1 takes the document's size).")
+        with l.item():
+            st_write(s.medium, (s.bold, "What you see"),
+                     " — the document in a virtual screen of 1920×1080 CSS px, scaled to "
+                     "the window, centred, with black bands, like Chrome's device mode. "
+                     "Inside, 50vw × 50vh measures 960 × 540 px, exactly as on the "
+                     "projector. A readout gives the scale; Full screen fills the screen.")
+        with l.item():
+            st_write(s.medium, (s.bold, "Navigation"),
+                     " — the frame has the keyboard focus, so the arrow keys turn the "
+                     "slides; ?marker=, ?lang= and #anchor deep links pass through.")
+        with l.item():
+            st_write(s.medium, (s.bold, "Limit"),
+                     " — the scaled picture is resampled: slightly softer than the real "
+                     "screen at a non-integer scale.")
+    st_space("v", 1)
+
+    show_code("""\
+st_book([...], stage=(1920, 1080))   # default: the link reads "Stage 1920×1080"
+st_book([...], stage="1280x720")     # another projector
+st_book([...], stage=False)          # no stage link
+
+# stx.toml — one size for every document of the project
+[book.defaults]
+stage = [1920, 1080]""", language="python")
+    st_space("v", 2)
+
+    # Section 9: inject_zoom_logic (low-level API)
     st_write(bs.section, "Low-Level API: inject_zoom_logic()", toc_lvl="+1")
     st_space("v", 1)
 

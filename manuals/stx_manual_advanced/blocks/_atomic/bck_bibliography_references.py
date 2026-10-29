@@ -561,6 +561,61 @@ st_book([...], bib_sources=bib_sources, bib_config=bib_config)""")
         """)
         st_space("v", 3)
 
+        # --- Glossary (0.7.80, #12) ---
+        st_write(bs.sub, "Glossary: gloss() and st_glossary() (0.7.80)", toc_lvl="+1")
+        st_space("v", 2)
+
+        show_explanation("""\
+            A term is defined once and its definition shows wherever it is
+            used: the term is underlined with dots and its definition appears
+            under it on hover (or keyboard focus). It is pure CSS, so it also
+            works in the exported HTML. In print the definition is hidden and
+            st_glossary() gives the list.
+
+            Glossary terms live apart from the references: they take no
+            citation number and never appear in st_bibliography().
+        """)
+        st_space("v", 1)
+
+        show_code("""\
+# glossary.yaml — a short form, or title (hover) + note (longer)
+LLM: Large Language Model
+RLHF:
+  title: Reinforcement Learning from Human Feedback
+  note: The model is tuned on human rankings of its answers.
+
+# or in the shared .bib
+@glossary{GPT, title = {Generative Pre-trained Transformer}, note = {A decoder-only model.}}""",
+                  language="yaml")
+        st_space("v", 1)
+
+        show_code("""\
+from streamtex import gloss, st_glossary, GlossaryConfig
+
+st_book([...], glossary_sources=["glossary.yaml"],          # .yaml, .json or .bib
+        glossary_config=GlossaryConfig(strict=True))         # unknown key: error
+
+st_write(s.big, "How ", gloss("LLM"), " models generate text")
+st_write(s.big, gloss("RLHF", text="human feedback"), " tunes them")
+
+st_glossary(title="Glossary", toc_lvl="1")   # the used terms, A to Z
+st_glossary(only_used=False)                 # every term of the sources""")
+        st_space("v", 2)
+
+        show_details("""\
+            gloss() shows the term's abbreviation field, or its key; text=
+            changes the words shown. An unknown key gives [key?] and a
+            warning, or a KeyError with GlossaryConfig(strict=True).
+
+            st_glossary() lists "LLM — Large Language Model. Its note." with an
+            anchor gloss-<key> per term. In paginated mode it also counts the
+            terms used on other pages.
+
+            The TOC and the slide markers keep the term without its
+            definition: "How LLM models generate text".
+        """)
+        st_space("v", 3)
+
         # --- Migrating .bib files ---
         st_write(bs.sub, "Migrating your .bib files (0.7.38)", toc_lvl="+1")
         st_space("v", 2)

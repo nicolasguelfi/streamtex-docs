@@ -906,8 +906,18 @@ def st_book(
     inspector=None,
     page_width: int = 90,
     zoom: int = 100,
+    # … (other parameters elided)
+    glossary_sources=None,          # 0.7.80: .yaml/.json/.bib terms for gloss() (#12)
+    glossary_config=None,           # 0.7.80: GlossaryConfig(strict=True)
+    stage=(1920, 1080),             # 0.7.80: stage size, "WxH" or [w, h]; False: no link (#105)
 )
 ```
+
+**Stage mode (0.7.80):** Settings › "Stage 1920×1080" (and the HTML export's
+sidebar) opens the page in a new tab, in a virtual 1920×1080 screen scaled to
+the window with black bands — the projector's layout on any laptop. The URL
+`?stage=1920x1080` opens it too; `[book.defaults] stage = [1920, 1080]` in
+`stx.toml` sets it for every document.
 
 **Minimal book:**
 
@@ -1423,6 +1433,23 @@ def export_bibtex(*, only_cited: bool = True) -> str
 ```python
 bib_text = export_bibtex(only_cited=True)
 ```
+
+### Glossary (0.7.80)
+
+```python
+# glossary.yaml:  LLM: Large Language Model
+#                 RLHF: {title: Reinforcement Learning from Human Feedback, note: ...}
+# or in a .bib:   @glossary{GPT, title = {...}, note = {...}}
+st_book(modules, glossary_sources=["glossary.yaml"])
+
+st_write(s.big, "How ", gloss("LLM"), " models learn")      # dotted underline, definition on hover
+st_write(s.big, gloss("RLHF", text="human feedback"))       # other words shown
+st_glossary(title="Glossary", toc_lvl="1")                  # used terms, A to Z; only_used=False: all
+```
+
+CSS only: the hover works live and in the HTML export; print hides it. Terms take
+no citation number and stay out of `st_bibliography()`. Unknown key: `[key?]`, or
+`KeyError` with `GlossaryConfig(strict=True)`.
 
 ---
 
